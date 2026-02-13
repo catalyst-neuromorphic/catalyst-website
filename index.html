@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalyst N1 — Neuromorphic Processor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      color: #fff;
+      background: #000;
+      overflow-x: hidden;
+    }
+    a { color: inherit; }
+
+    /* ── Glass ── */
+    .glass {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(40px) saturate(1.2);
+      -webkit-backdrop-filter: blur(40px) saturate(1.2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .glass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%, rgba(255,255,255,0.02) 100%);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+    .glass-strong {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(60px) saturate(1.3);
+      -webkit-backdrop-filter: blur(60px) saturate(1.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-strong::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(255,255,255,0.08) 0%, transparent 40%);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    /* ── Accent ── */
+    .accent-mark { display: inline-block; width: 8px; height: 8px; background: #3B82F6; border-radius: 3px; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 56px; background: transparent;
+      transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,0.6);
+      backdrop-filter: blur(40px) saturate(1.2);
+      -webkit-backdrop-filter: blur(40px) saturate(1.2);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-inner {
+      max-width: 1400px; margin: 0 auto; height: 100%;
+      display: flex; align-items: center; justify-content: space-between; padding: 0 48px;
+    }
+    .nav-left { display: flex; align-items: center; gap: 10px; }
+    .nav-logo { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.3s; }
+    .nav-links a:hover { color: #fff; }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── Hero ── */
+    .hero {
+      height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .neural-canvas {
+      position: absolute; inset: 0; z-index: 1;
+      display: grid; grid-template-columns: repeat(40, 1fr); grid-template-rows: repeat(22, 1fr); gap: 1px;
+    }
+    .n-cell { background: transparent; border-radius: 2px; transition: background 0.6s ease; }
+    .n-cell.a1 { background: rgba(59, 130, 246, 0.04); }
+    .n-cell.a2 { background: rgba(59, 130, 246, 0.09); }
+    .n-cell.a3 { background: rgba(59, 130, 246, 0.16); }
+    .n-cell.a4 { background: rgba(59, 130, 246, 0.25); }
+    .hero-text { position: relative; z-index: 2; }
+    .hero h1 { font-size: clamp(3.5rem,7vw,7rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+    .hero-sub { font-size: clamp(1rem,1.5vw,1.35rem); font-weight: 400; color: rgba(255,255,255,0.4); margin-top: 16px; }
+    .hero-cta {
+      margin-top: 36px; display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); text-decoration: none;
+      padding: 12px 28px; border-radius: 100px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .hero-cta:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); transform: translateY(-1px); text-decoration: none; }
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 2;
+      width: 24px; height: 40px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15);
+      display: flex; justify-content: center; padding-top: 8px;
+    }
+    .hero-scroll::after {
+      content: ''; width: 3px; height: 8px; border-radius: 3px; background: rgba(255,255,255,0.3);
+      animation: scrollDot 2s ease infinite;
+    }
+    @keyframes scrollDot {
+      0% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(12px); opacity: 0.2; }
+      100% { transform: translateY(0); opacity: 0.6; }
+    }
+
+    /* ── Statement ── */
+    .statement { padding: 160px 48px; text-align: center; }
+    .statement h2 {
+      font-size: clamp(2rem,4vw,3.5rem); font-weight: 600; letter-spacing: -0.02em;
+      line-height: 1.2; color: rgba(255,255,255,0.85); max-width: 800px; margin: 0 auto;
+    }
+
+    /* ── Stats ── */
+    .stats-section { padding: 80px 48px; }
+    .stats-glass { max-width: 1200px; margin: 0 auto; padding: 48px 32px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); }
+    .stat-item { text-align: center; padding: 24px 16px; position: relative; }
+    .stat-item:not(:last-child)::after {
+      content: ''; position: absolute; right: 0; top: 20%; height: 60%; width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.08), transparent);
+    }
+    .stat-num { font-size: clamp(2.5rem,5vw,4rem); font-weight: 700; letter-spacing: -0.03em; }
+    .stat-label { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* ── Section ── */
+    .section { padding: 160px 48px; }
+    .section-split { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .section-label { font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .section h2 { font-size: clamp(2rem,3.5vw,3rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 20px; }
+    .section p { font-size: clamp(0.95rem,1.1vw,1.1rem); color: rgba(255,255,255,0.45); line-height: 1.7; font-weight: 400; }
+    .section-visual { display: flex; justify-content: center; align-items: center; }
+    .content-glass { padding: 40px; }
+
+    /* ── Code ── */
+    .code-block { padding: 36px; overflow-x: auto; }
+    .code-block > * { position: relative; z-index: 1; }
+    .code-line { font-family: 'SF Mono','Consolas','Fira Code',monospace; font-size: clamp(0.75rem,0.9vw,0.9rem); line-height: 2; color: rgba(255,255,255,0.35); white-space: pre; }
+    .code-line .kw { color: rgba(255,255,255,0.6); }
+    .code-line .fn { color: rgba(59,130,246,0.7); }
+    .code-line .str { color: rgba(255,255,255,0.5); }
+    .code-line .num { color: rgba(255,255,255,0.55); }
+
+    /* ── Table ── */
+    .table-wrap { max-width: 1100px; margin: 0 auto; }
+    .table-glass { padding: 8px; overflow: hidden; }
+    .comp-table { width: 100%; border-collapse: collapse; }
+    .comp-table th, .comp-table td { padding: 18px 24px; text-align: left; font-size: clamp(0.8rem,0.95vw,0.95rem); border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .comp-table th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.3); font-weight: 500; }
+    .comp-table td { color: rgba(255,255,255,0.4); }
+    .comp-table td:first-child { color: rgba(255,255,255,0.7); }
+    .comp-table tbody tr { transition: background 0.3s; }
+    .comp-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+    .comp-table tbody tr:last-child td { border-bottom: none; }
+    .comp-table .ours { color: #fff; font-weight: 600; }
+    .comp-table .dim { color: rgba(255,255,255,0.15); }
+
+    /* ── Dual section ── */
+    .dual-section { padding: 160px 48px; }
+    .dual-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .dual-card { padding: 48px; }
+    .dual-card h3 { font-size: clamp(1.5rem,2.5vw,2rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .dual-card p { font-size: clamp(0.9rem,1vw,1rem); color: rgba(255,255,255,0.4); line-height: 1.7; }
+    .btn-pill {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 24px;
+      font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.6); text-decoration: none;
+      padding: 10px 24px; border-radius: 100px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.3s;
+    }
+    .btn-pill:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.15); text-decoration: none; }
+    .pulse-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #3B82F6; margin-right: 8px; animation: blink 2s ease infinite; box-shadow: 0 0 8px rgba(59,130,246,0.4); }
+    @keyframes blink { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+    .dev-tag { display: inline-flex; align-items: center; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 16px; }
+
+    /* ── Builder / Contact ── */
+    .builder-card { max-width: 700px; margin: 0 auto; text-align: center; padding: 64px 48px; }
+    .contact-section { padding: 160px 48px; text-align: center; }
+    .contact-card { max-width: 600px; margin: 0 auto; padding: 64px 48px; }
+
+    /* ── Footer ── */
+    footer { padding: 48px; text-align: center; }
+    .footer-links { display: flex; justify-content: center; gap: 32px; margin-bottom: 20px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.3s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.6); }
+    footer .copy { font-size: 12px; color: rgba(255,255,255,0.15); }
+
+    /* ── Diagram glass wrapper ── */
+    .diagram-glass {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+    }
+    .diagram-glass svg { width: 100%; height: auto; display: block; min-width: 700px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .section-split, .dual-grid { grid-template-columns: 1fr; gap: 32px; }
+      .nav-inner { padding: 0 24px; }
+      .section, .statement, .dual-section, .contact-section { padding: 100px 24px; }
+    }
+    @media (max-width: 734px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-item:nth-child(2)::after { display: none; }
+      .nav-links { display: none; }
+      .hero-scroll { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <span class="nav-logo">Catalyst</span>
+      </div>
+      <div class="nav-links">
+        <a href="#arch">Architecture</a>
+        <a href="#sdk">SDK</a>
+        <a href="#specs">Specs</a>
+        <a href="mailto:henry@catalyst-neuromorphic.com">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="neural-canvas" id="neuralCanvas"></div>
+    <div class="hero-text">
+      <h1>Catalyst N1</h1>
+      <p class="hero-sub">128-core neuromorphic processor. Open hardware.</p>
+      <a href="#arch" class="hero-cta">Learn more</a>
+    </div>
+    <div class="hero-scroll"></div>
+  </section>
+
+  <!-- STATEMENT -->
+  <section class="statement">
+    <h2 class="reveal">What takes a billion-dollar lab and a hundred engineers, we built from scratch. Then open-sourced it.</h2>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-section">
+    <div class="stats-glass glass reveal">
+      <div class="stats-grid">
+        <div class="stat-item"><div class="stat-num" data-target="128">0</div><div class="stat-label">Cores</div></div>
+        <div class="stat-item"><div class="stat-num" data-target="131072" data-comma="true">0</div><div class="stat-label">Neurons</div></div>
+        <div class="stat-item"><div class="stat-num" data-target="131" data-suffix="K">0</div><div class="stat-label">Synapses / core</div></div>
+        <div class="stat-item"><div class="stat-num" data-target="85.9" data-suffix="%" data-decimal="true">0</div><div class="stat-label">SHD benchmark</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section class="section" id="arch">
+    <div class="section-split" style="grid-template-columns: 1fr 2fr; gap: 48px;">
+      <div class="content-glass glass reveal">
+        <div class="section-label"><span class="accent-mark"></span> Architecture</div>
+        <h2>128 cores. One mesh.</h2>
+        <p>Each core: 1,024 spiking neurons, 131K synapses, a programmable learning engine. Cores communicate through a barrier-synchronized mesh or asynchronous event-driven network-on-chip.</p>
+      </div>
+      <div class="section-visual reveal">
+        <div class="diagram-glass">
+          <svg viewBox="0 0 640 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="glassGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.07)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0.02)"/>
+              </linearGradient>
+              <linearGradient id="blueGlass" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(59,130,246,0.12)"/>
+                <stop offset="100%" stop-color="rgba(59,130,246,0.03)"/>
+              </linearGradient>
+              <linearGradient id="cellGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.05)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0.015)"/>
+              </linearGradient>
+              <linearGradient id="blueCellGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(59,130,246,0.07)"/>
+                <stop offset="100%" stop-color="rgba(59,130,246,0.02)"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Mesh Router -->
+            <rect x="20" y="16" width="600" height="44" rx="16" fill="url(#blueGlass)" stroke="rgba(59,130,246,0.2)" stroke-width="0.75"/>
+            <text x="320" y="43" text-anchor="middle" fill="rgba(59,130,246,0.8)" font-size="12" font-weight="600" font-family="Space Grotesk">SPIKE MESH ROUTER</text>
+
+            <!-- Connection lines router → cores -->
+            <line x1="85" y1="60" x2="85" y2="90" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="230" y1="60" x2="230" y2="90" stroke="rgba(59,130,246,0.15)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="375" y1="60" x2="375" y2="90" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-linecap="round"/>
+            <line x1="520" y1="60" x2="520" y2="90" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-linecap="round"/>
+
+            <!-- Core 0 -->
+            <g transform="translate(20, 90)">
+              <rect width="130" height="130" rx="16" fill="url(#glassGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+              <text x="65" y="22" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">Core 0</text>
+              <rect x="8" y="32" width="55" height="38" rx="10" fill="url(#cellGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+              <text x="35" y="49" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="8.5" font-weight="500">Neurons</text>
+              <text x="35" y="62" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="7.5">1024 LIF</text>
+              <rect x="67" y="32" width="55" height="38" rx="10" fill="url(#cellGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+              <text x="94" y="49" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="8.5" font-weight="500">CSR</text>
+              <text x="94" y="62" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="7.5">131K syn</text>
+              <rect x="8" y="76" width="55" height="38" rx="10" fill="url(#cellGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+              <text x="35" y="93" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="8.5" font-weight="500">Learning</text>
+              <text x="35" y="106" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="7.5">14-op ISA</text>
+              <rect x="67" y="76" width="55" height="38" rx="10" fill="url(#cellGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+              <text x="94" y="93" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="8.5" font-weight="500">Delay</text>
+              <text x="94" y="106" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="7.5">0–63 step</text>
+            </g>
+
+            <!-- Core 1 — blue accent -->
+            <g transform="translate(165, 90)">
+              <rect width="130" height="130" rx="16" fill="url(#blueGlass)" stroke="rgba(59,130,246,0.18)" stroke-width="0.75"/>
+              <text x="65" y="22" text-anchor="middle" fill="rgba(59,130,246,0.9)" font-size="11" font-weight="600">Core 1</text>
+              <rect x="8" y="32" width="55" height="38" rx="10" fill="url(#blueCellGrad)" stroke="rgba(59,130,246,0.1)" stroke-width="0.5"/>
+              <text x="35" y="49" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="8.5" font-weight="500">Neurons</text>
+              <text x="35" y="62" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="7.5">1024 LIF</text>
+              <rect x="67" y="32" width="55" height="38" rx="10" fill="url(#blueCellGrad)" stroke="rgba(59,130,246,0.1)" stroke-width="0.5"/>
+              <text x="94" y="49" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="8.5" font-weight="500">CSR</text>
+              <text x="94" y="62" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="7.5">131K syn</text>
+              <rect x="8" y="76" width="55" height="38" rx="10" fill="url(#blueCellGrad)" stroke="rgba(59,130,246,0.1)" stroke-width="0.5"/>
+              <text x="35" y="93" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="8.5" font-weight="500">Learning</text>
+              <text x="35" y="106" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="7.5">14-op ISA</text>
+              <rect x="67" y="76" width="55" height="38" rx="10" fill="url(#blueCellGrad)" stroke="rgba(59,130,246,0.1)" stroke-width="0.5"/>
+              <text x="94" y="93" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="8.5" font-weight="500">Delay</text>
+              <text x="94" y="106" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="7.5">0–63 step</text>
+            </g>
+
+            <!-- Core 2 -->
+            <g transform="translate(310, 90)">
+              <rect width="130" height="130" rx="16" fill="url(#glassGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+              <text x="65" y="22" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-weight="600">Core 2</text>
+              <rect x="8" y="32" width="55" height="38" rx="10" fill="url(#cellGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+              <text x="35" y="52" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="8.5">1024 LIF</text>
+              <rect x="67" y="32" width="55" height="38" rx="10" fill="url(#cellGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+              <text x="94" y="52" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="8.5">131K syn</text>
+              <rect x="8" y="76" width="55" height="38" rx="10" fill="url(#cellGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+              <text x="35" y="96" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="8.5">14-op ISA</text>
+              <rect x="67" y="76" width="55" height="38" rx="10" fill="url(#cellGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+              <text x="94" y="96" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="8.5">0–63 step</text>
+            </g>
+
+            <!-- Ghost card "× 128 cores" -->
+            <g transform="translate(455, 90)">
+              <rect width="130" height="130" rx="16" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="0.75" stroke-dasharray="6,4"/>
+              <text x="65" y="58" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="18">···</text>
+              <text x="65" y="80" text-anchor="middle" fill="rgba(255,255,255,0.18)" font-size="11">× 128 cores</text>
+            </g>
+
+            <!-- Feature pills row -->
+            <g transform="translate(20, 248)">
+              <rect width="190" height="48" rx="14" fill="url(#glassGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+              <text x="95" y="21" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9" font-weight="600" letter-spacing="0.5">DENDRITIC TREE</text>
+              <text x="95" y="37" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="9">4 compartments / neuron</text>
+            </g>
+            <g transform="translate(222, 248)">
+              <rect width="190" height="48" rx="14" fill="url(#glassGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+              <text x="95" y="21" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9" font-weight="600" letter-spacing="0.5">GRADED SPIKES</text>
+              <text x="95" y="37" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="9">8-bit payload per spike</text>
+            </g>
+            <g transform="translate(424, 248)">
+              <rect width="190" height="48" rx="14" fill="url(#glassGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+              <text x="95" y="21" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9" font-weight="600" letter-spacing="0.5">GALS ASYNC</text>
+              <text x="95" y="37" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="9">Event-driven operation</text>
+            </g>
+
+            <!-- Host Interface -->
+            <rect x="20" y="320" width="600" height="44" rx="16" fill="url(#glassGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="0.75"/>
+            <text x="320" y="347" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="12" font-weight="500" font-family="Space Grotesk">HOST INTERFACE · UART · 9 COMMANDS</text>
+
+            <!-- Vertical connectors -->
+            <line x1="85" y1="220" x2="85" y2="248" stroke="rgba(255,255,255,0.04)" stroke-width="0.75"/>
+            <line x1="320" y1="220" x2="320" y2="248" stroke="rgba(255,255,255,0.04)" stroke-width="0.75"/>
+            <line x1="520" y1="220" x2="520" y2="248" stroke="rgba(255,255,255,0.04)" stroke-width="0.75"/>
+            <line x1="115" y1="296" x2="115" y2="320" stroke="rgba(255,255,255,0.04)" stroke-width="0.75"/>
+            <line x1="320" y1="296" x2="320" y2="320" stroke="rgba(255,255,255,0.04)" stroke-width="0.75"/>
+            <line x1="520" y1="296" x2="520" y2="320" stroke="rgba(255,255,255,0.04)" stroke-width="0.75"/>
+
+            <!-- Die label -->
+            <text x="320" y="395" text-anchor="middle" fill="rgba(255,255,255,0.12)" font-size="9" font-family="Space Grotesk">Catalyst N1 · 32,768 neurons · CERN-OHL-W</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEARNING -->
+  <section class="section">
+    <div class="section-split">
+      <div class="section-visual reveal">
+        <div class="diagram-glass">
+          <svg id="stdpSvg" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Grid lines -->
+            <line x1="60" y1="150" x2="440" y2="150" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+            <line x1="230" y1="30" x2="230" y2="270" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+            <!-- Minor grid -->
+            <line x1="60" y1="90" x2="440" y2="90" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" stroke-dasharray="2,4"/>
+            <line x1="60" y1="210" x2="440" y2="210" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" stroke-dasharray="2,4"/>
+            <line x1="145" y1="30" x2="145" y2="270" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" stroke-dasharray="2,4"/>
+            <line x1="315" y1="30" x2="315" y2="270" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" stroke-dasharray="2,4"/>
+            <!-- Axis labels -->
+            <text x="440" y="168" fill="rgba(255,255,255,0.3)" font-size="10" font-family="Space Grotesk">Δt (ms)</text>
+            <text x="236" y="26" fill="rgba(255,255,255,0.3)" font-size="10" font-family="Space Grotesk">Δw</text>
+            <!-- Tick labels -->
+            <text x="60" y="164" fill="rgba(255,255,255,0.2)" font-size="8" text-anchor="middle">-50</text>
+            <text x="145" y="164" fill="rgba(255,255,255,0.2)" font-size="8" text-anchor="middle">-25</text>
+            <text x="230" y="164" fill="rgba(255,255,255,0.2)" font-size="8" text-anchor="middle">0</text>
+            <text x="315" y="164" fill="rgba(255,255,255,0.2)" font-size="8" text-anchor="middle">+25</text>
+            <text x="400" y="164" fill="rgba(255,255,255,0.2)" font-size="8" text-anchor="middle">+50</text>
+            <!-- Curves generated by JS -->
+            <g id="stdpCurves"></g>
+            <!-- Labels -->
+            <text x="340" y="68" fill="rgba(59,130,246,0.8)" font-size="12" font-weight="600" font-family="Space Grotesk">LTP</text>
+            <text x="100" y="248" fill="rgba(239,68,68,0.6)" font-size="12" font-weight="600" font-family="Space Grotesk">LTD</text>
+            <text x="230" y="290" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-size="9" font-family="Space Grotesk">Spike-Timing Dependent Plasticity · 3-Factor with Eligibility</text>
+          </svg>
+        </div>
+      </div>
+      <div class="content-glass glass reveal">
+        <div class="section-label"><span class="accent-mark"></span> Learning</div>
+        <h2>It learns on its own.</h2>
+        <p>Three-factor plasticity with eligibility traces and reward modulation. A programmable microcode engine lets you write custom learning rules — STDP, reinforcement learning, homeostatic normalization — in 14 opcodes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SDK -->
+  <section class="section" id="sdk">
+    <div class="section-split">
+      <div class="content-glass glass reveal">
+        <div class="section-label"><span class="accent-mark"></span> SDK</div>
+        <h2>Python to silicon.</h2>
+        <p>Define networks, compile to hardware, simulate or deploy. Cycle-accurate simulator for development. FPGA backend for the real thing.</p>
+      </div>
+      <div class="reveal">
+        <div class="code-block glass">
+          <div class="code-line"><span class="kw">import</span> neurocore <span class="kw">as</span> nc</div>
+          <div class="code-line"></div>
+          <div class="code-line">net = nc.<span class="fn">Network</span>()</div>
+          <div class="code-line">exc = net.<span class="fn">population</span>(<span class="num">64</span>, params={<span class="str">"threshold"</span>: <span class="num">800</span>})</div>
+          <div class="code-line">inh = net.<span class="fn">population</span>(<span class="num">16</span>, params={<span class="str">"threshold"</span>: <span class="num">600</span>})</div>
+          <div class="code-line"></div>
+          <div class="code-line">net.<span class="fn">connect</span>(exc, exc, topology=<span class="str">"random_sparse"</span>, p=<span class="num">0.1</span>)</div>
+          <div class="code-line">net.<span class="fn">connect</span>(exc, inh, topology=<span class="str">"all_to_all"</span>, weight=<span class="num">150</span>)</div>
+          <div class="code-line">net.<span class="fn">connect</span>(inh, exc, topology=<span class="str">"all_to_all"</span>, weight=<span class="num">-300</span>)</div>
+          <div class="code-line"></div>
+          <div class="code-line">sim = nc.<span class="fn">Simulator</span>()</div>
+          <div class="code-line">result = sim.<span class="fn">run</span>(timesteps=<span class="num">100</span>)</div>
+          <div class="code-line">result.<span class="fn">raster_plot</span>()</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="section" id="specs">
+    <div class="table-wrap">
+      <div class="section-label reveal" style="margin-bottom: 40px;"><span class="accent-mark"></span> How it compares</div>
+      <div class="table-glass glass reveal">
+        <table class="comp-table">
+          <thead><tr>
+            <th></th><th>Catalyst N1</th><th>Loihi 1</th><th>TrueNorth</th><th>SpiNNaker</th><th>BrainScaleS</th>
+          </tr></thead>
+          <tbody>
+            <tr><td>Total neurons</td><td class="ours">131K</td><td>131K</td><td>1M</td><td>18K*</td><td>512</td></tr>
+            <tr><td>Synapses/core</td><td class="ours">131K</td><td>128K</td><td>256</td><td>SW</td><td>224</td></tr>
+            <tr><td>On-chip learning</td><td class="ours">Yes</td><td>Yes</td><td class="dim">&mdash;</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td>Graded spikes</td><td class="ours">Yes</td><td class="dim">&mdash;</td><td class="dim">&mdash;</td><td class="dim">&mdash;</td><td class="dim">&mdash;</td></tr>
+            <tr><td>Dendrite trees</td><td class="ours">Yes</td><td>Yes</td><td class="dim">&mdash;</td><td class="dim">&mdash;</td><td class="dim">&mdash;</td></tr>
+            <tr><td>Embedded CPU</td><td class="ours">Yes</td><td>Yes</td><td class="dim">&mdash;</td><td>Yes</td><td class="dim">&mdash;</td></tr>
+            <tr><td>Open design</td><td class="ours">Yes</td><td class="dim">&mdash;</td><td class="dim">&mdash;</td><td>Yes</td><td class="dim">&mdash;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="reveal" style="margin-top: 16px; font-size: 11px; color: rgba(255,255,255,0.15);">*Per ARM968 core. SpiNNaker scales to ~1M neurons across 1000+ chips.</p>
+    </div>
+  </section>
+
+  <!-- BUILDER -->
+  <section class="section">
+    <div class="builder-card glass-strong reveal">
+      <div class="section-label" style="justify-content: center;"><span class="accent-mark"></span> Built by</div>
+      <h2 style="font-size: clamp(2rem,3.5vw,3rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 20px;">Henry Shulayev Barnes</h2>
+      <p style="font-size: clamp(0.95rem,1.1vw,1.1rem); color: rgba(255,255,255,0.45); line-height: 1.7;">Independent hardware engineer, UK. Every line of RTL, every test, every tool in the SDK. One person. 25 development phases. 98 test scenarios. Zero failures.</p>
+    </div>
+  </section>
+
+  <!-- OPEN SOURCE + N2 -->
+  <section class="dual-section">
+    <div class="dual-grid">
+      <div class="dual-card glass reveal">
+        <div class="section-label"><span class="accent-mark"></span> Open source</div>
+        <h3>See everything.</h3>
+        <p>Full RTL, testbenches, SDK, and paper. CERN-OHL-W licensed. No NDAs. No black boxes.</p>
+        <a href="#" class="btn-pill">View repository</a>
+      </div>
+      <div class="dual-card glass reveal">
+        <div class="dev-tag"><span class="pulse-dot"></span> In development</div>
+        <h3>Catalyst N2</h3>
+        <p>Next generation. Higher neuron density, enhanced compute primitives. Targeting feature parity with the industry's latest.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section">
+    <div class="contact-card glass-strong reveal">
+      <h2 style="font-size: clamp(2rem,3.5vw,3rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px;">Get in touch.</h2>
+      <p style="font-size: clamp(0.95rem,1.1vw,1.1rem); color: rgba(255,255,255,0.45); line-height: 1.7;">Collaboration, licensing, or early access.</p>
+      <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill" style="margin-top: 20px; font-size: 15px; padding: 14px 32px;">henry@catalyst-neuromorphic.com</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="mailto:henry@catalyst-neuromorphic.com">Contact</a>
+      <a href="#">Paper</a>
+      <a href="#">GitHub</a>
+    </div>
+    <p class="copy">CERN-OHL-W &middot; &copy; 2026 Henry Shulayev Barnes</p>
+  </footer>
+
+  <script>
+  // ═══════════════════════════════════════════
+  // NEURAL ACTIVITY GRID — Hero Animation
+  // ═══════════════════════════════════════════
+  (function() {
+    const canvas = document.getElementById('neuralCanvas');
+    const COLS = 40, ROWS = 22;
+    const cells = [];
+    const brightness = new Float32Array(COLS * ROWS);
+
+    for (let i = 0; i < COLS * ROWS; i++) {
+      const c = document.createElement('div');
+      c.className = 'n-cell';
+      canvas.appendChild(c);
+      cells.push(c);
+    }
+
+    function activate() {
+      const cx = Math.random() * COLS;
+      const cy = Math.random() * ROWS;
+      const r = 2 + Math.random() * 4;
+      const str = 0.6 + Math.random() * 0.4;
+      for (let y = 0; y < ROWS; y++) {
+        for (let x = 0; x < COLS; x++) {
+          const d = Math.sqrt((x-cx)**2 + (y-cy)**2);
+          if (d < r) {
+            const f = 1 - d/r;
+            brightness[y*COLS+x] = Math.min(1, brightness[y*COLS+x] + f*f*str);
+          }
+        }
+      }
+    }
+
+    const glow = new Int8Array(COLS * ROWS);
+    function render() {
+      for (let i = 0; i < cells.length; i++) {
+        const b = brightness[i];
+        let lv = 0;
+        if (b > 0.6) lv = 4; else if (b > 0.3) lv = 3; else if (b > 0.12) lv = 2; else if (b > 0.04) lv = 1;
+        if (lv !== glow[i]) {
+          if (glow[i]) cells[i].classList.remove('a'+glow[i]);
+          if (lv) cells[i].classList.add('a'+lv);
+          glow[i] = lv;
+        }
+      }
+    }
+
+    let last = 0;
+    function tick(t) {
+      if (t - last > 50) {
+        for (let i = 0; i < brightness.length; i++) {
+          brightness[i] *= 0.96;
+          if (brightness[i] < 0.01) brightness[i] = 0;
+        }
+        render();
+        last = t;
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function sched() { activate(); setTimeout(sched, 250 + Math.random() * 500); }
+    for (let i = 0; i < 5; i++) activate();
+    render();
+    requestAnimationFrame(tick);
+    sched();
+  })();
+
+  // ═══════════════════════════════════════════
+  // STDP CURVE — Learning section
+  // ═══════════════════════════════════════════
+  (function() {
+    const g = document.getElementById('stdpCurves');
+    const ns = 'http://www.w3.org/2000/svg';
+    const tau = 20, Ap = 1.0, Am = 1.2;
+
+    // LTP (positive dt)
+    let ltp = 'M230,150';
+    for (let dt = 0.5; dt <= 50; dt += 0.5) {
+      const dw = Ap * Math.exp(-dt / tau);
+      ltp += ` L${(230 + dt*4.2).toFixed(1)},${(150 - dw*100).toFixed(1)}`;
+    }
+    const ltpEl = document.createElementNS(ns, 'path');
+    ltpEl.setAttribute('d', ltp);
+    ltpEl.setAttribute('stroke', 'rgba(59,130,246,0.7)');
+    ltpEl.setAttribute('fill', 'none');
+    ltpEl.setAttribute('stroke-width', '2');
+    ltpEl.setAttribute('stroke-linecap', 'round');
+    g.appendChild(ltpEl);
+
+    // LTP fill
+    const ltpFill = document.createElementNS(ns, 'path');
+    ltpFill.setAttribute('d', ltp + ' L440,150 Z');
+    ltpFill.setAttribute('fill', 'rgba(59,130,246,0.05)');
+    ltpFill.setAttribute('stroke', 'none');
+    g.appendChild(ltpFill);
+
+    // LTD (negative dt)
+    let ltd = 'M230,150';
+    for (let dt = 0.5; dt <= 50; dt += 0.5) {
+      const dw = -Am * Math.exp(-dt / tau);
+      ltd += ` L${(230 - dt*3.4).toFixed(1)},${(150 - dw*100).toFixed(1)}`;
+    }
+    const ltdEl = document.createElementNS(ns, 'path');
+    ltdEl.setAttribute('d', ltd);
+    ltdEl.setAttribute('stroke', 'rgba(239,68,68,0.5)');
+    ltdEl.setAttribute('fill', 'none');
+    ltdEl.setAttribute('stroke-width', '2');
+    ltdEl.setAttribute('stroke-linecap', 'round');
+    g.appendChild(ltdEl);
+
+    // LTD fill
+    const ltdFill = document.createElementNS(ns, 'path');
+    ltdFill.setAttribute('d', ltd + ' L60,150 Z');
+    ltdFill.setAttribute('fill', 'rgba(239,68,68,0.03)');
+    ltdFill.setAttribute('stroke', 'none');
+    g.appendChild(ltdFill);
+
+    // Origin dot
+    const dot = document.createElementNS(ns, 'circle');
+    dot.setAttribute('cx', '230'); dot.setAttribute('cy', '150'); dot.setAttribute('r', '3');
+    dot.setAttribute('fill', 'rgba(255,255,255,0.4)');
+    g.appendChild(dot);
+  })();
+
+  // ═══════════════════════════════════════════
+  // STAT COUNT-UP
+  // ═══════════════════════════════════════════
+  let statsCounted = false;
+  function countStats() {
+    if (statsCounted) return;
+    statsCounted = true;
+    document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      const isDecimal = el.dataset.decimal === 'true';
+      const hasComma = el.dataset.comma === 'true';
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800;
+      const start = Date.now();
+      function tick() {
+        const p = Math.min((Date.now()-start)/duration, 1);
+        const ease = 1 - Math.pow(1-p, 3);
+        const v = target * ease;
+        if (hasComma) el.textContent = Math.round(v).toLocaleString();
+        else if (isDecimal) el.textContent = v.toFixed(1) + suffix;
+        else el.textContent = Math.round(v) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      tick();
+    });
+  }
+
+  // ═══════════════════════════════════════════
+  // NAV + REVEAL
+  // ═══════════════════════════════════════════
+  const nav = document.getElementById('nav');
+  new IntersectionObserver(([e]) => {
+    nav.classList.toggle('scrolled', !e.isIntersecting);
+  }, { threshold: 0.05 }).observe(document.getElementById('hero'));
+
+  const ro = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        if (e.target.closest('.stats-section')) countStats();
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+  </script>
+</body>
+</html>
