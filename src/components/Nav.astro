@@ -1,0 +1,80 @@
+---
+const navLinks = [
+  { href: '/processors', label: 'Processors' },
+  { href: '/technology', label: 'Technology' },
+  { href: '/cloud', label: 'Cloud' },
+  { href: '/research', label: 'Research' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<nav id="nav" class="fixed top-0 left-0 right-0 z-50 h-14 transition-all duration-500" style="background: transparent;">
+  <div class="max-w-[1400px] mx-auto h-full flex items-center justify-between px-6 md:px-12">
+    <a href="/" class="text-[22px] font-bold tracking-tight">Catalyst</a>
+    <div class="hidden md:flex items-center gap-8">
+      {navLinks.map(link => (
+        <a href={link.href} class="text-sm text-white/50 no-underline hover:text-white transition-colors duration-300">
+          {link.label}
+        </a>
+      ))}
+    </div>
+    <!-- Mobile menu button -->
+    <button id="mobile-menu-btn" class="md:hidden text-white/50 hover:text-white transition-colors" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+  </div>
+  <!-- Mobile dropdown -->
+  <div id="mobile-menu" class="hidden md:hidden absolute top-14 left-0 right-0 py-4 px-6" style="background: rgba(10,10,10,0.95); backdrop-filter: blur(40px); border-bottom: 1px solid rgba(255,255,255,0.06);">
+    {navLinks.map(link => (
+      <a href={link.href} class="block py-3 text-sm text-white/50 no-underline hover:text-white transition-colors">
+        {link.label}
+      </a>
+    ))}
+  </div>
+</nav>
+
+<script>
+  // Nav scroll behavior
+  const nav = document.getElementById('nav');
+  const hero = document.querySelector('.hero-section');
+
+  if (hero && nav) {
+    new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) {
+        nav.style.background = 'rgba(10,10,10,0.6)';
+        nav.style.backdropFilter = 'blur(40px) saturate(1.2)';
+        nav.style.webkitBackdropFilter = 'blur(40px) saturate(1.2)';
+        nav.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
+      } else {
+        nav.style.background = 'transparent';
+        nav.style.backdropFilter = 'none';
+        nav.style.webkitBackdropFilter = 'none';
+        nav.style.borderBottom = 'none';
+      }
+    }, { threshold: 0.05 }).observe(hero);
+  } else if (nav) {
+    // Non-hero pages: always show blurred nav
+    nav.style.background = 'rgba(10,10,10,0.6)';
+    nav.style.backdropFilter = 'blur(40px) saturate(1.2)';
+    nav.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
+  }
+
+  // Mobile menu toggle
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+
+  // Reveal animations
+  const ro = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+</script>

@@ -1,0 +1,494 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Code examples defined here to avoid JSX brace escaping issues
+const signupCurl = `curl -X POST https://api.catalyst-neuromorphic.com/v1/signup \\
+  -H "Content-Type: application/json" \\
+  -d '&#123;"email": "you@lab.edu", "tier": "free"&#125;'
+
+# Response:
+# &#123;
+#   "api_key": "cn_live_...",
+#   "tier": "free",
+#   "limits": &#123;"max_neurons": 1024, "max_timesteps": 1000, ...&#125;
+# &#125;`;
+
+const signupPython = `import requests
+
+r = requests.post("https://api.catalyst-neuromorphic.com/v1/signup",
+    json=&#123;"email": "you@lab.edu", "tier": "free"&#125;)
+
+data = r.json()
+API_KEY = data["api_key"]  # Save this — shown only once
+print(f"Key: &#123;data['key_prefix']&#125;...")
+print(f"Limits: &#123;data['limits']&#125;")`;
+
+const signupJs = `const res = await fetch("https://api.catalyst-neuromorphic.com/v1/signup", &#123;
+  method: "POST",
+  headers: &#123; "Content-Type": "application/json" &#125;,
+  body: JSON.stringify(&#123; email: "you@lab.edu", tier: "free" &#125;)
+&#125;);
+
+const &#123; api_key, limits &#125; = await res.json();
+// Save api_key — it's shown only once`;
+
+const networkCurl = `curl -X POST https://api.catalyst-neuromorphic.com/v1/networks \\
+  -H "Content-Type: application/json" \\
+  -H "X-API-Key: cn_live_..." \\
+  -d '&#123;
+    "populations": [
+      &#123;"label": "excitatory", "size": 100, "params": &#123;"threshold": 1000, "leak": 10&#125;&#125;,
+      &#123;"label": "inhibitory", "size": 25, "params": &#123;"threshold": 800, "leak": 5&#125;&#125;
+    ],
+    "connections": [
+      &#123;"source": "excitatory", "target": "inhibitory", "topology": "random_sparse",
+       "p": 0.2, "weight": 600&#125;,
+      &#123;"source": "inhibitory", "target": "excitatory", "weight": -400&#125;
+    ]
+  &#125;'
+
+# Response:
+# &#123;"network_id": "net_...", "total_neurons": 125, "populations": 2, "connections": 2&#125;`;
+
+const networkPython = `headers = &#123;"X-API-Key": API_KEY, "Content-Type": "application/json"&#125;
+
+network = &#123;
+    "populations": [
+        &#123;"label": "excitatory", "size": 100, "params": &#123;"threshold": 1000, "leak": 10&#125;&#125;,
+        &#123;"label": "inhibitory", "size": 25, "params": &#123;"threshold": 800, "leak": 5&#125;&#125;,
+    ],
+    "connections": [
+        &#123;"source": "excitatory", "target": "inhibitory",
+         "topology": "random_sparse", "p": 0.2, "weight": 600&#125;,
+        &#123;"source": "inhibitory", "target": "excitatory", "weight": -400&#125;,
+    ],
+&#125;
+
+r = requests.post("https://api.catalyst-neuromorphic.com/v1/networks",
+    json=network, headers=headers)
+
+net_id = r.json()["network_id"]`;
+
+const networkJs = `const headers = &#123;
+  "X-API-Key": api_key,
+  "Content-Type": "application/json"
+&#125;;
+
+const res = await fetch("https://api.catalyst-neuromorphic.com/v1/networks", &#123;
+  method: "POST", headers,
+  body: JSON.stringify(&#123;
+    populations: [
+      &#123; label: "excitatory", size: 100, params: &#123; threshold: 1000, leak: 10 &#125; &#125;,
+      &#123; label: "inhibitory", size: 25, params: &#123; threshold: 800, leak: 5 &#125; &#125;
+    ],
+    connections: [
+      &#123; source: "excitatory", target: "inhibitory",
+        topology: "random_sparse", p: 0.2, weight: 600 &#125;,
+      &#123; source: "inhibitory", target: "excitatory", weight: -400 &#125;
+    ]
+  &#125;)
+&#125;);
+
+const &#123; network_id &#125; = await res.json();`;
+
+const jobCurl = `curl -X POST https://api.catalyst-neuromorphic.com/v1/jobs \\
+  -H "Content-Type: application/json" \\
+  -H "X-API-Key: cn_live_..." \\
+  -d '&#123;
+    "network_id": "net_...",
+    "timesteps": 1000,
+    "stimuli": [
+      &#123;"population": "excitatory", "neurons": [0,1,2,3,4], "current": 8000&#125;
+    ]
+  &#125;'
+
+# Response: &#123;"job_id": "job_...", "status": "queued"&#125;
+
+# Poll for results:
+curl https://api.catalyst-neuromorphic.com/v1/jobs/job_... \\
+  -H "X-API-Key: cn_live_..."
+
+# When status is "completed":
+# &#123;
+#   "status": "completed",
+#   "result": &#123;
+#     "total_spikes": 847,
+#     "firing_rates": &#123;"excitatory": 0.0052, "inhibitory": 0.0128&#125;,
+#     "spike_count_timeseries": [5, 12, 3, ...]
+#   &#125;,
+#   "compute_seconds": 0.34
+# &#125;`;
+
+const jobPython = `import time
+
+# Submit job
+r = requests.post("https://api.catalyst-neuromorphic.com/v1/jobs",
+    json=&#123;
+        "network_id": net_id,
+        "timesteps": 1000,
+        "stimuli": [&#123;"population": "excitatory", "neurons": [0,1,2,3,4], "current": 8000&#125;],
+    &#125;,
+    headers=headers)
+
+job_id = r.json()["job_id"]
+
+# Poll for completion
+while True:
+    r = requests.get(f"https://api.catalyst-neuromorphic.com/v1/jobs/&#123;job_id&#125;",
+        headers=headers)
+    job = r.json()
+    if job["status"] in ("completed", "failed"):
+        break
+    time.sleep(1)
+
+print(f"Spikes: &#123;job['result']['total_spikes']&#125;")
+print(f"Rates: &#123;job['result']['firing_rates']&#125;")
+print(f"Compute: &#123;job['compute_seconds']&#125;s")`;
+
+const jobJs = `// Submit job
+let res = await fetch("https://api.catalyst-neuromorphic.com/v1/jobs", &#123;
+  method: "POST", headers,
+  body: JSON.stringify(&#123;
+    network_id,
+    timesteps: 1000,
+    stimuli: [&#123; population: "excitatory", neurons: [0,1,2,3,4], current: 8000 &#125;]
+  &#125;)
+&#125;);
+
+const &#123; job_id &#125; = await res.json();
+
+// Poll for completion
+let job;
+do &#123;
+  await new Promise(r =&gt; setTimeout(r, 1000));
+  res = await fetch(\`https://api.catalyst-neuromorphic.com/v1/jobs/\${job_id}\`, &#123; headers &#125;);
+  job = await res.json();
+&#125; while (job.status !== "completed" &amp;&amp; job.status !== "failed");
+
+console.log("Spikes:", job.result.total_spikes);
+console.log("Rates:", job.result.firing_rates);`;
+
+const spikesCurl = `curl https://api.catalyst-neuromorphic.com/v1/jobs/job_.../spikes \\
+  -H "X-API-Key: cn_live_..."
+
+# Response:
+# &#123;
+#   "spike_trains": &#123;
+#     "excitatory": &#123;"0": [12, 45, 78], "1": [13, 47], "4": [11, 44, 77, 110]&#125;,
+#     "inhibitory": &#123;"0": [14, 48], "3": [15, 49, 82]&#125;
+#   &#125;
+# &#125;`;
+
+const spikesPython = `r = requests.get(f"https://api.catalyst-neuromorphic.com/v1/jobs/&#123;job_id&#125;/spikes",
+    headers=headers)
+
+spikes = r.json()["spike_trains"]
+
+# Plot raster
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize=(10, 4))
+y = 0
+for pop, neurons in spikes.items():
+    for nid, times in sorted(neurons.items(), key=lambda x: int(x[0])):
+        ax.scatter(times, [y] * len(times), s=1, c='white')
+        y += 1
+ax.set_xlabel("Timestep")
+ax.set_ylabel("Neuron")
+plt.savefig("raster.png", dpi=150)
+print("Saved raster.png")`;
+
+const spikesResponse = `&#123;"spike_trains": &#123;"excitatory": &#123;"0": [12, 45], "1": [13]&#125;, "inhibitory": &#123;"0": [14, 48]&#125;&#125;&#125;`;
+---
+
+<BaseLayout title="API Docs — Catalyst Cloud" description="Complete API reference for Catalyst Cloud neuromorphic compute.">
+
+  <!-- Header -->
+  <section class="pt-36 pb-12 px-6 md:px-12 text-center">
+    <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Documentation</p>
+    <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tighter">API Reference</h1>
+    <p class="text-lg text-white/40 mt-4 max-w-[550px] mx-auto">
+      Everything you need to run neuromorphic simulations from any language.
+    </p>
+    <p class="text-sm text-white/30 mt-3">
+      Base URL: <code class="text-white/50 font-mono bg-white/5 px-2 py-0.5 rounded">https://api.catalyst-neuromorphic.com</code>
+    </p>
+  </section>
+
+  <!-- Quick Start -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto">
+      <h2 class="reveal text-2xl font-bold mb-8">Quick start</h2>
+
+      <!-- Step 1: Signup -->
+      <div class="reveal mb-10">
+        <h3 class="text-lg font-semibold mb-2">1. Get an API key</h3>
+        <p class="text-sm text-white/40 mb-4">Free. No credit card required.</p>
+        <div class="code-tabs glass rounded-xl overflow-hidden" data-group="signup">
+          <div class="flex border-b border-white/5">
+            <button class="tab-btn active px-4 py-2.5 text-xs font-mono" data-lang="curl">curl</button>
+            <button class="tab-btn px-4 py-2.5 text-xs font-mono" data-lang="python">Python</button>
+            <button class="tab-btn px-4 py-2.5 text-xs font-mono" data-lang="js">JavaScript</button>
+          </div>
+          <pre class="tab-content p-5 text-sm font-mono text-white/70 leading-relaxed" data-lang="curl"><code set:html={signupCurl} /></pre>
+          <pre class="tab-content p-5 text-sm font-mono text-white/70 leading-relaxed hidden" data-lang="python"><code set:html={signupPython} /></pre>
+          <pre class="tab-content p-5 text-sm font-mono text-white/70 leading-relaxed hidden" data-lang="js"><code set:html={signupJs} /></pre>
+        </div>
+      </div>
+
+      <!-- Step 2: Create Network -->
+      <div class="reveal mb-10">
+        <h3 class="text-lg font-semibold mb-2">2. Define a network</h3>
+        <p class="text-sm text-white/40 mb-4">Populations of spiking neurons with connections between them.</p>
+        <div class="code-tabs glass rounded-xl overflow-hidden" data-group="network">
+          <div class="flex border-b border-white/5">
+            <button class="tab-btn active px-4 py-2.5 text-xs font-mono" data-lang="curl">curl</button>
+            <button class="tab-btn px-4 py-2.5 text-xs font-mono" data-lang="python">Python</button>
+            <button class="tab-btn px-4 py-2.5 text-xs font-mono" data-lang="js">JavaScript</button>
+          </div>
+          <pre class="tab-content p-5 text-sm font-mono text-white/70 leading-relaxed" data-lang="curl"><code set:html={networkCurl} /></pre>
+          <pre class="tab-content p-5 text-sm font-mono text-white/70 leading-relaxed hidden" data-lang="python"><code set:html={networkPython} /></pre>
+          <pre class="tab-content p-5 text-sm font-mono text-white/70 leading-relaxed hidden" data-lang="js"><code set:html={networkJs} /></pre>
+        </div>
+      </div>
+
+      <!-- Step 3: Submit Job -->
+      <div class="reveal mb-10">
+        <h3 class="text-lg font-semibold mb-2">3. Run a simulation</h3>
+        <p class="text-sm text-white/40 mb-4">Submit a job with stimuli. It runs asynchronously and you poll for results.</p>
+        <div class="code-tabs glass rounded-xl overflow-hidden" data-group="job">
+          <div class="flex border-b border-white/5">
+            <button class="tab-btn active px-4 py-2.5 text-xs font-mono" data-lang="curl">curl</button>
+            <button class="tab-btn px-4 py-2.5 text-xs font-mono" data-lang="python">Python</button>
+            <button class="tab-btn px-4 py-2.5 text-xs font-mono" data-lang="js">JavaScript</button>
+          </div>
+          <pre class="tab-content p-5 text-sm font-mono text-white/70 leading-relaxed" data-lang="curl"><code set:html={jobCurl} /></pre>
+          <pre class="tab-content p-5 text-sm font-mono text-white/70 leading-relaxed hidden" data-lang="python"><code set:html={jobPython} /></pre>
+          <pre class="tab-content p-5 text-sm font-mono text-white/70 leading-relaxed hidden" data-lang="js"><code set:html={jobJs} /></pre>
+        </div>
+      </div>
+
+      <!-- Step 4: Spike Trains -->
+      <div class="reveal mb-10">
+        <h3 class="text-lg font-semibold mb-2">4. Get spike trains</h3>
+        <p class="text-sm text-white/40 mb-4">Full per-neuron spike times, indexed by population label and local neuron index.</p>
+        <div class="code-tabs glass rounded-xl overflow-hidden" data-group="spikes">
+          <div class="flex border-b border-white/5">
+            <button class="tab-btn active px-4 py-2.5 text-xs font-mono" data-lang="curl">curl</button>
+            <button class="tab-btn px-4 py-2.5 text-xs font-mono" data-lang="python">Python</button>
+          </div>
+          <pre class="tab-content p-5 text-sm font-mono text-white/70 leading-relaxed" data-lang="curl"><code set:html={spikesCurl} /></pre>
+          <pre class="tab-content p-5 text-sm font-mono text-white/70 leading-relaxed hidden" data-lang="python"><code set:html={spikesPython} /></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Full Endpoint Reference -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto">
+      <h2 class="reveal text-2xl font-bold mb-12">Endpoint reference</h2>
+
+      <!-- Signup -->
+      <div class="reveal mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/signup</code>
+          <span class="text-xs text-white/30">Public</span>
+        </div>
+        <p class="text-sm text-white/40 mb-3">Create a new account and get an API key.</p>
+        <div class="glass rounded-lg p-4 text-sm">
+          <p class="font-mono text-white/50 mb-2">Request body:</p>
+          <table class="w-full text-sm">
+            <tbody>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">email</td><td class="py-1.5 text-white/40">string, required</td></tr>
+              <tr><td class="py-1.5 font-mono text-white/60">tier</td><td class="py-1.5 text-white/40">"free" (default), "researcher", "startup", "enterprise"</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Networks -->
+      <div class="reveal mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/networks</code>
+          <span class="text-xs text-white/30">Requires X-API-Key</span>
+        </div>
+        <p class="text-sm text-white/40 mb-3">Store a network definition for later job submission.</p>
+        <div class="glass rounded-lg p-4 text-sm">
+          <p class="font-mono text-white/50 mb-2">Request body:</p>
+          <table class="w-full text-sm">
+            <tbody>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">populations</td><td class="py-1.5 text-white/40">array of label, size, params</td></tr>
+              <tr><td class="py-1.5 font-mono text-white/60">connections</td><td class="py-1.5 text-white/40">array of source, target, topology, weight, p, delay, compartment</td></tr>
+            </tbody>
+          </table>
+          <p class="font-mono text-white/50 mt-4 mb-2">Neuron params (all optional):</p>
+          <table class="w-full text-sm">
+            <tbody>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">threshold</td><td class="py-1.5 text-white/40">int (default 1000) — spike threshold</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">leak</td><td class="py-1.5 text-white/40">int (default 3) — membrane leak rate</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">resting</td><td class="py-1.5 text-white/40">int (default 0) — resting potential</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">refrac</td><td class="py-1.5 text-white/40">int (default 3) — refractory period</td></tr>
+              <tr><td class="py-1.5 font-mono text-white/60">dend_threshold</td><td class="py-1.5 text-white/40">int (default 500) — dendritic compartment threshold</td></tr>
+            </tbody>
+          </table>
+          <p class="font-mono text-white/50 mt-4 mb-2">Connection options:</p>
+          <table class="w-full text-sm">
+            <tbody>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">topology</td><td class="py-1.5 text-white/40">all_to_all, one_to_one, random_sparse, fixed_fan_in, fixed_fan_out</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">weight</td><td class="py-1.5 text-white/40">int [-32768, 32767] (default 200) — negative for inhibitory</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">p</td><td class="py-1.5 text-white/40">float [0, 1] — connection probability (random_sparse)</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">delay</td><td class="py-1.5 text-white/40">int [0, 63] — synaptic delay in timesteps</td></tr>
+              <tr><td class="py-1.5 font-mono text-white/60">compartment</td><td class="py-1.5 text-white/40">int [0, 3] — target dendritic compartment</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Jobs -->
+      <div class="reveal mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/jobs</code>
+          <span class="text-xs text-white/30">Requires X-API-Key</span>
+        </div>
+        <p class="text-sm text-white/40 mb-3">Submit a simulation job. Returns immediately with job_id.</p>
+        <div class="glass rounded-lg p-4 text-sm">
+          <table class="w-full text-sm">
+            <tbody>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">network_id</td><td class="py-1.5 text-white/40">string, required — from POST /v1/networks</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">timesteps</td><td class="py-1.5 text-white/40">int, required — number of simulation steps</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">stimuli</td><td class="py-1.5 text-white/40">array of population, neurons (optional), current</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">learning</td><td class="py-1.5 text-white/40">enabled, graded, dendritic, noise, three_factor</td></tr>
+              <tr><td class="py-1.5 font-mono text-white/60">rewards</td><td class="py-1.5 text-white/40">array of timestep, value — for 3-factor learning</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Get Job -->
+      <div class="reveal mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/jobs/job_id</code>
+          <span class="text-xs text-white/30">Requires X-API-Key</span>
+        </div>
+        <p class="text-sm text-white/40 mb-3">Get job status and summary results. Poll until status is "completed" or "failed".</p>
+        <div class="glass rounded-lg p-4 text-sm">
+          <p class="font-mono text-white/50 mb-2">Response fields (when completed):</p>
+          <table class="w-full text-sm">
+            <tbody>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">result.total_spikes</td><td class="py-1.5 text-white/40">int — total spikes across all neurons</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">result.firing_rates</td><td class="py-1.5 text-white/40">per-population mean spikes per neuron per timestep</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">result.spike_count_timeseries</td><td class="py-1.5 text-white/40">array — total spikes at each timestep</td></tr>
+              <tr><td class="py-1.5 font-mono text-white/60">compute_seconds</td><td class="py-1.5 text-white/40">float — actual simulation compute time</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Get Spikes -->
+      <div class="reveal mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/jobs/job_id/spikes</code>
+          <span class="text-xs text-white/30">Requires X-API-Key</span>
+        </div>
+        <p class="text-sm text-white/40 mb-3">Full spike trains grouped by population with local neuron indices.</p>
+        <div class="glass rounded-lg p-4 text-sm">
+          <p class="font-mono text-white/50 mb-2">Response:</p>
+          <pre class="text-xs font-mono text-white/50 mt-2"><code set:html={spikesResponse} /></pre>
+        </div>
+      </div>
+
+      <!-- Usage -->
+      <div class="reveal mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/usage</code>
+          <span class="text-xs text-white/30">Requires X-API-Key</span>
+        </div>
+        <p class="text-sm text-white/40 mb-3">Your current usage stats and estimated cost.</p>
+        <div class="glass rounded-lg p-4 text-sm">
+          <table class="w-full text-sm">
+            <tbody>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">jobs_today</td><td class="py-1.5 text-white/40">int — jobs submitted today</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">jobs_limit_today</td><td class="py-1.5 text-white/40">int — daily limit for your tier</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">compute_seconds_this_month</td><td class="py-1.5 text-white/40">float — total compute this billing cycle</td></tr>
+              <tr><td class="py-1.5 font-mono text-white/60">estimated_cost_gbp</td><td class="py-1.5 text-white/40">float — estimated cost at your tier rate</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Errors -->
+      <h2 class="reveal text-2xl font-bold mt-20 mb-8">Error codes</h2>
+      <div class="reveal glass rounded-lg p-4 text-sm">
+        <table class="w-full text-sm">
+          <tbody>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">400</td><td class="py-1.5 text-white/40">Invalid request — check your JSON format</td></tr>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">401</td><td class="py-1.5 text-white/40">Missing or invalid API key</td></tr>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">403</td><td class="py-1.5 text-white/40">Tier limit exceeded (neurons, timesteps)</td></tr>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">404</td><td class="py-1.5 text-white/40">Network or job not found</td></tr>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">409</td><td class="py-1.5 text-white/40">Email already registered</td></tr>
+            <tr><td class="py-1.5 font-mono text-white/60">429</td><td class="py-1.5 text-white/40">Daily job limit reached — upgrade your tier</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 px-6 md:px-12 text-center">
+    <p class="text-white/40 mb-4">Interactive docs also available at</p>
+    <a href="https://api.catalyst-neuromorphic.com/docs" class="reveal btn-pill inline-flex px-8 py-3 text-sm" target="_blank">OpenAPI Explorer &rarr;</a>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .tab-btn {
+    color: rgba(255,255,255,0.3);
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+  .tab-btn:hover {
+    color: rgba(255,255,255,0.6);
+  }
+  .tab-btn.active {
+    color: rgba(255,255,255,0.8);
+    border-bottom-color: #3B82F6;
+  }
+  pre {
+    margin: 0;
+    overflow-x: auto;
+  }
+  pre code {
+    white-space: pre;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.code-tabs').forEach(group => {
+    const buttons = group.querySelectorAll('.tab-btn');
+    const contents = group.querySelectorAll('.tab-content');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        contents.forEach(c => {
+          c.classList.toggle('hidden', c.dataset.lang !== lang);
+        });
+      });
+    });
+  });
+</script>
