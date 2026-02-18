@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Research — Catalyst Neuromorphic" description="Papers, validation results, and benchmarks.">
+
+  <section class="pt-32 pb-20 px-6 md:px-12 text-center">
+    <h1 class="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tighter">Research</h1>
+    <p class="text-lg text-white/40 mt-4">Papers, validation, and benchmarks.</p>
+  </section>
+
+  <!-- PAPERS -->
+  <section class="pb-20 px-6 md:px-12">
+    <div class="max-w-[900px] mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="glass-accent p-10 reveal">
+          <p class="text-[10px] uppercase tracking-widest text-catalyst-blue/60 mb-2">Latest</p>
+          <h3 class="text-xl font-semibold mb-2">Catalyst N2 Paper</h3>
+          <p class="text-sm text-white/35 leading-relaxed mb-2">Full Loihi 2 Parity in an Open Neuromorphic Architecture</p>
+          <p class="text-xs text-white/20 mb-6">17 pages. Architecture, programmable neuron models, multi-backend SDK, hardware validation.</p>
+          <a href="/papers/catalyst-n2.pdf" class="btn-pill text-sm" target="_blank">Read PDF</a>
+        </div>
+        <div class="glass p-10 reveal">
+          <p class="text-[10px] uppercase tracking-widest text-white/30 mb-2">First Generation</p>
+          <h3 class="text-xl font-semibold mb-2">Catalyst N1 Paper</h3>
+          <p class="text-sm text-white/35 leading-relaxed mb-2">A 128-Core Spiking Neuromorphic Processor</p>
+          <p class="text-xs text-white/20 mb-6">13 pages. Architecture, instruction set, SDK, benchmarks.</p>
+          <a href="/papers/catalyst-n1.pdf" class="btn-pill text-sm" target="_blank">Read PDF</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALIDATION -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight mb-6">Hardware Validation</h2>
+      <p class="reveal text-lg text-white/40 leading-relaxed max-w-[600px] mx-auto mb-12">
+        N2 has been validated on real programmable hardware. Every test passing. Cycle-accurate, bit-exact results matching the software simulation.
+      </p>
+      <div class="reveal glass-strong p-12">
+        <div class="text-[clamp(4rem,8vw,6rem)] font-bold tracking-tight text-catalyst-green">28/28</div>
+        <div class="text-sm text-white/35 uppercase tracking-widest mt-2">All validation tests passing</div>
+        <div class="mt-10 space-y-2 text-left max-w-[400px] mx-auto">
+          {[
+            'Basic spike propagation',
+            'Multi-core routing',
+            'Learning convergence',
+            'Programmable neuron models',
+            'Graded spike payloads',
+            'Deployment and runtime',
+            'Performance benchmarks',
+          ].map(test => (
+            <div class="flex items-center gap-3 text-sm">
+              <span class="text-catalyst-green">&#10003;</span>
+              <span class="text-white/40">{test}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENCHMARKS -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto">
+      <h2 class="reveal text-center text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight mb-12">Benchmarks</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="glass p-10 text-center reveal">
+          <div class="text-4xl font-bold tracking-tight">85.9%</div>
+          <div class="text-sm text-white/35 mt-2">SHD Benchmark (float)</div>
+          <p class="text-xs text-white/20 mt-4">Spiking Heidelberg Digits &mdash; speech recognition with spiking neural networks.</p>
+        </div>
+        <div class="glass p-10 text-center reveal">
+          <div class="text-4xl font-bold tracking-tight">85.4%</div>
+          <div class="text-sm text-white/35 mt-2">SHD Benchmark (quantized)</div>
+          <p class="text-xs text-white/20 mt-4">Hardware-accurate fixed-point mode. Only 0.5% accuracy loss from quantization.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 px-6 md:px-12 text-center">
+    <a href="/processors" class="reveal btn-pill inline-flex">Explore our processors &rarr;</a>
+  </section>
+
+</BaseLayout>

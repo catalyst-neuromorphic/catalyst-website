@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Catalyst N1 — First Generation Neuromorphic Processor" description="128-core neuromorphic processor. The foundation of the Catalyst platform.">
+
+  <!-- Banner -->
+  <div class="pt-16 text-center py-3 banner-bar">
+    <a href="/processors/n2" class="text-sm text-catalyst-blue/70 hover:text-catalyst-blue transition-colors no-underline">
+      Looking for the latest? Catalyst N2 &rarr;
+    </a>
+  </div>
+
+  <!-- HERO -->
+  <section class="py-32 flex flex-col items-center justify-center text-center px-6">
+    <div class="reveal w-56 h-56 mb-10 rounded-2xl flex items-center justify-center chip-hero-n1">
+      <span class="text-5xl font-bold text-white/40">N1</span>
+    </div>
+    <p class="text-[11px] uppercase tracking-widest text-white/30 mb-4">First Generation</p>
+    <h1 class="text-[clamp(4rem,8vw,7rem)] font-bold tracking-tighter leading-none">N1</h1>
+    <p class="text-[clamp(1rem,1.5vw,1.35rem)] text-white/40 mt-4">The foundation.</p>
+    <div class="flex items-center gap-4 mt-8">
+      <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill">Enquire</a>
+      <a href="/papers/catalyst-n1.pdf" class="btn-pill" target="_blank">Read the paper</a>
+    </div>
+  </section>
+
+  <!-- WHAT N1 IS -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight">128 cores. One mesh.</h2>
+      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
+        The Catalyst N1 is a 128-core spiking neuromorphic processor with full parity to Intel's first-generation Loihi chip. Each core contains 1,024 neurons, 131K synapses, and a programmable learning engine.
+      </p>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="py-20 px-6 md:px-12">
+    <div class="max-w-[900px] mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6">
+      {[
+        { title: 'Dendritic trees', desc: 'Four compartments per neuron for spatial computation.' },
+        { title: 'Graded spikes', desc: 'Eight-bit payload per spike for analog-like signalling.' },
+        { title: 'On-chip learning', desc: 'Programmable plasticity rules. The chip learns as it runs.' },
+      ].map(feat => (
+        <div class="glass p-8 text-center reveal">
+          <h3 class="text-lg font-semibold mb-2">{feat.title}</h3>
+          <p class="text-sm text-white/35">{feat.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- SPECS -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[700px] mx-auto">
+      <h2 class="reveal text-center text-2xl font-bold tracking-tight mb-12">Technical Specifications</h2>
+      <div class="reveal space-y-0">
+        <div class="spec-row-n1"><span>Cores</span><span>128</span></div>
+        <div class="spec-row-n1"><span>Neurons per core</span><span>1,024 (LIF)</span></div>
+        <div class="spec-row-n1"><span>Total neurons</span><span>131,072</span></div>
+        <div class="spec-row-n1"><span>Synapses per core</span><span>131,072</span></div>
+        <div class="spec-row-n1"><span>Learning</span><span>14-opcode ISA, STDP</span></div>
+        <div class="spec-row-n1"><span>Axonal delays</span><span>Up to 63 timesteps</span></div>
+        <div class="spec-row-n1"><span>Graded spikes</span><span>8-bit payload</span></div>
+        <div class="spec-row-n1"><span>Dendrites</span><span>4 compartments</span></div>
+        <div class="spec-row-n1"><span>SHD benchmark</span><span>85.9% (float) / 85.4% (quantized)</span></div>
+        <div class="spec-row-n1"><span>Tests</span><span>96 passing</span></div>
+        <div class="spec-row-n1"><span>Parity</span><span>Intel Loihi 1</span></div>
+        <div class="spec-row-n1"><span>Patent</span><span>UK patent filed</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAPER -->
+  <section class="py-20 px-6 md:px-12 text-center">
+    <div class="glass max-w-[500px] mx-auto p-10 reveal">
+      <h3 class="text-xl font-semibold mb-2">Read the N1 paper</h3>
+      <p class="text-sm text-white/35 mb-6">13 pages. Architecture, instruction set, SDK, benchmarks.</p>
+      <a href="/papers/catalyst-n1.pdf" class="btn-pill" target="_blank">View PDF</a>
+    </div>
+  </section>
+
+  <!-- ENQUIRE -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[600px] mx-auto text-center">
+      <div class="glass-accent p-12 reveal">
+        <h2 class="text-2xl font-bold tracking-tight mb-4">Interested in N1?</h2>
+        <p class="text-white/40 leading-relaxed mb-8">Licensing and research enquiries.</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-primary">Enquire</a>
+          <a href="/processors/n2" class="btn-pill">See what's next: N2 &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .banner-bar { background: rgba(59,130,246,0.06); border-bottom: 1px solid rgba(59,130,246,0.1); }
+  .chip-hero-n1 { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); }
+  .spec-row-n1 {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    font-size: 0.875rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .spec-row-n1:last-child { border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .spec-row-n1 span:first-child { color: rgba(255,255,255,0.35); }
+  .spec-row-n1 span:last-child { color: rgba(255,255,255,0.6); }
+</style>
