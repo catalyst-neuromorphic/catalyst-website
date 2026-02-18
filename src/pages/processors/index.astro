@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Processors — Catalyst Neuromorphic" description="Explore our neuromorphic processor library.">
+
+  <section class="pt-32 pb-20 px-6 md:px-12 text-center">
+    <h1 class="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tighter">Processors</h1>
+    <p class="text-lg text-white/40 mt-4">Explore our chip library.</p>
+  </section>
+
+  <!-- CHIPS -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+      <!-- N2 -->
+      <div class="reveal text-center product-card-n2 rounded-3xl p-12">
+        <div class="w-56 h-56 mx-auto mb-8 rounded-3xl flex items-center justify-center chip-hero-n2">
+          <span class="text-5xl font-bold text-catalyst-blue/30">N2</span>
+        </div>
+        <p class="text-[10px] uppercase tracking-widest text-catalyst-blue/70 mb-3">Second Generation</p>
+        <h2 class="text-[clamp(2rem,3vw,2.5rem)] font-bold tracking-tighter leading-none">Catalyst N2</h2>
+        <p class="text-sm text-white/40 mt-3">Full parity with the industry's best. Five neuron models. Real hardware validation.</p>
+        <div class="flex items-center justify-center gap-3 mt-6">
+          <a href="/processors/n2" class="btn-primary">Learn more</a>
+          <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill">Enquire</a>
+        </div>
+      </div>
+      <!-- N1 -->
+      <div class="reveal text-center rounded-3xl p-12">
+        <div class="w-56 h-56 mx-auto mb-8 rounded-2xl flex items-center justify-center chip-hero-n1">
+          <span class="text-5xl font-bold text-white/40">N1</span>
+        </div>
+        <p class="text-[10px] uppercase tracking-widest text-white/30 mb-3">First Generation</p>
+        <h2 class="text-[clamp(2rem,3vw,2.5rem)] font-bold tracking-tighter leading-none">Catalyst N1</h2>
+        <p class="text-sm text-white/35 mt-3">The foundation of the Catalyst platform.</p>
+        <div class="flex items-center justify-center gap-3 mt-6">
+          <a href="/processors/n1" class="btn-pill">Learn more</a>
+          <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill">Enquire</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[700px] mx-auto">
+      <h2 class="reveal text-center text-2xl font-bold tracking-tight mb-12">Which processor is right for you?</h2>
+      <div class="glass p-2 overflow-x-auto reveal">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr>
+              <th class="p-4 text-left text-[11px] uppercase tracking-widest text-white/25 font-medium"></th>
+              <th class="p-4 text-center text-[11px] uppercase tracking-widest text-white/30 font-medium">N1</th>
+              <th class="p-4 text-center text-[11px] uppercase tracking-widest text-catalyst-blue font-semibold">N2</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            {[
+              ['Neuron models', '1', '5'],
+              ['On-chip learning', 'Yes', 'Yes, programmable'],
+              ['Hardware validated', '\u2014', 'Yes'],
+              ['SDK backends', 'CPU', 'CPU, GPU, Hardware'],
+              ['Generation', 'First', 'Second'],
+            ].map(row => (
+              <tr class="border-t border-white/[0.04]">
+                <td class="p-4 text-white/50">{row[0]}</td>
+                <td class="p-4 text-center text-white/30">{row[1]}</td>
+                <td class="p-4 text-center text-white font-medium">{row[2]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .product-card-n2 { background: linear-gradient(180deg, rgba(59,130,246,0.03) 0%, transparent 100%); border: 1px solid rgba(59,130,246,0.06); }
+  .chip-hero-n2 { background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, rgba(0,0,0,0) 70%); border: 1px solid rgba(59,130,246,0.12); }
+  .chip-hero-n1 { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); }
+</style>

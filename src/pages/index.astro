@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Catalyst — Neuromorphic Processors">
+
+  <!-- HERO -->
+  <section class="hero-section h-screen flex items-center justify-center text-center relative overflow-hidden">
+    <div id="neuralCanvas" class="absolute inset-0 z-[1] grid grid-cols-[repeat(40,1fr)] grid-rows-[repeat(22,1fr)] gap-px"></div>
+    <div class="relative z-[2]">
+      <h1 class="text-[clamp(3.5rem,7vw,7rem)] font-bold tracking-tighter leading-none">Catalyst</h1>
+      <p class="text-[clamp(1rem,1.5vw,1.35rem)] text-white/40 mt-4">Neuromorphic processors that think, learn, and consume almost nothing.</p>
+      <a href="#products" class="btn-pill mt-9 inline-flex">Explore our processors &rarr;</a>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-[2] w-6 h-10 rounded-xl border border-white/15 flex justify-center pt-2 max-md:hidden">
+      <span class="w-[3px] h-2 rounded-full bg-white/30 animate-bounce"></span>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM -->
+  <section class="py-40 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tight leading-tight">AI has a power problem.</h2>
+      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
+        Today's artificial intelligence burns through electricity at an unsustainable rate. Data centres already consume more power than some countries. GPUs brute-force their way through billions of calculations every cycle, whether they need to or not.
+      </p>
+      <p class="reveal text-lg text-white/40 mt-4 leading-relaxed max-w-[600px] mx-auto">
+        There has to be a better way.
+      </p>
+    </div>
+  </section>
+
+  <!-- THE SOLUTION -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[900px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tight leading-tight">Nature solved this 500 million years ago.</h2>
+      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[640px] mx-auto">
+        Your brain runs on 20 watts. It processes millions of sensory inputs in real time, learns continuously, and never needs a cooling system. We built processors that work the same way.
+      </p>
+    </div>
+    <div class="max-w-[1000px] mx-auto mt-20 grid grid-cols-3 gap-8 text-center">
+      <div class="reveal">
+        <div class="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight whitespace-nowrap">1000x</div>
+        <p class="text-sm text-white/35 mt-3 leading-relaxed">More energy efficient than GPU inference.</p>
+      </div>
+      <div class="reveal">
+        <div class="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight whitespace-nowrap">Real-time</div>
+        <p class="text-sm text-white/35 mt-3 leading-relaxed">On-chip learning. No cloud retraining.</p>
+      </div>
+      <div class="reveal">
+        <div class="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight whitespace-nowrap">20W</div>
+        <p class="text-sm text-white/35 mt-3 leading-relaxed">Brain-scale power. Not kilowatts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products" class="py-40 px-6 md:px-12">
+    <div class="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+      <!-- N2 -->
+      <div class="reveal text-center product-card-n2 rounded-3xl p-12">
+        <div class="w-56 h-56 mx-auto mb-8 rounded-3xl flex items-center justify-center chip-hero-n2">
+          <span class="text-5xl font-bold text-catalyst-blue/30">N2</span>
+        </div>
+        <h2 class="text-[clamp(2rem,3vw,2.5rem)] font-bold tracking-tighter leading-none">Catalyst N2</h2>
+        <p class="text-sm text-white/40 mt-3">Second generation. Full parity with the best in the world.</p>
+        <div class="flex items-center justify-center gap-3 mt-6">
+          <a href="/processors/n2" class="btn-primary">Learn more</a>
+          <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill">Enquire</a>
+        </div>
+      </div>
+      <!-- N1 -->
+      <div class="reveal text-center rounded-3xl p-12">
+        <div class="w-56 h-56 mx-auto mb-8 rounded-2xl flex items-center justify-center chip-hero-n1">
+          <span class="text-5xl font-bold text-white/40">N1</span>
+        </div>
+        <h2 class="text-[clamp(2rem,3vw,2.5rem)] font-bold tracking-tighter leading-none">Catalyst N1</h2>
+        <p class="text-sm text-white/35 mt-3">Where it all began.</p>
+        <div class="flex items-center justify-center gap-3 mt-6">
+          <a href="/processors/n1" class="btn-pill">Learn more</a>
+          <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill">Enquire</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDIBILITY -->
+  <section class="py-32 px-6 md:px-12 text-center">
+    <div class="max-w-[700px] mx-auto">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">What takes a billion-pound lab, we built from scratch.</h2>
+      <p class="reveal text-base text-white/40 mt-6 leading-relaxed">
+        Two generations of neuromorphic processors. Full parity with industry-leading silicon from Intel. Validated on real hardware. A complete development toolkit with over three thousand tests. And a UK patent protecting the architecture.
+      </p>
+      <p class="reveal text-2xl font-bold mt-10 tracking-tight">3,091 tests. Zero failures.</p>
+    </div>
+  </section>
+
+  <!-- OPEN DESIGN -->
+  <section class="py-20 px-6 md:px-12 text-center">
+    <div class="max-w-[600px] mx-auto">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight">Open by design.</h2>
+      <p class="reveal text-base text-white/40 mt-4 leading-relaxed">
+        Our SDK, research papers, and development tools are available on GitHub. We believe neuromorphic computing should be accessible to everyone.
+      </p>
+      <a href="https://github.com/Mr-wabbit/neurocore" target="_blank" rel="noopener noreferrer" class="reveal btn-pill mt-8 inline-flex">View on GitHub &rarr;</a>
+    </div>
+  </section>
+
+  <!-- FUNDING -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto text-center">
+      <div class="glass-accent p-12 reveal">
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold tracking-tight mb-4">Help us go from prototype to production.</h2>
+        <p class="text-white/40 leading-relaxed mb-8">
+          We're seeking grants, partnerships, and investment to bring neuromorphic computing from prototype to manufactured silicon.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="https://ko-fi.com/catalystneuromorphic" target="_blank" rel="noopener noreferrer" class="btn-primary">Support on Ko-fi</a>
+          <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .chip-hero-n2 {
+    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, rgba(0,0,0,0) 70%);
+    border: 1px solid rgba(59,130,246,0.12);
+  }
+  .chip-hero-n1 {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .product-card-n2 {
+    background: linear-gradient(180deg, rgba(59,130,246,0.03) 0%, transparent 100%);
+    border: 1px solid rgba(59,130,246,0.06);
+  }
+</style>
+
+<script>
+  // Neural grid animation
+  (function() {
+    var canvas = document.getElementById('neuralCanvas');
+    if (!canvas) return;
+    var COLS = 40, ROWS = 22;
+    var cells = [];
+    var brightness = new Float32Array(COLS * ROWS);
+    for (var i = 0; i < COLS * ROWS; i++) {
+      var c = document.createElement('div');
+      c.className = 'n-cell';
+      canvas.appendChild(c);
+      cells.push(c);
+    }
+    function activate() {
+      var cx = Math.random() * COLS, cy = Math.random() * ROWS;
+      var r = 2 + Math.random() * 4, str = 0.6 + Math.random() * 0.4;
+      for (var y = 0; y < ROWS; y++)
+        for (var x = 0; x < COLS; x++) {
+          var d = Math.sqrt((x - cx) * (x - cx) + (y - cy) * (y - cy));
+          if (d < r) brightness[y * COLS + x] = Math.min(1, brightness[y * COLS + x] + Math.pow(1 - d / r, 2) * str);
+        }
+    }
+    var glow = new Int8Array(COLS * ROWS);
+    function render() {
+      for (var i = 0; i < cells.length; i++) {
+        var b = brightness[i];
+        var lv = b > 0.6 ? 4 : b > 0.3 ? 3 : b > 0.12 ? 2 : b > 0.04 ? 1 : 0;
+        if (lv !== glow[i]) {
+          if (glow[i]) cells[i].classList.remove('a' + glow[i]);
+          if (lv) cells[i].classList.add('a' + lv);
+          glow[i] = lv;
+        }
+      }
+    }
+    var last = 0;
+    function tick(t) {
+      if (t - last > 50) {
+        for (var j = 0; j < brightness.length; j++) { brightness[j] *= 0.96; if (brightness[j] < 0.01) brightness[j] = 0; }
+        render();
+        last = t;
+      }
+      requestAnimationFrame(tick);
+    }
+    function sched() { activate(); setTimeout(sched, 250 + Math.random() * 500); }
+    for (var k = 0; k < 5; k++) activate();
+    render(); requestAnimationFrame(tick); sched();
+  })();
+</script>

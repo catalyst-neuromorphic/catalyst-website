@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-black text-white font-sans antialiased overflow-x-hidden;
+  }
+  a {
+    color: inherit;
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(40px) saturate(1.2);
+    -webkit-backdrop-filter: blur(40px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%, rgba(255,255,255,0.02) 100%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(60px) saturate(1.3);
+    -webkit-backdrop-filter: blur(60px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .glass-strong::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(255,255,255,0.08) 0%, transparent 40%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .glass-accent {
+    background: rgba(59, 130, 246, 0.04);
+    backdrop-filter: blur(40px) saturate(1.2);
+    -webkit-backdrop-filter: blur(40px) saturate(1.2);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .glass-accent::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(59,130,246,0.06) 0%, transparent 50%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .btn-pill {
+    @apply inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-all duration-300;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .btn-pill:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+  }
+  .btn-primary {
+    @apply inline-flex items-center gap-2 text-sm font-medium px-7 py-3.5 rounded-full transition-all duration-300;
+    color: #fff;
+    background: #3B82F6;
+    border: 1px solid rgba(59, 130, 246, 0.5);
+  }
+  .btn-primary:hover {
+    background: #2563EB;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.25);
+  }
+  .section-label {
+    @apply text-xs tracking-widest uppercase flex items-center gap-2.5 mb-4;
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .accent-mark {
+    @apply inline-block w-2 h-2 rounded-sm bg-catalyst-blue;
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Neural grid — must be global (cells created by JS, not in Astro template) */
+.n-cell { background: transparent; border-radius: 2px; transition: background 0.6s ease; }
+.n-cell.a1 { background: rgba(59, 130, 246, 0.04); }
+.n-cell.a2 { background: rgba(59, 130, 246, 0.09); }
+.n-cell.a3 { background: rgba(59, 130, 246, 0.16); }
+.n-cell.a4 { background: rgba(59, 130, 246, 0.25); }

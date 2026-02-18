@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Technology — Catalyst Neuromorphic" description="How neuromorphic computing works. Brain-inspired processors that learn in real time.">
+
+  <section class="pt-32 pb-20 px-6 md:px-12 text-center">
+    <h1 class="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tighter">Technology</h1>
+    <p class="text-lg text-white/40 mt-4">How neuromorphic computing works.</p>
+  </section>
+
+  <!-- SPIKES -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">Spikes, not multiplies.</h2>
+      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
+        Traditional processors perform billions of multiply-accumulate operations every cycle. Neuromorphic processors communicate through discrete spikes &mdash; binary events that propagate only when needed.
+      </p>
+      <p class="reveal text-lg text-white/40 mt-4 leading-relaxed max-w-[600px] mx-auto">
+        No spike, no computation, no energy. A neuromorphic chip doing nothing consumes almost zero power.
+      </p>
+    </div>
+  </section>
+
+  <!-- LEARNING -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">Learning happens on-chip.</h2>
+      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
+        When two neurons fire in close succession, the connection between them strengthens or weakens &mdash; the same mechanism your brain uses to form memories. No cloud. No retraining. The chip adapts in real time.
+      </p>
+    </div>
+  </section>
+
+  <!-- EFFICIENCY -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">1000x more efficient.</h2>
+      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
+        By only computing when spikes occur, neuromorphic processors achieve orders-of-magnitude better energy efficiency for inference. No idle power. No wasted cycles. The architecture mirrors the brain's own energy model.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHY IT MATTERS -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">Why it matters.</h2>
+      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
+        AI's power consumption is growing faster than our ability to generate clean energy. Neuromorphic computing offers a path to intelligent systems that don't cost the planet. Real-time learning at the edge. Sensors that think for themselves. Intelligence without the electricity bill.
+      </p>
+    </div>
+  </section>
+
+  <!-- SDK -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">Python to silicon.</h2>
+      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
+        Our SDK lets you define spiking neural networks in Python, simulate them on CPU or GPU, and deploy to real hardware. One codebase, three backends. What you test is what you get on silicon.
+      </p>
+      <a href="https://github.com/Mr-wabbit/neurocore" target="_blank" rel="noopener noreferrer" class="reveal btn-primary mt-8 inline-flex">View SDK on GitHub &rarr;</a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 px-6 md:px-12 text-center">
+    <a href="/processors" class="reveal btn-pill inline-flex">Explore our processors &rarr;</a>
+  </section>
+
+</BaseLayout>
