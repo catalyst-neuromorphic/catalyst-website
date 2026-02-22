@@ -95,43 +95,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- GET THE SDK -->
-  <section id="sdk" class="py-32 px-6 md:px-12">
+  <!-- ACCESS CATALYST -->
+  <section id="access" class="py-32 px-6 md:px-12">
     <div class="max-w-[900px] mx-auto text-center">
-      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight">Get the SDK.</h2>
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight">Access Catalyst.</h2>
       <p class="reveal text-base text-white/40 mt-4 leading-relaxed max-w-[640px] mx-auto">
-        Full source code, 3,091 tests, CPU/GPU/FPGA backends. From research prototyping to commercial deployment.
+        Run neuromorphic simulations via cloud API, or deploy on dedicated FPGA hardware. No GPU required.
       </p>
-      <div class="max-w-[800px] mx-auto mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="max-w-[800px] mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="reveal rounded-2xl p-8 border border-catalyst-blue/20 text-center" style="background: rgba(59,130,246,0.04);">
-          <p class="text-lg font-bold text-catalyst-blue">Researcher</p>
-          <p class="text-3xl font-bold mt-2">$25<span class="text-sm text-white/40 font-normal">/mo</span></p>
-          <p class="text-sm text-white/35 mt-3">Full N1 + N2 source, all 3,091 tests, research use</p>
+          <p class="text-lg font-bold text-catalyst-blue">Cloud API</p>
+          <p class="text-3xl font-bold mt-2">Free<span class="text-sm text-white/40 font-normal"> to start</span></p>
+          <p class="text-sm text-white/35 mt-3">REST API for neuromorphic compute. 10 jobs/day free. No hardware, no install.</p>
+          <a href="/cloud" class="btn-primary mt-6 inline-flex text-sm">Get started &rarr;</a>
         </div>
         <div class="reveal rounded-2xl p-8 border border-white/[0.06] text-center">
-          <p class="text-lg font-bold">Professional</p>
-          <p class="text-3xl font-bold mt-2">$100<span class="text-sm text-white/40 font-normal">/mo</span></p>
-          <p class="text-sm text-white/35 mt-3">Priority support, pre-release builds, commercial use</p>
-        </div>
-        <div class="reveal rounded-2xl p-8 border border-white/[0.06] text-center">
-          <p class="text-lg font-bold">Institutional</p>
-          <p class="text-3xl font-bold mt-2">$500<span class="text-sm text-white/40 font-normal">/mo</span></p>
-          <p class="text-sm text-white/35 mt-3">Consulting, custom features, FPGA bitstreams</p>
+          <p class="text-lg font-bold">FPGA Dev Boards</p>
+          <p class="text-3xl font-bold mt-2">Coming soon</p>
+          <p class="text-sm text-white/35 mt-3">Physical hardware with the Catalyst bitstream. Deploy at the edge. Real neuromorphic silicon.</p>
+          <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill mt-6 inline-flex text-sm">Register interest &rarr;</a>
         </div>
       </div>
-      <a href="https://github.com/sponsors/Mr-wabbit" target="_blank" rel="noopener noreferrer" class="reveal btn-primary mt-10 inline-flex">Get access via GitHub Sponsors &rarr;</a>
-      <p class="reveal text-xs text-white/25 mt-4">Source-available under BSL 1.1. Free cloud tier for research. SDK access starts at $25/mo.</p>
-    </div>
-  </section>
-
-  <!-- CLOUD API -->
-  <section class="py-20 px-6 md:px-12 text-center">
-    <div class="max-w-[600px] mx-auto">
-      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight">Or try it without installing anything.</h2>
-      <p class="reveal text-base text-white/40 mt-4 leading-relaxed">
-        Catalyst Cloud gives you neuromorphic compute via REST API. Define a network, submit a job, get spikes back. Free tier available.
-      </p>
-      <a href="/cloud" class="reveal btn-pill mt-8 inline-flex">Explore Cloud API &rarr;</a>
     </div>
   </section>
 
