@@ -1,0 +1,90 @@
+---
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  active?: string;
+}
+
+const { title, active = '' } = Astro.props;
+
+const navItems = [
+  { href: '/console/dashboard', label: 'Dashboard', icon: '&#9632;' },
+  { href: '/console/keys', label: 'API Keys', icon: '&#9919;' },
+  { href: '/console/usage', label: 'Usage', icon: '&#9671;' },
+  { href: '/console/billing', label: 'Billing', icon: '&#9673;' },
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} — Catalyst Console</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body class="bg-[#0a0a0a] text-white min-h-screen">
+  <!-- Top bar -->
+  <header class="fixed top-0 left-0 right-0 h-14 bg-[#111] border-b border-white/5 z-50 flex items-center px-6">
+    <a href="/" class="text-catalyst-blue font-bold text-lg tracking-tight mr-8">CATALYST</a>
+    <span class="text-white/30 text-sm">Console</span>
+    <div class="ml-auto flex items-center gap-4">
+      <a href="/cloud/docs" class="text-white/40 hover:text-white/70 text-sm">Docs</a>
+      <button id="logout-btn" class="text-white/40 hover:text-white/70 text-sm cursor-pointer">Log out</button>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="fixed top-14 left-0 w-52 bottom-0 bg-[#0d0d0d] border-r border-white/5 py-4">
+    <nav class="flex flex-col gap-1 px-3">
+      {navItems.map(item => (
+        <a
+          href={item.href}
+          class={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+            active === item.label
+              ? 'bg-catalyst-blue/10 text-catalyst-blue'
+              : 'text-white/50 hover:text-white/80 hover:bg-white/5'
+          }`}
+        >
+          <span class="text-xs" set:html={item.icon} />
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <main class="ml-52 mt-14 p-8 min-h-[calc(100vh-3.5rem)]">
+    <slot />
+  </main>
+
+  <script>
+    // Auth guard — redirect to login if no token
+    const token = localStorage.getItem('catalyst_token');
+    if (!token && !window.location.pathname.includes('/login') && !window.location.pathname.includes('/signup') && !window.location.pathname.includes('/authorize')) {
+      window.location.href = '/console/login';
+    }
+
+    // Logout button
+    document.getElementById('logout-btn')?.addEventListener('click', async () => {
+      try {
+        const t = localStorage.getItem('catalyst_token');
+        if (t) {
+          await fetch('https://api.catalyst-neuromorphic.com/v1/auth/logout', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${t}` },
+          });
+        }
+      } catch {}
+      localStorage.removeItem('catalyst_token');
+      localStorage.removeItem('catalyst_refresh_token');
+      window.location.href = '/console/login';
+    });
+  </script>
+</body>
+</html>

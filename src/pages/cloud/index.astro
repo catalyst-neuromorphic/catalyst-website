@@ -1,9 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const codeExample = `<span style="color:rgba(255,255,255,0.3)"># 1. Sign up</span>
-curl -X POST https://api.catalyst-neuromorphic.com/v1/signup \\
-  -d '&#123;"email": "you@lab.edu", "tier": "free"&#125;'
+const codeExample = `<span style="color:rgba(255,255,255,0.3)"># 1. Sign up at catalyst-neuromorphic.com/console/signup</span>
+<span style="color:rgba(255,255,255,0.3)">#    Create an API key in the dashboard</span>
 
 <span style="color:rgba(255,255,255,0.3)"># 2. Define a network</span>
 curl -X POST https://api.catalyst-neuromorphic.com/v1/networks \\
@@ -42,7 +41,7 @@ curl https://api.catalyst-neuromorphic.com/v1/jobs/job_.../spikes \\
         Run spiking neural network simulations via API. No hardware, no SDK install, no setup. Just send JSON, get spikes.
       </p>
       <div class="flex gap-4 justify-center mt-10">
-        <a href="/cloud/docs" class="btn-primary inline-flex px-8 py-3 text-sm">Get started free &rarr;</a>
+        <a href="/console/signup" class="btn-primary inline-flex px-8 py-3 text-sm">Get started free &rarr;</a>
         <a href="/cloud/pricing" class="btn-pill inline-flex px-8 py-3 text-sm">View pricing</a>
       </div>
     </div>
