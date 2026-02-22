@@ -13,6 +13,6 @@
     "@fontsource/space-grotesk": "^5.2.10",
     "astro": "^5.17.1",
     "gsap": "^3.14.2",
-    "tailwindcss": "^3.4.19"
+    "tailwindcss": "^4.2.0"
   }
 }
