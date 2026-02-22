@@ -1,0 +1,8 @@
+---
+import ConsoleLayout from '../../layouts/ConsoleLayout.astro';
+import BillingPanel from '../../components/console/BillingPanel';
+---
+
+<ConsoleLayout title="Billing" active="Billing">
+  <BillingPanel client:only="react" />
+</ConsoleLayout>

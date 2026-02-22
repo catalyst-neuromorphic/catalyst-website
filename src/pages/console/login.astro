@@ -1,0 +1,102 @@
+---
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/600.css';
+import '../../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log in — Catalyst Console</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body class="bg-[#0a0a0a] text-white min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-sm mx-auto px-6">
+    <div class="text-center mb-8">
+      <a href="/" class="text-catalyst-blue font-bold text-2xl tracking-tight">CATALYST</a>
+      <p class="text-white/30 text-sm mt-1">Console</p>
+    </div>
+
+    <div class="bg-[#111] border border-white/10 rounded-xl p-6">
+      <h1 class="text-lg font-semibold mb-6">Log in</h1>
+
+      <div id="error" class="hidden bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-lg px-4 py-3 mb-4"></div>
+
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="email" class="block text-sm text-white/60 mb-1">Email</label>
+          <input type="email" id="email" name="email" required
+            class="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-catalyst-blue/50" />
+        </div>
+        <div>
+          <label for="password" class="block text-sm text-white/60 mb-1">Password</label>
+          <input type="password" id="password" name="password" required
+            class="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-catalyst-blue/50" />
+        </div>
+        <button type="submit" id="submit-btn"
+          class="w-full bg-catalyst-blue hover:bg-catalyst-blue/90 text-white font-medium rounded-lg px-4 py-2.5 text-sm transition-colors">
+          Log in
+        </button>
+      </form>
+
+      <p class="text-center text-white/30 text-sm mt-6">
+        Don't have an account? <a href="/console/signup" class="text-catalyst-blue hover:underline">Sign up</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const API = 'https://api.catalyst-neuromorphic.com';
+
+    // If already logged in, redirect to dashboard
+    if (localStorage.getItem('catalyst_token')) {
+      window.location.href = '/console/dashboard';
+    }
+
+    document.getElementById('login-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorEl = document.getElementById('error')!;
+      const btn = document.getElementById('submit-btn') as HTMLButtonElement;
+      const email = (document.getElementById('email') as HTMLInputElement).value;
+      const password = (document.getElementById('password') as HTMLInputElement).value;
+
+      errorEl.classList.add('hidden');
+      btn.textContent = 'Logging in...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API}/v1/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.detail || 'Login failed');
+        }
+
+        const data = await res.json();
+        localStorage.setItem('catalyst_token', data.access_token);
+        localStorage.setItem('catalyst_refresh_token', data.refresh_token);
+
+        // Check for callback redirect (CLI OAuth flow)
+        const params = new URLSearchParams(window.location.search);
+        const callbackPort = params.get('callback_port');
+        if (callbackPort) {
+          window.location.href = `/console/authorize?callback_port=${callbackPort}&state=${params.get('state') || ''}`;
+        } else {
+          window.location.href = '/console/dashboard';
+        }
+      } catch (err: any) {
+        errorEl.textContent = err.message;
+        errorEl.classList.remove('hidden');
+        btn.textContent = 'Log in';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

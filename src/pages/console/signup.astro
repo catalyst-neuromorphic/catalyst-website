@@ -1,0 +1,108 @@
+---
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/600.css';
+import '../../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign up — Catalyst Console</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body class="bg-[#0a0a0a] text-white min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-sm mx-auto px-6">
+    <div class="text-center mb-8">
+      <a href="/" class="text-catalyst-blue font-bold text-2xl tracking-tight">CATALYST</a>
+      <p class="text-white/30 text-sm mt-1">Console</p>
+    </div>
+
+    <div class="bg-[#111] border border-white/10 rounded-xl p-6">
+      <h1 class="text-lg font-semibold mb-6">Create an account</h1>
+
+      <div id="error" class="hidden bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-lg px-4 py-3 mb-4"></div>
+
+      <form id="signup-form" class="space-y-4">
+        <div>
+          <label for="email" class="block text-sm text-white/60 mb-1">Email</label>
+          <input type="email" id="email" name="email" required
+            class="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-catalyst-blue/50" />
+        </div>
+        <div>
+          <label for="password" class="block text-sm text-white/60 mb-1">Password</label>
+          <input type="password" id="password" name="password" required minlength="8"
+            class="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-catalyst-blue/50" />
+          <p class="text-white/20 text-xs mt-1">Minimum 8 characters</p>
+        </div>
+        <div>
+          <label for="confirm" class="block text-sm text-white/60 mb-1">Confirm password</label>
+          <input type="password" id="confirm" name="confirm" required minlength="8"
+            class="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-catalyst-blue/50" />
+        </div>
+        <button type="submit" id="submit-btn"
+          class="w-full bg-catalyst-blue hover:bg-catalyst-blue/90 text-white font-medium rounded-lg px-4 py-2.5 text-sm transition-colors">
+          Create account
+        </button>
+      </form>
+
+      <p class="text-white/30 text-sm mt-4 text-center">Free tier includes 10 jobs/day.</p>
+
+      <p class="text-center text-white/30 text-sm mt-4">
+        Already have an account? <a href="/console/login" class="text-catalyst-blue hover:underline">Log in</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const API = 'https://api.catalyst-neuromorphic.com';
+
+    if (localStorage.getItem('catalyst_token')) {
+      window.location.href = '/console/dashboard';
+    }
+
+    document.getElementById('signup-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorEl = document.getElementById('error')!;
+      const btn = document.getElementById('submit-btn') as HTMLButtonElement;
+      const email = (document.getElementById('email') as HTMLInputElement).value;
+      const password = (document.getElementById('password') as HTMLInputElement).value;
+      const confirm = (document.getElementById('confirm') as HTMLInputElement).value;
+
+      if (password !== confirm) {
+        errorEl.textContent = 'Passwords do not match.';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      errorEl.classList.add('hidden');
+      btn.textContent = 'Creating account...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API}/v1/auth/signup`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.detail || 'Signup failed');
+        }
+
+        const data = await res.json();
+        localStorage.setItem('catalyst_token', data.access_token);
+        localStorage.setItem('catalyst_refresh_token', data.refresh_token);
+        window.location.href = '/console/dashboard';
+      } catch (err: any) {
+        errorEl.textContent = err.message;
+        errorEl.classList.remove('hidden');
+        btn.textContent = 'Create account';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+---
+import ConsoleLayout from '../../layouts/ConsoleLayout.astro';
+import UsageCharts from '../../components/console/UsageCharts';
+---
+
+<ConsoleLayout title="Usage" active="Usage">
+  <UsageCharts client:only="react" />
+</ConsoleLayout>

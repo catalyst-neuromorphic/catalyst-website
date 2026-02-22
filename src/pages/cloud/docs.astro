@@ -2,35 +2,54 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 // Code examples defined here to avoid JSX brace escaping issues
-const signupCurl = `curl -X POST https://api.catalyst-neuromorphic.com/v1/signup \\
-  -H "Content-Type: application/json" \\
-  -d '&#123;"email": "you@lab.edu", "tier": "free"&#125;'
+const signupCurl = `# 1. Create an account at the Console:
+#    https://catalyst-neuromorphic.com/console/signup
+#
+# 2. Create an API key in the Console dashboard:
+#    https://catalyst-neuromorphic.com/console/keys
+#
+# 3. Or use the CLI:
+#    catalyst auth login
+#    (Opens browser for login)
+
+# Test your key:
+curl https://api.catalyst-neuromorphic.com/v1/auth/me \\
+  -H "X-API-Key: cn_live_..."
 
 # Response:
 # &#123;
-#   "api_key": "cn_live_...",
+#   "user_id": "user_...",
+#   "email": "you@lab.edu",
 #   "tier": "free",
-#   "limits": &#123;"max_neurons": 1024, "max_timesteps": 1000, ...&#125;
+#   "credits_balance": 0.0
 # &#125;`;
 
 const signupPython = `import requests
 
-r = requests.post("https://api.catalyst-neuromorphic.com/v1/signup",
-    json=&#123;"email": "you@lab.edu", "tier": "free"&#125;)
+# Get your API key from the Console:
+# https://catalyst-neuromorphic.com/console/keys
+API_KEY = "cn_live_..."
 
-data = r.json()
-API_KEY = data["api_key"]  # Save this — shown only once
-print(f"Key: &#123;data['key_prefix']&#125;...")
-print(f"Limits: &#123;data['limits']&#125;")`;
+# Verify it works
+headers = &#123;"X-API-Key": API_KEY&#125;
+r = requests.get("https://api.catalyst-neuromorphic.com/v1/auth/me",
+    headers=headers)
 
-const signupJs = `const res = await fetch("https://api.catalyst-neuromorphic.com/v1/signup", &#123;
-  method: "POST",
-  headers: &#123; "Content-Type": "application/json" &#125;,
-  body: JSON.stringify(&#123; email: "you@lab.edu", tier: "free" &#125;)
+me = r.json()
+print(f"Email: &#123;me['email']&#125;")
+print(f"Tier: &#123;me['tier']&#125;")
+print(f"Credits: £&#123;me['credits_balance']:.2f&#125;")`;
+
+const signupJs = `// Get your API key from the Console:
+// https://catalyst-neuromorphic.com/console/keys
+const API_KEY = "cn_live_...";
+
+const res = await fetch("https://api.catalyst-neuromorphic.com/v1/auth/me", &#123;
+  headers: &#123; "X-API-Key": API_KEY &#125;
 &#125;);
 
-const &#123; api_key, limits &#125; = await res.json();
-// Save api_key — it's shown only once`;
+const me = await res.json();
+console.log("Tier:", me.tier, "Credits:", me.credits_balance);`;
 
 const networkCurl = `curl -X POST https://api.catalyst-neuromorphic.com/v1/networks \\
   -H "Content-Type: application/json" \\
@@ -247,8 +266,8 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
 
       <!-- Step 1: Signup -->
       <div class="reveal mb-10">
-        <h3 class="text-lg font-semibold mb-2">1. Get an API key</h3>
-        <p class="text-sm text-white/40 mb-4">Free. No credit card required.</p>
+        <h3 class="text-lg font-semibold mb-2">1. Sign up and get an API key</h3>
+        <p class="text-sm text-white/40 mb-4">Create an account at the <a href="/console/signup" class="text-catalyst-blue hover:underline">Console</a>, then create an API key from the dashboard. Free, no credit card required.</p>
         <div class="code-tabs glass rounded-xl overflow-hidden" data-group="signup">
           <div class="flex border-b border-white/5">
             <button class="tab-btn active px-4 py-2.5 text-xs font-mono" data-lang="curl">curl</button>
@@ -314,23 +333,49 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
     <div class="max-w-[800px] mx-auto">
       <h2 class="reveal text-2xl font-bold mb-12">Endpoint reference</h2>
 
-      <!-- Signup -->
+      <!-- Authentication -->
       <div class="reveal mb-10">
-        <div class="flex items-center gap-3 mb-3">
-          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
-          <code class="text-sm font-mono text-white/70">/v1/signup</code>
-          <span class="text-xs text-white/30">Public</span>
-        </div>
-        <p class="text-sm text-white/40 mb-3">Create a new account and get an API key.</p>
-        <div class="glass rounded-lg p-4 text-sm">
-          <p class="font-mono text-white/50 mb-2">Request body:</p>
+        <h3 class="text-lg font-semibold mb-4">Authentication</h3>
+        <p class="text-sm text-white/40 mb-4">Two auth methods are supported. Include one header on each request:</p>
+        <div class="glass rounded-lg p-4 text-sm mb-4">
           <table class="w-full text-sm">
             <tbody>
-              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">email</td><td class="py-1.5 text-white/40">string, required</td></tr>
-              <tr><td class="py-1.5 font-mono text-white/60">tier</td><td class="py-1.5 text-white/40">"free" (default), "researcher", "startup", "enterprise"</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">X-API-Key: cn_live_...</td><td class="py-1.5 text-white/40">For scripts, CI/CD, and the Python SDK</td></tr>
+              <tr><td class="py-1.5 font-mono text-white/60">Authorization: Bearer cat_sess_...</td><td class="py-1.5 text-white/40">For CLI and web console sessions</td></tr>
             </tbody>
           </table>
         </div>
+        <p class="text-sm text-white/30">API keys are created in the <a href="/console/keys" class="text-catalyst-blue hover:underline">Console</a>. Session tokens are obtained via <code class="font-mono text-white/40">catalyst auth login</code>.</p>
+      </div>
+
+      <!-- Auth Me -->
+      <div class="reveal mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/me</code>
+          <span class="text-xs text-white/30">Requires auth</span>
+        </div>
+        <p class="text-sm text-white/40 mb-3">Get your account info, tier, and credit balance.</p>
+      </div>
+
+      <!-- Billing Balance -->
+      <div class="reveal mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/balance</code>
+          <span class="text-xs text-white/30">Requires auth</span>
+        </div>
+        <p class="text-sm text-white/40 mb-3">Get your credit balance, tier, and next tier threshold.</p>
+      </div>
+
+      <!-- Bitstreams -->
+      <div class="reveal mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/bitstreams</code>
+          <span class="text-xs text-white/30">Requires auth</span>
+        </div>
+        <p class="text-sm text-white/40 mb-3">List available FPGA bitstreams for your tier.</p>
       </div>
 
       <!-- Networks -->
