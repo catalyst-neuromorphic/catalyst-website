@@ -215,10 +215,35 @@ const spikesResponse = `&#123;"spike_trains": &#123;"excitatory": &#123;"0": [12
     </p>
   </section>
 
+  <!-- Python SDK -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto">
+      <div class="reveal glass-accent rounded-xl p-6 mb-6">
+        <h3 class="font-semibold mb-3">Python SDK (recommended)</h3>
+        <pre class="text-sm font-mono text-catalyst-blue mb-3"><code>pip install catalyst-cloud</code></pre>
+        <pre class="text-sm font-mono text-white/60 leading-relaxed"><code set:html={`import catalyst_cloud as cc
+
+client = cc.Client("cn_live_...")
+net = client.create_network(
+    populations=[&#123;"label": "input", "size": 100, "params": &#123;"threshold": 1000&#125;&#125;],
+    connections=[],
+)
+job = client.simulate(net["network_id"], timesteps=500,
+    stimuli=[&#123;"population": "input", "current": 5000&#125;])
+print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
+        <p class="text-xs text-white/30 mt-3">
+          <a href="https://pypi.org/project/catalyst-cloud/" target="_blank" class="text-catalyst-blue hover:underline">PyPI</a> &middot;
+          <a href="https://github.com/catalyst-neuromorphic/catalyst-cloud-python" target="_blank" class="text-catalyst-blue hover:underline">GitHub</a> &middot;
+          <a href="https://huggingface.co/spaces/Catalyst-Neuromorphic/catalyst-cloud" target="_blank" class="text-catalyst-blue hover:underline">Interactive demo</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- Quick Start -->
   <section class="py-16 px-6 md:px-12">
     <div class="max-w-[800px] mx-auto">
-      <h2 class="reveal text-2xl font-bold mb-8">Quick start</h2>
+      <h2 class="reveal text-2xl font-bold mb-8">Quick start (REST API)</h2>
 
       <!-- Step 1: Signup -->
       <div class="reveal mb-10">
