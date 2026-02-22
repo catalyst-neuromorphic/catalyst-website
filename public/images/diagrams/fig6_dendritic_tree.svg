@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .small { font-size: 9px; }
+    .mono { font-family: monospace; font-size: 10px; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="25" text-anchor="middle" class="title">Figure 6: Hierarchical Dendritic Compartment Tree</text>
+
+  <!-- Dendrite 3 (leaf) -->
+  <rect x="50" y="60" width="180" height="90" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="140" y="80" text-anchor="middle" font-weight="bold">Dendrite 3 (Leaf)</text>
+  <text x="140" y="100" text-anchor="middle" class="small">Accumulator: dend_acc_3 (16-bit)</text>
+  <text x="140" y="115" text-anchor="middle" class="small">Threshold: dend_thr_3 (16-bit)</text>
+  <text x="140" y="135" text-anchor="middle" class="mono">out3 = ReLU(acc3 - thr3)</text>
+
+  <!-- Synaptic inputs to D3 -->
+  <line x1="140" y1="40" x2="140" y2="60" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="140" y="38" text-anchor="middle" class="small">Synaptic input (comp=3)</text>
+
+  <!-- Dendrite 2 (intermediate) -->
+  <rect x="300" y="60" width="200" height="90" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="400" y="80" text-anchor="middle" font-weight="bold">Dendrite 2 (Intermediate)</text>
+  <text x="400" y="100" text-anchor="middle" class="small">Accumulator: dend_acc_2 (16-bit)</text>
+  <text x="400" y="115" text-anchor="middle" class="small">Threshold: dend_thr_2 (16-bit)</text>
+  <text x="400" y="135" text-anchor="middle" class="mono">in2 = acc2 + child_out</text>
+
+  <!-- Synaptic inputs to D2 -->
+  <line x1="400" y1="40" x2="400" y2="60" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="400" y="38" text-anchor="middle" class="small">Synaptic input (comp=2)</text>
+
+  <!-- Arrow from D3 to D2 (if parent(3)==2) -->
+  <line x1="230" y1="105" x2="300" y2="105" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="265" y="98" text-anchor="middle" class="small">out3</text>
+  <text x="265" y="118" text-anchor="middle" class="small">(if parent=2)</text>
+
+  <!-- ReLU for D2 -->
+  <rect x="330" y="165" width="140" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="400" y="182" text-anchor="middle" class="mono">out2 = ReLU(in2 - thr2)</text>
+
+  <line x1="400" y1="150" x2="400" y2="165" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Dendrite 1 (intermediate) -->
+  <rect x="300" y="210" width="200" height="90" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="400" y="230" text-anchor="middle" font-weight="bold">Dendrite 1 (Intermediate)</text>
+  <text x="400" y="250" text-anchor="middle" class="small">Accumulator: dend_acc_1 (16-bit)</text>
+  <text x="400" y="265" text-anchor="middle" class="small">Threshold: dend_thr_1 (16-bit)</text>
+  <text x="400" y="285" text-anchor="middle" class="mono">in1 = acc1 + child_outs</text>
+
+  <!-- Arrow from D2 to D1 -->
+  <line x1="400" y1="190" x2="400" y2="210" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="430" y="203" class="small">out2 (if parent=1)</text>
+
+  <!-- ReLU for D1 -->
+  <rect x="330" y="315" width="140" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="400" y="332" text-anchor="middle" class="mono">out1 = ReLU(in1 - thr1)</text>
+  <line x1="400" y1="300" x2="400" y2="315" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- SOMA -->
+  <rect x="250" y="370" width="300" height="100" fill="none" stroke="black" stroke-width="2"/>
+  <text x="400" y="390" text-anchor="middle" font-weight="bold">Soma (Compartment 0)</text>
+  <text x="400" y="410" text-anchor="middle" class="small">Membrane potential: nrn_mem (16-bit)</text>
+  <text x="400" y="430" text-anchor="middle" class="mono">V += direct_input + total_dend</text>
+  <text x="400" y="448" text-anchor="middle" class="small">total_dend = sum of all dendrites with parent=soma</text>
+  <text x="400" y="463" text-anchor="middle" class="small">If V > threshold: SPIKE (with graded payload)</text>
+
+  <!-- Arrow from D1 to Soma -->
+  <line x1="400" y1="340" x2="400" y2="370" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="430" y="358" class="small">out1 (if parent=0)</text>
+
+  <!-- Direct arrow from D3 to Soma (if parent=0) -->
+  <path d="M 140 150 L 140 420 L 250 420" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#arrow)"/>
+  <text x="100" y="290" class="small" transform="rotate(-90, 100, 290)">out3 (if parent=soma)</text>
+
+  <!-- Spike output -->
+  <line x1="400" y1="470" x2="400" y2="510" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="400" y="520" text-anchor="middle" font-weight="bold">Spike Output (neuron_id + payload)</text>
+
+  <!-- JoinOp box -->
+  <rect x="580" y="210" width="180" height="100" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="670" y="230" text-anchor="middle" font-weight="bold">Join Operations</text>
+  <text x="670" y="250" text-anchor="middle" class="small">00: ADD (summation)</text>
+  <text x="670" y="265" text-anchor="middle" class="small">01: ABS_MAX (max magnitude)</text>
+  <text x="670" y="280" text-anchor="middle" class="small">10: OR (bitwise)</text>
+  <text x="670" y="295" text-anchor="middle" class="small">11: PASS (no accumulation)</text>
+
+  <!-- Parent pointer box -->
+  <rect x="580" y="60" width="180" height="70" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="670" y="80" text-anchor="middle" font-weight="bold">Parent Pointers</text>
+  <text x="670" y="100" text-anchor="middle" class="small">Each compartment has a</text>
+  <text x="670" y="115" text-anchor="middle" class="small">parent_ptr defining tree</text>
+  <text x="670" y="127" text-anchor="middle" class="small">topology (programmable)</text>
+</svg>

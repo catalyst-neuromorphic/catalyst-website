@@ -1,0 +1,44 @@
+---
+title: "From Prototype to Patent"
+description: "How Catalyst Neuromorphic went from a blank Verilog file to a validated 128-core processor with a UK patent filing."
+date: 2026-02-13
+tags: ["Company", "IP"]
+---
+
+In February 2026, we filed a UK patent covering the full Catalyst neuromorphic processor architecture. Application reference: ~2602902.6. This is the story of how we got here.
+
+## Starting from zero
+
+Catalyst wasn't born from a university research group or a corporate spin-out. It started with a question: can an independent team build a neuromorphic processor that matches the best in the field?
+
+The answer, we now know, is yes. But the path wasn't obvious.
+
+The neuromorphic computing landscape is dominated by a handful of well-funded labs. Intel's Loihi programme has had hundreds of engineers and a decade of development. IBM's TrueNorth was a DARPA-funded project. SpiNNaker came from the University of Manchester with millions in EU funding. Breaking into this space as an independent effort required a different approach.
+
+## N1: Proving it's possible
+
+The first generation — Catalyst N1 — targeted Loihi 1 feature parity. Not a simplified subset. Not a "toy" implementation. Full parity: 128 cores, 1,024 neurons per core, 131,072 total neurons, configurable synapse weights, STDP learning, mesh network routing.
+
+N1 passed 96 out of 96 verification tests. The architecture worked. The 13-page paper documents every design decision.
+
+But N1 had limitations inherited from Loihi 1's architecture: only one neuron model (CUBA LIF), hardwired STDP learning with fixed parameters, no graded spike support. These are exactly the limitations that Intel addressed in Loihi 2.
+
+## N2: Matching the state of the art
+
+N2 is a ground-up redesign. Five neuron models. Programmable microcode learning engine with 16 registers. Graded spike payloads. Configurable axonal delays. Three-factor learning with eligibility traces. Per-group plasticity control. Convolutional synapse formats.
+
+The SDK grew to match: 3,091 tests, 155 features, 88 modules, three compute backends (CPU, GPU, FPGA). The SHD speech recognition benchmark hits 85.9% accuracy in floating-point mode and 85.4% in quantized 8-bit mode — competitive with published SNN results.
+
+Then we validated on real hardware. An AWS F2 FPGA instance with a Xilinx UltraScale+ VU47P. 28 validation tests, all passing. Cycle-accurate. Bit-exact.
+
+## The patent
+
+The UK patent covers the full architecture: neuromorphic core design, programmable learning engine, mesh network routing protocol, and the instruction set that ties it all together. The scope is broad enough to protect the core IP while the design philosophy remains open.
+
+The SDK (neurocore) is open-source. The RTL is protected under BSL 1.1. The papers are freely available. This balance — open tools, protected hardware — is deliberate. Anyone can build on top of Catalyst. The architecture itself is ours.
+
+## What this means
+
+Catalyst is no longer just a prototype. It's a validated, patent-protected neuromorphic processor architecture with a complete software stack. The foundation is built. Now we're building on it.
+
+[Read the N2 paper →](/papers/catalyst-n2.pdf) | [Read the N1 paper →](/papers/catalyst-n1.pdf)

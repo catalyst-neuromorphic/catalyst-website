@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="950" height="820" viewBox="0 0 950 820">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .label { font-size: 10px; }
+    .small { font-size: 9px; }
+  </style>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="475" y="25" text-anchor="middle" class="title">Figure 3: Four Graded Spike Payload Formats</text>
+
+  <!-- ===== Per-Core Format Selector ===== -->
+  <rect x="30" y="50" width="220" height="55" fill="none" stroke="black" stroke-width="2"/>
+  <text x="140" y="72" text-anchor="middle" font-weight="bold">Per-Core Format Selector</text>
+  <text x="140" y="90" text-anchor="middle" class="small">spike_format[1:0] (2-bit register)</text>
+
+  <line x1="250" y1="77" x2="300" y2="77" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="275" y="70" text-anchor="middle" class="small">select</text>
+
+  <!-- ===== Format 0: Binary (10-bit) ===== -->
+  <text x="310" y="72" class="label" font-weight="bold">Format 0: Binary</text>
+  <text x="530" y="72" class="small">10 bits total</text>
+
+  <g transform="translate(310, 82)">
+    <rect x="0" y="0" width="210" height="30" fill="none" stroke="black" stroke-width="1.5"/>
+    <text x="105" y="15" text-anchor="middle" dominant-baseline="central" class="small">Neuron ID (10-bit)</text>
+  </g>
+
+  <text x="720" y="92" class="small">Spike = 1 (presence only)</text>
+  <text x="720" y="108" class="small">No payload; I += w</text>
+
+  <!-- ===== Format 1: 8-bit Graded (18-bit) ===== -->
+  <text x="310" y="155" class="label" font-weight="bold">Format 1: 8-bit Graded</text>
+  <text x="530" y="155" class="small">18 bits total</text>
+
+  <g transform="translate(310, 165)">
+    <rect x="0" y="0" width="360" height="30" fill="none" stroke="black" stroke-width="1.5"/>
+    <line x1="210" y1="0" x2="210" y2="30" stroke="black" stroke-width="1"/>
+    <text x="105" y="15" text-anchor="middle" dominant-baseline="central" class="small">Neuron ID (10-bit)</text>
+    <text x="285" y="15" text-anchor="middle" dominant-baseline="central" class="small">8-bit payload</text>
+  </g>
+
+  <text x="720" y="175" class="small">Payload range: 0-255</text>
+  <text x="720" y="191" class="small">I += (w x payload) &gt;&gt; G</text>
+
+  <!-- ===== Format 2: 16-bit Graded (26-bit) ===== -->
+  <text x="310" y="238" class="label" font-weight="bold">Format 2: 16-bit Graded</text>
+  <text x="530" y="238" class="small">26 bits total</text>
+
+  <g transform="translate(310, 248)">
+    <rect x="0" y="0" width="360" height="30" fill="none" stroke="black" stroke-width="1.5"/>
+    <line x1="140" y1="0" x2="140" y2="30" stroke="black" stroke-width="1"/>
+    <text x="70" y="15" text-anchor="middle" dominant-baseline="central" class="small">Neuron ID (10-bit)</text>
+    <text x="250" y="15" text-anchor="middle" dominant-baseline="central" class="small">16-bit payload</text>
+  </g>
+
+  <text x="720" y="258" class="small">Payload range: 0-65535</text>
+  <text x="720" y="274" class="small">I += (w x payload) &gt;&gt; G</text>
+
+  <!-- ===== Format 3: 24-bit Graded (34-bit) ===== -->
+  <text x="310" y="321" class="label" font-weight="bold">Format 3: 24-bit Graded</text>
+  <text x="530" y="321" class="small">34 bits total</text>
+
+  <g transform="translate(310, 331)">
+    <rect x="0" y="0" width="360" height="30" fill="none" stroke="black" stroke-width="1.5"/>
+    <line x1="100" y1="0" x2="100" y2="30" stroke="black" stroke-width="1"/>
+    <text x="50" y="15" text-anchor="middle" dominant-baseline="central" class="small">Neuron ID (10-bit)</text>
+    <text x="230" y="15" text-anchor="middle" dominant-baseline="central" class="small">24-bit payload</text>
+  </g>
+
+  <text x="720" y="341" class="small">Payload range: 0-16.7M</text>
+  <text x="720" y="357" class="small">I += (w x payload) &gt;&gt; G</text>
+
+  <!-- ===== Grade-Shift Delivery Detail ===== -->
+  <rect x="30" y="400" width="890" height="150" fill="none" stroke="black" stroke-width="2"/>
+  <text x="475" y="422" text-anchor="middle" font-weight="bold">Grade-Shift Delivery Mechanism</text>
+  <line x1="30" y1="430" x2="920" y2="430" stroke="black" stroke-width="0.5"/>
+
+  <!-- Pipeline -->
+  <rect x="55" y="445" width="115" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="112" y="467" text-anchor="middle" class="small">Spike Arrives</text>
+  <text x="112" y="484" text-anchor="middle" class="small">(ID + payload)</text>
+
+  <line x1="170" y1="472" x2="210" y2="472" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="210" y="445" width="115" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="267" y="467" text-anchor="middle" class="small">Weight Lookup</text>
+  <text x="267" y="484" text-anchor="middle" class="small">w = pool[idx]</text>
+
+  <line x1="325" y1="472" x2="365" y2="472" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="365" y="445" width="145" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="437" y="467" text-anchor="middle" class="small">Multiply + Shift</text>
+  <text x="437" y="484" text-anchor="middle" class="small">result = (w x p) &gt;&gt; G</text>
+
+  <line x1="510" y1="472" x2="550" y2="472" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="550" y="445" width="130" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="615" y="467" text-anchor="middle" class="small">Accumulate</text>
+  <text x="615" y="484" text-anchor="middle" class="small">I[dst] += result</text>
+
+  <line x1="680" y1="472" x2="720" y2="472" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="720" y="445" width="130" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="785" y="467" text-anchor="middle" class="small">Neuron Current</text>
+  <text x="785" y="484" text-anchor="middle" class="small">I (updated)</text>
+
+  <!-- Grade shift parameter -->
+  <rect x="365" y="512" width="145" height="28" fill="none" stroke="black" stroke-width="1"/>
+  <text x="437" y="530" text-anchor="middle" dominant-baseline="central" class="small">G = gradeShift (0-24)</text>
+  <line x1="437" y1="512" x2="437" y2="500" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- ===== Use Cases and Comparison ===== -->
+  <rect x="30" y="575" width="890" height="160" fill="none" stroke="black" stroke-width="1"/>
+  <text x="475" y="597" text-anchor="middle" font-weight="bold">Format Comparison and Use Cases</text>
+  <line x1="30" y1="605" x2="920" y2="605" stroke="black" stroke-width="0.5"/>
+
+  <text x="55" y="625" class="small" font-weight="bold">Format</text>
+  <text x="185" y="625" class="small" font-weight="bold">Payload Bits</text>
+  <text x="315" y="625" class="small" font-weight="bold">Bandwidth</text>
+  <text x="465" y="625" class="small" font-weight="bold">Precision</text>
+  <text x="625" y="625" class="small" font-weight="bold">Use Case</text>
+
+  <text x="55" y="648" class="small">Binary (0)</text>
+  <text x="185" y="648" class="small">0</text>
+  <text x="315" y="648" class="small">Highest (ID only)</text>
+  <text x="465" y="648" class="small">1-bit (fire/no-fire)</text>
+  <text x="625" y="648" class="small">Standard SNN, sparse coding</text>
+
+  <text x="55" y="668" class="small">8-bit (1)</text>
+  <text x="185" y="668" class="small">8</text>
+  <text x="315" y="668" class="small">High</text>
+  <text x="465" y="668" class="small">256 levels</text>
+  <text x="625" y="668" class="small">Rate coding, sensor input</text>
+
+  <text x="55" y="688" class="small">16-bit (2)</text>
+  <text x="185" y="688" class="small">16</text>
+  <text x="315" y="688" class="small">Medium</text>
+  <text x="465" y="688" class="small">65K levels</text>
+  <text x="625" y="688" class="small">Audio features, gradients</text>
+
+  <text x="55" y="708" class="small">24-bit (3)</text>
+  <text x="185" y="708" class="small">24</text>
+  <text x="315" y="708" class="small">Lower</text>
+  <text x="465" y="708" class="small">16M levels</text>
+  <text x="625" y="708" class="small">Image pixels, float approx</text>
+
+  <text x="55" y="730" class="small">Note: Binary format is backward-compatible with N1. All four formats coexist on the mesh -- each core selects its format independently.</text>
+</svg>

@@ -1,0 +1,81 @@
+---
+title: "SHD Benchmark: 85.9%"
+description: "Catalyst N2 achieves 85.9% accuracy on the Spiking Heidelberg Digits benchmark, with only 0.5% loss from 8-bit quantization."
+date: 2026-02-10
+tags: ["Benchmark", "SDK"]
+---
+
+The Spiking Heidelberg Digits (SHD) benchmark is one of the standard tests for spiking neural network hardware. It's a speech recognition task — classifying spoken digits encoded as spike trains — that requires temporal processing, making it a natural fit for neuromorphic architectures.
+
+Catalyst N2 achieves **85.9%** accuracy in floating-point mode and **85.4%** in hardware-accurate quantized mode. Here's how.
+
+## The benchmark
+
+SHD consists of 8,156 training samples and 2,264 test samples of spoken digits (0–9) in English and German. The audio is converted to spike trains using a biologically-inspired cochlea model, producing 700 input channels of sparse temporal spike patterns.
+
+The task is challenging for spiking neural networks because it requires integrating information across time — a digit isn't recognised from a single spike but from the temporal pattern of spikes across hundreds of milliseconds.
+
+## The network
+
+We used a 3-layer recurrent SNN:
+
+- **Input**: 700 channels (cochlea encoding)
+- **Hidden**: 256 recurrent LIF neurons with adaptive thresholds (ALIF model)
+- **Output**: 20 readout neurons (10 digits × 2 languages)
+
+Training uses surrogate gradient descent with the neurocore SDK's built-in training loop. The network converges in roughly 100 epochs.
+
+The key architectural choice is using ALIF neurons in the hidden layer. The adaptive threshold provides a form of short-term memory — neurons that have fired recently have higher thresholds, creating a natural temporal filter. This is one of the five neuron models available on N2 hardware.
+
+## Float vs quantized
+
+The floating-point model achieves 85.9%. When we quantize to the hardware-accurate fixed-point representation (8-bit weights, 16-bit membrane potentials), accuracy drops to 85.4%. That's a 0.5% loss — negligible for most applications.
+
+This matters because it demonstrates that N2's quantization scheme preserves model quality. The 8-bit weight format isn't a compromise; it's sufficient for real workloads.
+
+| Mode | Accuracy | Weight precision | Membrane precision |
+|------|----------|------------------|--------------------|
+| Float | 85.9% | 32-bit | 32-bit |
+| Quantized | 85.4% | 8-bit | 16-bit |
+
+## Context
+
+For comparison, published SHD results from other frameworks and hardware:
+
+- Cramer et al. (2020): 83.2% (standard RSNN baseline)
+- Zenke & Vogels (2021): 84.4% (SuperSpike)
+- Yin et al. (2021): 90.4% (SRNN with attention, not directly hardware-mappable)
+
+Our 85.9% is competitive with published hardware-compatible architectures. The higher-accuracy results (90%+) typically use architectural features — like attention mechanisms — that don't map directly to neuromorphic hardware constraints.
+
+## Running it yourself
+
+The benchmark is included in the neurocore SDK examples:
+
+```python
+import neurocore as nc
+
+# Load the SHD dataset
+train, test = nc.datasets.shd(path="./data")
+
+# Build the network
+net = nc.Network()
+inp = net.add_layer(700, model="input")
+hid = net.add_layer(256, model="alif", recurrent=True)
+out = net.add_layer(20, model="lif")
+net.connect(inp, hid)
+net.connect(hid, hid)  # recurrent
+net.connect(hid, out)
+
+# Train
+trainer = nc.Trainer(net, lr=1e-3)
+trainer.fit(train, epochs=100, batch_size=64)
+
+# Evaluate
+accuracy = trainer.evaluate(test)
+print(f"Test accuracy: {accuracy:.1%}")
+```
+
+The same code runs on CPU, GPU, or FPGA backends. Change `nc.Network(backend="fpga")` to target real hardware.
+
+[Explore N2 →](/processors/n2) | [Try the Cloud API →](/cloud)

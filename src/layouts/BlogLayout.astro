@@ -1,0 +1,60 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  tags?: string[];
+}
+
+const { title, description, date, tags } = Astro.props;
+const formattedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<BaseLayout title={`${title} — Catalyst Neuromorphic`} description={description}>
+
+  <article class="pt-36 pb-20 px-6 md:px-12">
+    <div class="max-w-[700px] mx-auto">
+
+      <!-- Header -->
+      <header class="mb-12">
+        <div class="flex items-center gap-3 mb-4">
+          <time class="text-xs text-white/25 font-mono">{formattedDate}</time>
+          {tags?.map(tag => (
+            <span class="text-[9px] text-catalyst-blue/60 border border-catalyst-blue/20 rounded-full px-2 py-0.5">{tag}</span>
+          ))}
+        </div>
+        <h1 class="text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight leading-tight">{title}</h1>
+        <p class="text-lg text-white/40 mt-4">{description}</p>
+      </header>
+
+      <!-- Content -->
+      <div class="prose prose-invert prose-sm max-w-none
+        prose-headings:font-semibold prose-headings:tracking-tight
+        prose-h2:text-xl prose-h2:mt-12 prose-h2:mb-4
+        prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3
+        prose-p:text-white/60 prose-p:leading-relaxed
+        prose-a:text-catalyst-blue prose-a:no-underline hover:prose-a:underline
+        prose-strong:text-white/80
+        prose-code:text-catalyst-blue/80 prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-xs prose-code:font-mono
+        prose-pre:bg-surface-100 prose-pre:border prose-pre:border-white/5 prose-pre:rounded-xl
+        prose-blockquote:border-catalyst-blue/30 prose-blockquote:text-white/50
+        prose-li:text-white/60
+        prose-img:rounded-xl prose-img:border prose-img:border-white/5
+        prose-table:text-sm
+        prose-th:text-white/60 prose-th:font-medium
+        prose-td:text-white/40
+      ">
+        <slot />
+      </div>
+
+      <!-- Back link -->
+      <div class="mt-16 pt-8 border-t border-white/5">
+        <a href="/blog" class="text-sm text-white/30 hover:text-white/60 transition-colors">&larr; All posts</a>
+      </div>
+
+    </div>
+  </article>
+
+</BaseLayout>

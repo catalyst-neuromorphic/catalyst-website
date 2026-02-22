@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .small { font-size: 9px; }
+    .state { font-size: 10px; font-weight: bold; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="25" text-anchor="middle" class="title">Figure 7: Core FSM State Diagram (Major Phases)</text>
+
+  <!-- IDLE state -->
+  <ellipse cx="400" cy="75" rx="65" ry="28" fill="none" stroke="black" stroke-width="2"/>
+  <text x="400" y="80" text-anchor="middle" class="state">IDLE</text>
+
+  <!-- DELIVER phase -->
+  <rect x="60" y="150" width="270" height="170" fill="none" stroke="black" stroke-width="2"/>
+  <text x="195" y="172" text-anchor="middle" font-weight="bold">DELIVER Phase</text>
+
+  <ellipse cx="140" cy="210" rx="55" ry="20" fill="none" stroke="black" stroke-width="1"/>
+  <text x="140" y="215" text-anchor="middle" class="small">DELAY_DRAIN</text>
+
+  <ellipse cx="140" cy="265" rx="55" ry="20" fill="none" stroke="black" stroke-width="1"/>
+  <text x="140" y="270" text-anchor="middle" class="small">DELIVER_IDX</text>
+
+  <ellipse cx="270" cy="210" rx="50" ry="20" fill="none" stroke="black" stroke-width="1"/>
+  <text x="270" y="215" text-anchor="middle" class="small">POOL_READ</text>
+
+  <ellipse cx="270" cy="265" rx="50" ry="20" fill="none" stroke="black" stroke-width="1"/>
+  <text x="270" y="270" text-anchor="middle" class="small">DELIVER_ACC</text>
+
+  <!-- Arrows within DELIVER -->
+  <line x1="140" y1="230" x2="140" y2="245" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="195" y1="265" x2="220" y2="265" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="270" y1="230" x2="270" y2="245" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow from IDLE to DELIVER -->
+  <line x1="350" y1="97" x2="195" y2="150" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="255" y="118" text-anchor="middle" class="small">start</text>
+
+  <!-- UPDATE phase -->
+  <rect x="400" y="150" width="200" height="170" fill="none" stroke="black" stroke-width="2"/>
+  <text x="500" y="172" text-anchor="middle" font-weight="bold">UPDATE Phase</text>
+
+  <ellipse cx="500" cy="210" rx="60" ry="20" fill="none" stroke="black" stroke-width="1"/>
+  <text x="500" y="215" text-anchor="middle" class="small">READ_MEM</text>
+
+  <ellipse cx="500" cy="260" rx="60" ry="20" fill="none" stroke="black" stroke-width="1"/>
+  <text x="500" y="265" text-anchor="middle" class="small">COMPUTE</text>
+
+  <ellipse cx="500" cy="300" rx="60" ry="20" fill="none" stroke="black" stroke-width="1"/>
+  <text x="500" y="305" text-anchor="middle" class="small">WRITE_SPIKE</text>
+
+  <line x1="500" y1="230" x2="500" y2="240" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="500" y1="280" x2="500" y2="280" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow from DELIVER to UPDATE -->
+  <line x1="330" y1="235" x2="400" y2="235" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="365" y="228" text-anchor="middle" class="small">done</text>
+
+  <!-- LEARN phase -->
+  <rect x="230" y="390" width="340" height="150" fill="none" stroke="black" stroke-width="2"/>
+  <text x="400" y="412" text-anchor="middle" font-weight="bold">LEARN Phase</text>
+
+  <ellipse cx="310" cy="450" rx="55" ry="20" fill="none" stroke="black" stroke-width="1"/>
+  <text x="310" y="455" text-anchor="middle" class="small">TRACE_UPD</text>
+
+  <ellipse cx="310" cy="505" rx="55" ry="20" fill="none" stroke="black" stroke-width="1"/>
+  <text x="310" y="510" text-anchor="middle" class="small">ELIG_SCAN</text>
+
+  <ellipse cx="480" cy="450" rx="55" ry="20" fill="none" stroke="black" stroke-width="1"/>
+  <text x="480" y="455" text-anchor="middle" class="small">MC_EXEC</text>
+
+  <ellipse cx="480" cy="505" rx="55" ry="20" fill="none" stroke="black" stroke-width="1"/>
+  <text x="480" y="510" text-anchor="middle" class="small">WT_UPDATE</text>
+
+  <line x1="310" y1="470" x2="310" y2="485" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="365" y1="450" x2="425" y2="450" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="480" y1="470" x2="480" y2="485" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow from UPDATE to LEARN -->
+  <line x1="500" y1="320" x2="400" y2="390" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="465" y="355" text-anchor="middle" class="small">done</text>
+
+  <!-- Arrow from LEARN back to IDLE (clean right-side path) -->
+  <line x1="570" y1="470" x2="720" y2="470" stroke="black" stroke-width="1.5"/>
+  <line x1="720" y1="470" x2="720" y2="75" stroke="black" stroke-width="1.5"/>
+  <line x1="720" y1="75" x2="465" y2="75" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="740" y="280" text-anchor="middle" class="small">timestep</text>
+  <text x="740" y="295" text-anchor="middle" class="small">complete</text>
+
+  <!-- ASYNC mode note -->
+  <rect x="30" y="420" width="180" height="80" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="120" y="440" text-anchor="middle" font-weight="bold">GALS Async Mode</text>
+  <text x="120" y="458" text-anchor="middle" class="small">No barrier between phases</text>
+  <text x="120" y="473" text-anchor="middle" class="small">Event-driven: process on</text>
+  <text x="120" y="488" text-anchor="middle" class="small">spike arrival, no timestep</text>
+</svg>

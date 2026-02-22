@@ -4,14 +4,28 @@
 
 @layer base {
   body {
-    @apply bg-black text-white font-sans antialiased overflow-x-hidden;
+    @apply bg-surface text-white font-sans antialiased overflow-x-hidden;
   }
   a {
     color: inherit;
   }
+
+  /* Noise texture overlay on body */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
 }
 
 @layer components {
+  /* ── Glass morphism ── */
   .glass {
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(40px) saturate(1.2);
@@ -63,6 +77,8 @@
     border-radius: inherit;
     pointer-events: none;
   }
+
+  /* ── Buttons ── */
   .btn-pill {
     @apply inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-all duration-300;
     color: rgba(255, 255, 255, 0.7);
@@ -86,6 +102,8 @@
     transform: translateY(-1px);
     box-shadow: 0 8px 30px rgba(59, 130, 246, 0.25);
   }
+
+  /* ── Labels ── */
   .section-label {
     @apply text-xs tracking-widest uppercase flex items-center gap-2.5 mb-4;
     color: rgba(255, 255, 255, 0.3);
@@ -93,19 +111,22 @@
   .accent-mark {
     @apply inline-block w-2 h-2 rounded-sm bg-catalyst-blue;
   }
+
+  /* ── Reveal (GSAP-driven) ── */
   .reveal {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
   }
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
+  /* Stagger parent — children get staggered reveal via GSAP */
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(30px);
+    will-change: opacity, transform;
   }
 }
 
-/* Neural grid — must be global (cells created by JS, not in Astro template) */
+/* ── Neural grid — cells created by JS ── */
 .n-cell { background: transparent; border-radius: 2px; transition: background 0.6s ease; }
 .n-cell.a1 { background: rgba(59, 130, 246, 0.04); }
 .n-cell.a2 { background: rgba(59, 130, 246, 0.09); }

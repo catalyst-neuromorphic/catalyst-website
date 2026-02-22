@@ -1,0 +1,36 @@
+---
+title: "Introducing Catalyst N2"
+description: "Second-generation neuromorphic processor with full Loihi 2 feature parity, five neuron models, and a programmable microcode learning engine."
+date: 2026-02-15
+tags: ["N2", "Architecture"]
+---
+
+Catalyst N2 is the second generation of our open neuromorphic processor architecture. Where N1 achieved parity with Intel's Loihi 1, N2 targets the full feature set of Loihi 2 — and delivers it in an open, reproducible design.
+
+## What's new in N2
+
+The jump from N1 to N2 isn't incremental. It's a ground-up redesign of the compute core, learning engine, and routing mesh.
+
+**Five neuron models.** N1 supported standard CUBA LIF neurons. N2 adds four more: Izhikevich (20+ spiking behaviours from four parameters), Adaptive LIF (homeostatic threshold regulation), Sigma-Delta (graded, rate-coded output bridging spiking and analog domains), and Resonate-and-Fire (complex-valued state for frequency-selective temporal pattern detection). Each model is runtime-configurable per compartment — no recompilation required.
+
+**Programmable microcode learning engine.** N1 had hardwired STDP with fixed parameters. N2 replaces this with a 16-register programmable engine that executes custom learning rules as microcode programs. Three-factor learning (pre × post × modulatory), eligibility traces with configurable decay, per-group plasticity control, and reward-modulated updates are all programmable. This is how Loihi 2 achieves its flexibility — and N2 matches it.
+
+**128-core mesh network.** The NoC routing fabric scales to 128 cores with deterministic latency. Multicast spike delivery, graded spike payloads (8-bit), configurable axonal delays (1–63 timesteps), and cross-core spike routing are all validated on hardware.
+
+## Validation
+
+N2 has been validated on real programmable hardware — an AWS F2 instance with a Xilinx UltraScale+ VU47P FPGA. Every test passes. Cycle-accurate. Bit-exact against the software simulation.
+
+The numbers: 28/28 FPGA validation tests passing, 81,000 spikes routed in 3.4ms, 163,000 spikes in the cross-core microcode learning benchmark. The SDK (neurocore v3.7.0) has 3,091 tests across CPU, GPU, and FPGA backends.
+
+## The paper
+
+The full technical paper (18 pages) covers the architecture in detail: core microarchitecture, neuron model implementations, learning engine ISA, mesh routing protocol, FPGA validation methodology, and SHD benchmark results.
+
+[Read the N2 paper →](/papers/catalyst-n2.pdf)
+
+## What's next
+
+N2 is complete and validated. The architecture is protected by a UK patent filing. We're now working on N3 — which pushes beyond Loihi 2 parity into novel territory — and the Catalyst Cloud API, which gives anyone access to neuromorphic compute without hardware.
+
+[Explore N2 →](/processors/n2)

@@ -1,40 +1,91 @@
 ---
-const navLinks = [
-  { href: '/processors', label: 'Processors' },
-  { href: '/technology', label: 'Technology' },
-  { href: '/cloud', label: 'Cloud' },
-  { href: '/research', label: 'Research' },
-  { href: '/about', label: 'About' },
-  { href: '/console/dashboard', label: 'Console' },
+const products = [
+  { href: '/processors/n2', label: 'N2 Processor', desc: 'Loihi 2 parity, 131K neurons' },
+  { href: '/processors/n1', label: 'N1 Processor', desc: 'Loihi 1 parity, first-gen silicon' },
+  { href: '/cloud', label: 'Catalyst Cloud', desc: 'Neuromorphic compute API' },
+  { href: '/processors', label: 'Compare Processors', desc: 'Side-by-side specifications' },
+  { href: '/cloud/pricing', label: 'Pricing', desc: 'Subscriptions and API credits' },
 ];
 ---
 
 <nav id="nav" class="fixed top-0 left-0 right-0 z-50 h-14 transition-all duration-500" style="background: transparent;">
   <div class="max-w-[1400px] mx-auto h-full flex items-center justify-between px-6 md:px-12">
-    <a href="/" class="text-[22px] font-bold tracking-tight">Catalyst</a>
+    <!-- Logo -->
+    <a href="/" class="text-[22px] font-display font-bold tracking-tight no-underline">Catalyst</a>
+
+    <!-- Desktop nav -->
     <div class="hidden md:flex items-center gap-8">
-      {navLinks.map(link => (
-        <a href={link.href} class="text-sm text-white/50 no-underline hover:text-white transition-colors duration-300">
-          {link.label}
-        </a>
-      ))}
+      <!-- Products dropdown -->
+      <div class="relative group">
+        <button class="text-sm text-white/50 hover:text-white transition-colors duration-300 flex items-center gap-1">
+          Products
+          <svg class="w-3.5 h-3.5 mt-0.5 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+          <div class="glass rounded-xl p-2 min-w-[280px]" style="border-radius: 16px;">
+            {products.map(item => (
+              <a href={item.href} class="flex flex-col px-4 py-3 rounded-lg no-underline hover:bg-white/[0.06] transition-colors duration-200">
+                <span class="text-sm font-medium text-white/90">{item.label}</span>
+                <span class="text-xs text-white/40 mt-0.5">{item.desc}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <a href="/research" class="text-sm text-white/50 no-underline hover:text-white transition-colors duration-300">Research</a>
+      <a href="/about" class="text-sm text-white/50 no-underline hover:text-white transition-colors duration-300">About</a>
+
+      <!-- Sign in / Avatar -->
+      <div class="relative group" id="auth-nav">
+        <a href="/console/login" id="sign-in-link" class="text-sm text-white/50 no-underline hover:text-white transition-colors duration-300">Sign in</a>
+        <!-- Avatar (shown when logged in, hidden by default) -->
+        <button id="avatar-btn" class="hidden w-8 h-8 rounded-full bg-catalyst-blue/20 border border-catalyst-blue/30 text-catalyst-blue text-xs font-medium items-center justify-center hover:bg-catalyst-blue/30 transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <div id="avatar-dropdown" class="absolute top-full right-0 pt-3 opacity-0 invisible transition-all duration-200">
+          <div class="glass rounded-xl p-2 min-w-[180px]" style="border-radius: 16px;">
+            <a href="/console/dashboard" class="flex px-4 py-2.5 rounded-lg text-sm text-white/70 no-underline hover:bg-white/[0.06] transition-colors">Dashboard</a>
+            <a href="/console/keys" class="flex px-4 py-2.5 rounded-lg text-sm text-white/70 no-underline hover:bg-white/[0.06] transition-colors">API Keys</a>
+            <a href="/console/billing" class="flex px-4 py-2.5 rounded-lg text-sm text-white/70 no-underline hover:bg-white/[0.06] transition-colors">Billing</a>
+            <a href="/console/usage" class="flex px-4 py-2.5 rounded-lg text-sm text-white/70 no-underline hover:bg-white/[0.06] transition-colors">Usage</a>
+            <div class="border-t border-white/[0.06] my-1"></div>
+            <button id="sign-out-btn" class="flex w-full px-4 py-2.5 rounded-lg text-sm text-white/40 hover:text-white/70 hover:bg-white/[0.06] transition-colors text-left">Sign out</button>
+          </div>
+        </div>
+      </div>
     </div>
+
     <!-- Mobile menu button -->
     <button id="mobile-menu-btn" class="md:hidden text-white/50 hover:text-white transition-colors" aria-label="Menu">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <svg id="menu-icon" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <line x1="3" y1="6" x2="21" y2="6" />
         <line x1="3" y1="12" x2="21" y2="12" />
         <line x1="3" y1="18" x2="21" y2="18" />
       </svg>
+      <svg id="close-icon" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
     </button>
   </div>
-  <!-- Mobile dropdown -->
-  <div id="mobile-menu" class="hidden md:hidden absolute top-14 left-0 right-0 py-4 px-6" style="background: rgba(10,10,10,0.95); backdrop-filter: blur(40px); border-bottom: 1px solid rgba(255,255,255,0.06);">
-    {navLinks.map(link => (
-      <a href={link.href} class="block py-3 text-sm text-white/50 no-underline hover:text-white transition-colors">
-        {link.label}
-      </a>
-    ))}
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden absolute top-14 left-0 right-0 py-4 px-6" style="background: rgba(10,12,16,0.97); backdrop-filter: blur(40px); border-bottom: 1px solid rgba(255,255,255,0.06);">
+    <div class="mb-3">
+      <p class="text-xs text-white/30 uppercase tracking-wider mb-2 px-1">Products</p>
+      {products.map(item => (
+        <a href={item.href} class="block py-2.5 px-1 text-sm text-white/50 no-underline hover:text-white transition-colors">
+          {item.label}
+        </a>
+      ))}
+    </div>
+    <div class="border-t border-white/[0.06] my-3"></div>
+    <a href="/research" class="block py-2.5 px-1 text-sm text-white/50 no-underline hover:text-white transition-colors">Research</a>
+    <a href="/about" class="block py-2.5 px-1 text-sm text-white/50 no-underline hover:text-white transition-colors">About</a>
+    <div class="border-t border-white/[0.06] my-3"></div>
+    <a href="/console/dashboard" class="block py-2.5 px-1 text-sm text-white/50 no-underline hover:text-white transition-colors">Console</a>
+    <a href="/console/login" id="mobile-sign-in" class="block py-2.5 px-1 text-sm text-catalyst-blue no-underline hover:text-catalyst-blue/80 transition-colors">Sign in</a>
   </div>
 </nav>
 
@@ -46,20 +97,19 @@ const navLinks = [
   if (hero && nav) {
     new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) {
-        nav.style.background = 'rgba(10,10,10,0.6)';
+        nav.style.background = 'rgba(10,12,16,0.7)';
         nav.style.backdropFilter = 'blur(40px) saturate(1.2)';
-        nav.style.webkitBackdropFilter = 'blur(40px) saturate(1.2)';
+        (nav.style as any).webkitBackdropFilter = 'blur(40px) saturate(1.2)';
         nav.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
       } else {
         nav.style.background = 'transparent';
         nav.style.backdropFilter = 'none';
-        nav.style.webkitBackdropFilter = 'none';
+        (nav.style as any).webkitBackdropFilter = 'none';
         nav.style.borderBottom = 'none';
       }
     }, { threshold: 0.05 }).observe(hero);
   } else if (nav) {
-    // Non-hero pages: always show blurred nav
-    nav.style.background = 'rgba(10,10,10,0.6)';
+    nav.style.background = 'rgba(10,12,16,0.7)';
     nav.style.backdropFilter = 'blur(40px) saturate(1.2)';
     nav.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
   }
@@ -67,15 +117,48 @@ const navLinks = [
   // Mobile menu toggle
   const btn = document.getElementById('mobile-menu-btn');
   const menu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+
   btn?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
     menu?.classList.toggle('hidden');
+    menuIcon?.classList.toggle('hidden', !isOpen);
+    closeIcon?.classList.toggle('hidden', isOpen);
   });
 
-  // Reveal animations
-  const ro = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('visible');
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+  // Auth state — check localStorage for session
+  const signInLink = document.getElementById('sign-in-link');
+  const avatarBtn = document.getElementById('avatar-btn');
+  const avatarDropdown = document.getElementById('avatar-dropdown');
+
+  try {
+    const session = localStorage.getItem('catalyst_session');
+    if (session) {
+      const data = JSON.parse(session);
+      if (data?.access_token) {
+        signInLink?.classList.add('hidden');
+        avatarBtn?.classList.remove('hidden');
+        avatarBtn?.classList.add('flex');
+
+        // Avatar dropdown toggle
+        avatarBtn?.addEventListener('click', () => {
+          const isVisible = !avatarDropdown?.classList.contains('invisible');
+          if (isVisible) {
+            avatarDropdown?.classList.add('opacity-0', 'invisible');
+            avatarDropdown?.classList.remove('opacity-100', 'visible');
+          } else {
+            avatarDropdown?.classList.remove('opacity-0', 'invisible');
+            avatarDropdown?.classList.add('opacity-100', 'visible');
+          }
+        });
+      }
+    }
+  } catch {}
+
+  // Sign out
+  document.getElementById('sign-out-btn')?.addEventListener('click', () => {
+    localStorage.removeItem('catalyst_session');
+    window.location.href = '/';
+  });
 </script>

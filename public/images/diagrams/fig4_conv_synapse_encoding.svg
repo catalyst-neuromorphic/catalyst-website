@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="950" height="750" viewBox="0 0 950 750">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .label { font-size: 10px; }
+    .small { font-size: 9px; }
+  </style>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="475" y="25" text-anchor="middle" class="title">Figure 4: Convolutional Synapse Encoding (FMT_CONV)</text>
+
+  <!-- ===== LEFT: Traditional CSR Format ===== -->
+  <rect x="20" y="45" width="360" height="270" fill="none" stroke="black" stroke-width="2"/>
+  <text x="200" y="65" text-anchor="middle" font-weight="bold">Traditional CSR Format (FMT_DENSE/SPARSE)</text>
+  <line x1="20" y1="72" x2="380" y2="72" stroke="black" stroke-width="0.5"/>
+
+  <!-- Index Table -->
+  <rect x="40" y="85" width="120" height="30" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="100" y="105" text-anchor="middle" class="small">Index Entry</text>
+
+  <line x1="160" y1="100" x2="185" y2="100" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Pool entries (explicit weights) -->
+  <text x="200" y="90" class="small" font-weight="bold">Pool (explicit weights):</text>
+  <rect x="195" y="95" width="170" height="22" fill="none" stroke="black" stroke-width="1"/>
+  <text x="210" y="110" class="small">w0</text>
+  <text x="240" y="110" class="small">w1</text>
+  <text x="270" y="110" class="small">w2</text>
+  <text x="300" y="110" class="small">w3</text>
+  <text x="330" y="110" class="small">w4</text>
+  <text x="352" y="110" class="small">...</text>
+
+  <!-- Show 3x3 kernel with 9 explicit entries -->
+  <text x="40" y="142" class="small" font-weight="bold">Example: 3x3 kernel, 100 neurons</text>
+  <text x="40" y="159" class="small">Each neuron stores 9 weights explicitly:</text>
+
+  <!-- Grid showing repeated weights -->
+  <text x="40" y="179" class="small">Neuron 0: w00 w01 w02 w10 w11 w12 w20 w21 w22</text>
+  <text x="40" y="194" class="small">Neuron 1: w00 w01 w02 w10 w11 w12 w20 w21 w22</text>
+  <text x="40" y="209" class="small">Neuron 2: w00 w01 w02 w10 w11 w12 w20 w21 w22</text>
+  <text x="40" y="222" class="small">   ...</text>
+  <text x="40" y="237" class="small">Neuron 99: w00 w01 w02 w10 w11 w12 w20 w21 w22</text>
+
+  <!-- Memory calculation -->
+  <rect x="40" y="255" width="320" height="30" fill="none" stroke="black" stroke-width="1"/>
+  <text x="200" y="275" text-anchor="middle" class="small" font-weight="bold">Total: 100 x 9 x 8-bit = 900 bytes (7200 bits)</text>
+
+  <!-- ===== Comparison Arrow (centered in gap between boxes) ===== -->
+  <line x1="390" y1="180" x2="480" y2="180" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="435" y="168" text-anchor="middle" font-weight="bold">6.25x</text>
+  <text x="435" y="198" text-anchor="middle" class="small">savings</text>
+
+  <!-- ===== RIGHT: FMT_CONV Format ===== -->
+  <rect x="490" y="45" width="440" height="270" fill="none" stroke="black" stroke-width="2"/>
+  <text x="710" y="65" text-anchor="middle" font-weight="bold">FMT_CONV Format (shared kernel)</text>
+  <line x1="490" y1="72" x2="930" y2="72" stroke="black" stroke-width="0.5"/>
+
+  <!-- Shared kernel stored once -->
+  <text x="510" y="92" class="small" font-weight="bold">Shared Kernel (stored once):</text>
+  <g transform="translate(510, 100)">
+    <!-- 3x3 kernel grid -->
+    <rect x="0" y="0" width="30" height="22" fill="none" stroke="black" stroke-width="1"/>
+    <rect x="30" y="0" width="30" height="22" fill="none" stroke="black" stroke-width="1"/>
+    <rect x="60" y="0" width="30" height="22" fill="none" stroke="black" stroke-width="1"/>
+    <rect x="0" y="22" width="30" height="22" fill="none" stroke="black" stroke-width="1"/>
+    <rect x="30" y="22" width="30" height="22" fill="none" stroke="black" stroke-width="1"/>
+    <rect x="60" y="22" width="30" height="22" fill="none" stroke="black" stroke-width="1"/>
+    <rect x="0" y="44" width="30" height="22" fill="none" stroke="black" stroke-width="1"/>
+    <rect x="30" y="44" width="30" height="22" fill="none" stroke="black" stroke-width="1"/>
+    <rect x="60" y="44" width="30" height="22" fill="none" stroke="black" stroke-width="1"/>
+    <text x="10" y="16" class="small">k0</text>
+    <text x="40" y="16" class="small">k1</text>
+    <text x="70" y="16" class="small">k2</text>
+    <text x="10" y="38" class="small">k3</text>
+    <text x="40" y="38" class="small">k4</text>
+    <text x="70" y="38" class="small">k5</text>
+    <text x="10" y="60" class="small">k6</text>
+    <text x="40" y="60" class="small">k7</text>
+    <text x="70" y="60" class="small">k8</text>
+  </g>
+  <text x="620" y="135" class="small">9 x 8-bit = 9 bytes</text>
+
+  <!-- Synapse entries with kernel index + offset -->
+  <text x="510" y="186" class="small" font-weight="bold">Synapse Entries (kernel_idx + src_offset):</text>
+
+  <rect x="510" y="192" width="400" height="22" fill="none" stroke="black" stroke-width="1"/>
+  <line x1="590" y1="192" x2="590" y2="214" stroke="black" stroke-width="0.5"/>
+  <line x1="670" y1="192" x2="670" y2="214" stroke="black" stroke-width="0.5"/>
+  <line x1="750" y1="192" x2="750" y2="214" stroke="black" stroke-width="0.5"/>
+  <line x1="830" y1="192" x2="830" y2="214" stroke="black" stroke-width="0.5"/>
+  <text x="530" y="208" class="small">k_idx:off</text>
+  <text x="610" y="208" class="small">k_idx:off</text>
+  <text x="690" y="208" class="small">k_idx:off</text>
+  <text x="770" y="208" class="small">k_idx:off</text>
+  <text x="860" y="208" class="small">...</text>
+
+  <text x="510" y="234" class="small">Per synapse: 4-bit kernel_idx + 8-bit src_offset = 12 bits</text>
+  <text x="510" y="250" class="small">(vs 32 bits in traditional: 8-bit weight + 24-bit address)</text>
+
+  <!-- Memory calculation -->
+  <rect x="510" y="263" width="400" height="30" fill="none" stroke="black" stroke-width="1"/>
+  <text x="710" y="283" text-anchor="middle" class="small" font-weight="bold">Total: 9 bytes + 100 x 9 x 12-bit = 144 bytes (1152 bits)</text>
+
+  <!-- ===== Decompression Pipeline ===== -->
+  <rect x="20" y="340" width="910" height="115" fill="none" stroke="black" stroke-width="2"/>
+  <text x="475" y="360" text-anchor="middle" font-weight="bold">FMT_CONV Decompression Pipeline</text>
+  <line x1="20" y1="366" x2="930" y2="366" stroke="black" stroke-width="0.5"/>
+
+  <rect x="40" y="380" width="140" height="50" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="110" y="400" text-anchor="middle" class="small">Read Synapse</text>
+  <text x="110" y="415" text-anchor="middle" class="small">(kernel_idx, offset)</text>
+
+  <line x1="180" y1="405" x2="220" y2="405" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="220" y="380" width="140" height="50" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="290" y="400" text-anchor="middle" class="small">Kernel Lookup</text>
+  <text x="290" y="415" text-anchor="middle" class="small">w = kernel[k_idx]</text>
+
+  <line x1="360" y1="405" x2="400" y2="405" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="400" y="380" width="140" height="50" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="470" y="400" text-anchor="middle" class="small">Source Resolution</text>
+  <text x="470" y="415" text-anchor="middle" class="small">src = base + offset</text>
+
+  <line x1="540" y1="405" x2="580" y2="405" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="580" y="380" width="140" height="50" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="650" y="400" text-anchor="middle" class="small">Spike Check</text>
+  <text x="650" y="415" text-anchor="middle" class="small">spike[src] active?</text>
+
+  <line x1="720" y1="405" x2="760" y2="405" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="760" y="380" width="140" height="50" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="830" y="400" text-anchor="middle" class="small">Accumulate</text>
+  <text x="830" y="415" text-anchor="middle" class="small">I[dst] += w</text>
+
+  <!-- ===== Additional Details ===== -->
+  <rect x="20" y="475" width="910" height="165" fill="none" stroke="black" stroke-width="1"/>
+  <text x="475" y="495" text-anchor="middle" font-weight="bold">FMT_CONV Encoding Details</text>
+  <line x1="20" y1="502" x2="930" y2="502" stroke="black" stroke-width="0.5"/>
+
+  <!-- Index table entry for CONV -->
+  <text x="40" y="522" class="small" font-weight="bold">Index Table Entry (FMT_CONV):</text>
+
+  <g transform="translate(40, 530)">
+    <rect x="0" y="0" width="70" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="35" y="16" text-anchor="middle" class="small">fmt=3</text>
+
+    <rect x="70" y="0" width="100" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="120" y="16" text-anchor="middle" class="small">kernel_base</text>
+
+    <rect x="170" y="0" width="80" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="210" y="16" text-anchor="middle" class="small">kernel_sz</text>
+
+    <rect x="250" y="0" width="100" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="300" y="16" text-anchor="middle" class="small">syn_base</text>
+
+    <rect x="350" y="0" width="80" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="390" y="16" text-anchor="middle" class="small">num_syn</text>
+
+    <rect x="430" y="0" width="100" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="480" y="16" text-anchor="middle" class="small">src_base_id</text>
+
+    <rect x="530" y="0" width="80" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="570" y="16" text-anchor="middle" class="small">learn_en</text>
+  </g>
+
+  <text x="40" y="576" class="small">- fmt=3 identifies FMT_CONV (vs fmt=0 Dense, fmt=1 Sparse, fmt=2 Patterned)</text>
+  <text x="40" y="593" class="small">- kernel_base: address of shared kernel weights in pool SRAM</text>
+  <text x="40" y="610" class="small">- Kernel weights are stored once and referenced by all synapses in the group (weight sharing)</text>
+  <text x="40" y="627" class="small">- Memory savings scale with neuron count: for N neurons with KxK kernel, savings = N/(1 + N x (12/32)) = ~2.67x at N=100</text>
+</svg>

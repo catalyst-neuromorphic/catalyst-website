@@ -1,0 +1,57 @@
+---
+title: "28/28: FPGA Validation Complete"
+description: "Every N2 validation test passes on real programmable hardware. Cycle-accurate, bit-exact results on Xilinx UltraScale+."
+date: 2026-02-12
+tags: ["FPGA", "Validation"]
+---
+
+When you design a chip in simulation, you can make anything work. The real question is whether it holds up on actual hardware. Today we can confirm: it does. Every single N2 validation test passes on a Xilinx UltraScale+ VU47P FPGA.
+
+## The setup
+
+We validated N2 on an AWS F2 instance — Amazon's FPGA development platform based on the Xilinx VU47P. This is real programmable logic, not software simulation. The RTL synthesises, places, routes, and runs at speed. Every signal is physical.
+
+The validation suite covers the full architecture:
+
+- **Basic spike propagation** — single spikes traverse the pipeline correctly
+- **Multi-core mesh routing** — spikes route across the 128-core mesh network
+- **STDP learning convergence** — the learning engine updates weights correctly over time
+- **All 5 neuron models** — LIF, Izhikevich, ALIF, Sigma-Delta, Resonate-and-Fire
+- **Graded spike payloads** — 8-bit payloads survive encode, route, decode
+- **Axonal delay accuracy** — delays from 1 to 63 timesteps delivered at exact cycle
+- **Cross-core microcode** — learning rules execute across core boundaries (163,000 spikes)
+- **Performance** — 81,000 spikes routed in 3.4 milliseconds
+
+All 28 tests. Zero failures.
+
+## Cycle-accurate, bit-exact
+
+The FPGA results match the software simulation bit-for-bit. This isn't "close enough" — it's exact. Every spike timestamp, every weight update, every membrane potential value matches between the Python SDK simulation and the hardware execution.
+
+This matters because it means the neurocore SDK is a faithful representation of the hardware. When you develop and test a spiking neural network in Python, the behaviour you see is the behaviour you'll get on silicon.
+
+## What we learned
+
+FPGA validation exposed a handful of issues that pure simulation missed:
+
+**BRAM initialisation.** In simulation, `ifdef SIMULATION` blocks handle memory initialisation cleanly. On FPGA, those blocks don't exist. We had to ensure all 128 cores receive a HALT instruction before enabling neuron model execution — otherwise cores with uninitialised instruction memory would execute garbage.
+
+**Timing closure.** The mesh router's critical path required careful pipelining to meet timing at the target clock frequency. The fix was adding a single pipeline register in the crossbar — invisible to the functional simulation but essential for hardware.
+
+**Power-on sequencing.** The learning engine's microcode registers need to be programmed before the first timestep. In simulation, this happens "instantly." On FPGA, we added an explicit initialisation phase to the boot sequence.
+
+None of these were fundamental design issues — they were the normal gap between simulation and hardware that every chip design hits. The architecture is sound.
+
+## The SDK connection
+
+The neurocore SDK (v3.7.0) includes an FPGA backend that communicates with the hardware via PCIe DMA. The same Python code that runs simulations can target real hardware with a single backend flag:
+
+```python
+import neurocore as nc
+
+net = nc.Network(backend="fpga")  # or "cpu" or "gpu"
+```
+
+3,091 tests verify the SDK across all three backends.
+
+[Read the N2 paper →](/papers/catalyst-n2.pdf) | [Explore N2 architecture →](/processors/n2)
