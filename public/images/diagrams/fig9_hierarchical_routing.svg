@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .small { font-size: 9px; }
+    .mono { font-family: monospace; font-size: 10px; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="25" text-anchor="middle" class="title">Figure 9: Hierarchical Two-Level Multicast Routing</text>
+
+  <!-- Spike source -->
+  <rect x="30" y="60" width="120" height="50" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="90" y="82" text-anchor="middle" font-weight="bold">Source Spike</text>
+  <text x="90" y="98" text-anchor="middle" class="small">neuron_id + payload</text>
+
+  <!-- Local Route Table -->
+  <rect x="200" y="40" width="250" height="200" fill="none" stroke="black" stroke-width="2"/>
+  <text x="325" y="60" text-anchor="middle" font-weight="bold">Local Route Table</text>
+  <text x="325" y="75" text-anchor="middle" class="small">8 slots per neuron (ROUTE_FANOUT=8)</text>
+
+  <!-- Slot entries -->
+  <rect x="215" y="85" width="220" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="325" y="99" text-anchor="middle" class="mono">Slot 0: [V|dest_core|dest_nrn|wt]</text>
+  <rect x="215" y="103" width="220" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="325" y="117" text-anchor="middle" class="mono">Slot 1: [V|dest_core|dest_nrn|wt]</text>
+  <rect x="215" y="121" width="220" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="325" y="135" text-anchor="middle" class="mono">Slot 2: [V|dest_core|dest_nrn|wt]</text>
+  <text x="325" y="157" text-anchor="middle">...</text>
+  <rect x="215" y="165" width="220" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="325" y="179" text-anchor="middle" class="mono">Slot 7: [V|dest_core|dest_nrn|wt]</text>
+
+  <!-- Address format -->
+  <text x="325" y="200" text-anchor="middle" class="small">Addr: {core_id, neuron_id, slot}</text>
+  <text x="325" y="213" text-anchor="middle" class="small">Entry: V(1) + core(12) + nrn(10) + wt(16)</text>
+  <text x="325" y="226" text-anchor="middle" class="small">= 40 bits per slot, 1M entries total</text>
+
+  <!-- Global Route Table -->
+  <rect x="500" y="40" width="250" height="160" fill="none" stroke="black" stroke-width="2"/>
+  <text x="625" y="60" text-anchor="middle" font-weight="bold">Global Route Table</text>
+  <text x="625" y="75" text-anchor="middle" class="small">4 slots per neuron (GLOBAL_ROUTE_SLOTS=4)</text>
+
+  <rect x="515" y="85" width="220" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="625" y="99" text-anchor="middle" class="mono">Slot 0: [V|dest_core|dest_nrn|wt]</text>
+  <rect x="515" y="103" width="220" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="625" y="117" text-anchor="middle" class="mono">Slot 1: [V|dest_core|dest_nrn|wt]</text>
+  <rect x="515" y="121" width="220" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="625" y="135" text-anchor="middle" class="mono">Slot 2: [V|dest_core|dest_nrn|wt]</text>
+  <rect x="515" y="139" width="220" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="625" y="153" text-anchor="middle" class="mono">Slot 3: [V|dest_core|dest_nrn|wt]</text>
+
+  <text x="625" y="180" text-anchor="middle" class="small">Address: {core_id[11:0], neuron_id[9:0], slot[1:0]}</text>
+  <text x="625" y="195" text-anchor="middle" class="small">Total: 128 x 1024 x 4 = 524K entries</text>
+
+  <!-- Arrow from source to Local Route Table -->
+  <line x1="150" y1="85" x2="200" y2="85" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Arrow from source to Global Route Table (routed above both boxes) -->
+  <line x1="90" y1="60" x2="90" y2="33" stroke="black" stroke-width="1.5"/>
+  <line x1="90" y1="33" x2="490" y2="33" stroke="black" stroke-width="1.5"/>
+  <line x1="490" y1="33" x2="490" y2="120" stroke="black" stroke-width="1.5"/>
+  <line x1="490" y1="120" x2="500" y2="120" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="493" y="80" class="small">global</text>
+
+  <!-- Cluster diagram -->
+  <rect x="100" y="280" width="600" height="150" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="400" y="300" text-anchor="middle" font-weight="bold">Multi-Core Mesh with Cluster Hierarchy</text>
+
+  <!-- Cluster 0 -->
+  <rect x="120" y="315" width="170" height="90" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="205" y="332" text-anchor="middle" class="small">Cluster 0</text>
+  <rect x="130" y="340" width="35" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="148" y="357" text-anchor="middle" class="small">C0</text>
+  <rect x="170" y="340" width="35" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="188" y="357" text-anchor="middle" class="small">C1</text>
+  <rect x="130" y="370" width="35" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="148" y="387" text-anchor="middle" class="small">C2</text>
+  <rect x="170" y="370" width="35" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="188" y="387" text-anchor="middle" class="small">C3</text>
+  <text x="250" y="370" text-anchor="middle" class="small">Local</text>
+  <text x="250" y="385" text-anchor="middle" class="small">routes</text>
+
+  <!-- Cluster 1 -->
+  <rect x="310" y="315" width="170" height="90" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="395" y="332" text-anchor="middle" class="small">Cluster 1</text>
+  <rect x="320" y="340" width="35" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="338" y="357" text-anchor="middle" class="small">C4</text>
+  <rect x="360" y="340" width="35" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="378" y="357" text-anchor="middle" class="small">C5</text>
+  <rect x="320" y="370" width="35" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="338" y="387" text-anchor="middle" class="small">C6</text>
+  <rect x="360" y="370" width="35" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="378" y="387" text-anchor="middle" class="small">C7</text>
+
+  <!-- Cluster N -->
+  <rect x="510" y="315" width="170" height="90" fill="none" stroke="black" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="595" y="365" text-anchor="middle">... Cluster 31</text>
+
+  <!-- Global route arrows between clusters -->
+  <line x1="290" y1="360" x2="310" y2="360" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="480" y1="360" x2="510" y2="360" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="395" y="420" text-anchor="middle" class="small">Global routes for inter-cluster communication</text>
+
+  <!-- Total per neuron (below cluster diagram) -->
+  <text x="400" y="445" text-anchor="middle" font-weight="bold">Total per neuron: 8 local + 4 global = 12 multicast targets</text>
+</svg>

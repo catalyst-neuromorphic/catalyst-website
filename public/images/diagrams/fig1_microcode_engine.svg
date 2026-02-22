@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="780" viewBox="0 0 900 780">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .label { font-size: 10px; }
+    .small { font-size: 9px; }
+  </style>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="450" y="25" text-anchor="middle" class="title">Figure 1: Programmable Neuron Microcode Engine</text>
+
+  <!-- ===== Instruction SRAM Block ===== -->
+  <rect x="30" y="55" width="180" height="115" fill="none" stroke="black" stroke-width="2"/>
+  <text x="120" y="78" text-anchor="middle" font-weight="bold">Instruction SRAM</text>
+  <text x="120" y="95" text-anchor="middle" class="small">256 instructions/core</text>
+  <text x="120" y="110" text-anchor="middle" class="small">32-bit per instruction</text>
+  <text x="120" y="125" text-anchor="middle" class="small">(opcode + dst + src + imm)</text>
+  <text x="120" y="143" text-anchor="middle" class="small">14 opcodes: ADD, SUB, MUL,</text>
+  <text x="120" y="157" text-anchor="middle" class="small">CMP, BR, MOV, SHL, SHR, ...</text>
+
+  <!-- Per-neuron Offset Register -->
+  <rect x="30" y="200" width="180" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="120" y="222" text-anchor="middle" font-weight="bold">Per-Neuron Offset</text>
+  <text x="120" y="237" text-anchor="middle" class="small">10-bit offset per neuron</text>
+  <text x="120" y="250" text-anchor="middle" class="small">Selects program start addr</text>
+
+  <!-- Arrow: Offset -> SRAM -->
+  <line x1="120" y1="200" x2="120" y2="170" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="142" y="190" class="small">addr</text>
+
+  <!-- ===== MUX Block ===== -->
+  <rect x="50" y="290" width="140" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="120" y="312" text-anchor="middle" font-weight="bold">MUX</text>
+  <text x="120" y="330" text-anchor="middle" class="small">microcode_en?</text>
+
+  <!-- Arrow from Per-Neuron Offset down to MUX -->
+  <line x1="120" y1="255" x2="120" y2="290" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="142" y="275" class="small">enable = 1</text>
+
+  <!-- ===== FSM States ===== -->
+  <text x="340" y="55" text-anchor="middle" class="label" font-weight="bold">FSM States</text>
+
+  <rect x="265" y="65" width="150" height="40" fill="none" stroke="black" stroke-width="2"/>
+  <text x="340" y="90" text-anchor="middle" font-weight="bold">PROGRAM LOAD</text>
+
+  <rect x="265" y="130" width="150" height="40" fill="none" stroke="black" stroke-width="2"/>
+  <text x="340" y="155" text-anchor="middle" font-weight="bold">INSTRUCTION FETCH</text>
+
+  <rect x="265" y="195" width="150" height="45" fill="none" stroke="black" stroke-width="2"/>
+  <text x="340" y="222" text-anchor="middle" font-weight="bold">EXECUTE</text>
+
+  <!-- FSM arrows -->
+  <line x1="340" y1="105" x2="340" y2="130" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="340" y1="170" x2="340" y2="195" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Arrow from SRAM to Fetch -->
+  <line x1="210" y1="105" x2="265" y2="150" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Loop back from Execute to Fetch -->
+  <path d="M 415 210 Q 450 210 450 150 Q 450 145 415 145" fill="none" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="462" y="208" class="small">next instr</text>
+
+  <!-- ===== Register File ===== -->
+  <rect x="540" y="55" width="200" height="205" fill="none" stroke="black" stroke-width="2"/>
+  <text x="640" y="76" text-anchor="middle" font-weight="bold">Register File (R0-R15)</text>
+  <line x1="540" y1="84" x2="740" y2="84" stroke="black" stroke-width="0.5"/>
+
+  <!-- Register mapping -->
+  <text x="558" y="100" class="small">R0: current (I)</text>
+  <text x="558" y="115" class="small">R1: voltage (V)</text>
+  <text x="558" y="130" class="small">R2: threshold (theta)</text>
+  <text x="558" y="145" class="small">R3: bias (b)</text>
+  <text x="558" y="160" class="small">R4: decay factor (lambda_v)</text>
+  <text x="558" y="175" class="small">R5: refractory counter</text>
+  <text x="558" y="190" class="small">R6-R10: user-defined</text>
+  <text x="558" y="205" class="small">R11: trace1 (pre-syn)</text>
+  <text x="558" y="220" class="small">R12: trace2 (post-syn)</text>
+  <text x="558" y="235" class="small">R13-R15: scratch</text>
+
+  <!-- Arrow from Execute to Register File -->
+  <line x1="415" y1="210" x2="540" y2="155" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="455" y="198" class="small">read/write</text>
+
+  <!-- ===== HALT / EMIT Paths ===== -->
+  <rect x="250" y="290" width="100" height="42" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="300" y="308" text-anchor="middle" font-weight="bold">HALT</text>
+  <text x="300" y="322" text-anchor="middle" class="small">(no spike)</text>
+
+  <rect x="420" y="290" width="100" height="42" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="470" y="308" text-anchor="middle" font-weight="bold">EMIT</text>
+  <text x="470" y="322" text-anchor="middle" class="small">(spike out)</text>
+
+  <!-- Arrows from Execute to HALT/EMIT -->
+  <line x1="310" y1="240" x2="300" y2="290" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="285" y="268" class="small">halt</text>
+
+  <line x1="380" y1="240" x2="460" y2="290" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="435" y="265" class="small">emit</text>
+
+  <!-- Arrow from EMIT to Spike FIFO -->
+  <rect x="580" y="290" width="140" height="42" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="650" y="315" text-anchor="middle" font-weight="bold">Spike FIFO</text>
+  <line x1="520" y1="311" x2="580" y2="311" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ===== Dashed separator line ===== -->
+  <line x1="20" y1="380" x2="880" y2="380" stroke="black" stroke-width="1.5" stroke-dasharray="10,5"/>
+
+  <!-- enable=0 label well below the dashed line -->
+  <line x1="120" y1="345" x2="120" y2="430" stroke="black" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <text x="142" y="418" class="small">enable = 0</text>
+
+  <!-- ===== Fixed CUBA Datapath (dashed bypass) ===== -->
+  <rect x="50" y="440" width="700" height="100" fill="none" stroke="black" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="400" y="462" text-anchor="middle" font-weight="bold">Fixed CUBA Datapath (bypass when microcode disabled)</text>
+
+  <!-- CUBA pipeline boxes -->
+  <rect x="70" y="475" width="130" height="45" fill="none" stroke="black" stroke-width="1"/>
+  <text x="135" y="494" text-anchor="middle" class="small">V = V x lambda_v + I</text>
+  <text x="135" y="509" text-anchor="middle" class="small">Current Decay</text>
+
+  <rect x="225" y="475" width="120" height="45" fill="none" stroke="black" stroke-width="1"/>
+  <text x="285" y="494" text-anchor="middle" class="small">V &gt;= theta ?</text>
+  <text x="285" y="509" text-anchor="middle" class="small">Threshold Test</text>
+
+  <rect x="370" y="475" width="120" height="45" fill="none" stroke="black" stroke-width="1"/>
+  <text x="430" y="494" text-anchor="middle" class="small">V = V_reset</text>
+  <text x="430" y="509" text-anchor="middle" class="small">Reset / Refrac</text>
+
+  <rect x="515" y="475" width="120" height="45" fill="none" stroke="black" stroke-width="1"/>
+  <text x="575" y="494" text-anchor="middle" class="small">Spike Out</text>
+  <text x="575" y="509" text-anchor="middle" class="small">to FIFO</text>
+
+  <!-- CUBA pipeline arrows -->
+  <line x1="200" y1="497" x2="225" y2="497" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="345" y1="497" x2="370" y2="497" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="490" y1="497" x2="515" y2="497" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- ===== Legend / Notes ===== -->
+  <rect x="30" y="575" width="840" height="130" fill="none" stroke="black" stroke-width="1"/>
+  <text x="450" y="597" text-anchor="middle" font-weight="bold">Programmable Microcode Engine -- Key Features</text>
+  <line x1="30" y1="605" x2="870" y2="605" stroke="black" stroke-width="0.5"/>
+
+  <text x="50" y="625" class="small">1. Each neuron has a 10-bit program offset selecting its start address within the shared 256-instruction SRAM.</text>
+  <text x="50" y="643" class="small">2. Three FSM states: PROGRAM LOAD (fetch offset), INSTRUCTION FETCH (read instruction word), EXECUTE (ALU op on register file).</text>
+  <text x="50" y="661" class="small">3. Register file R0-R15 maps directly to neuron state variables (voltage, current, threshold, traces, etc.).</text>
+  <text x="50" y="679" class="small">4. HALT terminates without spike; EMIT terminates and enqueues spike into output FIFO with optional graded payload.</text>
+  <text x="50" y="697" class="small">5. When microcode_en=0, the fixed CUBA datapath is used (backward compatible with N1 behavior).</text>
+</svg>

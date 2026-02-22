@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="820" viewBox="0 0 900 820">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .label { font-size: 10px; }
+    .small { font-size: 9px; }
+  </style>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="450" y="25" text-anchor="middle" class="title">Figure 5: Five-Trace Learning System</text>
+
+  <!-- ===== Trace Architecture Overview ===== -->
+  <rect x="20" y="42" width="860" height="260" fill="none" stroke="black" stroke-width="2"/>
+  <text x="450" y="62" text-anchor="middle" font-weight="bold">Five Independent Eligibility Traces per Neuron</text>
+  <line x1="20" y1="68" x2="880" y2="68" stroke="black" stroke-width="0.5"/>
+
+  <!-- ===== Pre-synaptic traces (left group) ===== -->
+
+  <!-- Trace x1 -->
+  <rect x="60" y="85" width="140" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="130" y="105" text-anchor="middle" font-weight="bold">x1 (pre-syn)</text>
+  <text x="130" y="120" text-anchor="middle" class="small">decay_shift: tau_x1</text>
+  <text x="130" y="133" text-anchor="middle" class="small">7-bit [0-127]</text>
+
+  <!-- Trace x2 -->
+  <rect x="230" y="85" width="140" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="300" y="105" text-anchor="middle" font-weight="bold">x2 (pre-syn 2)</text>
+  <text x="300" y="120" text-anchor="middle" class="small">decay_shift: tau_x2</text>
+  <text x="300" y="133" text-anchor="middle" class="small">7-bit [0-127]</text>
+
+  <!-- ===== Post-synaptic traces (right group) ===== -->
+
+  <!-- Trace y1 -->
+  <rect x="430" y="85" width="140" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="500" y="105" text-anchor="middle" font-weight="bold">y1 (post-syn)</text>
+  <text x="500" y="120" text-anchor="middle" class="small">decay_shift: tau_y1</text>
+  <text x="500" y="133" text-anchor="middle" class="small">7-bit [0-127]</text>
+
+  <!-- Trace y2 -->
+  <rect x="600" y="85" width="140" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="670" y="105" text-anchor="middle" font-weight="bold">y2 (post-syn 2)</text>
+  <text x="670" y="120" text-anchor="middle" class="small">decay_shift: tau_y2</text>
+  <text x="670" y="133" text-anchor="middle" class="small">7-bit [0-127]</text>
+
+  <!-- Trace y3 -->
+  <rect x="770" y="85" width="100" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="820" y="105" text-anchor="middle" font-weight="bold">y3</text>
+  <text x="820" y="118" text-anchor="middle" class="small">(post-syn 3)</text>
+  <text x="820" y="133" text-anchor="middle" class="small">7-bit [0-127]</text>
+
+  <!-- ===== Pre-synaptic spike event ===== -->
+  <!-- Event label with box -->
+  <rect x="100" y="170" width="150" height="35" fill="none" stroke="black" stroke-width="1"/>
+  <text x="175" y="185" text-anchor="middle" class="small" font-weight="bold">pre-spike event</text>
+  <text x="175" y="198" text-anchor="middle" class="small">(sets x1, x2 = 127)</text>
+  <!-- Arrows UP from event box to each trace -->
+  <line x1="130" y1="170" x2="130" y2="140" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="225" y1="170" x2="300" y2="140" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ===== Post-synaptic spike event ===== -->
+  <!-- Event label with box -->
+  <rect x="570" y="170" width="180" height="35" fill="none" stroke="black" stroke-width="1"/>
+  <text x="660" y="185" text-anchor="middle" class="small" font-weight="bold">post-spike event</text>
+  <text x="660" y="198" text-anchor="middle" class="small">(sets y1, y2, y3 = 127)</text>
+  <!-- Arrows UP from event box to each trace -->
+  <line x1="590" y1="170" x2="500" y2="140" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="660" y1="170" x2="670" y2="140" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="730" y1="170" x2="820" y2="140" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ===== Saturation note ===== -->
+  <text x="450" y="228" text-anchor="middle" class="small">On spike event: trace saturates to MAX (127 for learning traces, 255 for neuron microcode registers)</text>
+
+  <!-- ===== Feed to learning engine (clear separation) ===== -->
+  <text x="450" y="258" text-anchor="middle" class="small" font-weight="bold">feed to learning engine</text>
+  <line x1="450" y1="264" x2="450" y2="290" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ===== Register Types Distinction ===== -->
+  <rect x="20" y="305" width="420" height="140" fill="none" stroke="black" stroke-width="2"/>
+  <text x="230" y="325" text-anchor="middle" font-weight="bold">7-bit Learning Trace Registers</text>
+  <line x1="20" y1="332" x2="440" y2="332" stroke="black" stroke-width="0.5"/>
+
+  <text x="40" y="352" class="small">Traces: x1, x2, y1, y2, y3</text>
+  <text x="40" y="369" class="small">Range: 0 to 127 (LEARNING_TRACE_MAX)</text>
+  <text x="40" y="386" class="small">Width: 7 bits</text>
+  <text x="40" y="403" class="small">Used by: Learning engine eligibility computation</text>
+  <text x="40" y="420" class="small">Saturation: spike event sets trace = 127</text>
+  <text x="40" y="437" class="small">Decay: exponential via shift, min-step-1 guarantee</text>
+
+  <rect x="460" y="305" width="420" height="140" fill="none" stroke="black" stroke-width="2"/>
+  <text x="670" y="325" text-anchor="middle" font-weight="bold">8-bit Neuron Microcode Registers</text>
+  <line x1="460" y1="332" x2="880" y2="332" stroke="black" stroke-width="0.5"/>
+
+  <text x="480" y="352" class="small">Registers: R11 (trace1), R12 (trace2) in microcode</text>
+  <text x="480" y="369" class="small">Range: 0 to 255 (FP_TRACE_MAX)</text>
+  <text x="480" y="386" class="small">Width: 8 bits</text>
+  <text x="480" y="403" class="small">Used by: Neuron microcode programs (ALU operations)</text>
+  <text x="480" y="420" class="small">Saturation: spike event sets register = 255</text>
+  <text x="480" y="437" class="small">Decay: computed by microcode instructions</text>
+
+  <!-- ===== Decay Behavior Diagram ===== -->
+  <rect x="20" y="465" width="860" height="210" fill="none" stroke="black" stroke-width="2"/>
+  <text x="450" y="485" text-anchor="middle" font-weight="bold">Exponential Decay with Min-Step-1 Guarantee</text>
+  <line x1="20" y1="492" x2="880" y2="492" stroke="black" stroke-width="0.5"/>
+
+  <!-- Decay curve -->
+  <!-- Y axis -->
+  <line x1="70" y1="510" x2="70" y2="650" stroke="black" stroke-width="1.5"/>
+  <line x1="70" y1="510" x2="65" y2="518" stroke="black" stroke-width="1"/>
+  <line x1="70" y1="510" x2="75" y2="518" stroke="black" stroke-width="1"/>
+  <text x="63" y="507" text-anchor="end" class="small">127</text>
+  <text x="63" y="580" text-anchor="end" class="small">64</text>
+  <text x="63" y="650" text-anchor="end" class="small">0</text>
+
+  <!-- X axis -->
+  <line x1="70" y1="650" x2="400" y2="650" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="235" y="668" text-anchor="middle" class="small">timesteps</text>
+
+  <!-- Decay curve (exponential) -->
+  <polyline points="90,512 110,520 130,530 150,542 170,552 190,562 210,572 230,582 250,590 270,598 290,604 310,610 330,616 350,620 370,624"
+            fill="none" stroke="black" stroke-width="2"/>
+
+  <!-- Spike event marker -->
+  <line x1="90" y1="650" x2="90" y2="512" stroke="black" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="90" y="665" text-anchor="middle" class="small">spike</text>
+
+  <!-- Decay formula -->
+  <text x="460" y="520" class="small" font-weight="bold">Decay Formula (per timestep):</text>
+  <text x="460" y="542" class="small">trace[t] = trace[t-1] - max(1, trace[t-1] >> tau)</text>
+  <text x="460" y="564" class="small" font-weight="bold">Where:</text>
+  <text x="460" y="584" class="small">tau = decay_shift (per-trace configurable)</text>
+  <text x="460" y="602" class="small">trace[t-1] >> tau = floor(trace / 2^tau)</text>
+  <text x="460" y="620" class="small">max(1, ...) = min-step-1 guarantee</text>
+  <text x="460" y="638" class="small">(ensures trace always reaches zero; avoids</text>
+  <text x="460" y="654" class="small"> stuck-at for small trace values where >>tau = 0)</text>
+
+  <!-- On spike annotation -->
+  <text x="460" y="672" class="small" font-weight="bold">On spike: trace = LEARNING_TRACE_MAX (127)</text>
+</svg>

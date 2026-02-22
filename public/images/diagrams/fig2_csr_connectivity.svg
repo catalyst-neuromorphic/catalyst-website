@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="550" viewBox="0 0 800 550">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .small { font-size: 9px; }
+    .mono { font-family: monospace; font-size: 10px; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="25" text-anchor="middle" class="title">Figure 2: CSR Connectivity Engine</text>
+
+  <!-- Index Table -->
+  <rect x="30" y="50" width="200" height="200" fill="none" stroke="black" stroke-width="2"/>
+  <text x="130" y="70" text-anchor="middle" font-weight="bold">Index Table SRAM</text>
+  <text x="130" y="85" text-anchor="middle" class="small">1024 entries (1 per neuron)</text>
+
+  <!-- Index entries -->
+  <rect x="45" y="100" width="170" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="50" y="117" class="mono">Neuron 0: [fmt|base|count]</text>
+  <rect x="45" y="125" width="170" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="50" y="142" class="mono">Neuron 1: [fmt|base|count]</text>
+  <rect x="45" y="150" width="170" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="50" y="167" class="mono">Neuron 2: [fmt|base|count]</text>
+  <text x="130" y="190" text-anchor="middle">...</text>
+  <rect x="45" y="200" width="170" height="25" fill="none" stroke="black" stroke-width="1"/>
+  <text x="50" y="217" class="mono">Neuron 1023: [fmt|base|cnt]</text>
+
+  <!-- Bit field breakdown -->
+  <rect x="30" y="265" width="200" height="50" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="130" y="280" text-anchor="middle" class="small">27-bit entry:</text>
+  <text x="130" y="295" text-anchor="middle" class="mono">[26:25]=fmt [24:8]=base [7:0]=count</text>
+  <text x="130" y="308" text-anchor="middle" class="small">fmt: 0=SPARSE, 1=DENSE, 2=POPULATION</text>
+
+  <!-- Arrow from index to pool -->
+  <line x1="230" y1="150" x2="310" y2="150" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="270" y="142" text-anchor="middle" class="small">base addr</text>
+
+  <!-- Connection Pool -->
+  <rect x="310" y="50" width="460" height="200" fill="none" stroke="black" stroke-width="2"/>
+  <text x="540" y="70" text-anchor="middle" font-weight="bold">Shared Connection Pool (131,072 entries)</text>
+
+  <!-- Three parallel SRAMs -->
+  <rect x="325" y="85" width="130" height="150" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="390" y="105" text-anchor="middle" font-weight="bold">Target SRAM</text>
+  <text x="390" y="120" text-anchor="middle" class="small">131K x 10 bits</text>
+  <rect x="340" y="135" width="100" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="390" y="148" text-anchor="middle" class="mono">neuron_id</text>
+  <rect x="340" y="153" width="100" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="390" y="166" text-anchor="middle" class="mono">neuron_id</text>
+  <rect x="340" y="171" width="100" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="390" y="184" text-anchor="middle" class="mono">neuron_id</text>
+  <text x="390" y="210" text-anchor="middle">...</text>
+
+  <rect x="470" y="85" width="130" height="150" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="535" y="105" text-anchor="middle" font-weight="bold">Weight SRAM</text>
+  <text x="535" y="120" text-anchor="middle" class="small">131K x 16 bits</text>
+  <rect x="485" y="135" width="100" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="535" y="148" text-anchor="middle" class="mono">weight (s16)</text>
+  <rect x="485" y="153" width="100" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="535" y="166" text-anchor="middle" class="mono">weight (s16)</text>
+  <rect x="485" y="171" width="100" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="535" y="184" text-anchor="middle" class="mono">weight (s16)</text>
+  <text x="535" y="210" text-anchor="middle">...</text>
+
+  <rect x="615" y="85" width="130" height="150" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="680" y="105" text-anchor="middle" font-weight="bold">Comp SRAM</text>
+  <text x="680" y="120" text-anchor="middle" class="small">131K x 2 bits</text>
+  <rect x="630" y="135" width="100" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="680" y="148" text-anchor="middle" class="mono">comp_id</text>
+  <rect x="630" y="153" width="100" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="680" y="166" text-anchor="middle" class="mono">comp_id</text>
+  <rect x="630" y="171" width="100" height="18" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="680" y="184" text-anchor="middle" class="mono">comp_id</text>
+  <text x="680" y="210" text-anchor="middle">...</text>
+
+  <!-- Three format explanations -->
+  <rect x="30" y="340" width="230" height="90" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="145" y="360" text-anchor="middle" font-weight="bold">Format 0: SPARSE</text>
+  <text x="145" y="378" text-anchor="middle" class="small">Explicit target per connection</text>
+  <text x="145" y="393" text-anchor="middle" class="small">target = pool_target[addr]</text>
+  <text x="145" y="408" text-anchor="middle" class="small">weight = pool_weight[addr]</text>
+
+  <rect x="280" y="340" width="230" height="90" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="395" y="360" text-anchor="middle" font-weight="bold">Format 1: DENSE</text>
+  <text x="395" y="378" text-anchor="middle" class="small">Implicit targets (base + offset)</text>
+  <text x="395" y="393" text-anchor="middle" class="small">target = base_target + index</text>
+  <text x="395" y="408" text-anchor="middle" class="small">weight = pool_weight[addr]</text>
+
+  <rect x="530" y="340" width="230" height="90" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="645" y="360" text-anchor="middle" font-weight="bold">Format 2: POPULATION</text>
+  <text x="645" y="378" text-anchor="middle" class="small">Shared weight, implicit targets</text>
+  <text x="645" y="393" text-anchor="middle" class="small">target = base_target + index</text>
+  <text x="645" y="408" text-anchor="middle" class="small">weight = shared_weight (1 read)</text>
+
+  <!-- Format selection MUX -->
+  <rect x="310" y="460" width="200" height="50" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="410" y="480" text-anchor="middle" font-weight="bold">Format MUX</text>
+  <text x="410" y="495" text-anchor="middle" class="small">Select target/weight based on fmt field</text>
+
+  <!-- Arrows from formats to MUX -->
+  <line x1="145" y1="430" x2="310" y2="480" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="395" y1="430" x2="410" y2="460" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="645" y1="430" x2="510" y2="480" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Output -->
+  <line x1="410" y1="510" x2="410" y2="540" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="410" y="550" text-anchor="middle" class="small">To Neuron Accumulators</text>
+</svg>

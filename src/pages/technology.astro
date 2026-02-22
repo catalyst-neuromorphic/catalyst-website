@@ -4,51 +4,158 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="Technology — Catalyst Neuromorphic" description="How neuromorphic computing works. Brain-inspired processors that learn in real time.">
 
-  <section class="pt-32 pb-20 px-6 md:px-12 text-center">
-    <h1 class="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tighter">Technology</h1>
-    <p class="text-lg text-white/40 mt-4">How neuromorphic computing works.</p>
+  <section class="pt-36 pb-20 px-6 md:px-12 text-center">
+    <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Technology</p>
+    <h1 class="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tighter">How it works.</h1>
+    <p class="text-lg text-white/40 mt-4 max-w-[550px] mx-auto">Brain-inspired computing from first principles.</p>
   </section>
 
-  <!-- SPIKES -->
+  <!-- SPIKES vs MULTIPLIES -->
   <section class="py-32 px-6 md:px-12">
-    <div class="max-w-[800px] mx-auto text-center">
-      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">Spikes, not multiplies.</h2>
-      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
-        Traditional processors perform billions of multiply-accumulate operations every cycle. Neuromorphic processors communicate through discrete spikes &mdash; binary events that propagate only when needed.
+    <div class="max-w-[900px] mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <h2 class="text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">Spikes, not multiplies.</h2>
+          <p class="text-white/40 mt-6 leading-relaxed">
+            Traditional processors perform billions of multiply-accumulate operations every cycle. Neuromorphic processors communicate through discrete spikes &mdash; binary events that propagate only when needed.
+          </p>
+          <p class="text-white/40 mt-4 leading-relaxed">
+            No spike, no computation, no energy. A neuromorphic chip doing nothing consumes almost zero power. This event-driven model is how the human brain achieves 20 watts.
+          </p>
+        </div>
+        <div class="reveal glass p-8 text-center">
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <div class="text-xs text-white/25 uppercase tracking-wider mb-3">GPU</div>
+              <div class="h-32 bg-red-500/10 rounded-lg flex items-end justify-center pb-3 relative">
+                <div class="absolute inset-x-3 bottom-3 bg-red-500/30 rounded" style="height: 85%"></div>
+                <span class="relative text-xs text-red-400 font-mono">300W</span>
+              </div>
+            </div>
+            <div>
+              <div class="text-xs text-white/25 uppercase tracking-wider mb-3">Neuromorphic</div>
+              <div class="h-32 bg-catalyst-green/10 rounded-lg flex items-end justify-center pb-3 relative">
+                <div class="absolute inset-x-3 bottom-3 bg-catalyst-green/30 rounded" style="height: 7%"></div>
+                <span class="relative text-xs text-catalyst-green font-mono">&lt;1W</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-xs text-white/20 mt-4">Typical inference power consumption</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[900px] mx-auto">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight text-center mb-6">Catalyst N2 Architecture</h2>
+      <p class="reveal text-white/40 text-center max-w-[600px] mx-auto mb-12">
+        128 neuromorphic cores connected by a mesh network. Each core contains 1,024 neurons, a synapse memory, and a local learning engine.
       </p>
-      <p class="reveal text-lg text-white/40 mt-4 leading-relaxed max-w-[600px] mx-auto">
-        No spike, no computation, no energy. A neuromorphic chip doing nothing consumes almost zero power.
-      </p>
+
+      <div class="reveal glass-strong p-8 rounded-xl mb-8">
+        <img src="/images/diagrams/fig9_complete_n2_pipeline.svg" alt="N2 complete processing pipeline" class="w-full invert opacity-80" loading="lazy" />
+        <p class="text-xs text-white/25 text-center mt-4">N2 processing pipeline: spike input → synapse lookup → dendritic accumulation → neuron model → spike output → learning update</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 reveal-stagger">
+        <div class="glass p-6">
+          <img src="/images/diagrams/fig1_system_overview.svg" alt="System overview" class="w-full invert opacity-70 mb-4" loading="lazy" />
+          <h3 class="font-semibold mb-1">Core Architecture</h3>
+          <p class="text-sm text-white/40">Each core has its own neuron array, synapse RAM, and programmable learning engine. Cores communicate via the mesh NoC.</p>
+        </div>
+        <div class="glass p-6">
+          <img src="/images/diagrams/fig9_hierarchical_routing.svg" alt="Hierarchical routing" class="w-full invert opacity-70 mb-4" loading="lazy" />
+          <h3 class="font-semibold mb-1">Mesh Network</h3>
+          <p class="text-sm text-white/40">128 cores connected by a 2D mesh with deterministic routing. Multicast delivery, configurable delays, graded payloads.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- LEARNING -->
   <section class="py-32 px-6 md:px-12">
-    <div class="max-w-[800px] mx-auto text-center">
-      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">Learning happens on-chip.</h2>
-      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
-        When two neurons fire in close succession, the connection between them strengthens or weakens &mdash; the same mechanism your brain uses to form memories. No cloud. No retraining. The chip adapts in real time.
-      </p>
+    <div class="max-w-[900px] mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="reveal glass p-6">
+          <img src="/images/diagrams/fig3_three_factor_learning.svg" alt="Three-factor learning rule" class="w-full invert opacity-70 mb-4" loading="lazy" />
+          <p class="text-xs text-white/25 text-center">Three-factor learning: pre-synaptic × post-synaptic × modulatory reward signal</p>
+        </div>
+        <div class="reveal">
+          <h2 class="text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">Learning happens on-chip.</h2>
+          <p class="text-white/40 mt-6 leading-relaxed">
+            When two neurons fire in close succession, the connection between them strengthens or weakens &mdash; the same mechanism your brain uses to form memories. No cloud. No retraining. The chip adapts in real time.
+          </p>
+          <p class="text-white/40 mt-4 leading-relaxed">
+            N2's programmable microcode engine supports arbitrary learning rules: STDP, reward-modulated learning, eligibility traces, homeostatic plasticity. Sixteen registers, fully programmable per core group.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 mt-12 reveal-stagger">
+        <div class="glass p-6">
+          <img src="/images/diagrams/fig4_microcode_engine.svg" alt="Microcode engine" class="w-full invert opacity-70 mb-3" loading="lazy" />
+          <h3 class="text-sm font-semibold mb-1">Microcode Engine</h3>
+          <p class="text-xs text-white/40">16-register programmable engine executes custom learning rules as microcode programs.</p>
+        </div>
+        <div class="glass p-6">
+          <img src="/images/diagrams/fig5_five_trace_learning.svg" alt="Eligibility traces" class="w-full invert opacity-70 mb-3" loading="lazy" />
+          <h3 class="text-sm font-semibold mb-1">Eligibility Traces</h3>
+          <p class="text-xs text-white/40">Five independent traces with configurable decay. Persistent traces survive across timesteps.</p>
+        </div>
+        <div class="glass p-6">
+          <img src="/images/diagrams/fig6_persistent_reward_trace.svg" alt="Reward modulation" class="w-full invert opacity-70 mb-3" loading="lazy" />
+          <h3 class="text-sm font-semibold mb-1">Reward Modulation</h3>
+          <p class="text-xs text-white/40">Third-factor reward signals modulate plasticity. Enables reinforcement learning on-chip.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- EFFICIENCY -->
+  <!-- NEURON MODELS -->
   <section class="py-32 px-6 md:px-12">
-    <div class="max-w-[800px] mx-auto text-center">
-      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">1000x more efficient.</h2>
-      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
-        By only computing when spikes occur, neuromorphic processors achieve orders-of-magnitude better energy efficiency for inference. No idle power. No wasted cycles. The architecture mirrors the brain's own energy model.
+    <div class="max-w-[900px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight mb-6">Five neuron models.</h2>
+      <p class="reveal text-white/40 max-w-[600px] mx-auto mb-12">
+        Runtime-configurable per compartment. No recompilation, no resynthesis. Choose the right model for each layer of your network.
       </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 reveal-stagger">
+        {[
+          { name: 'Standard CUBA LIF', desc: 'Classic leaky integrate-and-fire. Configurable membrane time constant, threshold, and reset.' },
+          { name: 'Izhikevich', desc: 'Four parameters (a,b,c,d) produce 20+ spiking behaviours from tonic to bursting to chattering.' },
+          { name: 'Adaptive LIF', desc: 'Dynamic threshold adapts with activity. Intrinsic homeostatic plasticity.' },
+          { name: 'Sigma-Delta', desc: 'Graded output for rate-coded signals. Bridges spiking and analog domains.' },
+          { name: 'Resonate-and-Fire', desc: 'Complex-valued state enables frequency-selective temporal pattern detection.' },
+        ].map(model => (
+          <div class="glass p-5 text-left">
+            <h3 class="text-sm font-semibold mb-1">{model.name}</h3>
+            <p class="text-xs text-white/40">{model.desc}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
-  <!-- WHY IT MATTERS -->
+  <!-- SPIKE FORMATS -->
   <section class="py-32 px-6 md:px-12">
-    <div class="max-w-[800px] mx-auto text-center">
-      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">Why it matters.</h2>
-      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
-        AI's power consumption is growing faster than our ability to generate clean energy. Neuromorphic computing offers a path to intelligent systems that don't cost the planet. Real-time learning at the edge. Sensors that think for themselves. Intelligence without the electricity bill.
-      </p>
+    <div class="max-w-[900px] mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <h2 class="text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">Beyond binary spikes.</h2>
+          <p class="text-white/40 mt-6 leading-relaxed">
+            Traditional neuromorphic chips send binary spikes &mdash; a neuron either fires or it doesn't. N2 supports graded spikes with 8-bit payloads, enabling richer inter-neuron communication and more efficient encoding of continuous signals.
+          </p>
+          <p class="text-white/40 mt-4 leading-relaxed">
+            Configurable axonal delays (1&ndash;63 timesteps) enable temporal coding and conduction delay matching, critical for audio and temporal pattern recognition tasks.
+          </p>
+        </div>
+        <div class="reveal glass p-6">
+          <img src="/images/diagrams/fig5_graded_spikes.svg" alt="Graded spike formats" class="w-full invert opacity-70 mb-4" loading="lazy" />
+          <p class="text-xs text-white/25 text-center">Binary vs graded spike encoding. Graded spikes carry 8-bit payloads.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -56,16 +163,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="py-32 px-6 md:px-12">
     <div class="max-w-[800px] mx-auto text-center">
       <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">Python to silicon.</h2>
-      <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
-        Our SDK lets you define spiking neural networks in Python, simulate them on CPU or GPU, and deploy to real hardware. One codebase, three backends. What you test is what you get on silicon.
+      <p class="reveal text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
+        The neurocore SDK lets you define spiking neural networks in Python, simulate them on CPU or GPU, and deploy to real hardware. One codebase, three backends. What you test in simulation is exactly what runs on silicon.
       </p>
-      <a href="/cloud" class="reveal btn-primary mt-8 inline-flex">Try via Cloud API &rarr;</a>
-    </div>
-  </section>
+      <div class="reveal glass rounded-xl p-6 mt-10 text-left overflow-x-auto">
+        <pre class="text-sm font-mono text-white/60 leading-relaxed"><code>{`import neurocore as nc
 
-  <!-- CTA -->
-  <section class="py-20 px-6 md:px-12 text-center">
-    <a href="/processors" class="reveal btn-pill inline-flex">Explore our processors &rarr;</a>
+net = nc.Network(backend="fpga")   # or "cpu", "gpu"
+inp = net.add_layer(700, model="input")
+hid = net.add_layer(256, model="alif", recurrent=True)
+out = net.add_layer(20, model="lif")
+
+net.connect(inp, hid)
+net.connect(hid, hid)  # recurrent
+net.connect(hid, out)
+
+trainer = nc.Trainer(net, lr=1e-3)
+trainer.fit(train_data, epochs=100)`}</code></pre>
+      </div>
+      <div class="flex gap-4 justify-center mt-8">
+        <a href="/cloud" class="reveal btn-primary inline-flex">Try via Cloud API &rarr;</a>
+        <a href="/processors/n2" class="reveal btn-pill inline-flex">Explore N2 specs &rarr;</a>
+      </div>
+    </div>
   </section>
 
 </BaseLayout>

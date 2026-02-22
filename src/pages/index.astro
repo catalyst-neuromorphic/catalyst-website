@@ -5,14 +5,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Catalyst — Neuromorphic Processors">
 
   <!-- HERO -->
-  <section class="hero-section h-screen flex items-center justify-center text-center relative overflow-hidden">
+  <section class="hero-section min-h-screen flex items-center justify-center text-center relative overflow-hidden">
     <div id="neuralCanvas" class="absolute inset-0 z-[1] grid grid-cols-[repeat(40,1fr)] grid-rows-[repeat(22,1fr)] gap-px"></div>
-    <div class="relative z-[2]">
-      <h1 class="text-[clamp(3.5rem,7vw,7rem)] font-bold tracking-tighter leading-none">Catalyst</h1>
-      <p class="text-[clamp(1rem,1.5vw,1.35rem)] text-white/40 mt-4">Neuromorphic processors that think, learn, and consume almost nothing.</p>
-      <a href="#products" class="btn-pill mt-9 inline-flex">Explore our processors &rarr;</a>
+
+    <!-- Chip render floating over grid -->
+    <div class="absolute inset-0 z-[2] flex items-center justify-center pointer-events-none">
+      <div class="chip-glow w-[280px] md:w-[400px] lg:w-[480px] opacity-60">
+        <img src="/images/renders/n2-top.webp" alt="Catalyst N2 processor die" class="w-full h-auto rounded-2xl" loading="eager" />
+      </div>
     </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-[2] w-6 h-10 rounded-xl border border-white/15 flex justify-center pt-2 max-md:hidden">
+
+    <div class="relative z-[3] px-6">
+      <h1 class="text-[clamp(4rem,8vw,8rem)] font-bold tracking-tighter leading-[0.9]">Catalyst</h1>
+      <p class="text-[clamp(1rem,1.5vw,1.25rem)] text-white/40 mt-5 max-w-[520px] mx-auto leading-relaxed">
+        Neuromorphic processors that think, learn, and consume almost nothing.
+      </p>
+      <div class="flex gap-4 justify-center mt-10">
+        <a href="/processors/n2" class="btn-primary">Explore N2 &rarr;</a>
+        <a href="/cloud" class="btn-pill">Try Cloud API</a>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-[3] w-6 h-10 rounded-xl border border-white/15 flex justify-center pt-2 max-md:hidden">
       <span class="w-[3px] h-2 rounded-full bg-white/30 animate-bounce"></span>
     </div>
   </section>
@@ -38,83 +52,158 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         Your brain runs on 20 watts. It processes millions of sensory inputs in real time, learns continuously, and never needs a cooling system. We built processors that work the same way.
       </p>
     </div>
-    <div class="max-w-[1000px] mx-auto mt-20 grid grid-cols-3 gap-8 text-center">
-      <div class="reveal">
-        <div class="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight whitespace-nowrap">1000x</div>
-        <p class="text-sm text-white/35 mt-3 leading-relaxed">More energy efficient than GPU inference.</p>
+    <div class="max-w-[1000px] mx-auto mt-20 grid grid-cols-3 gap-8 text-center reveal-stagger">
+      <div>
+        <div class="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight text-white/90" data-count="1000" data-count-suffix="x">0x</div>
+        <p class="text-sm text-white/40 mt-3 leading-relaxed">More energy efficient than GPU inference.</p>
       </div>
-      <div class="reveal">
-        <div class="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight whitespace-nowrap">Real-time</div>
-        <p class="text-sm text-white/35 mt-3 leading-relaxed">On-chip learning. No cloud retraining.</p>
+      <div>
+        <div class="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight text-white/90">Real-time</div>
+        <p class="text-sm text-white/40 mt-3 leading-relaxed">On-chip learning. No cloud retraining.</p>
       </div>
-      <div class="reveal">
-        <div class="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight whitespace-nowrap">20W</div>
-        <p class="text-sm text-white/35 mt-3 leading-relaxed">Brain-scale power. Not kilowatts.</p>
+      <div>
+        <div class="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight text-white/90" data-count="20" data-count-suffix="W">0W</div>
+        <p class="text-sm text-white/40 mt-3 leading-relaxed">Brain-scale power. Not kilowatts.</p>
       </div>
     </div>
   </section>
 
   <!-- PRODUCTS -->
   <section id="products" class="py-40 px-6 md:px-12">
-    <div class="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
-      <!-- N2 -->
-      <div class="reveal text-center product-card-n2 rounded-3xl p-12">
-        <div class="w-56 h-56 mx-auto mb-8 rounded-3xl flex items-center justify-center chip-hero-n2">
-          <span class="text-5xl font-bold text-catalyst-blue/30">N2</span>
-        </div>
-        <h2 class="text-[clamp(2rem,3vw,2.5rem)] font-bold tracking-tighter leading-none">Catalyst N2</h2>
-        <p class="text-sm text-white/40 mt-3">Second generation. Full parity with the best in the world.</p>
-        <div class="flex items-center justify-center gap-3 mt-6">
-          <a href="/processors/n2" class="btn-primary">Learn more</a>
-          <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill">Enquire</a>
-        </div>
+    <div class="max-w-[1100px] mx-auto">
+      <h2 class="reveal text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight text-center mb-16">Two generations of silicon.</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-stagger">
+        <!-- N2 -->
+        <a href="/processors/n2" class="group product-card-n2 rounded-2xl p-8 no-underline transition-all duration-300 hover:border-catalyst-blue/20">
+          <div class="w-full aspect-square max-w-[320px] mx-auto mb-6 rounded-xl overflow-hidden">
+            <img src="/images/renders/n2-angled.webp" alt="Catalyst N2 die shot" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+          </div>
+          <div class="text-center">
+            <p class="text-xs text-catalyst-blue font-medium tracking-wider uppercase mb-2">Second Generation</p>
+            <h3 class="text-2xl font-bold tracking-tight">Catalyst N2</h3>
+            <p class="text-sm text-white/40 mt-2 mb-4">Full Loihi 2 parity. 128 cores, 131,072 neurons, 5 neuron models, programmable learning engine.</p>
+            <div class="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-white/[0.06]">
+              <div>
+                <p class="text-lg font-bold text-white/90">128</p>
+                <p class="text-[10px] text-white/30 uppercase tracking-wider">Cores</p>
+              </div>
+              <div>
+                <p class="text-lg font-bold text-white/90">131K</p>
+                <p class="text-[10px] text-white/30 uppercase tracking-wider">Neurons</p>
+              </div>
+              <div>
+                <p class="text-lg font-bold text-white/90">5</p>
+                <p class="text-[10px] text-white/30 uppercase tracking-wider">Models</p>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- N1 -->
+        <a href="/processors/n1" class="group product-card-n1 rounded-2xl p-8 no-underline transition-all duration-300 hover:border-white/15">
+          <div class="w-full aspect-square max-w-[320px] mx-auto mb-6 rounded-xl overflow-hidden">
+            <img src="/images/renders/n1-top.webp" alt="Catalyst N1 die shot" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+          </div>
+          <div class="text-center">
+            <p class="text-xs text-white/40 font-medium tracking-wider uppercase mb-2">First Generation</p>
+            <h3 class="text-2xl font-bold tracking-tight">Catalyst N1</h3>
+            <p class="text-sm text-white/40 mt-2 mb-4">Full Loihi 1 parity. The foundation — where Catalyst began.</p>
+            <div class="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-white/[0.06]">
+              <div>
+                <p class="text-lg font-bold text-white/90">128</p>
+                <p class="text-[10px] text-white/30 uppercase tracking-wider">Cores</p>
+              </div>
+              <div>
+                <p class="text-lg font-bold text-white/90">131K</p>
+                <p class="text-[10px] text-white/30 uppercase tracking-wider">Neurons</p>
+              </div>
+              <div>
+                <p class="text-lg font-bold text-white/90">96</p>
+                <p class="text-[10px] text-white/30 uppercase tracking-wider">Tests</p>
+              </div>
+            </div>
+          </div>
+        </a>
       </div>
-      <!-- N1 -->
-      <div class="reveal text-center rounded-3xl p-12">
-        <div class="w-56 h-56 mx-auto mb-8 rounded-2xl flex items-center justify-center chip-hero-n1">
-          <span class="text-5xl font-bold text-white/40">N1</span>
-        </div>
-        <h2 class="text-[clamp(2rem,3vw,2.5rem)] font-bold tracking-tighter leading-none">Catalyst N1</h2>
-        <p class="text-sm text-white/35 mt-3">Where it all began.</p>
-        <div class="flex items-center justify-center gap-3 mt-6">
-          <a href="/processors/n1" class="btn-pill">Learn more</a>
-          <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill">Enquire</a>
+    </div>
+  </section>
+
+  <!-- BY THE NUMBERS -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="reveal glass rounded-2xl p-12 md:p-16">
+        <h2 class="text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight text-center mb-12">By the numbers.</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal-stagger">
+          <div>
+            <p class="text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight text-catalyst-blue" data-count="131072">0</p>
+            <p class="text-sm text-white/40 mt-1">Neurons</p>
+          </div>
+          <div>
+            <p class="text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight text-catalyst-blue" data-count="3091">0</p>
+            <p class="text-sm text-white/40 mt-1">Tests passing</p>
+          </div>
+          <div>
+            <p class="text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight text-catalyst-blue">28/28</p>
+            <p class="text-sm text-white/40 mt-1">FPGA validated</p>
+          </div>
+          <div>
+            <p class="text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight text-catalyst-blue" data-count="85" data-count-suffix=".9%">0%</p>
+            <p class="text-sm text-white/40 mt-1">SHD benchmark</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CREDIBILITY -->
-  <section class="py-32 px-6 md:px-12 text-center">
-    <div class="max-w-[700px] mx-auto">
-      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight leading-tight">What takes a billion-pound lab, we built from scratch.</h2>
-      <p class="reveal text-base text-white/40 mt-6 leading-relaxed">
-        Two generations of neuromorphic processors. Full parity with industry-leading silicon from Intel. Validated on real hardware. A complete development toolkit with over three thousand tests. And a UK patent protecting the architecture.
-      </p>
-      <p class="reveal text-2xl font-bold mt-10 tracking-tight"><!-- STAT:TEST_COUNT -->3,091<!-- /STAT --> tests. Zero failures.</p>
-    </div>
-  </section>
-
-  <!-- ACCESS CATALYST -->
+  <!-- CLOUD API -->
   <section id="access" class="py-32 px-6 md:px-12">
     <div class="max-w-[900px] mx-auto text-center">
       <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight">Access Catalyst.</h2>
       <p class="reveal text-base text-white/40 mt-4 leading-relaxed max-w-[640px] mx-auto">
         Run neuromorphic simulations via cloud API, or deploy on dedicated FPGA hardware. No GPU required.
       </p>
-      <div class="max-w-[800px] mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="reveal rounded-2xl p-8 border border-catalyst-blue/20 text-center" style="background: rgba(59,130,246,0.04);">
+      <div class="max-w-[800px] mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 reveal-stagger">
+        <div class="rounded-2xl p-8 border border-catalyst-blue/20 text-center" style="background: rgba(59,130,246,0.04);">
           <p class="text-lg font-bold text-catalyst-blue">Cloud API</p>
           <p class="text-3xl font-bold mt-2">Free<span class="text-sm text-white/40 font-normal"> to start</span></p>
-          <p class="text-sm text-white/35 mt-3">REST API for neuromorphic compute. 10 jobs/day free. No hardware, no install.</p>
+          <p class="text-sm text-white/40 mt-3">REST API for neuromorphic compute. 500 compute-seconds/week free. No hardware, no install.</p>
           <a href="/cloud" class="btn-primary mt-6 inline-flex text-sm">Get started &rarr;</a>
         </div>
-        <div class="reveal rounded-2xl p-8 border border-white/[0.06] text-center">
+        <div class="rounded-2xl p-8 border border-white/[0.06] text-center">
           <p class="text-lg font-bold">FPGA Dev Boards</p>
           <p class="text-3xl font-bold mt-2">Coming soon</p>
-          <p class="text-sm text-white/35 mt-3">Physical hardware with the Catalyst bitstream. Deploy at the edge. Real neuromorphic silicon.</p>
+          <p class="text-sm text-white/40 mt-3">Physical hardware with the Catalyst bitstream. Deploy at the edge. Real neuromorphic silicon.</p>
           <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill mt-6 inline-flex text-sm">Register interest &rarr;</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH TEASER -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[900px] mx-auto">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight text-center mb-12">Published research.</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal-stagger">
+        <!-- N2 Paper -->
+        <div class="glass rounded-xl p-6">
+          <p class="text-xs text-catalyst-blue font-medium tracking-wider uppercase mb-3">Technical Paper</p>
+          <h3 class="font-semibold text-white/90 mb-2">Catalyst N2: A Neuromorphic Processor with Full Loihi 2 Parity</h3>
+          <p class="text-sm text-white/40 mb-4">18 pages. 128-core architecture, 5 neuron models, programmable microcode learning engine.</p>
+          <a href="/papers/catalyst-n2.pdf" class="text-sm text-catalyst-blue hover:underline">Read paper &rarr;</a>
+        </div>
+        <!-- N1 Paper -->
+        <div class="glass rounded-xl p-6">
+          <p class="text-xs text-white/40 font-medium tracking-wider uppercase mb-3">Technical Paper</p>
+          <h3 class="font-semibold text-white/90 mb-2">Catalyst N1: A First-Generation Neuromorphic Processor</h3>
+          <p class="text-sm text-white/40 mb-4">13 pages. Loihi 1 parity. The first complete open neuromorphic processor design.</p>
+          <div class="flex items-center gap-4">
+            <a href="/papers/catalyst-n1.pdf" class="text-sm text-catalyst-blue hover:underline">Read paper &rarr;</a>
+            <span class="text-xs text-white/25 font-mono">DOI: 10.5281/zenodo.18727094</span>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-8">
+        <a href="/research" class="text-sm text-white/40 hover:text-white transition-colors">View all research &rarr;</a>
       </div>
     </div>
   </section>
@@ -128,7 +217,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           We're seeking grants, partnerships, and investment to bring neuromorphic computing from prototype to manufactured silicon.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="https://github.com/sponsors/Mr-wabbit" target="_blank" rel="noopener noreferrer" class="btn-primary">Sponsor on GitHub</a>
+          <a href="https://github.com/sponsors/catalyst-neuromorphic" target="_blank" rel="noopener noreferrer" class="btn-primary">Sponsor on GitHub</a>
+          <a href="https://ko-fi.com/catalystneuromorphic" target="_blank" rel="noopener noreferrer" class="btn-pill">Support on Ko-Fi</a>
           <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill">Get in touch</a>
         </div>
       </div>
@@ -138,17 +228,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
-  .chip-hero-n2 {
-    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, rgba(0,0,0,0) 70%);
-    border: 1px solid rgba(59,130,246,0.12);
-  }
-  .chip-hero-n1 {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
+  .chip-glow {
+    filter: drop-shadow(0 0 80px rgba(59,130,246,0.15)) drop-shadow(0 0 160px rgba(59,130,246,0.08));
   }
   .product-card-n2 {
     background: linear-gradient(180deg, rgba(59,130,246,0.03) 0%, transparent 100%);
-    border: 1px solid rgba(59,130,246,0.06);
+    border: 1px solid rgba(59,130,246,0.08);
+  }
+  .product-card-n1 {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
   }
 </style>
 

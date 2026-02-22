@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="950" height="920" viewBox="0 0 950 920">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .label { font-size: 10px; }
+    .small { font-size: 9px; }
+  </style>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="475" y="25" text-anchor="middle" class="title">Figure 6: Persistent Reward Trace with Exponential Decay</text>
+
+  <!-- ===== Feedback arrow: r[t] output routes back to r[t-1] input ===== -->
+  <!-- Routes: r[t] top → up → left → down LEFT of pipeline box → right into r[t-1] box -->
+  <text x="475" y="48" text-anchor="middle" class="small">feedback: r[t] becomes r[t-1] next timestep</text>
+  <line x1="865" y1="120" x2="865" y2="55" stroke="black" stroke-width="1"/>
+  <line x1="865" y1="55" x2="35" y2="55" stroke="black" stroke-width="1"/>
+  <line x1="35" y1="55" x2="35" y2="247" stroke="black" stroke-width="1"/>
+  <line x1="35" y1="247" x2="50" y2="247" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- ===== Reward Injection + Accumulation (MUCH wider and taller) ===== -->
+  <rect x="20" y="75" width="910" height="220" fill="none" stroke="black" stroke-width="2"/>
+  <text x="475" y="97" text-anchor="middle" font-weight="bold">Reward Trace Update Pipeline</text>
+  <line x1="20" y1="104" x2="930" y2="104" stroke="black" stroke-width="0.5"/>
+
+  <!-- r[t-1] input (top-left, well inside the box with margin) -->
+  <rect x="50" y="230" width="120" height="35" fill="none" stroke="black" stroke-width="1"/>
+  <text x="110" y="252" text-anchor="middle" class="small">r[t-1] (previous)</text>
+  <line x1="110" y1="230" x2="110" y2="210" stroke="black" stroke-width="1"/>
+  <line x1="110" y1="210" x2="240" y2="210" stroke="black" stroke-width="1"/>
+  <line x1="240" y1="210" x2="240" y2="185" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- tau_r parameter (bottom-center, well inside the box) -->
+  <rect x="245" y="230" width="140" height="35" fill="none" stroke="black" stroke-width="1"/>
+  <text x="315" y="252" text-anchor="middle" class="small">tau_r (reward decay shift)</text>
+  <line x1="315" y1="230" x2="315" y2="185" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Stage 1: Reward injection -->
+  <rect x="50" y="120" width="140" height="65" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="120" y="145" text-anchor="middle" font-weight="bold">r_inj[t]</text>
+  <text x="120" y="162" text-anchor="middle" class="small">Reward Injection</text>
+  <text x="120" y="177" text-anchor="middle" class="small">(from host/env)</text>
+
+  <line x1="190" y1="152" x2="230" y2="152" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 2: Signed Decay computation -->
+  <rect x="230" y="120" width="180" height="65" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="320" y="140" text-anchor="middle" class="small" font-weight="bold">Signed Decay</text>
+  <text x="320" y="158" text-anchor="middle" class="small">decay = sgn(r) x</text>
+  <text x="320" y="174" text-anchor="middle" class="small">max(1, floor(|r| / 2^tau_r))</text>
+
+  <line x1="410" y1="152" x2="455" y2="152" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 3: Subtraction -->
+  <rect x="455" y="120" width="140" height="65" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="525" y="145" text-anchor="middle" class="small" font-weight="bold">Subtract Decay</text>
+  <text x="525" y="165" text-anchor="middle" class="small">r' = r[t-1] - decay</text>
+
+  <line x1="595" y1="152" x2="640" y2="152" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 4: Addition -->
+  <rect x="640" y="120" width="140" height="65" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="710" y="145" text-anchor="middle" class="small" font-weight="bold">Add Injection</text>
+  <text x="710" y="165" text-anchor="middle" class="small">r[t] = r' + r_inj[t]</text>
+
+  <line x1="780" y1="152" x2="815" y2="152" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 5: Output -->
+  <rect x="815" y="120" width="100" height="65" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="865" y="142" text-anchor="middle" font-weight="bold">r[t]</text>
+  <text x="865" y="160" text-anchor="middle" class="small">Current Reward</text>
+  <text x="865" y="175" text-anchor="middle" class="small">(to learning eng.)</text>
+
+  <!-- ===== Two Modes Comparison ===== -->
+  <!-- Mode 1: tau_r = 0 -->
+  <rect x="20" y="320" width="440" height="230" fill="none" stroke="black" stroke-width="2"/>
+  <text x="240" y="342" text-anchor="middle" font-weight="bold">Mode 1: tau_r = 0 (One-Shot, N1 Compatible)</text>
+  <line x1="20" y1="350" x2="460" y2="350" stroke="black" stroke-width="0.5"/>
+
+  <!-- One-shot graph -->
+  <!-- Y axis -->
+  <line x1="65" y1="365" x2="65" y2="520" stroke="black" stroke-width="1.5"/>
+  <line x1="65" y1="365" x2="60" y2="373" stroke="black" stroke-width="1"/>
+  <line x1="65" y1="365" x2="70" y2="373" stroke="black" stroke-width="1"/>
+  <text x="58" y="370" text-anchor="end" class="small">r</text>
+  <!-- X axis -->
+  <line x1="65" y1="520" x2="430" y2="520" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="430" y="536" class="small">t</text>
+
+  <!-- Zero line -->
+  <line x1="65" y1="460" x2="420" y2="460" stroke="black" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <text x="58" y="463" text-anchor="end" class="small">0</text>
+
+  <!-- Injection spike at t=5 -->
+  <line x1="140" y1="460" x2="140" y2="380" stroke="black" stroke-width="2"/>
+  <line x1="140" y1="380" x2="155" y2="460" stroke="black" stroke-width="2"/>
+  <text x="140" y="536" text-anchor="middle" class="small">inject</text>
+
+  <!-- After: immediate decay to 0 -->
+  <line x1="155" y1="460" x2="420" y2="460" stroke="black" stroke-width="2"/>
+
+  <!-- Annotations (to the right of graph, not overlapping) -->
+  <text x="200" y="385" class="small">decay = max(1, |r|/2^0) = |r|</text>
+  <text x="200" y="402" class="small">Reward consumed in ONE timestep</text>
+  <text x="200" y="419" class="small">(backward compatible with N1)</text>
+
+  <!-- Mode 2: tau_r > 0 -->
+  <rect x="490" y="320" width="440" height="230" fill="none" stroke="black" stroke-width="2"/>
+  <text x="710" y="342" text-anchor="middle" font-weight="bold">Mode 2: tau_r > 0 (Persistent Decay)</text>
+  <line x1="490" y1="350" x2="930" y2="350" stroke="black" stroke-width="0.5"/>
+
+  <!-- Persistent decay graph -->
+  <!-- Y axis -->
+  <line x1="535" y1="365" x2="535" y2="520" stroke="black" stroke-width="1.5"/>
+  <line x1="535" y1="365" x2="530" y2="373" stroke="black" stroke-width="1"/>
+  <line x1="535" y1="365" x2="540" y2="373" stroke="black" stroke-width="1"/>
+  <text x="528" y="370" text-anchor="end" class="small">r</text>
+  <!-- X axis -->
+  <line x1="535" y1="520" x2="900" y2="520" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="900" y="536" class="small">t</text>
+
+  <!-- Zero line -->
+  <line x1="535" y1="460" x2="890" y2="460" stroke="black" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <text x="528" y="463" text-anchor="end" class="small">0</text>
+
+  <!-- First injection spike -->
+  <line x1="600" y1="460" x2="600" y2="385" stroke="black" stroke-width="2"/>
+  <text x="600" y="536" text-anchor="middle" class="small">inject</text>
+
+  <!-- First exponential decay curve -->
+  <polyline points="600,385 615,393 630,400 645,408 660,416 675,424 690,430 705,436 720,441 735,445 750,449 765,452 780,455 795,457 810,459"
+            fill="none" stroke="black" stroke-width="2"/>
+
+  <!-- Second injection at t=15 -->
+  <line x1="750" y1="449" x2="750" y2="395" stroke="black" stroke-width="2"/>
+  <text x="750" y="536" text-anchor="middle" class="small">inject</text>
+
+  <!-- Second decay curve from higher point -->
+  <polyline points="750,395 765,402 780,410 795,418 810,425 825,432 840,438 855,443 870,447 885,450 895,452"
+            fill="none" stroke="black" stroke-width="2"/>
+
+  <!-- Annotations ABOVE the curves, not overlapping them -->
+  <text x="710" y="375" text-anchor="middle" class="small">Reward accumulates and</text>
+  <text x="710" y="390" text-anchor="middle" class="small">decays slowly over time</text>
+
+  <!-- ===== Complete Formula ===== -->
+  <rect x="20" y="575" width="910" height="65" fill="none" stroke="black" stroke-width="2"/>
+  <text x="475" y="597" text-anchor="middle" font-weight="bold">Complete Reward Trace Update Formula</text>
+  <line x1="20" y1="604" x2="930" y2="604" stroke="black" stroke-width="0.5"/>
+  <text x="475" y="626" text-anchor="middle" class="label">r[t] = r[t-1] - sgn(r[t-1]) x max(1, floor(|r[t-1]| / 2^tau_r)) + r_inj[t]</text>
+
+  <!-- ===== Learning Engine Modulation ===== -->
+  <rect x="20" y="665" width="910" height="130" fill="none" stroke="black" stroke-width="2"/>
+  <text x="475" y="687" text-anchor="middle" font-weight="bold">Reward Modulation in Learning Engine</text>
+  <line x1="20" y1="694" x2="930" y2="694" stroke="black" stroke-width="0.5"/>
+
+  <rect x="50" y="712" width="150" height="50" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="125" y="733" text-anchor="middle" class="small">Eligibility Traces</text>
+  <text x="125" y="748" text-anchor="middle" class="small">(x1,x2,y1,y2,y3)</text>
+
+  <line x1="200" y1="737" x2="245" y2="737" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="245" y="712" width="170" height="50" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="330" y="733" text-anchor="middle" class="small">Microcode Evaluation</text>
+  <text x="330" y="748" text-anchor="middle" class="small">dw = f(x1,x2,y1,y2,y3)</text>
+
+  <line x1="415" y1="737" x2="460" y2="737" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="460" y="712" width="150" height="50" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="535" y="733" text-anchor="middle" class="small" font-weight="bold">r[t] x dw</text>
+  <text x="535" y="748" text-anchor="middle" class="small">Reward Modulation</text>
+
+  <line x1="610" y1="737" x2="655" y2="737" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="655" y="712" width="170" height="50" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="740" y="733" text-anchor="middle" class="small">w[t+1] = w[t] + dw</text>
+  <text x="740" y="748" text-anchor="middle" class="small">Weight Update</text>
+
+  <text x="475" y="785" text-anchor="middle" class="small">Three-factor learning: dw = r[t] x f(eligibility_traces) -- persistent reward enables delayed credit assignment</text>
+</svg>

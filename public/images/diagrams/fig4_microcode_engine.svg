@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .small { font-size: 9px; }
+    .mono { font-family: monospace; font-size: 10px; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="25" text-anchor="middle" class="title">Figure 4: Programmable Microcode Learning Engine</text>
+
+  <!-- Microcode SRAM -->
+  <rect x="30" y="50" width="170" height="150" fill="none" stroke="black" stroke-width="2"/>
+  <text x="115" y="70" text-anchor="middle" font-weight="bold">Microcode SRAM</text>
+  <text x="115" y="85" text-anchor="middle" class="small">256 x 32 bits per core</text>
+  <rect x="45" y="95" width="140" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="115" y="107" text-anchor="middle" class="mono">0: LOADI R11, A_LTP</text>
+  <rect x="45" y="111" width="140" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="115" y="123" text-anchor="middle" class="mono">1: MULS R11, R0, R2</text>
+  <rect x="45" y="127" width="140" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="115" y="139" text-anchor="middle" class="mono">2: ADD  R5, R5, R11</text>
+  <rect x="45" y="143" width="140" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="115" y="155" text-anchor="middle" class="mono">3: STORE_W R5</text>
+  <rect x="45" y="159" width="140" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="115" y="171" text-anchor="middle" class="mono">4: HALT</text>
+  <text x="115" y="193" text-anchor="middle" class="small">(example: simple STDP)</text>
+
+  <!-- Instruction decode -->
+  <rect x="30" y="220" width="170" height="65" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="115" y="238" text-anchor="middle" font-weight="bold">32-bit Instruction</text>
+  <text x="115" y="255" text-anchor="middle" class="mono">[31:28] opcode  (4b)</text>
+  <text x="115" y="268" text-anchor="middle" class="mono">[27:24] dst_reg (4b)</text>
+  <text x="115" y="281" text-anchor="middle" class="mono">[23:16] srcA,srcB(8b)</text>
+
+  <line x1="115" y1="200" x2="115" y2="220" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Register File -->
+  <rect x="270" y="50" width="200" height="290" fill="none" stroke="black" stroke-width="2"/>
+  <text x="370" y="70" text-anchor="middle" font-weight="bold">Register File (16 x 16-bit)</text>
+
+  <rect x="285" y="82" width="170" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="370" y="94" text-anchor="middle" class="mono">R0  = x1 (pre trace 1)</text>
+  <rect x="285" y="98" width="170" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="370" y="110" text-anchor="middle" class="mono">R1  = x2 (pre trace 2)</text>
+  <rect x="285" y="114" width="170" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="370" y="126" text-anchor="middle" class="mono">R2  = y1 (post trace 1)</text>
+  <rect x="285" y="130" width="170" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="370" y="142" text-anchor="middle" class="mono">R3  = y2 (post trace 2)</text>
+  <rect x="285" y="146" width="170" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="370" y="158" text-anchor="middle" class="mono">R4  = y3 (post trace 3)</text>
+  <rect x="285" y="162" width="170" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="370" y="174" text-anchor="middle" class="mono">R5  = weight</text>
+  <rect x="285" y="178" width="170" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="370" y="190" text-anchor="middle" class="mono">R6  = delay</text>
+  <rect x="285" y="194" width="170" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="370" y="206" text-anchor="middle" class="mono">R7  = tag</text>
+  <rect x="285" y="210" width="170" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="370" y="222" text-anchor="middle" class="mono">R8  = eligibility</text>
+  <rect x="285" y="226" width="170" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="370" y="238" text-anchor="middle" class="mono">R9  = reward_trace</text>
+  <rect x="285" y="242" width="170" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="370" y="254" text-anchor="middle" class="mono">R10 = spike_timing</text>
+  <rect x="285" y="258" width="170" height="16" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="370" y="270" text-anchor="middle" class="mono">R11-R15 = temp (init 0)</text>
+
+  <!-- Arrow from decode to register file (L-shaped, clean horizontal entry) -->
+  <line x1="200" y1="250" x2="270" y2="250" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ALU -->
+  <rect x="540" y="100" width="200" height="200" fill="none" stroke="black" stroke-width="2"/>
+  <text x="640" y="120" text-anchor="middle" font-weight="bold">ALU</text>
+
+  <text x="560" y="145" class="small">Op 1: ADD  Rd = Ra + Rb</text>
+  <text x="560" y="160" class="small">Op 2: SUB  Rd = Ra - Rb</text>
+  <text x="560" y="175" class="small">Op 3: MULS Rd = (Ra*Rb)>>sh</text>
+  <text x="560" y="190" class="small">Op 4: SHR  Rd = Ra >> sh</text>
+  <text x="560" y="205" class="small">Op 5: SHL  Rd = Ra &lt;&lt; sh</text>
+  <text x="560" y="220" class="small">Op 6: MAX  Rd = max(Ra,Rb)</text>
+  <text x="560" y="235" class="small">Op 7: MIN  Rd = min(Ra,Rb)</text>
+  <text x="560" y="255" class="small">Op 8:  LOADI    Rd = imm16</text>
+  <text x="560" y="270" class="small">Op 11: SKIP_Z   if Ra==0</text>
+  <text x="560" y="285" class="small">Op 12: SKIP_NZ  if Ra!=0</text>
+
+  <!-- Arrow from register file to ALU -->
+  <line x1="470" y1="180" x2="540" y2="180" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="505" y="172" text-anchor="middle" class="small">Ra, Rb</text>
+
+  <!-- Arrow from ALU write-back to register file (exits ALU left side) -->
+  <path d="M 540 280 L 505 280 L 505 330 L 370 330 L 370 340" fill="none" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="440" y="323" text-anchor="middle" class="small">Rd write-back</text>
+
+  <!-- Arrow from ALU down to Store Outputs (exits ALU bottom right) -->
+  <line x1="640" y1="300" x2="640" y2="370" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Write-back outputs -->
+  <rect x="540" y="370" width="200" height="100" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="640" y="390" text-anchor="middle" font-weight="bold">Store Outputs</text>
+  <text x="560" y="410" class="small">STORE_W (Op 9):  -> Weight SRAM</text>
+  <text x="560" y="425" class="small">STORE_E (Op 10): -> Eligibility SRAM</text>
+  <text x="560" y="440" class="small">STORE_D (Op 14): -> Delay SRAM</text>
+  <text x="560" y="455" class="small">STORE_T (Op 15): -> Tag SRAM</text>
+
+  <!-- Program Counter -->
+  <rect x="270" y="370" width="200" height="40" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="370" y="395" text-anchor="middle" font-weight="bold">PC (8-bit) + HALT detection</text>
+  <line x1="370" y1="410" x2="370" y2="430" stroke="black" stroke-width="1"/>
+  <text x="370" y="445" text-anchor="middle" class="small">Executes once per synapse during LEARN phase</text>
+</svg>

@@ -3,6 +3,8 @@ import '@fontsource/space-grotesk/400.css';
 import '@fontsource/space-grotesk/500.css';
 import '@fontsource/space-grotesk/600.css';
 import '@fontsource/space-grotesk/700.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -10,9 +12,11 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description?: string;
+  image?: string;
 }
 
-const { title, description = 'Neuromorphic processors. Built from scratch.' } = Astro.props;
+const { title, description = 'Neuromorphic processors. Built from scratch.', image = '/og-default.png' } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://catalyst-neuromorphic.com');
 ---
 
 <!DOCTYPE html>
@@ -23,12 +27,123 @@ const { title, description = 'Neuromorphic processors. Built from scratch.' } = 
   <meta name="description" content={description} />
   <title>{title}</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href={canonicalURL} />
+
+  <!-- Satoshi font from Fontshare -->
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Catalyst Neuromorphic" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={image} />
+
+  <!-- JSON-LD Organization -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Catalyst Neuromorphic",
+    "url": "https://catalyst-neuromorphic.com",
+    "logo": "https://catalyst-neuromorphic.com/favicon.svg",
+    "description": "Neuromorphic processors built from scratch. Hardware-accurate spiking neural network silicon.",
+    "sameAs": [
+      "https://github.com/catalyst-neuromorphic",
+      "https://twitter.com/CatalystNeuro"
+    ]
+  })} />
 </head>
 <body>
   <Nav />
-  <main>
-    <slot />
-  </main>
-  <Footer />
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+      <main>
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </div>
+
+  <script>
+    import { gsap } from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Reveal animations — replaces old IntersectionObserver
+    function initReveals() {
+      // Single reveals
+      gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1, y: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 88%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      });
+
+      // Staggered reveals — children of .reveal-stagger
+      gsap.utils.toArray<HTMLElement>('.reveal-stagger').forEach((parent) => {
+        const children = parent.children;
+        gsap.fromTo(children,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1, y: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            stagger: 0.1,
+            scrollTrigger: {
+              trigger: parent,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      });
+    }
+
+    // Count-up animation for stat numbers
+    function initCountUp() {
+      gsap.utils.toArray<HTMLElement>('[data-count]').forEach((el) => {
+        const target = parseInt(el.dataset.count || '0', 10);
+        const suffix = el.dataset.countSuffix || '';
+        const prefix = el.dataset.countPrefix || '';
+        const obj = { val: 0 };
+
+        gsap.to(obj, {
+          val: target,
+          duration: 2,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+          onUpdate() {
+            el.textContent = prefix + Math.round(obj.val).toLocaleString() + suffix;
+          },
+        });
+      });
+    }
+
+    // Initialize all
+    initReveals();
+    initCountUp();
+  </script>
 </body>
 </html>

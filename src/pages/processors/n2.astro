@@ -4,16 +4,25 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <BaseLayout title="Catalyst N2 — Second Generation Neuromorphic Processor" description="128-core neuromorphic processor with full Loihi 2 parity. Five neuron models, on-chip learning, hardware validated.">
 
+  <!-- STICKY SUB-NAV -->
+  <nav id="sub-nav" class="fixed top-14 left-0 right-0 z-40 h-10 opacity-0 transition-all duration-300 pointer-events-none" style="background: rgba(10,12,16,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.04);">
+    <div class="max-w-[1200px] mx-auto h-full flex items-center gap-6 px-6 md:px-12 overflow-x-auto">
+      {['Overview', 'Architecture', 'Neuron Models', 'Learning', 'Comparison', 'Specs', 'Paper'].map((label) => (
+        <a href={`#${label.toLowerCase().replace(/\s+/g, '-')}`} class="sub-nav-link text-xs text-white/30 no-underline hover:text-white/60 transition-colors whitespace-nowrap">{label}</a>
+      ))}
+    </div>
+  </nav>
+
   <!-- HERO -->
-  <section class="h-screen flex flex-col items-center justify-center text-center relative px-6">
-    <div class="reveal w-72 h-72 mb-10 rounded-3xl flex items-center justify-center chip-hero">
-      <span class="text-6xl font-bold text-catalyst-blue/30">N2</span>
+  <section id="overview" class="hero-section min-h-screen flex flex-col items-center justify-center text-center relative px-6">
+    <div class="reveal w-[280px] md:w-[360px] lg:w-[420px] mb-8">
+      <img src="/images/renders/n2-angled.webp" alt="Catalyst N2 processor die shot" class="w-full h-auto chip-glow" loading="eager" />
     </div>
     <h1 class="text-[clamp(4rem,8vw,8rem)] font-bold tracking-tighter leading-none">N2</h1>
-    <p class="text-[clamp(1rem,1.5vw,1.35rem)] text-white/40 mt-4">Brain-inspired. World-ready.</p>
+    <p class="text-[clamp(1rem,1.5vw,1.35rem)] text-white/40 mt-4 max-w-[480px]">Second generation. Full Loihi 2 parity. 128 cores, 131,072 neurons, 5 neuron models.</p>
     <div class="flex items-center gap-4 mt-8">
-      <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-primary">Enquire</a>
-      <a href="/papers/catalyst-n2.pdf" class="btn-pill" target="_blank">Read the paper</a>
+      <a href="/papers/catalyst-n2.pdf" class="btn-primary" target="_blank">Read the paper</a>
+      <a href="#specs" class="btn-pill">View specs</a>
     </div>
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 w-6 h-10 rounded-xl border border-white/15 flex justify-center pt-2 max-md:hidden">
       <span class="w-[3px] h-2 rounded-full bg-white/30 animate-bounce"></span>
@@ -21,7 +30,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </section>
 
   <!-- CHIP ZOOM ANIMATION -->
-  <section id="chip-zoom" class="relative" style="height: 500vh;">
+  <section id="architecture" class="relative" style="height: 500vh;">
     <div class="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
       <div class="relative w-[80vmin] h-[80vmin] max-w-[600px] max-h-[600px]" style="perspective: 1200px;">
 
@@ -33,7 +42,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             ))}
           </div>
           <p class="text-xl font-semibold mt-8 tracking-tight">Individual transistors.</p>
-          <p class="text-sm text-white/35 mt-2">Billions of switches.</p>
+          <p class="text-sm text-white/40 mt-2">Billions of switches.</p>
         </div>
 
         <!-- Level 2: Logic Gates -->
@@ -44,7 +53,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             ))}
           </div>
           <p class="text-xl font-semibold mt-8 tracking-tight">Logic gates.</p>
-          <p class="text-sm text-white/35 mt-2">The building blocks.</p>
+          <p class="text-sm text-white/40 mt-2">The building blocks.</p>
         </div>
 
         <!-- Level 3: Single Core -->
@@ -68,7 +77,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             </div>
           </div>
           <p class="text-xl font-semibold mt-8 tracking-tight">One core. 1,024 spiking neurons.</p>
-          <p class="text-sm text-white/35 mt-2">Five neuron models. Programmable everything.</p>
+          <p class="text-sm text-white/40 mt-2">Five neuron models. Programmable everything.</p>
         </div>
 
         <!-- Level 4: Core Mesh -->
@@ -79,22 +88,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             ))}
           </div>
           <p class="text-xl font-semibold mt-8 tracking-tight">128 cores. One mesh network.</p>
-          <p class="text-sm text-white/35 mt-2">Every core communicates. Every spike arrives.</p>
+          <p class="text-sm text-white/40 mt-2">Every core communicates. Every spike arrives.</p>
         </div>
 
-        <!-- Level 5: Full Die -->
+        <!-- Level 5: Full Die (real render) -->
         <div class="zoom-level absolute inset-0 flex flex-col items-center justify-center opacity-0" id="zoom-5">
-          <div class="w-80 h-80 rounded-3xl flex items-center justify-center relative die-box">
-            <span class="text-4xl font-bold text-catalyst-blue/40">N2</span>
-            <div class="absolute top-2 left-0 right-0 flex justify-center gap-1">
-              {Array.from({length: 16}).map(() => <div class="w-3 h-1 rounded-sm bg-white/10"></div>)}
-            </div>
-            <div class="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
-              {Array.from({length: 16}).map(() => <div class="w-3 h-1 rounded-sm bg-white/10"></div>)}
-            </div>
+          <div class="w-80 h-80 rounded-3xl overflow-hidden">
+            <img src="/images/renders/n2-top.webp" alt="N2 full die" class="w-full h-full object-cover chip-glow" />
           </div>
           <p class="text-2xl font-bold mt-8 tracking-tight">Catalyst N2.</p>
-          <p class="text-sm text-white/35 mt-2">131,072 neurons. UK patent filed.</p>
+          <p class="text-sm text-white/40 mt-2">131,072 neurons. UK patent filed.</p>
         </div>
       </div>
 
@@ -112,16 +115,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <!-- HIGHLIGHTS STRIP -->
   <section class="py-20 px-6 md:px-12">
-    <div class="max-w-[1100px] mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+    <div class="max-w-[1100px] mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 reveal-stagger">
       {[
-        '5 neuron models',
-        'On-chip learning',
-        '1000x efficiency',
-        '3 dev backends',
-        'Hardware validated',
-      ].map((label) => (
-        <div class="reveal text-center py-6">
-          <div class="text-sm text-white/50 font-medium">{label}</div>
+        { stat: '5', label: 'Neuron models' },
+        { stat: '3-factor', label: 'On-chip learning' },
+        { stat: '1000x', label: 'More efficient' },
+        { stat: '3', label: 'Dev backends' },
+        { stat: '28/28', label: 'FPGA validated' },
+      ].map((item) => (
+        <div class="text-center py-6">
+          <div class="text-lg font-bold text-catalyst-blue">{item.stat}</div>
+          <div class="text-sm text-white/40 mt-1">{item.label}</div>
         </div>
       ))}
     </div>
@@ -148,23 +152,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </section>
 
   <!-- NEURON MODELS -->
-  <section class="py-40 px-6 md:px-12">
+  <section id="neuron-models" class="py-40 px-6 md:px-12">
     <div class="max-w-[1000px] mx-auto text-center">
       <h2 class="reveal text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tight">Five ways to think.</h2>
       <p class="reveal text-lg text-white/40 mt-6 leading-relaxed max-w-[600px] mx-auto">
         N2 supports five distinct neuron models, each optimised for different types of computation. Choose the right model for your application, or mix them within a single network.
       </p>
-      <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 reveal-stagger">
         {[
-          { name: 'Standard', desc: 'Fast, efficient, the default workhorse.' },
-          { name: 'Adaptive', desc: 'Adjusts its own firing threshold over time.' },
-          { name: 'Complex', desc: 'Rich spiking patterns. Bursting, chattering.' },
-          { name: 'Graded', desc: 'Bridges spiking and analog computation.' },
-          { name: 'Resonant', desc: 'Frequency-selective. Tuned to temporal patterns.' },
+          { name: 'CUBA LIF', desc: 'Current-based leaky integrate-and-fire. Configurable membrane time constant, 8-bit weights, threshold and reset dynamics.', tag: 'Default' },
+          { name: 'Izhikevich', desc: '4 parameters (a,b,c,d) produce rich dynamics: regular spiking, chattering, bursting, fast spiking, and more.', tag: 'Complex' },
+          { name: 'ALIF', desc: 'Adaptive threshold with configurable time constant. Intrinsic plasticity and homeostatic regulation.', tag: 'Adaptive' },
+          { name: 'Sigma-Delta', desc: 'Graded output. Rate-coded. Bridges spiking and analog computation domains.', tag: 'Graded' },
+          { name: 'Resonate-and-Fire', desc: 'Complex-valued state. Frequency-selective. Tuned to detect temporal patterns in spike trains.', tag: 'Resonant' },
         ].map((model) => (
-          <div class="glass p-6 text-left reveal">
-            <h3 class="text-base font-semibold mb-2">{model.name}</h3>
-            <p class="text-xs text-white/35 leading-relaxed">{model.desc}</p>
+          <div class="glass p-6 text-left">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-sm font-semibold text-white/90">{model.name}</h3>
+              <span class="text-[9px] text-catalyst-blue/60 border border-catalyst-blue/20 rounded-full px-2 py-0.5">{model.tag}</span>
+            </div>
+            <p class="text-xs text-white/40 leading-relaxed">{model.desc}</p>
           </div>
         ))}
       </div>
@@ -172,7 +179,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </section>
 
   <!-- LEARNING -->
-  <section class="py-40 px-6 md:px-12">
+  <section id="learning" class="py-40 px-6 md:px-12">
     <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
       <div class="reveal">
         <div class="glass p-6">
@@ -192,7 +199,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           N2 doesn't need to be retrained in the cloud. It learns in real time, on-chip, using the same mechanism your brain uses &mdash; strengthening connections that matter, weakening ones that don't.
         </p>
         <p class="text-lg text-white/40 mt-4 leading-relaxed">
-          A fully programmable learning engine lets you define custom rules. The chip adapts to its environment without host intervention.
+          A fully programmable microcode engine with 16 general-purpose registers lets you define custom learning rules. 3-factor STDP, reward modulation, eligibility traces, homeostatic regulation &mdash; all executing on silicon.
         </p>
       </div>
     </div>
@@ -210,7 +217,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </div>
       <div class="reveal">
         <div class="glass p-8 overflow-x-auto">
-          <div id="sdk-code" class="font-mono text-[clamp(0.75rem,0.85vw,0.85rem)] leading-[2] text-white/35 whitespace-pre"></div>
+          <div id="sdk-code" class="font-mono text-[clamp(0.75rem,0.85vw,0.85rem)] leading-[2] text-white/40 whitespace-pre"></div>
         </div>
       </div>
     </div>
@@ -230,58 +237,45 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- WHAT CHANGED -->
-  <section class="py-32 px-6 md:px-12">
-    <div class="max-w-[900px] mx-auto">
-      <h2 class="reveal text-center text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight mb-16">Everything. Upgraded.</h2>
-      <div class="space-y-5">
-        {[
-          { before: '1 neuron model', after: '5 neuron models' },
-          { before: 'Fixed learning rules', after: 'Fully programmable' },
-          { before: 'Simulation only', after: 'Real hardware validation' },
-          { before: '168 tests', after: '<!-- STAT:TEST_COUNT -->3,091<!-- /STAT --> tests' },
-        ].map((item) => (
-          <div class="reveal glass p-6 flex items-center gap-6">
-            <span class="text-white/25 text-sm w-44 shrink-0">{item.before}</span>
-            <span class="text-white/15 text-lg">&rarr;</span>
-            <span class="text-lg font-semibold">{item.after}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <!-- COMPARISON -->
-  <section class="py-32 px-6 md:px-12">
-    <div class="max-w-[1000px] mx-auto">
+  <section id="comparison" class="py-32 px-6 md:px-12">
+    <div class="max-w-[1100px] mx-auto">
       <h2 class="reveal text-center text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight mb-16">How N2 compares.</h2>
       <div class="glass p-2 overflow-x-auto reveal">
-        <table class="w-full border-collapse min-w-[600px]">
+        <table class="w-full border-collapse min-w-[700px]">
           <thead>
             <tr>
               <th class="p-4 text-left text-[11px] uppercase tracking-widest text-white/25 font-medium"></th>
               <th class="p-4 text-left text-[11px] uppercase tracking-widest text-catalyst-blue font-semibold">Catalyst N2</th>
               <th class="p-4 text-left text-[11px] uppercase tracking-widest text-white/25 font-medium">Intel Loihi 2</th>
+              <th class="p-4 text-left text-[11px] uppercase tracking-widest text-white/25 font-medium">BrainScaleS-2</th>
               <th class="p-4 text-left text-[11px] uppercase tracking-widest text-white/25 font-medium">IBM TrueNorth</th>
-              <th class="p-4 text-left text-[11px] uppercase tracking-widest text-white/25 font-medium">SpiNNaker</th>
+              <th class="p-4 text-left text-[11px] uppercase tracking-widest text-white/25 font-medium">SpiNNaker 2</th>
             </tr>
           </thead>
           <tbody class="text-sm">
             {[
-              ['Neuron models', '5', '3+', '1', 'Software'],
-              ['On-chip learning', 'Yes', 'Yes', '\u2014', 'Yes'],
-              ['Programmable logic', 'Yes', 'Yes', '\u2014', '\u2014'],
-              ['Real-time learning', 'Yes', 'Yes', '\u2014', 'Limited'],
-              ['Hardware validated', 'Yes', 'Yes (ASIC)', 'Yes (ASIC)', 'Yes (ASIC)'],
-              ['Open design', 'Yes', 'No', 'No', 'Partial'],
-              ['SDK included', 'Yes', 'Limited', '\u2014', 'Yes'],
+              ['Cores', '128', '128', '2 (analog)', '4,096', '152 (ARM)'],
+              ['Neurons per core', '1,024', '1,024', '256', '256', 'Software'],
+              ['Total neurons', '131,072', '131,072', '512', '1,048,576', 'Up to 16M'],
+              ['Neuron models', '5', '3+', 'Physical', '1 (LIF)', 'Software'],
+              ['Weight precision', '8-bit', '8-bit', 'Analog', '1-bit', 'Software'],
+              ['Spike types', 'Binary + graded', 'Binary + graded', 'Analog', 'Binary', 'Software'],
+              ['On-chip learning', 'Yes (programmable)', 'Yes (programmable)', 'Yes (analog)', '\u2014', 'Yes'],
+              ['Learning engine', '16-reg microcode', 'Microcode', 'Analog', '\u2014', 'ARM cores'],
+              ['Routing', 'Barrier mesh', 'Mesh', 'Crossbar', 'Multicast', 'Multicast'],
+              ['Axonal delays', '1\u201363 timesteps', '1\u201363 timesteps', '\u2014', '\u2014', 'Software'],
+              ['Hardware validated', 'FPGA (28/28)', 'ASIC (7nm)', 'ASIC (65nm)', 'ASIC (28nm)', 'ASIC (22nm)'],
+              ['Open design', 'Yes', 'No', 'Partial', 'No', 'Partial'],
+              ['SDK included', 'neurocore 3.7', 'Lava (limited)', 'PyNN adapter', '\u2014', 'SpiNNTools'],
             ].map(row => (
               <tr class="border-t border-white/[0.04] comp-row">
                 <td class="p-4 text-white/50">{row[0]}</td>
                 <td class="p-4 text-white font-semibold">{row[1]}</td>
                 <td class="p-4 text-white/30">{row[2]}</td>
-                <td class="p-4 text-white/20">{row[3]}</td>
+                <td class="p-4 text-white/25">{row[3]}</td>
                 <td class="p-4 text-white/20">{row[4]}</td>
+                <td class="p-4 text-white/20">{row[5]}</td>
               </tr>
             ))}
           </tbody>
@@ -296,7 +290,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <h2 class="reveal text-center text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight mb-16">Technical Specifications</h2>
 
       <div class="reveal space-y-0">
-        <!-- Compute -->
         <details class="spec-group" open>
           <summary class="spec-summary">Compute</summary>
           <div class="spec-content">
@@ -304,51 +297,47 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <div class="spec-row"><span>Neurons per core</span><span>1,024</span></div>
             <div class="spec-row"><span>Total neurons</span><span>131,072</span></div>
             <div class="spec-row"><span>Synapses per core</span><span>131,072 (CSR format)</span></div>
-          </div>
-        </details>
-
-        <details class="spec-group">
-          <summary class="spec-summary">Neuron Models</summary>
-          <div class="spec-content">
-            <div class="spec-row"><span>CUBA LIF</span><span>Current-based leaky integrate-and-fire</span></div>
-            <div class="spec-row"><span>Izhikevich</span><span>4-parameter, rich spiking dynamics</span></div>
-            <div class="spec-row"><span>ALIF</span><span>Adaptive threshold, intrinsic plasticity</span></div>
-            <div class="spec-row"><span>Sigma-Delta</span><span>Rate-coded graded output</span></div>
-            <div class="spec-row"><span>Resonate-and-Fire</span><span>Oscillatory, frequency-selective</span></div>
+            <div class="spec-row"><span>Neuron models</span><span>CUBA LIF, Izhikevich, ALIF, Sigma-Delta, Resonate-and-Fire</span></div>
+            <div class="spec-row"><span>Compartment model</span><span>4-compartment dendritic tree</span></div>
           </div>
         </details>
 
         <details class="spec-group">
           <summary class="spec-summary">Learning Engine</summary>
           <div class="spec-content">
-            <div class="spec-row"><span>Plasticity</span><span>3-factor STDP</span></div>
+            <div class="spec-row"><span>Plasticity rules</span><span>3-factor STDP, reward-modulated, homeostatic</span></div>
             <div class="spec-row"><span>Microcode engine</span><span>16 general-purpose registers</span></div>
             <div class="spec-row"><span>Eligibility traces</span><span>7-bit, configurable decay</span></div>
-            <div class="spec-row"><span>Reward modulation</span><span>Global + per-core reward signals</span></div>
+            <div class="spec-row"><span>Reward signals</span><span>Global + per-core reward modulation</span></div>
             <div class="spec-row"><span>Homeostasis</span><span>Proportional error, target rate regulation</span></div>
             <div class="spec-row"><span>Weight precision</span><span>8-bit with stochastic rounding</span></div>
+            <div class="spec-row"><span>Per-group plasticity</span><span>Independent learning rules per synapse group</span></div>
+            <div class="spec-row"><span>Persistent traces</span><span>5 trace types with configurable time constants</span></div>
           </div>
         </details>
 
         <details class="spec-group">
           <summary class="spec-summary">Communication</summary>
           <div class="spec-content">
-            <div class="spec-row"><span>Routing</span><span>Barrier-synchronized mesh</span></div>
-            <div class="spec-row"><span>Graded spikes</span><span>8-bit payload per spike</span></div>
-            <div class="spec-row"><span>Axonal delays</span><span>Up to 63 timesteps</span></div>
+            <div class="spec-row"><span>Routing</span><span>Barrier-synchronized mesh network</span></div>
+            <div class="spec-row"><span>Spike types</span><span>Binary spikes + 8-bit graded payloads</span></div>
+            <div class="spec-row"><span>Axonal delays</span><span>1&ndash;63 timesteps, per-synapse configurable</span></div>
             <div class="spec-row"><span>Dendrites</span><span>4-compartment multi-compartment model</span></div>
+            <div class="spec-row"><span>Convolutional synapses</span><span>Shared weight kernels, stride, padding</span></div>
           </div>
         </details>
 
         <details class="spec-group">
-          <summary class="spec-summary">SDK</summary>
+          <summary class="spec-summary">SDK &amp; Software</summary>
           <div class="spec-content">
-            <div class="spec-row"><span>Name</span><span>neurocore v3.7.0</span></div>
+            <div class="spec-row"><span>SDK name</span><span>neurocore v3.7.0</span></div>
             <div class="spec-row"><span>Language</span><span>Python</span></div>
             <div class="spec-row"><span>Modules</span><span>88</span></div>
-            <div class="spec-row"><span>Tests</span><span><!-- STAT:TEST_COUNT -->3,091<!-- /STAT --></span></div>
-            <div class="spec-row"><span>Backends</span><span>CPU, GPU, FPGA</span></div>
-            <div class="spec-row"><span>Fixed-point mode</span><span>Hardware-accurate quantization</span></div>
+            <div class="spec-row"><span>Features</span><span>155</span></div>
+            <div class="spec-row"><span>Tests</span><span>3,091</span></div>
+            <div class="spec-row"><span>Backends</span><span>CPU, GPU (CUDA), FPGA</span></div>
+            <div class="spec-row"><span>Fixed-point mode</span><span>Hardware-accurate integer quantization</span></div>
+            <div class="spec-row"><span>Benchmark</span><span>85.9% SHD (float), 85.4% (quantized)</span></div>
           </div>
         </details>
 
@@ -359,15 +348,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <div class="spec-row"><span>Platform</span><span>AWS F2 (Xilinx UltraScale+ VU47P)</span></div>
             <div class="spec-row"><span>Clock frequency</span><span>62.5 MHz</span></div>
             <div class="spec-row"><span>Cores validated</span><span>16</span></div>
-            <div class="spec-row"><span>RTL accuracy</span><span>Cycle-accurate, bit-exact</span></div>
+            <div class="spec-row"><span>RTL accuracy</span><span>Cycle-accurate, bit-exact vs simulation</span></div>
+            <div class="spec-row"><span>Peak throughput</span><span>81,000 spikes / 3.4ms</span></div>
+            <div class="spec-row"><span>Cross-core routing</span><span>163,000 spikes validated</span></div>
           </div>
         </details>
 
         <details class="spec-group">
           <summary class="spec-summary">Intellectual Property</summary>
           <div class="spec-content">
-            <div class="spec-row"><span>Patent</span><span>UK patent filed (full architecture)</span></div>
-            <div class="spec-row"><span>Design</span><span>Open (SDK on GitHub)</span></div>
+            <div class="spec-row"><span>UK Patent</span><span>Filed February 2026 (full architecture)</span></div>
+            <div class="spec-row"><span>Application ref</span><span>~2602902.6</span></div>
+            <div class="spec-row"><span>RTL</span><span>Proprietary (BSL 1.1)</span></div>
+            <div class="spec-row"><span>SDK</span><span>Open source (GitHub)</span></div>
           </div>
         </details>
       </div>
@@ -375,10 +368,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   </section>
 
   <!-- PAPER -->
-  <section class="py-20 px-6 md:px-12 text-center">
+  <section id="paper" class="py-20 px-6 md:px-12 text-center">
     <div class="glass max-w-[500px] mx-auto p-10 reveal">
       <h3 class="text-xl font-semibold mb-2">Read the N2 paper</h3>
-      <p class="text-sm text-white/35 mb-6">17 pages. Full architecture, SDK, and validation results.</p>
+      <p class="text-sm text-white/40 mb-6">18 pages. Full architecture, SDK, and FPGA validation results.</p>
       <a href="/papers/catalyst-n2.pdf" class="btn-pill" target="_blank">View PDF</a>
     </div>
   </section>
@@ -403,9 +396,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <style>
   .zoom-level { transition: opacity 0.4s ease, transform 0.4s ease; }
-  .chip-hero {
-    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, rgba(0,0,0,0) 70%);
-    border: 1px solid rgba(59,130,246,0.12);
+  .chip-glow {
+    filter: drop-shadow(0 0 60px rgba(59,130,246,0.12)) drop-shadow(0 0 120px rgba(59,130,246,0.06));
   }
   .transistor-grid { background: rgba(59,130,246,0.03); border: 1px solid rgba(59,130,246,0.08); }
   .gate-box { background: rgba(59,130,246,0.04); border: 1px solid rgba(59,130,246,0.1); }
@@ -415,11 +407,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .mesh-grid { background: rgba(59,130,246,0.03); border: 1px solid rgba(59,130,246,0.1); }
   .core-active { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.2); }
   .core-dim { background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.08); }
-  .die-box {
-    background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(59,130,246,0.02));
-    border: 2px solid rgba(59,130,246,0.15);
-    box-shadow: 0 0 80px rgba(59,130,246,0.1);
-  }
   .comp-row:hover { background: rgba(255,255,255,0.02); }
 
   /* Specs accordion */
@@ -444,9 +431,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     color: rgba(255,255,255,0.25);
     transition: transform 0.2s;
   }
-  details[open] .spec-summary::after {
-    content: '\2212';
-  }
+  details[open] .spec-summary::after { content: '\2212'; }
   .spec-content { padding-bottom: 1.25rem; }
   .spec-row {
     display: flex;
@@ -457,6 +442,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
   .spec-row span:first-child { color: rgba(255,255,255,0.35); }
   .spec-row span:last-child { color: rgba(255,255,255,0.6); text-align: right; }
+
+  /* Sub-nav active state */
+  .sub-nav-link.active { color: rgba(59,130,246,0.8); }
 </style>
 
 <script>
@@ -464,7 +452,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   (function() {
     var el = document.getElementById('sdk-code');
     if (!el) return;
-    var s = function(cls, text) { return '<span class="' + cls + '">' + text + '</span>'; };
+    var s = function(cls: string, text: string) { return '<span class="' + cls + '">' + text + '</span>'; };
     var w60 = 'text-white/60', w55 = 'text-white/55', w50 = 'text-white/50', w25 = 'text-white/25', blue = 'text-catalyst-blue/70';
     el.innerHTML = s(w60,'import') + ' neurocore ' + s(w60,'as') + ' nc\n\n'
       + s(w25,'# Define a network with adaptive neurons') + '\n'
@@ -499,18 +487,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       var fraction = levelProgress - currentLevel;
 
       levels.forEach(function(level, i) {
+        var el = level as HTMLElement;
         if (i === currentLevel) {
-          level.style.opacity = String(1 - fraction * 0.5);
-          level.style.transform = 'scale(' + (1 + fraction * 0.3) + ') rotateY(' + (fraction * 15) + 'deg)';
+          el.style.opacity = String(1 - fraction * 0.5);
+          el.style.transform = 'scale(' + (1 + fraction * 0.3) + ') rotateY(' + (fraction * 15) + 'deg)';
         } else if (i === currentLevel + 1) {
-          level.style.opacity = String(fraction);
-          level.style.transform = 'scale(' + (0.7 + fraction * 0.3) + ') rotateY(' + ((1 - fraction) * -15) + 'deg)';
+          el.style.opacity = String(fraction);
+          el.style.transform = 'scale(' + (0.7 + fraction * 0.3) + ') rotateY(' + ((1 - fraction) * -15) + 'deg)';
         } else if (i < currentLevel) {
-          level.style.opacity = '0';
-          level.style.transform = 'scale(1.5)';
+          el.style.opacity = '0';
+          el.style.transform = 'scale(1.5)';
         } else {
-          level.style.opacity = '0';
-          level.style.transform = 'scale(0.5)';
+          el.style.opacity = '0';
+          el.style.transform = 'scale(0.5)';
         }
       });
 
@@ -570,5 +559,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     dot.setAttribute('r', '3');
     dot.setAttribute('fill', 'rgba(255,255,255,0.4)');
     g.appendChild(dot);
+  })();
+
+  // Sticky sub-nav visibility
+  (function() {
+    var subNav = document.getElementById('sub-nav');
+    var hero = document.querySelector('.hero-section');
+    if (!subNav || !hero) return;
+
+    new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) {
+        subNav.style.opacity = '1';
+        subNav.style.pointerEvents = 'auto';
+      } else {
+        subNav.style.opacity = '0';
+        subNav.style.pointerEvents = 'none';
+      }
+    }, { threshold: 0.05 }).observe(hero);
   })();
 </script>

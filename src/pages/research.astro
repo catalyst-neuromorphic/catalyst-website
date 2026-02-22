@@ -2,33 +2,34 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Research — Catalyst Neuromorphic" description="Papers, validation results, and benchmarks.">
+<BaseLayout title="Research — Catalyst Neuromorphic" description="Papers, validation results, benchmarks, and patent filings.">
 
-  <section class="pt-32 pb-20 px-6 md:px-12 text-center">
-    <h1 class="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tighter">Research</h1>
-    <p class="text-lg text-white/40 mt-4">Papers, validation, and benchmarks.</p>
+  <section class="pt-36 pb-20 px-6 md:px-12 text-center">
+    <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Research</p>
+    <h1 class="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tighter">Published research.</h1>
+    <p class="text-lg text-white/40 mt-4 max-w-[550px] mx-auto">Papers, hardware validation, benchmarks, and patent filings.</p>
   </section>
 
   <!-- PAPERS -->
   <section class="pb-20 px-6 md:px-12">
     <div class="max-w-[900px] mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="glass-accent p-10 reveal">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-stagger">
+        <div class="glass-accent p-10">
           <p class="text-[10px] uppercase tracking-widest text-catalyst-blue/60 mb-2">Latest</p>
-          <h3 class="text-xl font-semibold mb-2">Catalyst N2 Paper</h3>
-          <p class="text-sm text-white/35 leading-relaxed mb-2">Full Loihi 2 Parity in an Open Neuromorphic Architecture</p>
-          <p class="text-xs text-white/20 mb-6">17 pages. Architecture, programmable neuron models, multi-backend SDK, hardware validation.</p>
+          <h3 class="text-xl font-semibold mb-2">Catalyst N2</h3>
+          <p class="text-sm text-white/40 leading-relaxed mb-2">Full Loihi 2 Parity in an Open Neuromorphic Architecture</p>
+          <p class="text-xs text-white/25 mb-6">18 pages. 128-core architecture, 5 neuron models, programmable microcode learning engine, FPGA validation.</p>
           <a href="/papers/catalyst-n2.pdf" class="btn-pill text-sm" target="_blank">Read PDF</a>
         </div>
-        <div class="glass p-10 reveal">
+        <div class="glass p-10">
           <p class="text-[10px] uppercase tracking-widest text-white/30 mb-2">First Generation</p>
-          <h3 class="text-xl font-semibold mb-2">Catalyst N1 Paper</h3>
-          <p class="text-sm text-white/35 leading-relaxed mb-2">A 131K-Neuron Open Neuromorphic Processor with Programmable Synaptic Plasticity and FPGA Validation</p>
-          <p class="text-xs text-white/20 mb-4">13 pages. Architecture, instruction set, SDK, benchmarks.</p>
+          <h3 class="text-xl font-semibold mb-2">Catalyst N1</h3>
+          <p class="text-sm text-white/40 leading-relaxed mb-2">A 131K-Neuron Open Neuromorphic Processor with Programmable Synaptic Plasticity</p>
+          <p class="text-xs text-white/25 mb-4">13 pages. Architecture, instruction set, SDK, benchmarks.</p>
           <p class="mb-6"><a href="https://zenodo.org/records/18727094" target="_blank" rel="noopener noreferrer"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.18727094.svg" alt="DOI: 10.5281/zenodo.18727094" style="display:inline-block;" /></a></p>
           <div class="flex items-center gap-3 flex-wrap">
             <a href="/papers/catalyst-n1.pdf" class="btn-pill text-sm" target="_blank">Read PDF</a>
-            <a href="https://zenodo.org/records/18727094" class="btn-pill text-sm" target="_blank" rel="noopener noreferrer">Zenodo Record</a>
+            <a href="https://zenodo.org/records/18727094" class="btn-pill text-sm" target="_blank" rel="noopener noreferrer">Zenodo</a>
           </div>
         </div>
       </div>
@@ -36,27 +37,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <!-- VALIDATION -->
-  <section class="py-32 px-6 md:px-12">
+  <section id="benchmarks" class="py-32 px-6 md:px-12">
     <div class="max-w-[800px] mx-auto text-center">
       <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight mb-6">Hardware Validation</h2>
       <p class="reveal text-lg text-white/40 leading-relaxed max-w-[600px] mx-auto mb-12">
-        N2 has been validated on real programmable hardware. Every test passing. Cycle-accurate, bit-exact results matching the software simulation.
+        N2 has been validated on real programmable hardware (AWS F2, Xilinx UltraScale+ VU47P). Cycle-accurate, bit-exact results matching the software simulation.
       </p>
       <div class="reveal glass-strong p-12">
         <div class="text-[clamp(4rem,8vw,6rem)] font-bold tracking-tight text-catalyst-green">28/28</div>
-        <div class="text-sm text-white/35 uppercase tracking-widest mt-2">All validation tests passing</div>
-        <div class="mt-10 space-y-2 text-left max-w-[400px] mx-auto">
+        <div class="text-sm text-white/40 uppercase tracking-widest mt-2">All validation tests passing</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-2 mt-10 text-left max-w-[500px] mx-auto">
           {[
             'Basic spike propagation',
-            'Multi-core routing',
-            'Learning convergence',
-            'Programmable neuron models',
+            'Multi-core mesh routing',
+            'STDP learning convergence',
+            'All 5 neuron models',
             'Graded spike payloads',
-            'Deployment and runtime',
-            'Performance benchmarks',
+            'Axonal delay accuracy',
+            'Cross-core microcode (163K spikes)',
+            'Performance (81K spikes / 3.4ms)',
           ].map(test => (
             <div class="flex items-center gap-3 text-sm">
-              <span class="text-catalyst-green">&#10003;</span>
+              <span class="text-catalyst-green flex-shrink-0">&#10003;</span>
               <span class="text-white/40">{test}</span>
             </div>
           ))}
@@ -69,24 +71,70 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="py-32 px-6 md:px-12">
     <div class="max-w-[800px] mx-auto">
       <h2 class="reveal text-center text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight mb-12">Benchmarks</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="glass p-10 text-center reveal">
-          <div class="text-4xl font-bold tracking-tight"><!-- STAT:SHD_FLOAT -->85.9<!-- /STAT -->%</div>
-          <div class="text-sm text-white/35 mt-2">SHD Benchmark (float)</div>
-          <p class="text-xs text-white/20 mt-4">Spiking Heidelberg Digits &mdash; speech recognition with spiking neural networks.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-stagger">
+        <div class="glass p-10 text-center">
+          <div class="text-4xl font-bold tracking-tight">85.9%</div>
+          <div class="text-sm text-white/40 mt-2">SHD Benchmark (float)</div>
+          <p class="text-xs text-white/25 mt-4">Spiking Heidelberg Digits &mdash; speech recognition with spiking neural networks. Competitive with published SNN results.</p>
         </div>
-        <div class="glass p-10 text-center reveal">
-          <div class="text-4xl font-bold tracking-tight"><!-- STAT:SHD_QUANT -->85.4<!-- /STAT -->%</div>
-          <div class="text-sm text-white/35 mt-2">SHD Benchmark (quantized)</div>
-          <p class="text-xs text-white/20 mt-4">Hardware-accurate fixed-point mode. Only 0.5% accuracy loss from quantization.</p>
+        <div class="glass p-10 text-center">
+          <div class="text-4xl font-bold tracking-tight">85.4%</div>
+          <div class="text-sm text-white/40 mt-2">SHD Benchmark (quantized)</div>
+          <p class="text-xs text-white/25 mt-4">Hardware-accurate fixed-point mode. Only 0.5% accuracy loss from 8-bit integer quantization.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATENT -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[700px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight mb-6">Intellectual Property</h2>
+      <div class="reveal glass p-10">
+        <div class="text-lg font-semibold mb-2">UK Patent Filed</div>
+        <p class="text-sm text-white/40 mb-4">Full neuromorphic processor architecture. Filed February 2026.</p>
+        <div class="grid grid-cols-2 gap-4 text-left max-w-[400px] mx-auto">
+          <div class="text-xs text-white/30">Reference</div>
+          <div class="text-xs text-white/50">CATALYST-N1-2026</div>
+          <div class="text-xs text-white/30">Application</div>
+          <div class="text-xs text-white/50">~2602902.6</div>
+          <div class="text-xs text-white/30">Scope</div>
+          <div class="text-xs text-white/50">Full processor architecture, learning engine, routing mesh</div>
+          <div class="text-xs text-white/30">RTL License</div>
+          <div class="text-xs text-white/50">BSL 1.1 (proprietary)</div>
+          <div class="text-xs text-white/30">SDK License</div>
+          <div class="text-xs text-white/50">Open source</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SDK STATS -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[900px] mx-auto">
+      <h2 class="reveal text-center text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight mb-12">neurocore SDK</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 reveal-stagger">
+        {[
+          { stat: '3,091', label: 'Tests' },
+          { stat: '155', label: 'Features' },
+          { stat: '88', label: 'Modules' },
+          { stat: '3', label: 'Backends' },
+        ].map(item => (
+          <div class="glass p-6 text-center">
+            <div class="text-2xl font-bold tracking-tight text-catalyst-blue">{item.stat}</div>
+            <div class="text-xs text-white/40 mt-1">{item.label}</div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
   <!-- CTA -->
   <section class="py-20 px-6 md:px-12 text-center">
-    <a href="/processors" class="reveal btn-pill inline-flex">Explore our processors &rarr;</a>
+    <div class="flex gap-4 justify-center">
+      <a href="/processors" class="reveal btn-pill inline-flex">Explore processors &rarr;</a>
+      <a href="/cloud" class="reveal btn-pill inline-flex">Try Cloud API &rarr;</a>
+    </div>
   </section>
 
 </BaseLayout>

@@ -2,11 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="About — Catalyst Neuromorphic" description="A chip design company based in the United Kingdom.">
+<BaseLayout title="About — Catalyst Neuromorphic" description="A chip design company based in the United Kingdom. Building open neuromorphic processors.">
 
-  <section class="pt-32 pb-20 px-6 md:px-12 text-center">
-    <h1 class="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tighter">About</h1>
-    <p class="text-lg text-white/40 mt-4">A chip design company based in the United Kingdom.</p>
+  <section class="pt-36 pb-20 px-6 md:px-12 text-center">
+    <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">About</p>
+    <h1 class="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tighter">A chip design company.</h1>
+    <p class="text-lg text-white/40 mt-4">Based in the United Kingdom.</p>
   </section>
 
   <!-- MISSION -->
@@ -17,7 +18,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           Building neuromorphic processors that match &mdash; and challenge &mdash; the industry's best.
         </h2>
         <p class="text-white/40 leading-relaxed">
-          Catalyst Neuromorphic designs open neuromorphic computing hardware. Our processors achieve feature parity with the latest commercial chips, validated on real hardware, with a complete Python SDK and open design philosophy.
+          Catalyst Neuromorphic designs open neuromorphic computing hardware. Our processors achieve feature parity with the latest commercial chips, validated on real FPGA hardware, with a complete Python SDK and an open design philosophy.
         </p>
       </div>
     </div>
@@ -26,15 +27,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- MILESTONES -->
   <section class="py-20 px-6 md:px-12">
     <div class="max-w-[700px] mx-auto">
+      <h2 class="reveal text-2xl font-bold tracking-tight text-center mb-10">Timeline</h2>
       <div class="space-y-5">
         {[
-          { date: '2026', title: 'Catalyst N1', desc: '128-core neuromorphic processor. Full parity with Intel Loihi 1. UK patent filed.' },
-          { date: '2026', title: 'Catalyst N2', desc: 'Second generation. Five neuron models, programmable learning, <!-- STAT:TEST_COUNT -->3,091<!-- /STAT --> tests.' },
-          { date: '2026', title: 'Hardware Validation', desc: 'Every test passing on real programmable logic. Cycle-accurate. Bit-exact.' },
-          { date: '2026', title: 'Open Design', desc: 'SDK released on GitHub. Papers published. Seeking partnerships and investment.' },
-        ].map((item, i) => (
+          { date: 'Feb 2026', title: 'Catalyst N1 Released', desc: '128-core neuromorphic processor. Full feature parity with Intel Loihi 1. 96/96 verification tests. 13-page paper published.' },
+          { date: 'Feb 2026', title: 'UK Patent Filed', desc: 'Full processor architecture, learning engine, and routing mesh protected. Application reference ~2602902.6.' },
+          { date: 'Feb 2026', title: 'Catalyst N2 Released', desc: 'Second generation. Five neuron models, programmable microcode learning engine, 3,091 SDK tests. 18-page paper published.' },
+          { date: 'Feb 2026', title: 'FPGA Validation Complete', desc: '28/28 tests passing on Xilinx UltraScale+ VU47P (AWS F2). Cycle-accurate, bit-exact. 81K spikes in 3.4ms.' },
+          { date: 'Feb 2026', title: 'Catalyst Cloud Launched', desc: 'Neuromorphic compute API live at api.catalyst-neuromorphic.com. Python SDK on PyPI. Free tier available.' },
+          { date: 'Feb 2026', title: 'N1 Paper on Zenodo', desc: 'First paper published with DOI: 10.5281/zenodo.18727094. Open access.' },
+        ].map(item => (
           <div class="glass p-7 flex gap-6 items-start reveal">
-            <div class="text-sm text-white/20 font-mono shrink-0 pt-1">{item.date}</div>
+            <div class="text-sm text-catalyst-blue/60 font-mono shrink-0 pt-1 w-20">{item.date}</div>
             <div>
               <h3 class="text-base font-semibold">{item.title}</h3>
               <p class="text-sm text-white/35 mt-1">{item.desc}</p>
@@ -45,17 +49,75 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- IP -->
+  <!-- BY THE NUMBERS -->
   <section class="py-20 px-6 md:px-12">
-    <div class="max-w-[600px] mx-auto text-center reveal">
-      <h2 class="text-2xl font-bold tracking-tight mb-4">UK patent filed.</h2>
-      <p class="text-white/40 leading-relaxed">
-        Full architecture protected. Licensing enquiries welcome.
-      </p>
+    <div class="max-w-[800px] mx-auto">
+      <div class="reveal glass-strong p-12 rounded-xl">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {[
+            { stat: '131,072', label: 'Total neurons' },
+            { stat: '3,091', label: 'SDK tests' },
+            { stat: '28/28', label: 'FPGA tests' },
+            { stat: '85.9%', label: 'SHD benchmark' },
+          ].map(item => (
+            <div>
+              <div class="text-2xl font-bold tracking-tight text-catalyst-blue">{item.stat}</div>
+              <div class="text-xs text-white/40 mt-1">{item.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- FUNDING -->
+  <!-- IP -->
+  <section class="py-20 px-6 md:px-12">
+    <div class="max-w-[700px] mx-auto">
+      <h2 class="reveal text-2xl font-bold tracking-tight text-center mb-8">Intellectual property</h2>
+      <div class="reveal glass p-8">
+        <div class="grid grid-cols-2 gap-4 max-w-[500px] mx-auto">
+          <div class="text-sm text-white/30">UK Patent</div>
+          <div class="text-sm text-white/50">Filed February 2026</div>
+          <div class="text-sm text-white/30">Reference</div>
+          <div class="text-sm text-white/50">CATALYST-N1-2026</div>
+          <div class="text-sm text-white/30">Application</div>
+          <div class="text-sm text-white/50">~2602902.6</div>
+          <div class="text-sm text-white/30">RTL License</div>
+          <div class="text-sm text-white/50">BSL 1.1 (proprietary)</div>
+          <div class="text-sm text-white/30">SDK License</div>
+          <div class="text-sm text-white/50">Open source (MIT)</div>
+          <div class="text-sm text-white/30">Papers</div>
+          <div class="text-sm text-white/50">Open access</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section class="py-20 px-6 md:px-12">
+    <div class="max-w-[700px] mx-auto text-center">
+      <h2 class="reveal text-2xl font-bold tracking-tight mb-4">Institutional support</h2>
+      <p class="reveal text-white/40 leading-relaxed mb-8">
+        We work with academic and government partners to advance neuromorphic computing research.
+      </p>
+      <div class="reveal grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="glass p-5">
+          <div class="text-sm font-semibold">University of Aberdeen</div>
+          <p class="text-xs text-white/30 mt-1">Academic partnership</p>
+        </div>
+        <div class="glass p-5">
+          <div class="text-sm font-semibold">Scottish Enterprise</div>
+          <p class="text-xs text-white/30 mt-1">SMART:SCOTLAND</p>
+        </div>
+        <div class="glass p-5">
+          <div class="text-sm font-semibold">Techscaler</div>
+          <p class="text-xs text-white/30 mt-1">Early stage member</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
   <section class="py-32 px-6 md:px-12">
     <div class="max-w-[700px] mx-auto text-center">
       <div class="glass-accent p-12 reveal">
@@ -64,7 +126,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           Grants, research partnerships, investment, and commercial licensing. Help us bring neuromorphic computing from prototype to silicon.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="https://github.com/sponsors/Mr-wabbit" target="_blank" rel="noopener noreferrer" class="btn-primary">Sponsor on GitHub</a>
+          <a href="https://github.com/sponsors/catalyst-neuromorphic" target="_blank" rel="noopener noreferrer" class="btn-primary">Sponsor on GitHub</a>
           <a href="https://github.com/catalyst-neuromorphic/catalyst-neurocore" target="_blank" rel="noopener noreferrer" class="btn-pill">View on GitHub</a>
           <a href="mailto:henry@catalyst-neuromorphic.com" class="btn-pill">Get in touch</a>
         </div>
