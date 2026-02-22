@@ -1,0 +1,99 @@
+name: Sync Stats
+on:
+  repository_dispatch:
+    types: [stats-update]
+  schedule:
+    - cron: "0 8 * * 1"  # Weekly Monday 8AM UTC (1hr after neurocore)
+  workflow_dispatch: {}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.CATALYST_BOT_APP_ID }}
+          private-key: ${{ secrets.CATALYST_BOT_PRIVATE_KEY }}
+          owner: catalyst-neuromorphic
+          repositories: catalyst-website
+
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Update astro files
+        env:
+          PAYLOAD: ${{ toJSON(github.event.client_payload) }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          python3 << 'SCRIPT'
+          import re, json, os, glob
+
+          payload = os.environ.get("PAYLOAD", "{}")
+          event = os.environ.get("EVENT_NAME", "")
+
+          if event == "repository_dispatch" and payload and payload != "null":
+              stats = json.loads(payload)
+          else:
+              stats = {
+                  "test_count": "3091",
+                  "features_total": "155",
+                  "features_full": "152",
+                  "features_hw_only": "3",
+                  "shd_float": "85.9",
+                  "shd_quantized": "85.4",
+                  "sdk_version": "3.7.0"
+              }
+
+          val_map = {
+              "TEST_COUNT": f"{int(stats.get('test_count', 3091)):,}",
+              "FEATURES_TOTAL": str(stats.get("features_total", "155")),
+              "FEATURES_FULL": str(stats.get("features_full", "152")),
+              "FEATURES_HW_ONLY": str(stats.get("features_hw_only", "3")),
+              "SHD_FLOAT": str(stats.get("shd_float", "85.9")),
+              "SHD_QUANT": str(stats.get("shd_quantized", "85.4")),
+              "SDK_VERSION": str(stats.get("sdk_version", "3.7.0")),
+          }
+
+          targets = [
+              "src/pages/index.astro",
+              "src/pages/about.astro",
+              "src/pages/research.astro",
+              "src/pages/processors/n1.astro",
+              "src/pages/processors/n2.astro",
+          ]
+
+          updated = []
+          for path in targets:
+              if not os.path.exists(path):
+                  continue
+              with open(path, "r") as f:
+                  content = f.read()
+              original = content
+              for key, val in val_map.items():
+                  pattern = rf"(<!-- STAT:{key} -->).*?(<!-- /STAT -->)"
+                  content = re.sub(pattern, rf"\g<1>{val}\g<2>", content)
+              if content != original:
+                  with open(path, "w") as f:
+                      f.write(content)
+                  updated.append(path)
+
+          if updated:
+              print(f"Updated {len(updated)} files:")
+              for f in updated:
+                  print(f"  {f}")
+          else:
+              print("No changes needed.")
+
+          for k, v in val_map.items():
+              print(f"  {k}: {v}")
+          SCRIPT
+
+      - name: Commit and push
+        run: |
+          git config user.name "catalyst-ci-bot[bot]"
+          git config user.email "catalyst-ci-bot[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "chore: sync stats from test suite"
+          git push
