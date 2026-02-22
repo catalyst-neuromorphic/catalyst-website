@@ -21,7 +21,9 @@ curl https://api.catalyst-neuromorphic.com/v1/auth/me \\
 #   "user_id": "user_...",
 #   "email": "you@lab.edu",
 #   "tier": "free",
-#   "credits_balance": 0.0
+#   "plan": "free",
+#   "credits_balance": 0.0,
+#   "extra_usage_enabled": false
 # &#125;`;
 
 const signupPython = `import requests
@@ -38,7 +40,7 @@ r = requests.get("https://api.catalyst-neuromorphic.com/v1/auth/me",
 me = r.json()
 print(f"Email: &#123;me['email']&#125;")
 print(f"Tier: &#123;me['tier']&#125;")
-print(f"Credits: £&#123;me['credits_balance']:.2f&#125;")`;
+print(f"Credits: $&#123;me['credits_balance']:.2f&#125;")`;
 
 const signupJs = `// Get your API key from the Console:
 // https://catalyst-neuromorphic.com/console/keys
@@ -487,7 +489,7 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">jobs_today</td><td class="py-1.5 text-white/40">int — jobs submitted today</td></tr>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">jobs_limit_today</td><td class="py-1.5 text-white/40">int — daily limit for your tier</td></tr>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">compute_seconds_this_month</td><td class="py-1.5 text-white/40">float — total compute this billing cycle</td></tr>
-              <tr><td class="py-1.5 font-mono text-white/60">estimated_cost_gbp</td><td class="py-1.5 text-white/40">float — estimated cost at your tier rate</td></tr>
+              <tr><td class="py-1.5 font-mono text-white/60">estimated_cost_usd</td><td class="py-1.5 text-white/40">float — estimated cost at API rates (USD)</td></tr>
             </tbody>
           </table>
         </div>

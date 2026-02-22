@@ -5,30 +5,72 @@ interface Profile {
   user_id: string;
   email: string;
   tier: string;
+  plan: string;
   credits_balance: number;
-  total_deposited: number;
+  extra_usage_enabled: boolean;
+  monthly_spending_cap: number;
+  api_discount_pct: number;
   created_at: string;
+  github_linked: boolean;
+  google_linked: boolean;
 }
 
-interface Balance {
-  credits_balance: number;
-  tier: string;
-  total_deposited: number;
-  next_tier_at: number | null;
+interface UsageStatus {
+  plan: string;
+  session: {
+    used_pct: number;
+    used_seconds: number;
+    limit_seconds: number;
+    remaining_seconds: number;
+    resets_at: string;
+  };
+  weekly: {
+    used_pct: number;
+    used_seconds: number;
+    limit_seconds: number;
+    remaining_seconds: number;
+    resets_at: string;
+  };
+  extra_usage: {
+    enabled: boolean;
+    spent_this_month: number;
+    monthly_cap: number;
+    balance: number;
+  };
 }
 
-interface UsageData {
-  tier: string;
-  jobs_today: number;
-  jobs_limit_today: number;
-  compute_seconds_this_month: number;
-  estimated_cost_gbp: number;
+function UsageBar({ label, pct, remaining, resetsAt }: {
+  label: string; pct: number; remaining: number; resetsAt: string;
+}) {
+  const resetDate = new Date(resetsAt);
+  const now = new Date();
+  const hoursLeft = Math.max(0, (resetDate.getTime() - now.getTime()) / (1000 * 60 * 60));
+  const resetLabel = hoursLeft < 24
+    ? `${Math.ceil(hoursLeft)}h`
+    : `${Math.ceil(hoursLeft / 24)}d`;
+
+  const barColor = pct >= 90 ? 'bg-red-500' : pct >= 70 ? 'bg-yellow-500' : 'bg-catalyst-blue';
+
+  return (
+    <div className="bg-[#111] border border-white/5 rounded-xl p-5">
+      <div className="flex justify-between items-center mb-2">
+        <p className="text-white/40 text-xs uppercase tracking-wider">{label}</p>
+        <p className="text-white/30 text-xs">Resets in {resetLabel}</p>
+      </div>
+      <div className="w-full bg-white/5 rounded-full h-2.5 mb-2">
+        <div className={`${barColor} h-2.5 rounded-full transition-all duration-500`}
+          style={{ width: `${Math.min(100, pct)}%` }} />
+      </div>
+      <p className="text-white/50 text-xs">
+        {pct}% used &middot; {Math.round(remaining)}s remaining
+      </p>
+    </div>
+  );
 }
 
 export default function DashboardOverview() {
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [balance, setBalance] = useState<Balance | null>(null);
-  const [usage, setUsage] = useState<UsageData | null>(null);
+  const [usage, setUsage] = useState<UsageStatus | null>(null);
   const [keyCount, setKeyCount] = useState<number>(0);
   const [error, setError] = useState('');
 
@@ -36,8 +78,7 @@ export default function DashboardOverview() {
     if (!isLoggedIn()) return;
     Promise.all([
       api('/v1/auth/me').then(setProfile).catch(() => {}),
-      api('/v1/billing/balance').then(setBalance).catch(() => {}),
-      api('/v1/usage').then(setUsage).catch(() => {}),
+      api('/v1/usage/status').then(setUsage).catch(() => {}),
       api('/v1/keys').then((keys: any[]) => setKeyCount(keys.filter(k => k.active).length)).catch(() => {}),
     ]).catch(e => setError(e.message));
   }, []);
@@ -45,62 +86,101 @@ export default function DashboardOverview() {
   if (error) return <div className="text-red-400">{error}</div>;
   if (!profile) return <div className="text-white/30">Loading...</div>;
 
-  const tierColors: Record<string, string> = {
+  const planColors: Record<string, string> = {
     free: 'text-white/50',
-    researcher: 'text-catalyst-blue',
-    startup: 'text-green-400',
-    enterprise: 'text-purple-400',
+    basic: 'text-catalyst-blue',
+    max: 'text-green-400',
+    ultra: 'text-purple-400',
   };
+
+  const planLabels: Record<string, string> = {
+    free: 'Free',
+    basic: 'Basic',
+    max: 'Max',
+    ultra: 'Ultra',
+  };
+
+  const plan = usage?.plan || profile.plan || 'free';
 
   return (
     <div>
       <h1 className="text-2xl font-bold mb-1">Dashboard</h1>
       <p className="text-white/30 text-sm mb-8">Welcome back, {profile.email}</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {/* Credits */}
+      {/* Plan + Usage Bars */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        {/* Plan Card */}
         <div className="bg-[#111] border border-white/5 rounded-xl p-5">
-          <p className="text-white/40 text-xs uppercase tracking-wider mb-2">Credits</p>
-          <p className="text-3xl font-bold text-green-400">
-            {'\u00A3'}{(balance?.credits_balance ?? 0).toFixed(2)}
-          </p>
-          {balance?.next_tier_at && (
-            <p className="text-white/20 text-xs mt-1">
-              {'\u00A3'}{(balance.next_tier_at - (balance.total_deposited ?? 0)).toFixed(0)} to next tier
+          <p className="text-white/40 text-xs uppercase tracking-wider mb-2">Current Plan</p>
+          <div className="flex items-center gap-3">
+            <p className={`text-3xl font-bold ${planColors[plan] || 'text-white'}`}>
+              {planLabels[plan] || plan}
             </p>
-          )}
+            {plan === 'free' && (
+              <a href="/console/billing"
+                className="text-xs bg-catalyst-blue/10 text-catalyst-blue border border-catalyst-blue/20 px-3 py-1 rounded-full hover:bg-catalyst-blue/20 transition-colors">
+                Upgrade
+              </a>
+            )}
+          </div>
+          <div className="flex gap-4 mt-2 text-white/30 text-xs">
+            {profile.github_linked && <span>GitHub linked</span>}
+            {profile.google_linked && <span>Google linked</span>}
+          </div>
         </div>
 
-        {/* Tier */}
+        {/* API Credits */}
         <div className="bg-[#111] border border-white/5 rounded-xl p-5">
-          <p className="text-white/40 text-xs uppercase tracking-wider mb-2">Tier</p>
-          <p className={`text-2xl font-bold capitalize ${tierColors[profile.tier] || 'text-white'}`}>
-            {profile.tier}
+          <p className="text-white/40 text-xs uppercase tracking-wider mb-2">API Credits</p>
+          <p className="text-3xl font-bold text-green-400">
+            ${(profile.credits_balance ?? 0).toFixed(2)}
           </p>
-          <p className="text-white/20 text-xs mt-1">
-            {'\u00A3'}{(balance?.total_deposited ?? 0).toFixed(0)} deposited total
-          </p>
-        </div>
-
-        {/* Jobs Today */}
-        <div className="bg-[#111] border border-white/5 rounded-xl p-5">
-          <p className="text-white/40 text-xs uppercase tracking-wider mb-2">Jobs Today</p>
-          <p className="text-2xl font-bold">
-            {usage?.jobs_today ?? 0}
-            <span className="text-white/20 text-lg">/{usage?.jobs_limit_today ?? 10}</span>
-          </p>
-          <p className="text-white/20 text-xs mt-1">
-            {((usage?.compute_seconds_this_month ?? 0) / 3600).toFixed(1)}h compute this month
-          </p>
-        </div>
-
-        {/* API Keys */}
-        <div className="bg-[#111] border border-white/5 rounded-xl p-5">
-          <p className="text-white/40 text-xs uppercase tracking-wider mb-2">API Keys</p>
-          <p className="text-2xl font-bold">{keyCount}</p>
-          <p className="text-white/20 text-xs mt-1">active keys</p>
+          <div className="flex gap-3 mt-2">
+            {profile.api_discount_pct > 0 && (
+              <span className="text-xs text-purple-400">{profile.api_discount_pct}% API discount</span>
+            )}
+            <span className="text-white/20 text-xs">{keyCount} active key{keyCount !== 1 ? 's' : ''}</span>
+          </div>
         </div>
       </div>
+
+      {/* Usage Bars */}
+      {usage && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <UsageBar
+            label="Session Usage"
+            pct={usage.session.used_pct}
+            remaining={usage.session.remaining_seconds}
+            resetsAt={usage.session.resets_at}
+          />
+          <UsageBar
+            label="Weekly Usage"
+            pct={usage.weekly.used_pct}
+            remaining={usage.weekly.remaining_seconds}
+            resetsAt={usage.weekly.resets_at}
+          />
+        </div>
+      )}
+
+      {/* Extra Usage Card */}
+      {usage && (
+        <div className="bg-[#111] border border-white/5 rounded-xl p-5 mb-6">
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Extra Usage</p>
+              <p className="text-sm text-white/60">
+                {usage.extra_usage.enabled
+                  ? `$${usage.extra_usage.spent_this_month.toFixed(2)} spent this month (cap: $${usage.extra_usage.monthly_cap})`
+                  : 'Disabled — jobs stop when plan limits are reached'}
+              </p>
+            </div>
+            <a href="/console/billing"
+              className="text-xs text-catalyst-blue hover:underline">
+              {usage.extra_usage.enabled ? 'Manage' : 'Enable'}
+            </a>
+          </div>
+        </div>
+      )}
 
       {/* Quick Actions */}
       <div className="flex gap-3">
@@ -110,7 +190,7 @@ export default function DashboardOverview() {
         </a>
         <a href="/console/billing"
           className="bg-green-500/10 border border-green-500/20 text-green-400 hover:bg-green-500/20 px-4 py-2 rounded-lg text-sm transition-colors">
-          Add Credits
+          Buy API Credits
         </a>
         <a href="/cloud/docs"
           className="bg-white/5 border border-white/10 text-white/50 hover:text-white/80 hover:bg-white/10 px-4 py-2 rounded-lg text-sm transition-colors">
