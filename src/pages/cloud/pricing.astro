@@ -4,13 +4,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 const tiers = [
   {
     name: 'Free',
-    deposit: '£0',
-    description: 'For exploration and small experiments.',
+    price: '$0',
+    priceNote: 'credit card required',
+    description: 'For exploration and quick experiments.',
     features: [
-      '10 jobs per day',
+      '500 compute-seconds/week',
+      'N1 chip only',
       '1,024 neurons max',
       '1,000 timesteps max',
-      '30s max runtime',
       'Community support',
     ],
     cta: 'Get started free',
@@ -18,71 +19,66 @@ const tiers = [
     highlight: false,
   },
   {
-    name: 'Researcher',
-    deposit: '£5+',
+    name: 'Basic',
+    price: '$25',
+    priceNote: '/month',
     description: 'For academic research and coursework.',
     features: [
-      '100 jobs per day',
+      '1,500 compute-seconds/week',
+      'N1 + N2 chips',
       '32,768 neurons max',
       '100,000 timesteps max',
-      '5 min max runtime',
       'Email support',
     ],
-    cta: 'Add credits',
+    cta: 'Subscribe',
+    ctaHref: '/console/billing',
+    highlight: false,
+  },
+  {
+    name: 'Max',
+    price: '$100',
+    priceNote: '/month',
+    description: 'For serious research and benchmarking.',
+    features: [
+      '7,000 compute-seconds/week',
+      'N1 + N2 chips',
+      '131,072 neurons max',
+      '1M timesteps max',
+      'Priority support',
+    ],
+    cta: 'Subscribe',
     ctaHref: '/console/billing',
     highlight: true,
   },
   {
-    name: 'Startup',
-    deposit: '£50+',
-    description: 'For product development and benchmarking.',
+    name: 'Ultra',
+    price: '$200',
+    priceNote: '/month',
+    description: 'For production workloads and heavy compute.',
     features: [
-      '500 jobs per day',
-      '131,072 neurons max',
-      '1M timesteps max',
-      '30 min max runtime',
-      'Priority support',
-    ],
-    cta: 'Add credits',
-    ctaHref: '/console/billing',
-    highlight: false,
-  },
-  {
-    name: 'Enterprise',
-    deposit: '£200+',
-    description: 'For production workloads and dedicated capacity.',
-    features: [
-      'Unlimited jobs',
+      '16,000 compute-seconds/week',
+      'N1 + N2 chips',
       '131,072 neurons max',
       '10M timesteps max',
-      '1 hour max runtime',
       'Dedicated support',
     ],
-    cta: 'Add credits',
+    cta: 'Subscribe',
     ctaHref: '/console/billing',
     highlight: false,
   },
-];
-
-const creditPacks = [
-  { amount: 5, label: '£5' },
-  { amount: 20, label: '£20' },
-  { amount: 50, label: '£50' },
-  { amount: 100, label: '£100' },
-  { amount: 200, label: '£200' },
 ];
 ---
 
-<BaseLayout title="Pricing — Catalyst Cloud" description="Simple, transparent pricing for neuromorphic compute. Prepaid credits, no subscriptions.">
+<BaseLayout title="Pricing — Catalyst Cloud" description="Plans that grow with you. Subscribe for cloud access or buy API credits.">
 
   <!-- Header -->
   <section class="pt-36 pb-12 px-6 md:px-12 text-center">
     <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Pricing</p>
     <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tighter">
-      Pay as you go.
+      Plans that grow with you.
     </h1>
     <p class="text-lg text-white/40 mt-4 max-w-[550px] mx-auto">
-      Start free. Add credits when you need more. Your tier advances automatically as you deposit.
+      Subscribe for cloud access with included compute. Buy API credits separately for programmatic use.
     </p>
   </section>
 
@@ -94,8 +90,8 @@ const creditPacks = [
           <div class="mb-6">
             <h3 class="text-lg font-semibold">{tier.name}</h3>
             <div class="mt-3">
-              <span class="text-3xl font-bold">{tier.deposit}</span>
-              <span class="text-sm text-white/40 ml-1">cumulative deposit</span>
+              <span class="text-3xl font-bold">{tier.price}</span>
+              <span class="text-sm text-white/40 ml-1">{tier.priceNote}</span>
             </div>
             <p class="text-sm text-white/40 mt-2">{tier.description}</p>
           </div>
@@ -115,64 +111,94 @@ const creditPacks = [
     </div>
   </section>
 
-  <!-- Credit Packs -->
-  <section class="py-16 px-6 md:px-12">
-    <div class="max-w-[800px] mx-auto text-center">
-      <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight mb-4">Add credits</h2>
-      <p class="text-white/40 mb-8">Credits never expire. Compute rate: £0.005/sec (£18/hr).</p>
-      <div class="reveal flex justify-center gap-4 flex-wrap">
-        {creditPacks.map(pack => (
-          <a href="/console/billing" class="glass hover:glass-accent px-6 py-3 rounded-lg text-lg font-bold no-underline text-green-400 transition-all duration-200">
-            {pack.label}
-          </a>
-        ))}
+  <!-- Enterprise -->
+  <section class="py-8 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="reveal glass rounded-xl p-8 text-center">
+        <h3 class="text-xl font-semibold mb-2">Enterprise</h3>
+        <p class="text-white/40 mb-4">Custom compute budgets, dedicated capacity, SLA guarantees, and on-premise deployment options.</p>
+        <a href="mailto:henry@catalyst-neuromorphic.com" class="text-catalyst-blue hover:underline text-sm">Contact sales &rarr;</a>
       </div>
     </div>
   </section>
 
-  <!-- Compute Pricing -->
-  <section class="py-32 px-6 md:px-12">
+  <!-- API Pricing -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight text-center mb-4">API Credits</h2>
+      <p class="text-white/40 text-center mb-8">For programmatic access via API keys. Separate from subscription compute.</p>
+      <div class="reveal glass rounded-xl p-8">
+        <div class="grid md:grid-cols-2 gap-8 mb-8">
+          <div>
+            <h4 class="font-semibold mb-3">Chip Models</h4>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <span class="text-white/60 text-sm">N1 (Loihi 1 parity)</span>
+                <span class="text-green-400 font-bold">$0.002/sec</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-white/60 text-sm">N2 (Loihi 2 parity)</span>
+                <span class="text-green-400 font-bold">$0.005/sec</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-3">Buy Credits</h4>
+            <p class="text-white/60 text-sm mb-2">Any amount, $5 minimum.</p>
+            <p class="text-white/30 text-xs">Credits never expire. Buy from the console dashboard.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Extra Usage -->
+  <section class="py-16 px-6 md:px-12">
     <div class="max-w-[800px] mx-auto text-center">
-      <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight mb-8">How it works</h2>
-      <div class="reveal glass rounded-xl p-8 text-left">
-        <div class="grid md:grid-cols-3 gap-6 mb-8">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight mb-4">Extra usage</h2>
+      <p class="reveal text-white/40 max-w-[600px] mx-auto">
+        Hit your subscription limits? Enable extra usage to keep going.
+        Compute is billed from your API credit balance at standard API rates.
+        Set a monthly spending cap for peace of mind.
+      </p>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight text-center mb-8">How it works</h2>
+      <div class="reveal glass rounded-xl p-8">
+        <div class="grid md:grid-cols-3 gap-6">
           <div>
             <div class="text-catalyst-blue text-2xl font-bold mb-2">1.</div>
             <h4 class="font-semibold text-sm mb-1">Sign up free</h4>
-            <p class="text-sm text-white/40">Create an account and get 10 free jobs per day. No credit card needed.</p>
+            <p class="text-sm text-white/40">Create an account with GitHub, Google, or email. Free tier gets 500 compute-seconds/week.</p>
           </div>
           <div>
             <div class="text-catalyst-blue text-2xl font-bold mb-2">2.</div>
-            <h4 class="font-semibold text-sm mb-1">Add credits</h4>
-            <p class="text-sm text-white/40">Buy credit packs when you need more. Your tier advances with cumulative deposit.</p>
+            <h4 class="font-semibold text-sm mb-1">Subscribe or buy credits</h4>
+            <p class="text-sm text-white/40">Subscribe for included compute with usage bars. Or buy API credits for programmatic access.</p>
           </div>
           <div>
             <div class="text-catalyst-blue text-2xl font-bold mb-2">3.</div>
             <h4 class="font-semibold text-sm mb-1">Run simulations</h4>
-            <p class="text-sm text-white/40">Credits are deducted per second of compute. Unused credits never expire.</p>
-          </div>
-        </div>
-        <div class="grid md:grid-cols-2 gap-6 border-t border-white/5 pt-6">
-          <div>
-            <h4 class="font-semibold text-sm mb-3">Example: Small experiment</h4>
-            <div class="text-sm text-white/40 space-y-1">
-              <p>100 neurons, 1,000 timesteps</p>
-              <p>Compute: ~0.05 seconds</p>
-              <p>Cost: £0.00025</p>
-              <p class="text-white/60 font-medium mt-2">Free tier: £0.00</p>
-            </div>
-          </div>
-          <div>
-            <h4 class="font-semibold text-sm mb-3">Example: Full research run</h4>
-            <div class="text-sm text-white/40 space-y-1">
-              <p>32K neurons, 100K timesteps, 50 trials</p>
-              <p>Compute: ~300 seconds total</p>
-              <p>Cost: £1.50</p>
-              <p class="text-white/60 font-medium mt-2">Less than a coffee.</p>
-            </div>
+            <p class="text-sm text-white/40">Subscription compute tracks via session and weekly limits. API credits are deducted per second of compute.</p>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- GitHub Sponsors -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight mb-4">GitHub Sponsors</h2>
+      <p class="reveal text-white/40 max-w-[600px] mx-auto mb-6">
+        Sponsor us on GitHub and your subscription is activated automatically when you sign in with GitHub OAuth.
+      </p>
+      <a href="https://github.com/sponsors/catalyst-neuromorphic" target="_blank"
+        class="reveal btn-primary inline-flex px-8 py-3 text-sm">Sponsor on GitHub &rarr;</a>
     </div>
   </section>
 
@@ -183,23 +209,27 @@ const creditPacks = [
       <div class="space-y-6">
         <div class="reveal">
           <h3 class="font-semibold mb-2">Is the free tier actually free?</h3>
-          <p class="text-sm text-white/40 leading-relaxed">Yes. 10 jobs per day, up to 1,024 neurons, forever. No credit card required.</p>
+          <p class="text-sm text-white/40 leading-relaxed">Yes. 500 compute-seconds per week on the N1 chip. Credit card required to prevent abuse, but you're never charged.</p>
         </div>
         <div class="reveal">
-          <h3 class="font-semibold mb-2">Do credits expire?</h3>
-          <p class="text-sm text-white/40 leading-relaxed">No. Credits stay on your account until you use them. There are no monthly fees or subscriptions.</p>
+          <h3 class="font-semibold mb-2">What's the difference between subscriptions and API credits?</h3>
+          <p class="text-sm text-white/40 leading-relaxed">Subscriptions give you included compute for interactive cloud access (console, web interface). API credits are for programmatic access via API keys — billed per compute-second.</p>
         </div>
         <div class="reveal">
-          <h3 class="font-semibold mb-2">How does tier advancement work?</h3>
-          <p class="text-sm text-white/40 leading-relaxed">Your tier is based on how much you've deposited in total, not per month. Deposit £5 total and you're a Researcher forever. Tiers never downgrade.</p>
+          <h3 class="font-semibold mb-2">What is extra usage?</h3>
+          <p class="text-sm text-white/40 leading-relaxed">When your subscription compute is exhausted, extra usage lets jobs keep running by billing from your API credit balance. You control this with a monthly spending cap.</p>
         </div>
         <div class="reveal">
-          <h3 class="font-semibold mb-2">What neuromorphic model do you run?</h3>
-          <p class="text-sm text-white/40 leading-relaxed">Hardware-accurate Loihi 2 parity. Leak-integrate-fire neurons with 4 dendritic compartments, configurable thresholds, refractory periods, synaptic delays, and multiple learning rules including STDP and 3-factor reward modulation.</p>
+          <h3 class="font-semibold mb-2">Do API credits expire?</h3>
+          <p class="text-sm text-white/40 leading-relaxed">No. Credits stay on your account until you use them. There are no monthly fees for credits — they're one-time purchases.</p>
         </div>
         <div class="reveal">
-          <h3 class="font-semibold mb-2">What's the latency?</h3>
-          <p class="text-sm text-white/40 leading-relaxed">Small simulations complete in under a second. Larger ones scale linearly with neuron count and timesteps. Results are available via polling.</p>
+          <h3 class="font-semibold mb-2">How does N2 usage work?</h3>
+          <p class="text-sm text-white/40 leading-relaxed">N2 compute burns 2.5x your subscription allocation compared to N1. So 1 second of N2 compute uses 2.5 seconds of your weekly limit. API credit rates are separate: $0.002/sec for N1, $0.005/sec for N2.</p>
+        </div>
+        <div class="reveal">
+          <h3 class="font-semibold mb-2">Can I use GitHub Sponsors instead?</h3>
+          <p class="text-sm text-white/40 leading-relaxed">Yes. Sponsoring at $25/mo gives you a Basic plan, $100/mo gives Max, $200/mo gives Ultra. Sign in with GitHub OAuth and it's activated automatically.</p>
         </div>
       </div>
     </div>

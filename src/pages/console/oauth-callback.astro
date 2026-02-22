@@ -1,0 +1,49 @@
+---
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/600.css';
+import '../../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signing in... — Catalyst Console</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body class="bg-[#0a0a0a] text-white min-h-screen flex items-center justify-center">
+  <div class="text-center">
+    <a href="/" class="text-catalyst-blue font-bold text-2xl tracking-tight">CATALYST</a>
+    <p class="text-white/30 text-sm mt-2" id="status">Completing sign in...</p>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const accessToken = params.get('access_token');
+    const refreshToken = params.get('refresh_token');
+    const statusEl = document.getElementById('status');
+
+    if (accessToken && refreshToken) {
+      localStorage.setItem('catalyst_token', accessToken);
+      localStorage.setItem('catalyst_refresh_token', refreshToken);
+
+      // Check for CLI callback (callback_port in params)
+      const callbackPort = params.get('callback_port');
+      if (callbackPort) {
+        window.location.href = `/console/authorize?callback_port=${callbackPort}&state=${params.get('state') || ''}`;
+      } else {
+        window.location.href = '/console/dashboard';
+      }
+    } else {
+      if (statusEl) {
+        statusEl.textContent = 'Authentication failed. Redirecting to login...';
+        statusEl.classList.add('text-red-400');
+      }
+      setTimeout(() => {
+        window.location.href = '/console/login';
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
