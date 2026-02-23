@@ -71,11 +71,6 @@
     text-decoration:none;transition:color .25s;
   }
   .nav-links a:hover{color:#fff}
-  .nav-links .has-chevron::after{
-    content:'';display:inline-block;width:0;height:0;
-    border-left:4px solid transparent;border-right:4px solid transparent;
-    border-top:4px solid currentColor;margin-left:5px;vertical-align:middle;
-  }
 
   /* ═══════════════════════════════════
      HERO
@@ -85,7 +80,7 @@
   .hero h1 { font-family:'Space Grotesk',system-ui,sans-serif; font-size:clamp(4rem,10vw,8rem); font-weight:700; color:white; letter-spacing:-0.03em; text-shadow:0 0 80px rgba(59,130,246,0.3),0 0 160px rgba(59,130,246,0.1); }
   .hero p { color:rgba(255,255,255,0.4); font-size:1.1rem; margin-top:16px; text-align:center; font-family:'Plus Jakarta Sans',system-ui,sans-serif; }
   .hero-ctas { display:flex; gap:16px; margin-top:36px; }
-  .hero-ctas a { display:inline-flex; align-items:center; gap:8px; padding:14px 32px; border-radius:999px; font-family:'Plus Jakarta Sans',sans-serif; font-size:.95rem; font-weight:600; text-decoration:none; transition:all .3s; }
+  .hero-ctas a { display:inline-flex; align-items:center; gap:8px; padding:14px 32px; border-radius:999px; font-family:'Plus Jakarta Sans',sans-serif; font-size:.95rem; font-weight:600; text-decoration:none; transition:all .3s; position:relative;z-index:1; }
   .hero-ctas .primary { background:linear-gradient(135deg,#3B82F6,#2563EB); color:#fff; box-shadow:0 4px 20px rgba(59,130,246,0.35); }
   .hero-ctas .primary:hover { box-shadow:0 8px 32px rgba(59,130,246,0.5); transform:translateY(-1px); }
   .hero-ctas .secondary { border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.7); background:rgba(255,255,255,0.04); }
@@ -284,7 +279,7 @@
   .app-section{
     position:relative;z-index:1;
     padding:80px 0 120px;
-    overflow-x:hidden;overflow-y:visible;
+    overflow:visible;
   }
   .app-section .sh,.app-section .ss{padding:0 32px}
   .app-section .ss{margin-bottom:56px}
@@ -377,9 +372,9 @@
   .mcard .ov{
     position:absolute;inset:0;z-index:1;
     background:linear-gradient(180deg,
-      rgba(5,5,7,0) 15%,
-      rgba(5,5,7,.5) 60%,
-      rgba(5,5,7,.88) 100%
+      rgba(5,5,7,0) 5%,
+      rgba(5,5,7,.55) 45%,
+      rgba(5,5,7,.93) 100%
     );
   }
 
@@ -390,13 +385,14 @@
   .mcard .tag{
     font-size:.6rem;font-weight:600;text-transform:uppercase;
     letter-spacing:.08em;color:#60A5FA;margin-bottom:6px;
-    display:block;
+    display:block;text-shadow:0 1px 6px rgba(0,0,0,0.8);
   }
   .mcard .ct h3{
     font-family:'Space Grotesk','Plus Jakarta Sans',sans-serif;
     font-size:.95rem;font-weight:600;line-height:1.2;margin-bottom:4px;
+    text-shadow:0 1px 8px rgba(0,0,0,0.9);
   }
-  .mcard .ct p{font-size:.75rem;color:rgba(255,255,255,0.45);line-height:1.5;font-weight:400}
+  .mcard .ct p{font-size:.75rem;color:rgba(255,255,255,0.45);line-height:1.5;font-weight:400;text-shadow:0 1px 6px rgba(0,0,0,0.8)}
 
   /* ═══════════════════════════════════
      RESPONSIVE
@@ -521,6 +517,49 @@
   .btn-blue:hover{box-shadow:0 6px 24px rgba(59,130,246,0.45);transform:translateY(-1px)}
   .btn-ghost{border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.04)}
   .btn-ghost:hover{background:rgba(255,255,255,0.08);color:#fff}
+
+  /* ── GLOW BUTTONS — Huly-style internal spotlight ── */
+  .glow-btn{
+    position:relative;overflow:hidden;
+  }
+  .glow-spot{
+    position:absolute;top:50%;
+    transform:translateY(-50%);
+    width:200px;height:100%;
+    display:flex;align-items:center;justify-content:center;
+    z-index:0;pointer-events:none;
+    opacity:0;
+    will-change:transform,opacity;
+  }
+  .glow-spot-circle{
+    position:absolute;width:120px;height:120px;border-radius:50%;
+    background:radial-gradient(50% 50% at 50% 50%,
+      rgba(255,255,255,0.90) 3.5%,
+      rgba(96,165,250,0.70) 26.5%,
+      rgba(147,197,253,0.50) 37.5%,
+      rgba(59,130,246,0.25) 49%,
+      rgba(37,99,235,0) 92.5%
+    );
+  }
+  .glow-spot-wide{
+    position:absolute;width:200px;height:100px;
+    background:radial-gradient(43.3% 44.23% at 50% 49.51%,
+      rgba(255,255,255,0.70) 29%,
+      rgba(191,219,254,0.50) 48.5%,
+      rgba(147,197,253,0.25) 60.71%,
+      rgba(214,211,210,0) 100%
+    );
+    filter:blur(5px);
+  }
+  /* external glow — uses box-shadow since child is clipped by overflow:hidden */
+  .glow-btn{
+    transition:box-shadow .4s ease;
+  }
+  .glow-btn.glow-on{
+    box-shadow:
+      0 0 25px rgba(59,130,246,0.25),
+      0 0 50px rgba(59,130,246,0.08);
+  }
 
   /* ═══════════════════════════════════
      RESEARCH TEASER
@@ -735,10 +774,10 @@
 <nav class="nav" id="main-nav">
   <a href="#" class="nav-logo">Catalyst</a>
   <div class="nav-links">
-    <a href="#" class="has-chevron">Products</a>
+    <a href="/processors">Products</a>
     <a href="/research">Research</a>
     <a href="/about">About</a>
-    <a href="/console">Sign in</a>
+    <a href="/console/login">Sign in</a>
   </div>
 </nav>
 
@@ -1804,7 +1843,7 @@ var obs = new IntersectionObserver(function(entries) {
       obs.unobserve(e.target);
     }
   });
-}, { threshold: 0.06, rootMargin: '0px 0px -60px 0px' });
+}, { threshold: 0.15, rootMargin: '0px 0px -180px 0px' });
 
 document.querySelectorAll('.anim, .text-anim').forEach(function(el) { obs.observe(el); });
 
@@ -2183,9 +2222,9 @@ document.querySelectorAll('.pcard, .mcard').forEach(function(card) {
 
     /* Combine */
     '  float aura = fog * auraMask * 1.25 + edgeGlow * 0.14;' +
-    '  aura *= smoothstep(0.15, 0.0, sdf);' +
+    '  aura *= smoothstep(0.18, 0.0, sdf);' +
 
-    /* Outer fade — fog to nothing at canvas edges */
+    /* Outer fade — fog to nothing at marquee-wrap edges */
     '  float hMask = smoothstep(u_hFade.x, u_hFade.y, uv.x)' +
     '              * smoothstep(u_hFade.w, u_hFade.z, uv.x);' +
     '  aura *= hMask;' +
@@ -2287,7 +2326,7 @@ document.querySelectorAll('.pcard, .mcard').forEach(function(card) {
       var wr = wraps[0].getBoundingClientRect();
       var wL = (wr.left - cr.left) / cW;
       var wR = (wr.right - cr.left) / cW;
-      var bleedUV = 100 / cW;
+      var bleedUV = 200 / cW;
       var hFL0 = wL - bleedUV;
       var hFL1 = wL;
       var hFR1 = wR;
@@ -2320,7 +2359,7 @@ document.querySelectorAll('.pcard, .mcard').forEach(function(card) {
     var mTrack1 = document.getElementById('row1');
     var mTrack2 = document.getElementById('row2');
     if (mWraps.length >= 2 && mTrack1 && mTrack2) {
-      var MBLEED = 100;
+      var MBLEED = 400;
 
       var mFogC = document.createElement('canvas');
       mFogC.style.cssText = 'position:absolute;pointer-events:none;z-index:0;';
@@ -2330,11 +2369,12 @@ document.querySelectorAll('.pcard, .mcard').forEach(function(card) {
         var w1 = mWraps[0], w2 = mWraps[1];
         var topY = w1.offsetTop - MBLEED;
         var botY = w2.offsetTop + w2.offsetHeight + MBLEED;
-        var cW = appS.offsetWidth;
+        var sW = appS.offsetWidth;
+        var cW = sW + MBLEED * 2;
         var cH = botY - topY;
 
         mFogC.style.top  = topY + 'px';
-        mFogC.style.left = '0px';
+        mFogC.style.left = -MBLEED + 'px';
         mFogC.style.width  = cW + 'px';
         mFogC.style.height = cH + 'px';
         var dpr = Math.min(window.devicePixelRatio, 2);
@@ -2348,6 +2388,84 @@ document.querySelectorAll('.pcard, .mcard').forEach(function(card) {
       initMarqueeFog(mFogC, mWraps, mTrack1, mTrack2);
     }
   }
+
+  /* ═══ GLOW BUTTONS — Huly-style internal spotlight with spring physics ═══ */
+  document.querySelectorAll('.hero-ctas a, .btn').forEach(function(btn) {
+    btn.classList.add('glow-btn');
+
+    /* Inject internal spotlight */
+    var spot = document.createElement('div');
+    spot.className = 'glow-spot';
+    spot.innerHTML = '<div class="glow-spot-circle"></div><div class="glow-spot-wide"></div>';
+    btn.insertBefore(spot, btn.firstChild);
+
+    /* Spring physics (matching Huly: snappy follow, bouncy return) */
+    var targetX = 0;
+    var currentX = 0;
+    var velocity = 0;
+    var stiffness = 10000;
+    var damping = 500;
+    var isHovering = false;
+    var animFrame = null;
+    var halfSpot = 100; /* half of glow-spot width */
+
+    function springTick() {
+      var force = stiffness * (targetX - currentX);
+      velocity = (velocity + force * 0.00006) * (1 - damping * 0.00006);
+      currentX += velocity * 0.016;
+
+      if (Math.abs(currentX - targetX) < 0.5 && Math.abs(velocity) < 0.5) {
+        currentX = targetX;
+        velocity = 0;
+        spot.style.left = (currentX - halfSpot) + 'px';
+        if (!isHovering) {
+          spot.style.opacity = '0';
+          btn.classList.remove('glow-on');
+        }
+        return; /* stop animation */
+      }
+
+      spot.style.left = (currentX - halfSpot) + 'px';
+      animFrame = requestAnimationFrame(springTick);
+    }
+
+    function startSpring() {
+      if (animFrame) cancelAnimationFrame(animFrame);
+      animFrame = requestAnimationFrame(springTick);
+    }
+
+    btn.addEventListener('mouseenter', function(e) {
+      isHovering = true;
+      stiffness = 10000; damping = 500; /* snappy */
+      var r = btn.getBoundingClientRect();
+      targetX = e.clientX - r.left;
+      currentX = targetX; velocity = 0; /* snap to cursor instantly on enter */
+      spot.style.left = (currentX - halfSpot) + 'px';
+      spot.style.opacity = '1';
+      spot.style.transition = '';
+      btn.classList.add('glow-on');
+    });
+
+    btn.addEventListener('mousemove', function(e) {
+      stiffness = 10000; damping = 500; /* snappy */
+      var r = btn.getBoundingClientRect();
+      targetX = e.clientX - r.left;
+      startSpring();
+    });
+
+    btn.addEventListener('mouseleave', function() {
+      isHovering = false;
+      stiffness = 120; damping = 18; /* slow bouncy return like Huly */
+      targetX = btn.offsetWidth / 2; /* return to center */
+      /* Fade out */
+      spot.style.transition = 'opacity 0.5s 0.3s';
+      spot.style.opacity = '0';
+      btn.classList.remove('glow-on');
+      startSpring();
+      /* Reset transition after fade completes */
+      setTimeout(function() { spot.style.transition = ''; }, 900);
+    });
+  });
 
 })();
 </script>
