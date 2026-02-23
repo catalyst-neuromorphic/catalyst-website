@@ -126,9 +126,5 @@
   }
 }
 
-/* ── Neural grid — cells created by JS ── */
-.n-cell { background: transparent; border-radius: 2px; transition: background 0.6s ease; }
-.n-cell.a1 { background: rgba(59, 130, 246, 0.04); }
-.n-cell.a2 { background: rgba(59, 130, 246, 0.09); }
-.n-cell.a3 { background: rgba(59, 130, 246, 0.16); }
-.n-cell.a4 { background: rgba(59, 130, 246, 0.25); }
+/* ── Neural grid canvas ── */
+#neuralCanvas { display: block; }
