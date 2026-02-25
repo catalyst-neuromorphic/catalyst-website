@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Terms of Service — Catalyst Neuromorphic" description="Catalyst Cloud Terms of Service">
+  <section class="max-w-3xl mx-auto px-6 py-24">
+    <h1 class="text-3xl font-bold mb-2" style="font-family:'Space Grotesk',sans-serif;">Terms of Service</h1>
+    <p class="text-white/30 text-sm mb-12">Last updated: 25 February 2026</p>
+
+    <div class="prose-legal">
+      <h2>1. About these terms</h2>
+      <p>These Terms of Service ("Terms") govern your use of the Catalyst Cloud platform, API, console, CLI tools, and documentation (collectively, the "Service") operated by Catalyst Neuromorphic ("we", "us", "our"), a business registered in the United Kingdom.</p>
+      <p>By creating an account or using the Service, you agree to be bound by these Terms. If you do not agree, do not use the Service.</p>
+
+      <h2>2. The Service</h2>
+      <p>Catalyst Cloud provides cloud-based neuromorphic computing services. You can define spiking neural networks and submit simulation jobs that run on our N1 and N2 neuromorphic processor architectures. The Service includes:</p>
+      <ul>
+        <li>A REST API for programmatic access</li>
+        <li>A web console for account management</li>
+        <li>A CLI tool for local development</li>
+        <li>A Python SDK (catalyst-cloud) for job submission</li>
+      </ul>
+
+      <h2>3. Accounts</h2>
+      <p>You must provide a valid email address to create an account. You are responsible for maintaining the security of your account credentials and API keys. You must not share API keys or allow others to use your account.</p>
+      <p>You must be at least 16 years old to use the Service. If you are using the Service on behalf of an organisation, you represent that you have authority to bind that organisation to these Terms.</p>
+
+      <h2>4. Acceptable use</h2>
+      <p>You agree not to:</p>
+      <ul>
+        <li>Use the Service for any unlawful purpose</li>
+        <li>Attempt to reverse-engineer, decompile, or extract source code from our proprietary SDK, processors, or platform</li>
+        <li>Circumvent usage limits, rate limits, or security controls</li>
+        <li>Resell or redistribute access to the Service without our written consent</li>
+        <li>Submit workloads designed to degrade the Service for other users</li>
+        <li>Use the Service to develop competing neuromorphic processor designs using information gained from our platform</li>
+      </ul>
+
+      <h2>5. Intellectual property</h2>
+      <p><strong>Your content:</strong> You retain all rights to the network definitions, configurations, and data you submit to the Service. We do not claim ownership of your content.</p>
+      <p><strong>Our IP:</strong> The Catalyst N1 and N2 processor architectures, neurocore SDK, compiler, simulator, RTL, and all associated technology are proprietary to Catalyst Neuromorphic, protected by UK patent applications, copyright, and trade secret law. The neurocore SDK is licensed under the Business Source License 1.1 (BSL 1.1). Nothing in these Terms grants you any rights to our source code, designs, or technology beyond the right to use the Service as described.</p>
+
+      <h2>6. Subscriptions and payments</h2>
+      <p>Paid subscriptions are billed monthly via Stripe. Prices are in US dollars unless currency conversion is shown on the pricing page. You can upgrade, downgrade, or cancel at any time from the console. Cancellations take effect at the end of the current billing period.</p>
+      <p>Prorated charges apply when upgrading mid-cycle. Refunds are at our discretion. API credit purchases are non-refundable once credits have been used.</p>
+
+      <h2>7. Usage limits and extra usage</h2>
+      <p>Each plan includes weekly compute-second allowances. When your allowance is exhausted, jobs will be rejected unless you have enabled Extra Usage billing with a sufficient API credit balance. Extra Usage charges are deducted from your credit balance at published per-second rates.</p>
+
+      <h2>8. Service availability</h2>
+      <p>We aim to keep the Service available but do not guarantee uptime. We may suspend or modify the Service for maintenance, updates, or operational reasons. We will endeavour to give notice of planned downtime where practical.</p>
+
+      <h2>9. Limitation of liability</h2>
+      <p>To the fullest extent permitted by law, our total liability for any claim arising from or relating to the Service is limited to the amount you paid us in the 12 months preceding the claim. We are not liable for indirect, incidental, consequential, or punitive damages, including loss of data, revenue, or profits.</p>
+
+      <h2>10. Termination</h2>
+      <p>You may delete your account at any time from the console. We may suspend or terminate your account if you violate these Terms. On termination, your data will be deleted in accordance with our Privacy Policy.</p>
+
+      <h2>11. Changes to these terms</h2>
+      <p>We may update these Terms from time to time. If we make material changes, we will notify you by email or via the console. Continued use of the Service after changes take effect constitutes acceptance.</p>
+
+      <h2>12. Governing law</h2>
+      <p>These Terms are governed by the laws of England and Wales. Any disputes will be resolved in the courts of England and Wales.</p>
+
+      <h2>13. Contact</h2>
+      <p>Questions about these Terms? Contact us at <a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a>.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .prose-legal h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-legal p {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.925rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  .prose-legal ul {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.925rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+  .prose-legal li {
+    margin-bottom: 0.35rem;
+    list-style-type: disc;
+  }
+  .prose-legal a {
+    color: #3B82F6;
+    text-decoration: none;
+  }
+  .prose-legal a:hover { text-decoration: underline; }
+  .prose-legal strong { color: rgba(255,255,255,0.7); }
+</style>

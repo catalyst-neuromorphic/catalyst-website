@@ -129,11 +129,27 @@ import '../../styles/global.css';
             <input type="email" id="email" name="email" required class="auth-input" />
           </div>
           <div>
-            <label for="password" class="block text-sm text-white/50 mb-1.5">Password</label>
+            <div class="flex justify-between items-center mb-1.5">
+              <label for="password" class="text-sm text-white/50">Password</label>
+              <a href="/console/forgot-password" class="text-xs text-catalyst-blue hover:underline">Forgot password?</a>
+            </div>
             <input type="password" id="password" name="password" required class="auth-input" />
           </div>
           <button type="submit" id="submit-btn" class="auth-submit">Log in</button>
         </form>
+
+        <!-- 2FA step (hidden by default) -->
+        <div id="twofa-step" class="hidden space-y-4">
+          <p class="text-white/50 text-sm">Enter the 6-digit code from your authenticator app (or a backup code).</p>
+          <div>
+            <label for="totp-code" class="block text-sm text-white/50 mb-1.5">Authentication code</label>
+            <input type="text" id="totp-code" maxlength="8" class="auth-input" style="letter-spacing:0.15em;" placeholder="000000" autocomplete="one-time-code" />
+          </div>
+          <button type="button" id="twofa-btn" class="auth-submit">Verify</button>
+          <p class="text-center">
+            <button type="button" id="twofa-back" class="text-white/30 text-xs hover:text-white/50">Back to login</button>
+          </p>
+        </div>
 
         <p class="text-center text-white/30 text-sm mt-6">
           Don't have an account? <a href="/console/signup" class="text-catalyst-blue hover:underline">Sign up</a>
@@ -164,6 +180,34 @@ import '../../styles/global.css';
       window.location.href = `${API}/v1/auth/google?redirect_uri=${encodeURIComponent(CALLBACK_URL + '?' + extra)}`;
     });
 
+    let pendingTempToken = '';
+
+    function completeLogin(data: any) {
+      localStorage.setItem('catalyst_token', data.access_token);
+      localStorage.setItem('catalyst_refresh_token', data.refresh_token);
+      const params = new URLSearchParams(window.location.search);
+      const callbackPort = params.get('callback_port');
+      if (callbackPort) {
+        window.location.href = `/console/authorize?callback_port=${callbackPort}&state=${params.get('state') || ''}`;
+      } else {
+        window.location.href = '/console/dashboard';
+      }
+    }
+
+    function showTwoFA(tempToken: string) {
+      pendingTempToken = tempToken;
+      document.getElementById('login-form')!.classList.add('hidden');
+      document.getElementById('twofa-step')!.classList.remove('hidden');
+      (document.getElementById('totp-code') as HTMLInputElement).focus();
+    }
+
+    function hideTwoFA() {
+      pendingTempToken = '';
+      document.getElementById('twofa-step')!.classList.add('hidden');
+      document.getElementById('login-form')!.classList.remove('hidden');
+      document.getElementById('error')!.classList.add('hidden');
+    }
+
     // Email/password form
     document.getElementById('login-form')?.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -189,17 +233,15 @@ import '../../styles/global.css';
         }
 
         const data = await res.json();
-        localStorage.setItem('catalyst_token', data.access_token);
-        localStorage.setItem('catalyst_refresh_token', data.refresh_token);
 
-        // Check for callback redirect (CLI OAuth flow)
-        const params = new URLSearchParams(window.location.search);
-        const callbackPort = params.get('callback_port');
-        if (callbackPort) {
-          window.location.href = `/console/authorize?callback_port=${callbackPort}&state=${params.get('state') || ''}`;
-        } else {
-          window.location.href = '/console/dashboard';
+        if (data.requires_2fa) {
+          showTwoFA(data.temp_token);
+          btn.textContent = 'Log in';
+          btn.disabled = false;
+          return;
         }
+
+        completeLogin(data);
       } catch (err: any) {
         errorEl.textContent = err.message;
         errorEl.classList.remove('hidden');
@@ -207,6 +249,50 @@ import '../../styles/global.css';
         btn.disabled = false;
       }
     });
+
+    // 2FA verification
+    document.getElementById('twofa-btn')?.addEventListener('click', async () => {
+      const errorEl = document.getElementById('error')!;
+      const btn = document.getElementById('twofa-btn') as HTMLButtonElement;
+      const code = (document.getElementById('totp-code') as HTMLInputElement).value.trim();
+
+      if (!code) return;
+
+      errorEl.classList.add('hidden');
+      btn.textContent = 'Verifying...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API}/v1/auth/verify-2fa`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ temp_token: pendingTempToken, code }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.detail || 'Verification failed');
+        }
+
+        const data = await res.json();
+        completeLogin(data);
+      } catch (err: any) {
+        errorEl.textContent = err.message;
+        errorEl.classList.remove('hidden');
+        btn.textContent = 'Verify';
+        btn.disabled = false;
+      }
+    });
+
+    // Allow Enter key on 2FA input
+    document.getElementById('totp-code')?.addEventListener('keydown', (e) => {
+      if ((e as KeyboardEvent).key === 'Enter') {
+        document.getElementById('twofa-btn')?.click();
+      }
+    });
+
+    // Back button
+    document.getElementById('twofa-back')?.addEventListener('click', hideTwoFA);
   </script>
 </body>
 </html>

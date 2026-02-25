@@ -26,6 +26,40 @@ interface Transaction {
   created_at: string;
 }
 
+interface UsageStatus {
+  plan: string;
+  session: { used_pct: number; used_seconds: number; limit_seconds: number; remaining_seconds: number; resets_at: string; };
+  weekly: { used_pct: number; used_seconds: number; limit_seconds: number; remaining_seconds: number; resets_at: string; };
+  extra_usage: { enabled: boolean; spent_this_month: number; monthly_cap: number; balance: number; };
+}
+
+function UsageBar({ label, pct, used, limit, remaining, resetsAt }: {
+  label: string; pct: number; used: number; limit: number; remaining: number; resetsAt: string;
+}) {
+  const resetDate = new Date(resetsAt);
+  const now = new Date();
+  const hoursLeft = Math.max(0, (resetDate.getTime() - now.getTime()) / (1000 * 60 * 60));
+  const resetLabel = hoursLeft < 24 ? `${Math.ceil(hoursLeft)}h` : `${Math.ceil(hoursLeft / 24)}d`;
+  const barColor = pct >= 90 ? 'bg-red-500' : pct >= 70 ? 'bg-yellow-500' : 'bg-catalyst-blue';
+
+  return (
+    <div className="console-card p-5">
+      <div className="flex justify-between items-center mb-2" style={{ position: 'relative', zIndex: 2 }}>
+        <p className="text-white/70 text-sm font-medium">{label}</p>
+        <p className="text-white/30 text-xs">Resets in {resetLabel}</p>
+      </div>
+      <div className="w-full bg-white/5 rounded-full h-2.5 mb-2" style={{ position: 'relative', zIndex: 2 }}>
+        <div className={`${barColor} h-2.5 rounded-full transition-all duration-500`}
+          style={{ width: `${Math.min(100, pct)}%` }} />
+      </div>
+      <div className="flex justify-between text-xs text-white/40" style={{ position: 'relative', zIndex: 2 }}>
+        <span>{pct}% ({Math.round(used)}s / {Math.round(limit)}s)</span>
+        <span>{Math.round(remaining)}s remaining</span>
+      </div>
+    </div>
+  );
+}
+
 const PLANS = [
   { name: 'free', label: 'Free', price: 0, features: ['500 sec/week', 'N1 only', '1,024 neurons', 'Community support'] },
   { name: 'basic', label: 'Basic', price: 25, features: ['1,500 sec/week', 'N1 + N2', '32,768 neurons', 'Email support'] },
@@ -42,6 +76,7 @@ export default function BillingPanel() {
   const [creditAmount, setCreditAmount] = useState('');
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState('');
+  const [usage, setUsage] = useState<UsageStatus | null>(null);
 
   useEffect(() => {
     if (!isLoggedIn()) return;
@@ -53,6 +88,7 @@ export default function BillingPanel() {
         setExtraUsage(p.extra_usage_enabled);
         setSpendingCap(p.monthly_spending_cap || 100);
       }).catch(() => {}),
+      api('/v1/usage/status').then(setUsage).catch(() => {}),
     ]).finally(() => setLoading(false));
   }, []);
 
@@ -136,8 +172,18 @@ export default function BillingPanel() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-1">Billing</h1>
-      <p className="text-white/30 text-sm mb-8">Manage your subscription, API credits, and extra usage.</p>
+      <h1 className="text-2xl font-bold mb-1">Billing & Usage</h1>
+      <p className="text-white/30 text-sm mb-8">Manage your subscription, monitor usage, and buy API credits.</p>
+
+      {/* Usage Bars */}
+      {usage && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <UsageBar label="Session Usage" pct={usage.session.used_pct} used={usage.session.used_seconds}
+            limit={usage.session.limit_seconds} remaining={usage.session.remaining_seconds} resetsAt={usage.session.resets_at} />
+          <UsageBar label="Weekly Usage" pct={usage.weekly.used_pct} used={usage.weekly.used_seconds}
+            limit={usage.weekly.limit_seconds} remaining={usage.weekly.remaining_seconds} resetsAt={usage.weekly.resets_at} />
+        </div>
+      )}
 
       {/* Current Plan */}
       {isActive && currentPlan !== 'free' && (

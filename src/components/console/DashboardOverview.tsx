@@ -13,6 +13,7 @@ interface Profile {
   created_at: string;
   github_linked: boolean;
   google_linked: boolean;
+  email_verified: boolean;
 }
 
 interface UsageStatus {
@@ -106,6 +107,20 @@ export default function DashboardOverview() {
     <div>
       <h1 className="text-2xl font-bold mb-1">Dashboard</h1>
       <p className="text-white/30 text-sm mb-8">Welcome back, {profile.email}</p>
+
+      {/* Email verification banner */}
+      {!profile.email_verified && (
+        <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg px-4 py-3 mb-6 flex items-center justify-between">
+          <div>
+            <p className="text-blue-400 text-sm font-medium">Verify your email</p>
+            <p className="text-blue-400/60 text-xs mt-0.5">Please verify your email to create API keys and submit jobs.</p>
+          </div>
+          <a href="/console/verify-email"
+            className="text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 px-3 py-1.5 rounded-lg hover:bg-blue-500/30 transition-colors whitespace-nowrap">
+            Verify now
+          </a>
+        </div>
+      )}
 
       {/* Plan + Usage Bars */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

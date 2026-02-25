@@ -37,7 +37,13 @@
     </div>
     <div class="hp-footer-bottom">
       <span>&copy; 2026 Catalyst Neuromorphic. All rights reserved.</span>
-      <span>UK Patents Pending</span>
+      <span class="hp-footer-legal">
+        <a href="/terms">Terms</a>
+        <span>&middot;</span>
+        <a href="/privacy">Privacy</a>
+        <span>&middot;</span>
+        <span>UK Patents Pending</span>
+      </span>
     </div>
   </div>
 </footer>
@@ -98,8 +104,20 @@
     font-size: 0.78rem;
     color: rgba(255,255,255,0.25);
   }
+  .hp-footer-legal {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hp-footer-legal a {
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .hp-footer-legal a:hover { color: rgba(255,255,255,0.6); }
   @media (max-width: 640px) {
     .hp-footer { padding: 32px 24px 24px; }
     .hp-footer-grid { grid-template-columns: 1fr 1fr; }
+    .hp-footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
   }
 </style>
