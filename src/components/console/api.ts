@@ -124,3 +124,119 @@ export async function logout() {
   } catch {}
   clearTokens();
 }
+
+export async function verifyEmail(code: string) {
+  return api('/v1/auth/verify-email', {
+    method: 'POST',
+    body: JSON.stringify({ code }),
+  });
+}
+
+export async function resendVerification() {
+  return api('/v1/auth/resend-verification', { method: 'POST' });
+}
+
+export async function forgotPassword(email: string) {
+  const res = await fetch(`${API_BASE}/v1/auth/forgot-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  });
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.detail || 'Request failed');
+  }
+  return res.json();
+}
+
+export async function resetPassword(token: string, password: string) {
+  const res = await fetch(`${API_BASE}/v1/auth/reset-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token, password }),
+  });
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.detail || 'Reset failed');
+  }
+  return res.json();
+}
+
+export async function updateProfile(data: { name?: string; email?: string; current_password?: string; new_password?: string }) {
+  return api('/v1/auth/profile', {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function getSessions() {
+  return api('/v1/auth/sessions');
+}
+
+export async function revokeSession(sessionId: string) {
+  return api(`/v1/auth/sessions/${sessionId}`, { method: 'DELETE' });
+}
+
+export async function deleteAccount(password: string) {
+  return api('/v1/account', {
+    method: 'DELETE',
+    body: JSON.stringify({ password }),
+  });
+}
+
+export async function exportData() {
+  return api('/v1/account/export');
+}
+
+export async function unlinkOAuth(provider: string) {
+  return api('/v1/account/oauth/unlink', {
+    method: 'POST',
+    body: JSON.stringify({ provider }),
+  });
+}
+
+export async function setPassword(password: string) {
+  return api('/v1/account/set-password', {
+    method: 'POST',
+    body: JSON.stringify({ password }),
+  });
+}
+
+// --- TOTP 2FA ---
+
+export async function setupTOTP() {
+  return api('/v1/auth/totp/setup', { method: 'POST' });
+}
+
+export async function verifyTOTPSetup(code: string) {
+  return api('/v1/auth/totp/verify-setup', {
+    method: 'POST',
+    body: JSON.stringify({ code }),
+  });
+}
+
+export async function disableTOTP(password: string, code: string) {
+  return api('/v1/auth/totp/disable', {
+    method: 'POST',
+    body: JSON.stringify({ password, code }),
+  });
+}
+
+export async function getTOTPStatus() {
+  return api('/v1/auth/totp/status');
+}
+
+export async function verify2FA(tempToken: string, code: string) {
+  const res = await fetch(`${API_BASE}/v1/auth/verify-2fa`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ temp_token: tempToken, code }),
+  });
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.detail || 'Verification failed');
+  }
+  const data = await res.json();
+  setTokens(data.access_token, data.refresh_token);
+  return data;
+}

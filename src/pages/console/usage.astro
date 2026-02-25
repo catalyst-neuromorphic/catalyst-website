@@ -1,8 +1,4 @@
 ---
-import ConsoleLayout from '../../layouts/ConsoleLayout.astro';
-import UsageCharts from '../../components/console/UsageCharts';
+// Usage page now merged into Billing & Usage — redirect
+return Astro.redirect('/console/billing', 301);
 ---
-
-<ConsoleLayout title="Usage" active="Usage">
-  <UsageCharts client:only="react" />
-</ConsoleLayout>
