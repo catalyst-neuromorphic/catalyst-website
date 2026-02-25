@@ -1,0 +1,303 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+// V4 — TRUST-FIRST NARRATIVE: Lead with methodology and evidence, not specs. Research audience focus.
+---
+
+<BaseLayout title="Research V4 — Trust-First" description="Evidence-led research page variant" hasFog={true}>
+
+  <!-- HERO — research focus -->
+  <section class="pt-36 pb-16 px-6 md:px-12" style="position:relative;z-index:1;">
+    <div class="max-w-[1200px] mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+      <div>
+        <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Research</p>
+        <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2.8rem,6vw,4.5rem); font-weight:700; letter-spacing:-0.04em; line-height:0.95;">
+          Every claim has<br/>a paper reference.
+        </h1>
+        <p class="text-lg text-white/35 mt-5 max-w-[500px]">Two processor generations. Two published papers. Full methodology. Reproducible results.</p>
+      </div>
+      <!-- Quick evidence badges -->
+      <div class="flex flex-wrap gap-2">
+        <span class="text-[10px] bg-catalyst-green/10 text-catalyst-green/70 px-3 py-1.5 rounded-full border border-catalyst-green/10">28/28 FPGA tests</span>
+        <span class="text-[10px] bg-catalyst-blue/10 text-catalyst-blue/60 px-3 py-1.5 rounded-full border border-catalyst-blue/10">85.9% SHD</span>
+        <span class="text-[10px] bg-white/5 text-white/40 px-3 py-1.5 rounded-full border border-white/5">152/155 Loihi 2</span>
+        <span class="text-[10px] bg-white/5 text-white/40 px-3 py-1.5 rounded-full border border-white/5">3,091 SDK tests</span>
+        <span class="text-[10px] bg-white/5 text-white/40 px-3 py-1.5 rounded-full border border-white/5">2 papers on Zenodo</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAPERS — prominent, these ARE the trust -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {[
+        {
+          gen: 'N2', tag: 'Latest', tagBg: 'bg-catalyst-blue/10 text-catalyst-blue/60 border-catalyst-blue/10',
+          title: 'Full Loihi 2 Parity in an Open Neuromorphic Architecture',
+          highlights: ['5 neuron models with programmable microcode', '28/28 FPGA validation across 7 categories', '155-feature parity audit (152 full, 3 HW-only)', 'SHD 85.9% float / 85.4% quantized'],
+          pages: 18, doi: '10.5281/zenodo.18728256', doiUrl: 'https://zenodo.org/records/18728256', pdf: '/papers/catalyst-n2.pdf',
+        },
+        {
+          gen: 'N1', tag: 'First gen', tagBg: 'bg-white/5 text-white/30 border-white/5',
+          title: 'A 131K-Neuron Open Neuromorphic Processor with Programmable Synaptic Plasticity',
+          highlights: ['128-core architecture, 1,024 neurons/core', '25 RTL testbenches, 98 scenarios, 0 failures', 'Triple RV32IMF RISC-V embedded cluster', '16-core FPGA validation on VU47P'],
+          pages: 13, doi: '10.5281/zenodo.18727094', doiUrl: 'https://zenodo.org/records/18727094', pdf: '/papers/catalyst-n1.pdf',
+        },
+      ].map(p => (
+        <div class="card-glass p-8 reveal">
+          <div class="flex items-center gap-2 mb-4">
+            <span class={`text-[9px] uppercase tracking-widest px-2 py-0.5 rounded-full border ${p.tagBg}`}>{p.tag}</span>
+            <span class="text-[10px] text-white/20">{p.pages} pages</span>
+          </div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-size:1.4rem; font-weight:700; letter-spacing:-0.02em;">{p.gen}</h3>
+          <p class="text-sm text-white/40 mt-1 leading-relaxed mb-4">{p.title}</p>
+          <!-- Key findings -->
+          <div class="space-y-1.5 mb-5">
+            {p.highlights.map(h => (
+              <div class="flex items-start gap-2 text-xs">
+                <span class="text-catalyst-blue/40 mt-0.5 shrink-0">&#9656;</span>
+                <span class="text-white/45">{h}</span>
+              </div>
+            ))}
+          </div>
+          <div class="flex items-center gap-3 mb-4">
+            <a href={p.doiUrl} target="_blank" rel="noopener noreferrer"><img src={`https://zenodo.org/badge/DOI/${p.doi}.svg`} alt="DOI" style="display:inline-block; height:18px;" /></a>
+          </div>
+          <div class="flex gap-3">
+            <a href={p.pdf} class="btn-pill text-xs px-4 py-2" target="_blank">Read PDF</a>
+            <a href={p.doiUrl} class="btn-pill text-xs px-4 py-2" target="_blank" rel="noopener noreferrer">Zenodo</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- METHODOLOGY SECTION — the "how we know" narrative -->
+  <section class="py-24 px-6 md:px-12" style="background:rgba(255,255,255,0.01); border-top:1px solid rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.03);">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="max-w-[700px] mb-14">
+        <h2 class="reveal" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:700; letter-spacing:-0.03em;">Methodology</h2>
+        <p class="reveal text-white/35 mt-3 leading-relaxed">
+          We don't publish performance numbers without explaining exactly how we measured them. The N2 paper documents a 7-step FPGA validation protocol, a three-part feature parity audit, and a benchmark methodology with explicit train/test splits. Below is the summary &mdash; the full methodology is in Section 6 of the N2 paper.
+        </p>
+      </div>
+
+      <!-- Three methodology pillars -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 reveal-stagger">
+        <!-- FPGA Protocol -->
+        <div class="card-glass p-7">
+          <div class="flex items-center gap-2 mb-5">
+            <span class="text-catalyst-green text-lg">&#9632;</span>
+            <h3 class="text-base font-semibold">FPGA validation</h3>
+          </div>
+          <div class="text-3xl font-bold text-catalyst-green tracking-tight mb-1" style="font-family:'Space Grotesk',sans-serif;">28/28</div>
+          <div class="text-xs text-white/30 mb-5">All categories, 0 failures</div>
+          <!-- Protocol steps condensed -->
+          <div class="space-y-2 mb-5">
+            {['Define network (Python SDK)', 'Compile to hardware bitstream', 'Silence stale cores (\u03B8=32767)', 'Deploy via PCIe MMIO', 'Inject spike stimuli', 'Readback output spikes', 'Bit-exact compare vs CPU sim'].map((step, i) => (
+              <div class="flex items-start gap-2">
+                <span class="text-[9px] text-catalyst-blue/40 font-mono w-3 shrink-0 pt-0.5">{i + 1}</span>
+                <span class="text-xs text-white/40">{step}</span>
+              </div>
+            ))}
+          </div>
+          <!-- Categories -->
+          <div class="pt-4 border-t border-white/[0.04]">
+            <div class="text-[9px] text-white/25 uppercase tracking-wider mb-2">7 test categories</div>
+            <div class="flex flex-wrap gap-1.5">
+              {[
+                { n: 'Neuron', c: 7 }, { n: 'Synapse', c: 6 }, { n: 'CUBA', c: 1 },
+                { n: 'Topology', c: 3 }, { n: 'Routing', c: 3 }, { n: 'Scale', c: 5 }, { n: 'Ops', c: 3 },
+              ].map(cat => (
+                <span class="text-[9px] bg-catalyst-green/5 text-catalyst-green/60 px-2 py-0.5 rounded border border-catalyst-green/10">{cat.n} {cat.c}/{cat.c}</span>
+              ))}
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/[0.04]">
+            <div class="text-[9px] text-white/20 uppercase tracking-wider mb-1">Hardware</div>
+            <div class="text-xs text-white/40">Xilinx UltraScale+ VU47P &mdash; AWS F2 instance</div>
+          </div>
+        </div>
+
+        <!-- Parity Audit -->
+        <div class="card-glass p-7">
+          <div class="flex items-center gap-2 mb-5">
+            <span class="text-catalyst-blue text-lg">&#9632;</span>
+            <h3 class="text-base font-semibold">Parity audit</h3>
+          </div>
+          <div class="flex items-baseline gap-2 mb-1">
+            <span class="text-3xl font-bold tracking-tight" style="font-family:'Space Grotesk',sans-serif;">152</span>
+            <span class="text-white/25 text-sm">/155</span>
+          </div>
+          <div class="text-xs text-white/30 mb-5">Loihi 2 features verified</div>
+          <div class="space-y-4 mb-5">
+            {[
+              { part: 'Part 1: Pipeline ordering', desc: '10 stages verified in Loihi 2 execution order. Synapse accumulation, dendritic processing, neuron update, learning, spike generation.' },
+              { part: 'Part 2: Feature coverage', desc: '155 features enumerated from Loihi 2 documentation. 152 FULL, 3 HW_ONLY (multi-chip serial I/O), 0 MISSING.' },
+              { part: 'Part 3: Numerical accuracy', desc: 'CPU backend: exact. GPU backend: statistically equivalent (FP reordering). FPGA backend: bit-exact against CPU.' },
+            ].map(a => (
+              <div>
+                <div class="text-xs font-medium text-white/55">{a.part}</div>
+                <div class="text-[10px] text-white/25 mt-0.5 leading-relaxed">{a.desc}</div>
+              </div>
+            ))}
+          </div>
+          <div class="pt-4 border-t border-white/[0.04]">
+            <div class="text-[9px] text-white/20 uppercase tracking-wider mb-1">Reference</div>
+            <div class="text-xs text-white/40">N2 Paper, Section 5</div>
+          </div>
+        </div>
+
+        <!-- Benchmark Methodology -->
+        <div class="card-glass p-7">
+          <div class="flex items-center gap-2 mb-5">
+            <span class="text-white/40 text-lg">&#9632;</span>
+            <h3 class="text-base font-semibold">SHD benchmark</h3>
+          </div>
+          <div class="flex items-baseline gap-2 mb-1">
+            <span class="text-3xl font-bold tracking-tight" style="font-family:'Space Grotesk',sans-serif;">85.9</span>
+            <span class="text-white/25 text-sm">%</span>
+          </div>
+          <div class="text-xs text-white/30 mb-5">Float &mdash; 85.4% quantized (8-bit)</div>
+          <!-- Methodology details -->
+          <div class="space-y-3 mb-5">
+            <div>
+              <div class="text-xs font-medium text-white/55">Dataset</div>
+              <div class="text-[10px] text-white/25 mt-0.5">Spiking Heidelberg Digits &mdash; spoken digit classification with spike-encoded audio</div>
+            </div>
+            <div>
+              <div class="text-xs font-medium text-white/55">Split</div>
+              <div class="text-[10px] text-white/25 mt-0.5">70/10/20 train/val/test. No test-time augmentation.</div>
+            </div>
+            <div>
+              <div class="text-xs font-medium text-white/55">Network</div>
+              <div class="text-[10px] text-white/25 mt-0.5">Recurrent LIF. Fair comparison limited to equivalent architectures.</div>
+            </div>
+          </div>
+          <!-- Comparison -->
+          <div class="pt-4 border-t border-white/[0.04]">
+            <div class="text-[9px] text-white/25 uppercase tracking-wider mb-3">vs. published baselines</div>
+            <div class="space-y-2.5">
+              {[
+                { name: 'Catalyst N2', score: 85.9, ours: true },
+                { name: 'Zenke & Vogels \'21', score: 83.4, ours: false },
+                { name: 'Cramer et al. \'22', score: 83.2, ours: false },
+              ].map(item => (
+                <div class="flex items-center gap-3">
+                  <span class={`text-[10px] w-28 shrink-0 ${item.ours ? 'text-white/60 font-medium' : 'text-white/25'}`}>{item.name}</span>
+                  <div class="flex-1 h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
+                    <div class={`h-full rounded-full ${item.ours ? 'bg-catalyst-blue' : 'bg-white/10'}`} style={`width:${((item.score - 80) / 10) * 100}%`}></div>
+                  </div>
+                  <span class="text-[10px] font-mono text-white/25 w-10 text-right">{item.score}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SDK TESTING — research rigor -->
+  <section class="py-24 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+        <div>
+          <h2 class="reveal" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:700; letter-spacing:-0.03em;">Software test suite</h2>
+          <p class="reveal text-white/30 mt-2 max-w-[500px]">The neurocore SDK mirrors the hardware specification. The software simulator produces bit-identical results to the FPGA.</p>
+        </div>
+        <div class="reveal text-right">
+          <div class="flex items-baseline gap-3 justify-end">
+            <span class="text-white/15 font-mono text-lg line-through">168</span>
+            <span style="font-family:'Space Grotesk',sans-serif; font-size:2.5rem; font-weight:700; letter-spacing:-0.03em;">3,091</span>
+          </div>
+          <div class="text-xs text-white/25 mt-1">18.4x growth &mdash; v3.7.0</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 reveal-stagger">
+        {[
+          { stat: '~1,200', label: 'Unit tests', desc: 'Individual neuron models, synapse types, learning rules', pct: 39 },
+          { stat: '~800', label: 'Integration', desc: 'Multi-module interactions, network assembly', pct: 26 },
+          { stat: '~500', label: 'Regression', desc: 'Every bug fix gets a test. Bugs don\u2019t come back.', pct: 16 },
+          { stat: '~400', label: 'CPU-GPU parity', desc: 'GPU backend matches CPU backend', pct: 13 },
+          { stat: '~100', label: 'Stress', desc: 'Memory pressure, large networks, edge cases', pct: 3 },
+        ].map(item => (
+          <div class="card-glass p-5">
+            <div class="text-xl font-bold tracking-tight" style="font-family:'Space Grotesk',sans-serif;">{item.stat}</div>
+            <div class="text-xs text-white/50 mt-1 font-medium">{item.label}</div>
+            <div class="text-[10px] text-white/20 mt-2 leading-relaxed">{item.desc}</div>
+            <div class="mt-3 h-1 rounded-full bg-white/[0.04] overflow-hidden">
+              <div class="h-full rounded-full bg-catalyst-blue/50" style={`width:${item.pct * 2.5}%`}></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- N1→N2 TABLE -->
+  <section class="py-24 px-6 md:px-12" style="background:rgba(255,255,255,0.01); border-top:1px solid rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.03);">
+    <div class="max-w-[1200px] mx-auto">
+      <h2 class="reveal mb-10" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:700; letter-spacing:-0.03em;">Generational progress</h2>
+      <div class="reveal card-glass p-6 overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-white/10">
+              <th class="text-left py-2.5 pr-6 text-white/30 font-medium">Specification</th>
+              <th class="text-left py-2.5 px-6 text-white/15 font-medium">N1</th>
+              <th class="text-left py-2.5 pl-6 text-catalyst-blue font-semibold">N2</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['Neuron models', '1 (CUBA LIF)', '5 — CUBA, Izhikevich, ALIF, \u03A3\u0394, R&F'],
+              ['Neuron engine', 'Fixed datapath', 'Programmable microcode'],
+              ['Spike formats', 'Binary only', 'Binary + 8/16/24-bit graded'],
+              ['Weight precision', 'Fixed 8-bit', 'Variable 1/2/4/8/16-bit per group'],
+              ['Spike traces', '2', '5'],
+              ['Learning', 'STDP + reward-modulated', 'Three-factor + homeostatic + persistent reward'],
+              ['Observability', 'Basic state read', '25 probe IDs, perf counters, DVFS'],
+              ['SDK tests', '168', '3,091 (18.4\u00D7)'],
+              ['FPGA validation', '16-core subset', '28/28, 7 categories, full protocol'],
+            ].map(([spec, n1, n2]) => (
+              <tr class="border-b border-white/[0.04]">
+                <td class="py-2.5 pr-6 text-white/45">{spec}</td>
+                <td class="py-2.5 px-6 text-white/15">{n1}</td>
+                <td class="py-2.5 pl-6 text-white/70">{n2}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- LICENSING + CTA -->
+  <section class="py-20 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+        {[
+          { l: 'Papers', v: 'Open access', s: 'Zenodo DOI' },
+          { l: 'SDK', v: 'BSL 1.1', s: 'Patent protected' },
+          { l: 'RTL', v: 'Patent pending', s: 'UK ~2602902.6' },
+          { l: 'API client', v: 'MIT', s: 'Open source' },
+        ].map(item => (
+          <div class="bg-white/[0.03] border border-white/[0.04] rounded-xl px-4 py-3">
+            <div class="text-[9px] text-white/25 uppercase tracking-wider">{item.l}</div>
+            <div class="text-sm font-semibold text-white/65 mt-1">{item.v}</div>
+            <div class="text-[10px] text-white/15 mt-0.5">{item.s}</div>
+          </div>
+        ))}
+      </div>
+      <div class="text-center">
+        <p class="text-white/25 mb-6">Read the papers. Verify the claims. Run the benchmarks.</p>
+        <div class="flex gap-4 justify-center flex-wrap">
+          <a href="/papers/catalyst-n2.pdf" class="btn-blue" target="_blank">Read N2 paper</a>
+          <a href="/papers/catalyst-n1.pdf" class="btn-ghost" target="_blank">Read N1 paper</a>
+          <a href="/cloud" class="btn-ghost">Try Cloud API &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

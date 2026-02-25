@@ -28,10 +28,10 @@ curl https://api.catalyst-neuromorphic.com/v1/jobs/job_.../spikes \\
   -H "X-API-Key: cn_live_..."`;
 ---
 
-<BaseLayout title="Cloud — Catalyst Neuromorphic" description="Run spiking neural network simulations in the cloud. No hardware required.">
+<BaseLayout title="Cloud — Catalyst Neuromorphic" description="Run spiking neural network simulations in the cloud. No hardware required." hasFog={true}>
 
   <!-- Hero -->
-  <section class="pt-36 pb-20 px-6 md:px-12 text-center">
+  <section class="pt-36 pb-20 px-6 md:px-12 text-center" style="position:relative;z-index:1;">
     <div class="max-w-[900px] mx-auto">
       <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Catalyst Cloud</p>
       <h1 class="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tighter leading-none">
@@ -67,21 +67,21 @@ curl https://api.catalyst-neuromorphic.com/v1/jobs/job_.../spikes \\
     <div class="max-w-[1100px] mx-auto">
       <h2 class="reveal text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight text-center mb-16">How it works</h2>
       <div class="grid md:grid-cols-3 gap-8">
-        <div class="reveal glass-accent rounded-xl p-8">
+        <div class="reveal card-glass p-8">
           <div class="text-3xl font-bold text-catalyst-blue mb-4">01</div>
           <h3 class="text-xl font-semibold mb-3">Define</h3>
           <p class="text-white/40 leading-relaxed">
             Describe your spiking neural network as JSON. Populations, connections, neuron parameters. No boilerplate.
           </p>
         </div>
-        <div class="reveal glass-accent rounded-xl p-8">
+        <div class="reveal card-glass p-8">
           <div class="text-3xl font-bold text-catalyst-blue mb-4">02</div>
           <h3 class="text-xl font-semibold mb-3">Simulate</h3>
           <p class="text-white/40 leading-relaxed">
             Submit a job with stimuli and timesteps. Our neuromorphic simulator runs it server-side with hardware-accurate dynamics.
           </p>
         </div>
-        <div class="reveal glass-accent rounded-xl p-8">
+        <div class="reveal card-glass p-8">
           <div class="text-3xl font-bold text-catalyst-blue mb-4">03</div>
           <h3 class="text-xl font-semibold mb-3">Analyse</h3>
           <p class="text-white/40 leading-relaxed">
@@ -97,27 +97,27 @@ curl https://api.catalyst-neuromorphic.com/v1/jobs/job_.../spikes \\
     <div class="max-w-[900px] mx-auto">
       <h2 class="reveal text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight text-center mb-16">Built for researchers and developers</h2>
       <div class="grid md:grid-cols-2 gap-6">
-        <div class="reveal glass rounded-xl p-6">
+        <div class="reveal card-glass p-6">
           <h3 class="font-semibold mb-2">Hardware-accurate LIF neurons</h3>
           <p class="text-sm text-white/40 leading-relaxed">Full Loihi 2 parity. Leak-integrate-fire with dendritic compartments, graded spikes, STDP, and 3-factor reward learning.</p>
         </div>
-        <div class="reveal glass rounded-xl p-6">
+        <div class="reveal card-glass p-6">
           <h3 class="font-semibold mb-2">5 connection topologies</h3>
           <p class="text-sm text-white/40 leading-relaxed">All-to-all, one-to-one, random sparse, fixed fan-in, fixed fan-out. Configurable weights, delays, and compartment targeting.</p>
         </div>
-        <div class="reveal glass rounded-xl p-6">
+        <div class="reveal card-glass p-6">
           <h3 class="font-semibold mb-2">Sub-second latency</h3>
           <p class="text-sm text-white/40 leading-relaxed">1,000 neurons for 1,000 timesteps in under a second. No queue wait for free tier.</p>
         </div>
-        <div class="reveal glass rounded-xl p-6">
+        <div class="reveal card-glass p-6">
           <h3 class="font-semibold mb-2">JSON in, JSON out</h3>
           <p class="text-sm text-white/40 leading-relaxed">No SDK to install. No dependencies. Works from any language: Python, JavaScript, MATLAB, Julia, or plain curl.</p>
         </div>
-        <div class="reveal glass rounded-xl p-6">
+        <div class="reveal card-glass p-6">
           <h3 class="font-semibold mb-2">Population-indexed results</h3>
           <p class="text-sm text-white/40 leading-relaxed">Spike trains grouped by your population labels. Firing rates per population. Direct integration with your analysis code.</p>
         </div>
-        <div class="reveal glass rounded-xl p-6">
+        <div class="reveal card-glass p-6">
           <h3 class="font-semibold mb-2">OpenAPI docs</h3>
           <p class="text-sm text-white/40 leading-relaxed">Auto-generated interactive documentation. Try endpoints from your browser at /docs.</p>
         </div>
@@ -130,17 +130,17 @@ curl https://api.catalyst-neuromorphic.com/v1/jobs/job_.../spikes \\
     <div class="max-w-[900px] mx-auto">
       <h2 class="reveal text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight text-center mb-16">Get started anywhere</h2>
       <div class="grid md:grid-cols-3 gap-6">
-        <a href="https://pypi.org/project/catalyst-cloud/" target="_blank" class="reveal glass rounded-xl p-6 hover:bg-white/[0.04] transition-colors">
+        <a href="https://pypi.org/project/catalyst-cloud/" target="_blank" class="reveal card-glass p-6 hover:bg-white/[0.04] transition-colors">
           <h3 class="font-semibold mb-2">Python SDK</h3>
           <code class="text-sm text-catalyst-blue font-mono">pip install catalyst-cloud</code>
           <p class="text-sm text-white/40 mt-3">Thin wrapper around the REST API. No dependencies beyond requests.</p>
         </a>
-        <a href="https://huggingface.co/spaces/Catalyst-Neuromorphic/catalyst-cloud" target="_blank" class="reveal glass rounded-xl p-6 hover:bg-white/[0.04] transition-colors">
+        <a href="https://huggingface.co/spaces/Catalyst-Neuromorphic/catalyst-cloud" target="_blank" class="reveal card-glass p-6 hover:bg-white/[0.04] transition-colors">
           <h3 class="font-semibold mb-2">Interactive Demo</h3>
           <code class="text-sm text-catalyst-blue font-mono">HuggingFace Spaces</code>
           <p class="text-sm text-white/40 mt-3">Try it in the browser. Configure a network, run a simulation, see spike rasters.</p>
         </a>
-        <a href="https://rapidapi.com/catalyst-neuromorphic/api/catalyst-neuromorphic" target="_blank" class="reveal glass rounded-xl p-6 hover:bg-white/[0.04] transition-colors">
+        <a href="https://rapidapi.com/catalyst-neuromorphic/api/catalyst-neuromorphic" target="_blank" class="reveal card-glass p-6 hover:bg-white/[0.04] transition-colors">
           <h3 class="font-semibold mb-2">RapidAPI</h3>
           <code class="text-sm text-catalyst-blue font-mono">API Marketplace</code>
           <p class="text-sm text-white/40 mt-3">Subscribe and call from RapidAPI's unified platform. Auto-generated client SDKs.</p>

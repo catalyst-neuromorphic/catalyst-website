@@ -1,0 +1,448 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+// V3 — TIMELINE: Cerebras/Graphcore engineering-precision feel. Vertical timeline centerpiece.
+---
+
+<BaseLayout title="About — Catalyst Neuromorphic" description="Building neuromorphic processors to challenge the way intelligence is computed." hasFog={true}>
+
+  <!-- HERO -->
+  <section class="v3-hero" style="position:relative;z-index:1;">
+    <div class="v3-hero-inner">
+      <p class="v3-label reveal">About</p>
+      <h1 class="v3-hero-heading reveal">
+        AI has a <span class="v3-gradient-text">hardware problem</span>.
+      </h1>
+      <p class="v3-hero-sub reveal">We're building the processors to fix it.</p>
+    </div>
+  </section>
+
+  <!-- THE SCALING WALL — single card-glass -->
+  <section class="v3-section" style="position:relative;z-index:1;">
+    <div class="v3-container">
+      <div class="card-glass reveal" style="padding:clamp(2rem,4vw,3rem);">
+        <div style="position:relative;z-index:2;">
+          <h2 class="v3-card-heading">The scaling wall</h2>
+          <div class="v3-prose">
+            <p>Modern AI runs on hardware that was never designed for intelligence. GPUs burn hundreds of watts per chip. Data centres already consume over 2% of global electricity, and that share is climbing fast. Training a single large language model can use more energy than a hundred homes do in a year. The models are getting bigger, but the returns are shrinking.</p>
+            <p>And for all that power, these systems still can't learn from new information without being retrained from scratch. They can't run without a data centre. They can't operate without sending your data to someone else's infrastructure.</p>
+            <p>The human brain does all of this on 20 watts. It learns continuously. It processes information in real-time. It runs at the edge, on-device, with no internet connection required. The gap between biological intelligence and artificial intelligence isn't a software problem. It's a hardware problem.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="v3-section" style="position:relative;z-index:1;">
+    <div class="v3-container">
+      <h2 class="v3-section-heading reveal">Milestones.</h2>
+      <div class="v3-timeline reveal">
+        <div class="v3-timeline-line"></div>
+
+        <div class="v3-timeline-item">
+          <div class="v3-timeline-dot"></div>
+          <div class="v3-timeline-content">
+            <span class="v3-timeline-year">2024</span>
+            <h3 class="v3-timeline-title">N1 processor designed</h3>
+            <p class="v3-timeline-desc">Loihi 1 parity, 96 tests passing</p>
+          </div>
+        </div>
+
+        <div class="v3-timeline-item">
+          <div class="v3-timeline-dot"></div>
+          <div class="v3-timeline-content">
+            <span class="v3-timeline-year">2025</span>
+            <h3 class="v3-timeline-title">N2 processor designed</h3>
+            <p class="v3-timeline-desc">Loihi 2 parity, validated on real FPGA hardware</p>
+          </div>
+        </div>
+
+        <div class="v3-timeline-item">
+          <div class="v3-timeline-dot"></div>
+          <div class="v3-timeline-content">
+            <span class="v3-timeline-year">2025</span>
+            <h3 class="v3-timeline-title">Papers published</h3>
+            <p class="v3-timeline-desc">Two open-access papers on Zenodo with DOIs</p>
+          </div>
+        </div>
+
+        <div class="v3-timeline-item">
+          <div class="v3-timeline-dot"></div>
+          <div class="v3-timeline-content">
+            <span class="v3-timeline-year">2026</span>
+            <h3 class="v3-timeline-title">Cloud API launched</h3>
+            <p class="v3-timeline-desc">Run neuromorphic networks from your terminal</p>
+          </div>
+        </div>
+
+        <div class="v3-timeline-item">
+          <div class="v3-timeline-dot"></div>
+          <div class="v3-timeline-content">
+            <span class="v3-timeline-year">2026</span>
+            <h3 class="v3-timeline-title">UK Patents filed</h3>
+            <p class="v3-timeline-desc">Architecture protected</p>
+          </div>
+        </div>
+
+        <div class="v3-timeline-item v3-timeline-item--next">
+          <div class="v3-timeline-dot v3-timeline-dot--next"></div>
+          <div class="v3-timeline-content">
+            <span class="v3-timeline-year v3-timeline-year--next">Next</span>
+            <h3 class="v3-timeline-title">Raising funding</h3>
+            <p class="v3-timeline-desc">Building toward manufactured silicon</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE'RE BUILDING -->
+  <section class="v3-section" style="position:relative;z-index:1;">
+    <div class="v3-container">
+      <h2 class="v3-section-heading reveal">Neuromorphic processors.</h2>
+      <div class="v3-prose reveal">
+        <p>Neuromorphic chips compute the way neurons do. They're event-driven &mdash; they only consume energy when there's something to process. They can learn on the hardware itself, not just run pre-trained models. They operate at the edge, on-device, without cloud dependency. And they do it at a fraction of the power cost.</p>
+        <p>This technology exists. Intel has Loihi. IBM built TrueNorth. But both are closed, corporate, and inaccessible. If you're not inside those companies or their select research programmes, you don't get access. The hardware that could reshape computing is locked behind walls.</p>
+        <p>Catalyst is building the open alternative. Full processor designs, published research, and a cloud platform anyone can use today. We're not asking for permission to compete with billion-dollar companies. We're just doing it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHERE WE ARE -->
+  <section class="v3-section" style="position:relative;z-index:1;">
+    <div class="v3-container">
+      <h2 class="v3-section-heading reveal">Where we are.</h2>
+      <div class="v3-prose reveal">
+        <p>We're early. Two processor generations are designed, built in software, and validated on real hardware. Both have published papers you can read today. A cloud API is live &mdash; you can run a neuromorphic network right now, without buying anything.</p>
+        <p>We're raising funding and building toward manufactured silicon. That's the goal: a physical chip you can hold, running real neuromorphic intelligence. We're not there yet. But the architecture is complete, tested, and protected by patent.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section class="v3-section" style="position:relative;z-index:1;">
+    <div class="v3-container">
+      <h2 class="v3-section-heading reveal">Founder.</h2>
+      <div class="card-glass reveal" style="padding:clamp(1.5rem,3vw,2rem); max-width:640px;">
+        <div style="position:relative;z-index:2;">
+          <p class="v3-founder-text"><strong class="v3-founder-name">Henry Shulayev Barnes</strong> &mdash; engineering student at the University of Aberdeen. Started Catalyst because the neuromorphic hardware that should exist doesn't, and the hardware that does exist isn't accessible. Currently a member of Techscaler, Scotland's tech startup community.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST CARDS — 2x2 grid -->
+  <section class="v3-section" style="position:relative;z-index:1;">
+    <div class="v3-container">
+      <h2 class="v3-section-heading reveal">Don't take our word for it.</h2>
+      <div class="v3-trust-grid reveal-stagger">
+        <div class="card-glass v3-trust-card">
+          <div class="v3-trust-title" style="position:relative;z-index:2;">Read the papers</div>
+          <div class="v3-trust-desc" style="position:relative;z-index:2;">Two published papers on Zenodo with DOIs. Open access. Every claim documented.</div>
+        </div>
+        <div class="card-glass v3-trust-card">
+          <div class="v3-trust-title" style="position:relative;z-index:2;">Try the cloud</div>
+          <div class="v3-trust-desc" style="position:relative;z-index:2;">The API is live. Run a neuromorphic network from your terminal. Free tier available.</div>
+        </div>
+        <div class="card-glass v3-trust-card">
+          <div class="v3-trust-title" style="position:relative;z-index:2;">Check the hardware</div>
+          <div class="v3-trust-desc" style="position:relative;z-index:2;">Our designs run on real FPGA boards, not just simulators. Physical silicon execution.</div>
+        </div>
+        <div class="card-glass v3-trust-card">
+          <div class="v3-trust-title" style="position:relative;z-index:2;">Join the community</div>
+          <div class="v3-trust-desc" style="position:relative;z-index:2;">Open GitHub, public research, growing backers. We build in the open.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IP -->
+  <section class="v3-ip-section" style="position:relative;z-index:1;">
+    <div class="v3-container">
+      <div class="v3-ip-row reveal">
+        <span class="v3-ip-item"><span class="v3-ip-label">UK Patents</span> Filed Feb 2026</span>
+        <span class="v3-ip-sep"></span>
+        <span class="v3-ip-item"><span class="v3-ip-label">RTL</span> BSL 1.1 proprietary</span>
+        <span class="v3-ip-sep"></span>
+        <span class="v3-ip-item"><span class="v3-ip-label">SDK</span> BSL 1.1</span>
+        <span class="v3-ip-sep"></span>
+        <span class="v3-ip-item"><span class="v3-ip-label">Papers</span> Open access Zenodo</span>
+        <span class="v3-ip-sep"></span>
+        <span class="v3-ip-item"><span class="v3-ip-label">API Client</span> MIT open source</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GET IN TOUCH -->
+  <section class="connect-section" style="position:relative;z-index:1;">
+    <h2 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2.4rem,5vw,3.6rem); font-weight:700; letter-spacing:-0.035em; line-height:1.08; text-align:center; margin-bottom:18px;">Get in touch.</h2>
+    <p class="connect-email"><a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a></p>
+    <div class="connect-grid">
+      <a href="https://github.com/catalyst-neuromorphic" target="_blank" rel="noopener noreferrer" class="connect-card">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        <span class="connect-label">GitHub</span>
+        <span class="connect-sub">Source &amp; contributions</span>
+      </a>
+      <a href="/research" class="connect-card">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span class="connect-label">Research</span>
+        <span class="connect-sub">Papers &amp; benchmarks</span>
+      </a>
+      <a href="https://ko-fi.com/catalystneuromorphic" target="_blank" rel="noopener noreferrer" class="connect-card">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span class="connect-label">Support</span>
+        <span class="connect-sub">Buy us a coffee on Ko-Fi</span>
+      </a>
+    </div>
+  </section>
+
+  <style is:global>
+    /* ═══════════════════════════════════════════
+       V3 — TIMELINE VARIANT
+       Cerebras / Graphcore engineering precision
+       ═══════════════════════════════════════════ */
+
+    /* Hero */
+    .v3-hero {
+      padding: 144px 24px 64px;
+    }
+    .v3-hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .v3-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(59, 130, 246, 0.8);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 20px;
+    }
+    .v3-hero-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      color: #fff;
+    }
+    .v3-gradient-text {
+      background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 50%, #93C5FD 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .v3-hero-sub {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.35);
+      margin-top: 20px;
+      line-height: 1.7;
+    }
+
+    /* Layout */
+    .v3-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .v3-section {
+      padding: 48px 24px;
+    }
+    @media (min-width: 768px) {
+      .v3-section {
+        padding: 64px 48px;
+      }
+    }
+    .v3-section-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 32px;
+    }
+
+    /* Card heading */
+    .v3-card-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    /* Prose */
+    .v3-prose {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.75;
+    }
+    .v3-prose p + p {
+      margin-top: 16px;
+    }
+
+    /* ── Timeline ── */
+    .v3-timeline {
+      position: relative;
+      padding-left: 40px;
+    }
+    .v3-timeline-line {
+      position: absolute;
+      left: 7px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: linear-gradient(
+        180deg,
+        rgba(59, 130, 246, 0.5) 0%,
+        rgba(59, 130, 246, 0.3) 60%,
+        rgba(59, 130, 246, 0.08) 100%
+      );
+    }
+    .v3-timeline-item {
+      position: relative;
+      padding-bottom: 36px;
+    }
+    .v3-timeline-item:last-child {
+      padding-bottom: 0;
+    }
+    .v3-timeline-dot {
+      position: absolute;
+      left: -36px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #3B82F6;
+      border: 2px solid #050507;
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.35);
+    }
+    .v3-timeline-dot--next {
+      background: transparent;
+      border: 2px solid rgba(59, 130, 246, 0.4);
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
+    }
+    .v3-timeline-content {
+      /* nothing extra needed */
+    }
+    .v3-timeline-year {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: rgba(59, 130, 246, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .v3-timeline-year--next {
+      color: rgba(59, 130, 246, 0.45);
+    }
+    .v3-timeline-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin-top: 4px;
+    }
+    .v3-timeline-desc {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.35);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* ── Founder ── */
+    .v3-founder-text {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.75;
+    }
+    .v3-founder-name {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* ── Trust 2x2 ── */
+    .v3-trust-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 640px) {
+      .v3-trust-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .v3-trust-card {
+      padding: 20px 24px;
+    }
+    .v3-trust-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 6px;
+    }
+    .v3-trust-desc {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.3);
+      line-height: 1.6;
+    }
+
+    /* ── IP row ── */
+    .v3-ip-section {
+      padding: 32px 24px 64px;
+    }
+    .v3-ip-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 12px 0;
+    }
+    .v3-ip-item {
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.3);
+      white-space: nowrap;
+    }
+    .v3-ip-label {
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 600;
+      margin-right: 6px;
+    }
+    .v3-ip-sep {
+      width: 1px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 0 16px;
+    }
+    @media (max-width: 640px) {
+      .v3-ip-row {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .v3-ip-sep {
+        display: none;
+      }
+    }
+
+    /* ── Connect section ── */
+    .connect-section { max-width:1100px; margin:0 auto; padding:80px 32px 100px; }
+    .connect-email { font-family:'Space Grotesk',sans-serif; font-size:clamp(1.4rem,3vw,2.2rem); font-weight:600; letter-spacing:-0.02em; text-align:center; margin-top:16px; margin-bottom:56px; }
+    .connect-email a { color:rgba(59,130,246,0.8); text-decoration:none; transition:color 0.3s; }
+    .connect-email a:hover { color:#60A5FA; }
+    .connect-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .connect-card { display:flex; flex-direction:column; align-items:center; text-align:center; padding:36px 24px; border-radius:20px; text-decoration:none; color:#fff; background:linear-gradient(165deg,rgba(255,255,255,0.12) 0%,rgba(255,255,255,0.05) 35%,rgba(255,255,255,0.025) 100%); backdrop-filter:blur(28px) saturate(190%) brightness(1.06); -webkit-backdrop-filter:blur(28px) saturate(190%) brightness(1.06); border:1px solid transparent; box-shadow:0 8px 32px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.14),inset 0 -1px 0 rgba(255,255,255,0.02); position:relative; overflow:hidden; transition:box-shadow 0.5s,transform 0.3s; }
+    .connect-card:hover { transform:translateY(-3px); box-shadow:0 12px 48px rgba(0,0,0,0.55),inset 0 1px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(255,255,255,0.03); }
+    .connect-card::before { content:''; position:absolute; inset:0; border-radius:20px; padding:1px; background:linear-gradient(135deg,rgba(59,130,246,0.22) 0%,rgba(59,130,246,0.06) 25%,rgba(59,130,246,0.02) 50%,rgba(59,130,246,0.06) 75%,rgba(59,130,246,0.18) 100%); -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; z-index:5; opacity:0.55; transition:opacity 0.4s; }
+    .connect-card:hover::before { opacity:1; }
+    .connect-card svg { color:#60A5FA; margin-bottom:16px; position:relative; z-index:2; }
+    .connect-label { font-family:'Space Grotesk',sans-serif; font-size:1.05rem; font-weight:600; margin-bottom:6px; position:relative; z-index:2; }
+    .connect-sub { font-size:0.78rem; color:rgba(255,255,255,0.4); position:relative; z-index:2; }
+    @media(max-width:640px) { .connect-grid { grid-template-columns:1fr; } }
+  </style>
+
+</BaseLayout>

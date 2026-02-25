@@ -27,11 +27,14 @@ const navItems = [
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title} — Catalyst Console</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
-<body class="bg-[#0a0a0a] text-white min-h-screen">
+<body class="bg-surface text-white min-h-screen" style="font-family:'Plus Jakarta Sans','Space Grotesk',system-ui,sans-serif;">
   <!-- Top bar -->
-  <header class="fixed top-0 left-0 right-0 h-14 bg-[#111] border-b border-white/5 z-50 flex items-center px-6">
-    <a href="/" class="text-catalyst-blue font-bold text-lg tracking-tight mr-8">CATALYST</a>
+  <header class="fixed top-0 left-0 right-0 h-14 border-b border-white/5 z-50 flex items-center px-6" style="background:rgba(5,5,7,0.85); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);">
+    <a href="/" style="font-family:'Space Grotesk',system-ui,sans-serif; font-size:1.1rem; font-weight:700; color:#fff; letter-spacing:-0.02em; text-decoration:none; margin-right:2rem;">Catalyst</a>
     <span class="text-white/30 text-sm">Console</span>
     <div class="ml-auto flex items-center gap-4">
       <a href="/cloud/docs" class="text-white/40 hover:text-white/70 text-sm">Docs</a>
@@ -40,7 +43,7 @@ const navItems = [
   </header>
 
   <!-- Sidebar -->
-  <aside class="fixed top-14 left-0 w-52 bottom-0 bg-[#0d0d0d] border-r border-white/5 py-4">
+  <aside class="fixed top-14 left-0 w-52 bottom-0 border-r border-white/5 py-4" style="background:rgba(5,5,7,0.95);">
     <nav class="flex flex-col gap-1 px-3">
       {navItems.map(item => (
         <a
@@ -64,13 +67,18 @@ const navItems = [
   </main>
 
   <script>
-    // Auth guard — redirect to login if no token
+    // Auth guard — redirect to login if no token (check both keys for backwards compat)
     const token = localStorage.getItem('catalyst_token');
-    if (!token && !window.location.pathname.includes('/login') && !window.location.pathname.includes('/signup') && !window.location.pathname.includes('/authorize')) {
+    let sessionToken = null;
+    try {
+      const session = localStorage.getItem('catalyst_session');
+      if (session) { const d = JSON.parse(session); sessionToken = d?.access_token; }
+    } catch {}
+    if (!token && !sessionToken && !window.location.pathname.includes('/login') && !window.location.pathname.includes('/signup') && !window.location.pathname.includes('/authorize')) {
       window.location.href = '/console/login';
     }
 
-    // Logout button
+    // Logout button — clear all token keys
     document.getElementById('logout-btn')?.addEventListener('click', async () => {
       try {
         const t = localStorage.getItem('catalyst_token');
@@ -83,6 +91,7 @@ const navItems = [
       } catch {}
       localStorage.removeItem('catalyst_token');
       localStorage.removeItem('catalyst_refresh_token');
+      localStorage.removeItem('catalyst_session');
       window.location.href = '/console/login';
     });
   </script>

@@ -1,0 +1,154 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  tags?: string[];
+}
+
+const { title, description, date, tags } = Astro.props;
+const formattedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<BaseLayout title={`${title} — Catalyst Neuromorphic`} description={description} hasFog={true}>
+
+  <article class="pt-36 pb-20 px-6 md:px-12" style="position:relative;z-index:1;">
+    <div class="max-w-[700px] mx-auto">
+
+      <!-- Header -->
+      <header class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <time class="text-xs text-white/25 font-mono">{formattedDate}</time>
+          {tags?.map(tag => (
+            <span class="text-[9px] text-catalyst-blue/60 border border-catalyst-blue/20 rounded-full px-2 py-0.5">{tag}</span>
+          ))}
+        </div>
+        <h1 style="font-family:'Space Grotesk','Plus Jakarta Sans',sans-serif; font-size:clamp(2.2rem,5vw,3.4rem); font-weight:700; letter-spacing:-0.035em; line-height:1.08;">{title}</h1>
+        <p class="mt-5" style="font-size:1.1rem; color:rgba(255,255,255,0.4); line-height:1.7;">{description}</p>
+      </header>
+
+      <!-- Content — custom homepage-style typography -->
+      <div class="blog-custom">
+        <slot />
+      </div>
+
+      <!-- Back link -->
+      <div class="mt-20 pt-8 border-t border-white/5">
+        <a href="/blog" class="text-sm text-white/30 hover:text-white/60 transition-colors">&larr; All posts</a>
+      </div>
+
+    </div>
+  </article>
+
+</BaseLayout>
+
+<style>
+  .blog-custom :global(h2) {
+    font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin-top: 3.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .blog-custom :global(h3) {
+    font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-top: 2.5rem;
+    margin-bottom: 0.8rem;
+  }
+  .blog-custom :global(p) {
+    color: rgba(255,255,255,0.55);
+    line-height: 1.8;
+    margin-bottom: 1.4rem;
+    font-size: 1rem;
+  }
+  .blog-custom :global(a) {
+    color: #60A5FA;
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .blog-custom :global(a:hover) {
+    color: #93C5FD;
+  }
+  .blog-custom :global(strong) {
+    color: rgba(255,255,255,0.8);
+  }
+  .blog-custom :global(code) {
+    color: rgba(96,165,250,0.8);
+    background: rgba(255,255,255,0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .blog-custom :global(pre) {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    background: linear-gradient(165deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.025) 100%);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .blog-custom :global(pre code) {
+    background: none;
+    padding: 0;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .blog-custom :global(blockquote) {
+    border-left: 3px solid rgba(59,130,246,0.3);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0;
+    color: rgba(255,255,255,0.45);
+    font-style: italic;
+  }
+  .blog-custom :global(ul), .blog-custom :global(ol) {
+    color: rgba(255,255,255,0.55);
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  .blog-custom :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  .blog-custom :global(img) {
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    margin: 2rem 0;
+  }
+  .blog-custom :global(table) {
+    font-size: 0.9rem;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+  }
+  .blog-custom :global(th) {
+    color: rgba(255,255,255,0.6);
+    font-weight: 500;
+    text-align: left;
+    padding: 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .blog-custom :global(td) {
+    color: rgba(255,255,255,0.4);
+    padding: 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .blog-custom :global(hr) {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin: 2.5rem 0;
+  }
+</style>

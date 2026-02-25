@@ -8,14 +8,16 @@ import '@fontsource/jetbrains-mono/500.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import SubpageFog from '../components/SubpageFog.astro';
 
 interface Props {
   title: string;
   description?: string;
   image?: string;
+  hasFog?: boolean;
 }
 
-const { title, description = 'Neuromorphic processors. Built from scratch.', image = '/og-default.png' } = Astro.props;
+const { title, description = 'Neuromorphic processors. Built from scratch.', image = '/og-default.png', hasFog = false } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://catalyst-neuromorphic.com');
 ---
 
@@ -29,9 +31,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://catalyst
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="canonical" href={canonicalURL} />
 
-  <!-- Satoshi font from Fontshare -->
-  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
-  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" />
+  <!-- Plus Jakarta Sans (body) from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Open Graph -->
   <meta property="og:title" content={title} />
@@ -62,6 +65,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://catalyst
   })} />
 </head>
 <body>
+  {hasFog && <SubpageFog />}
   <Nav />
   <div id="smooth-wrapper">
     <div id="smooth-content">

@@ -2,9 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Technology — Catalyst Neuromorphic" description="How neuromorphic computing works. Brain-inspired processors that learn in real time.">
+<BaseLayout title="Technology — Catalyst Neuromorphic" description="How neuromorphic computing works. Brain-inspired processors that learn in real time." hasFog={true}>
 
-  <section class="pt-36 pb-20 px-6 md:px-12 text-center">
+  <section class="pt-36 pb-20 px-6 md:px-12 text-center" style="position:relative;z-index:1;">
     <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Technology</p>
     <h1 class="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tighter">How it works.</h1>
     <p class="text-lg text-white/40 mt-4 max-w-[550px] mx-auto">Brain-inspired computing from first principles.</p>
@@ -23,7 +23,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             No spike, no computation, no energy. A neuromorphic chip doing nothing consumes almost zero power. This event-driven model is how the human brain achieves 20 watts.
           </p>
         </div>
-        <div class="reveal glass p-8 text-center">
+        <div class="reveal card-glass p-8 text-center">
           <div class="grid grid-cols-2 gap-6">
             <div>
               <div class="text-xs text-white/25 uppercase tracking-wider mb-3">GPU</div>
@@ -54,18 +54,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         128 neuromorphic cores connected by a mesh network. Each core contains 1,024 neurons, a synapse memory, and a local learning engine.
       </p>
 
-      <div class="reveal glass-strong p-8 rounded-xl mb-8">
+      <div class="reveal card-glass p-8 mb-8">
         <img src="/images/diagrams/fig9_complete_n2_pipeline.svg" alt="N2 complete processing pipeline" class="w-full invert opacity-80" loading="lazy" />
         <p class="text-xs text-white/25 text-center mt-4">N2 processing pipeline: spike input → synapse lookup → dendritic accumulation → neuron model → spike output → learning update</p>
       </div>
 
       <div class="grid md:grid-cols-2 gap-6 reveal-stagger">
-        <div class="glass p-6">
+        <div class="card-glass p-6">
           <img src="/images/diagrams/fig1_system_overview.svg" alt="System overview" class="w-full invert opacity-70 mb-4" loading="lazy" />
           <h3 class="font-semibold mb-1">Core Architecture</h3>
           <p class="text-sm text-white/40">Each core has its own neuron array, synapse RAM, and programmable learning engine. Cores communicate via the mesh NoC.</p>
         </div>
-        <div class="glass p-6">
+        <div class="card-glass p-6">
           <img src="/images/diagrams/fig9_hierarchical_routing.svg" alt="Hierarchical routing" class="w-full invert opacity-70 mb-4" loading="lazy" />
           <h3 class="font-semibold mb-1">Mesh Network</h3>
           <p class="text-sm text-white/40">128 cores connected by a 2D mesh with deterministic routing. Multicast delivery, configurable delays, graded payloads.</p>
@@ -78,7 +78,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="py-32 px-6 md:px-12">
     <div class="max-w-[900px] mx-auto">
       <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div class="reveal glass p-6">
+        <div class="reveal card-glass p-6">
           <img src="/images/diagrams/fig3_three_factor_learning.svg" alt="Three-factor learning rule" class="w-full invert opacity-70 mb-4" loading="lazy" />
           <p class="text-xs text-white/25 text-center">Three-factor learning: pre-synaptic × post-synaptic × modulatory reward signal</p>
         </div>
@@ -94,17 +94,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
 
       <div class="grid md:grid-cols-3 gap-6 mt-12 reveal-stagger">
-        <div class="glass p-6">
+        <div class="card-glass p-6">
           <img src="/images/diagrams/fig4_microcode_engine.svg" alt="Microcode engine" class="w-full invert opacity-70 mb-3" loading="lazy" />
           <h3 class="text-sm font-semibold mb-1">Microcode Engine</h3>
           <p class="text-xs text-white/40">16-register programmable engine executes custom learning rules as microcode programs.</p>
         </div>
-        <div class="glass p-6">
+        <div class="card-glass p-6">
           <img src="/images/diagrams/fig5_five_trace_learning.svg" alt="Eligibility traces" class="w-full invert opacity-70 mb-3" loading="lazy" />
           <h3 class="text-sm font-semibold mb-1">Eligibility Traces</h3>
           <p class="text-xs text-white/40">Five independent traces with configurable decay. Persistent traces survive across timesteps.</p>
         </div>
-        <div class="glass p-6">
+        <div class="card-glass p-6">
           <img src="/images/diagrams/fig6_persistent_reward_trace.svg" alt="Reward modulation" class="w-full invert opacity-70 mb-3" loading="lazy" />
           <h3 class="text-sm font-semibold mb-1">Reward Modulation</h3>
           <p class="text-xs text-white/40">Third-factor reward signals modulate plasticity. Enables reinforcement learning on-chip.</p>
@@ -129,7 +129,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           { name: 'Sigma-Delta', desc: 'Graded output for rate-coded signals. Bridges spiking and analog domains.' },
           { name: 'Resonate-and-Fire', desc: 'Complex-valued state enables frequency-selective temporal pattern detection.' },
         ].map(model => (
-          <div class="glass p-5 text-left">
+          <div class="card-glass p-5 text-left">
             <h3 class="text-sm font-semibold mb-1">{model.name}</h3>
             <p class="text-xs text-white/40">{model.desc}</p>
           </div>
@@ -151,7 +151,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             Configurable axonal delays (1&ndash;63 timesteps) enable temporal coding and conduction delay matching, critical for audio and temporal pattern recognition tasks.
           </p>
         </div>
-        <div class="reveal glass p-6">
+        <div class="reveal card-glass p-6">
           <img src="/images/diagrams/fig5_graded_spikes.svg" alt="Graded spike formats" class="w-full invert opacity-70 mb-4" loading="lazy" />
           <p class="text-xs text-white/25 text-center">Binary vs graded spike encoding. Graded spikes carry 8-bit payloads.</p>
         </div>

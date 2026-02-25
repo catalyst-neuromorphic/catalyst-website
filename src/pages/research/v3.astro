@@ -1,0 +1,325 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+// V3 — HYBRID: Big hero moments for key numbers, then dense grids for detail. Best of both.
+---
+
+<BaseLayout title="Research V3 — Hybrid" description="Hybrid research page variant" hasFog={true}>
+
+  <!-- HERO — medium height with inline stat strip -->
+  <section class="pt-36 pb-12 px-6 md:px-12 text-center" style="position:relative;z-index:1;">
+    <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Research</p>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(3rem,7vw,5.5rem); font-weight:700; letter-spacing:-0.04em; line-height:0.95;">
+      Verified, not just claimed.
+    </h1>
+    <p class="text-lg text-white/35 mt-5 max-w-[520px] mx-auto">Two processor generations. Real FPGA hardware. Every result reproducible.</p>
+  </section>
+
+  <!-- THREE BIG NUMBERS — hero moments -->
+  <section class="py-20 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- 28/28 -->
+      <div class="card-glass p-10 text-center reveal" style="background:radial-gradient(ellipse at 50% 30%, rgba(34,197,94,0.06) 0%, transparent 70%), linear-gradient(165deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.025) 100%);">
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(3.5rem,7vw,5rem); font-weight:700; letter-spacing:-0.04em; color:rgb(34,197,94); line-height:1;" class="drop-shadow-[0_0_40px_rgba(34,197,94,0.15)]">28/28</div>
+        <div class="text-sm text-white/50 mt-3 font-medium">FPGA validation</div>
+        <div class="text-xs text-white/25 mt-1">7 categories. 0 failures.</div>
+        <div class="flex gap-1.5 justify-center mt-4">
+          <span class="text-[9px] bg-white/5 text-white/30 px-2 py-0.5 rounded-full">AWS F2</span>
+          <span class="text-[9px] bg-white/5 text-white/30 px-2 py-0.5 rounded-full">Xilinx VU47P</span>
+        </div>
+      </div>
+      <!-- 85.9% -->
+      <div class="card-glass p-10 text-center reveal" style="background:radial-gradient(ellipse at 50% 30%, rgba(59,130,246,0.06) 0%, transparent 70%), linear-gradient(165deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.025) 100%);">
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(3.5rem,7vw,5rem); font-weight:700; letter-spacing:-0.04em; line-height:1;" class="drop-shadow-[0_0_40px_rgba(59,130,246,0.15)]">85.9<span class="text-xl text-white/20">%</span></div>
+        <div class="text-sm text-white/50 mt-3 font-medium">SHD benchmark</div>
+        <div class="text-xs text-white/25 mt-1">85.4% quantized. 0.5% loss.</div>
+        <div class="flex gap-1.5 justify-center mt-4">
+          <span class="text-[9px] bg-white/5 text-white/30 px-2 py-0.5 rounded-full">Beats Zenke 83.4%</span>
+          <span class="text-[9px] bg-white/5 text-white/30 px-2 py-0.5 rounded-full">Beats Cramer 83.2%</span>
+        </div>
+      </div>
+      <!-- 152/155 -->
+      <div class="card-glass p-10 text-center reveal" style="background:radial-gradient(ellipse at 50% 30%, rgba(59,130,246,0.04) 0%, transparent 70%), linear-gradient(165deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.025) 100%);">
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(3.5rem,7vw,5rem); font-weight:700; letter-spacing:-0.04em; line-height:1;">152<span class="text-xl text-white/20">/155</span></div>
+        <div class="text-sm text-white/50 mt-3 font-medium">Loihi 2 parity</div>
+        <div class="text-xs text-white/25 mt-1">3 HW-only. 0 missing.</div>
+        <div class="flex gap-1.5 justify-center mt-4">
+          <span class="text-[9px] bg-white/5 text-white/30 px-2 py-0.5 rounded-full">3-part audit</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAPERS — clean row -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <h2 class="reveal text-xs text-white/30 uppercase tracking-widest mb-5">Published Papers</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 reveal-stagger">
+        {[
+          { gen: 'N2', tag: 'Latest', tagColor: 'text-catalyst-blue/60 bg-catalyst-blue/10', title: 'Full Loihi 2 Parity in an Open Neuromorphic Architecture', pages: 18, doi: '10.5281/zenodo.18728256', doiUrl: 'https://zenodo.org/records/18728256', pdf: '/papers/catalyst-n2.pdf' },
+          { gen: 'N1', tag: 'First gen', tagColor: 'text-white/25 bg-white/5', title: 'A 131K-Neuron Open Neuromorphic Processor with Programmable Synaptic Plasticity', pages: 13, doi: '10.5281/zenodo.18727094', doiUrl: 'https://zenodo.org/records/18727094', pdf: '/papers/catalyst-n1.pdf' },
+        ].map(p => (
+          <div class="card-glass p-7 flex flex-col sm:flex-row gap-6">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-2">
+                <span class={`text-[9px] uppercase tracking-widest px-2 py-0.5 rounded-full ${p.tagColor}`}>{p.tag}</span>
+                <span class="text-[10px] text-white/20">{p.pages} pages</span>
+              </div>
+              <h3 class="font-semibold">{p.gen}</h3>
+              <p class="text-sm text-white/40 mt-1 leading-relaxed">{p.title}</p>
+              <div class="mt-3">
+                <a href={p.doiUrl} target="_blank" rel="noopener noreferrer"><img src={`https://zenodo.org/badge/DOI/${p.doi}.svg`} alt="DOI" style="display:inline-block; height:18px;" /></a>
+              </div>
+            </div>
+            <div class="flex sm:flex-col gap-2 sm:justify-center shrink-0">
+              <a href={p.pdf} class="btn-pill text-xs px-4 py-2" target="_blank">PDF</a>
+              <a href={p.doiUrl} class="btn-pill text-xs px-4 py-2" target="_blank" rel="noopener noreferrer">Zenodo</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- VALIDATION DEEP DIVE — dense but organized -->
+  <section id="validation" class="py-20 px-6 md:px-12" style="background:rgba(255,255,255,0.01); border-top:1px solid rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.03);">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+        <div>
+          <h2 class="reveal" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(1.8rem,3vw,2.5rem); font-weight:700; letter-spacing:-0.03em;">How we proved it works</h2>
+          <p class="reveal text-sm text-white/30 mt-2">Every test follows the same 7-step protocol. No exceptions.</p>
+        </div>
+        <div class="reveal flex items-center gap-2">
+          <span class="text-[9px] bg-catalyst-green/10 text-catalyst-green/70 px-2 py-0.5 rounded-full">28/28 PASS</span>
+          <span class="text-[9px] bg-white/5 text-white/30 px-2 py-0.5 rounded-full">AWS F2</span>
+          <span class="text-[9px] bg-white/5 text-white/30 px-2 py-0.5 rounded-full">VU47P</span>
+        </div>
+      </div>
+
+      <!-- Protocol strip -->
+      <div class="reveal grid grid-cols-7 gap-px bg-white/[0.04] rounded-xl overflow-hidden mb-8">
+        {[
+          { n: '1', t: 'Define', d: 'SDK network' },
+          { n: '2', t: 'Compile', d: 'Bitstream' },
+          { n: '3', t: 'Silence', d: '\u03B8=32767' },
+          { n: '4', t: 'Deploy', d: 'PCIe MMIO' },
+          { n: '5', t: 'Inject', d: 'Stimuli' },
+          { n: '6', t: 'Readback', d: 'Capture' },
+          { n: '7', t: 'Compare', d: 'vs CPU' },
+        ].map(s => (
+          <div class="bg-surface py-3 text-center">
+            <div class="text-[9px] text-catalyst-blue/40 font-mono">{s.n}</div>
+            <div class="text-xs font-semibold mt-0.5">{s.t}</div>
+            <div class="text-[9px] text-white/20 mt-0.5">{s.d}</div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Two-column: categories + benchmark -->
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <!-- Categories (3 cols) -->
+        <div class="lg:col-span-3">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 reveal-stagger">
+            {[
+              { name: 'Neuron', n: 7, desc: 'Membrane, threshold, reset' },
+              { name: 'Synapse', n: 6, desc: 'Excitatory, inhibitory, weights' },
+              { name: 'CUBA', n: 1, desc: 'Analytical match' },
+              { name: 'Topology', n: 3, desc: 'FF, recurrent, fan-out' },
+              { name: 'Routing', n: 3, desc: 'Cross-core mesh' },
+              { name: 'Scale', n: 5, desc: '81K spikes/3.4ms' },
+              { name: 'Operational', n: 3, desc: 'State isolation' },
+            ].map(c => (
+              <div class="bg-white/[0.03] border border-white/[0.04] rounded-lg p-3">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-xs font-mono text-catalyst-green">{c.n}/{c.n}</span>
+                </div>
+                <div class="text-xs font-semibold text-white/70">{c.name}</div>
+                <div class="text-[10px] text-white/20 mt-0.5">{c.desc}</div>
+              </div>
+            ))}
+            <div class="bg-catalyst-blue/[0.04] border border-catalyst-blue/[0.08] rounded-lg p-3">
+              <div class="text-[8px] text-catalyst-blue/50 uppercase tracking-widest mb-1.5">Discovery</div>
+              <div class="text-xs font-semibold text-white/70">BRAM init</div>
+              <div class="text-[10px] text-white/20 mt-0.5">All zeros → silence protocol</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Benchmark comparison (2 cols) -->
+        <div class="lg:col-span-2 card-glass p-6">
+          <h3 class="text-xs text-white/30 uppercase tracking-widest mb-4">SHD vs Published</h3>
+          <div class="space-y-4">
+            {[
+              { name: 'Catalyst N2', sub: 'float', score: 85.9, ours: true },
+              { name: 'Catalyst N2', sub: '8-bit', score: 85.4, ours: true },
+              { name: 'Zenke & Vogels', sub: '2021', score: 83.4, ours: false },
+              { name: 'Cramer et al.', sub: '2022', score: 83.2, ours: false },
+            ].map(item => (
+              <div>
+                <div class="flex justify-between text-[10px] mb-1">
+                  <span class={item.ours ? 'text-white/60 font-medium' : 'text-white/25'}>{item.name} <span class="text-white/15">{item.sub}</span></span>
+                  <span class="font-mono text-white/30">{item.score}%</span>
+                </div>
+                <div class="h-2 rounded-full bg-white/[0.04] overflow-hidden">
+                  <div class={`h-full rounded-full ${item.ours ? 'bg-catalyst-blue' : 'bg-white/10'}`} style={`width:${((item.score - 80) / 10) * 100}%`}></div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p class="text-[9px] text-white/15 mt-4">Recurrent LIF. Bars: 80-90% range.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SDK + PARITY side by side -->
+  <section class="py-20 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- SDK -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="reveal" style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700; letter-spacing:-0.02em;">Software verification</h2>
+          <span class="reveal text-xs text-white/20">v3.7.0</span>
+        </div>
+        <div class="reveal card-glass p-6">
+          <div class="flex items-baseline gap-3 mb-5">
+            <span style="font-family:'Space Grotesk',sans-serif; font-size:2rem; font-weight:700;">3,091</span>
+            <span class="text-xs text-white/25">tests &middot; from 168 (18.4x)</span>
+          </div>
+          <div class="space-y-2.5 mb-5">
+            {[
+              { label: 'Unit', n: '~1,200', pct: 39 },
+              { label: 'Integration', n: '~800', pct: 26 },
+              { label: 'Regression', n: '~500', pct: 16 },
+              { label: 'CPU-GPU', n: '~400', pct: 13 },
+              { label: 'Stress', n: '~100', pct: 3 },
+            ].map(t => (
+              <div class="flex items-center gap-3">
+                <span class="text-[10px] text-white/35 w-16 shrink-0">{t.label}</span>
+                <div class="flex-1 h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
+                  <div class="h-full rounded-full bg-catalyst-blue/50" style={`width:${t.pct * 2.5}%`}></div>
+                </div>
+                <span class="text-[10px] text-white/20 font-mono w-12 text-right">{t.n}</span>
+              </div>
+            ))}
+          </div>
+          <div class="grid grid-cols-3 gap-2 pt-4 border-t border-white/[0.04]">
+            {[
+              { b: 'CPU', d: 'Exact reference' },
+              { b: 'GPU', d: 'CUDA, statistical' },
+              { b: 'FPGA', d: 'Bit-exact' },
+            ].map(item => (
+              <div class="bg-white/[0.03] rounded-lg px-2 py-2 text-center">
+                <div class="text-xs font-semibold text-white/60">{item.b}</div>
+                <div class="text-[9px] text-white/20">{item.d}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Parity -->
+      <div>
+        <h2 class="reveal mb-4" style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700; letter-spacing:-0.02em;">Loihi 2 parity audit</h2>
+        <div class="reveal card-glass p-6">
+          <div class="flex items-center justify-center gap-10 py-3 mb-5">
+            <div class="text-center">
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:2.5rem; font-weight:700; color:rgb(34,197,94);">152</div>
+              <div class="text-[10px] text-white/30 mt-1">Full</div>
+            </div>
+            <div class="text-center">
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:2.5rem; font-weight:700; color:rgb(96,165,250);">3</div>
+              <div class="text-[10px] text-white/30 mt-1">HW-only</div>
+            </div>
+            <div class="text-center">
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:2.5rem; font-weight:700; color:rgba(255,255,255,0.1);">0</div>
+              <div class="text-[10px] text-white/30 mt-1">Missing</div>
+            </div>
+          </div>
+          <div class="space-y-3 pt-4 border-t border-white/[0.04]">
+            {[
+              { p: '1', t: 'Pipeline ordering', d: '10 stages verified in Loihi 2 execution order' },
+              { p: '2', t: 'Feature coverage', d: '155 features enumerated and mapped' },
+              { p: '3', t: 'Numerical accuracy', d: 'CPU exact, GPU statistical, FPGA bit-exact' },
+            ].map(a => (
+              <div class="flex gap-3">
+                <span class="text-[9px] text-catalyst-blue/40 font-mono shrink-0 w-4 pt-0.5">{a.p}</span>
+                <div>
+                  <div class="text-xs font-medium text-white/60">{a.t}</div>
+                  <div class="text-[10px] text-white/20">{a.d}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- N1→N2 TABLE -->
+  <section class="py-20 px-6 md:px-12" style="background:rgba(255,255,255,0.01); border-top:1px solid rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.03);">
+    <div class="max-w-[1200px] mx-auto">
+      <h2 class="reveal mb-8" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(1.8rem,3vw,2.5rem); font-weight:700; letter-spacing:-0.03em;">N1 &rarr; N2</h2>
+      <div class="reveal card-glass p-6 overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-white/10">
+              <th class="text-left py-2.5 pr-6 text-white/30 font-medium">Specification</th>
+              <th class="text-left py-2.5 px-6 text-white/15 font-medium">N1</th>
+              <th class="text-left py-2.5 pl-6 text-catalyst-blue font-semibold">N2</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['Neuron models', '1 (CUBA LIF)', '5 — CUBA, Izhikevich, ALIF, \u03A3\u0394, R&F'],
+              ['Engine', 'Fixed datapath', 'Programmable microcode'],
+              ['Spike formats', 'Binary only', 'Binary + 8/16/24-bit graded'],
+              ['Weight precision', 'Fixed 8-bit', 'Variable 1/2/4/8/16-bit per group'],
+              ['Spike traces', '2', '5'],
+              ['Learning', 'STDP + reward-modulated', 'Three-factor + homeostatic + persistent reward'],
+              ['Synapse encoding', 'CSR, dense, population', '+ convolutional (FMT_CONV)'],
+              ['Observability', 'Basic state read', '25 probe IDs, perf counters, DVFS'],
+              ['SDK tests', '168', '3,091 (18.4\u00D7)'],
+              ['RTL testbenches', '25 TBs / 98 scenarios', '21 TBs / 453 scenarios'],
+              ['FPGA validation', '16-core subset', '28/28, 7 categories, full protocol'],
+            ].map(([spec, n1, n2]) => (
+              <tr class="border-b border-white/[0.04]">
+                <td class="py-2.5 pr-6 text-white/45">{spec}</td>
+                <td class="py-2.5 px-6 text-white/15">{n1}</td>
+                <td class="py-2.5 pl-6 text-white/70">{n2}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- LICENSING + CTA -->
+  <section class="py-20 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+        {[
+          { l: 'Papers', v: 'Open access', s: 'Zenodo DOI' },
+          { l: 'SDK', v: 'BSL 1.1', s: 'Patent protected' },
+          { l: 'RTL', v: 'Patent pending', s: 'UK ~2602902.6' },
+          { l: 'API client', v: 'MIT', s: 'Open source' },
+        ].map(item => (
+          <div class="bg-white/[0.03] border border-white/[0.04] rounded-xl px-4 py-3">
+            <div class="text-[9px] text-white/25 uppercase tracking-wider">{item.l}</div>
+            <div class="text-sm font-semibold text-white/65 mt-1">{item.v}</div>
+            <div class="text-[10px] text-white/15 mt-0.5">{item.s}</div>
+          </div>
+        ))}
+      </div>
+      <div class="text-center">
+        <p class="text-white/25 mb-6">Read the papers. Check the numbers.</p>
+        <div class="flex gap-4 justify-center flex-wrap">
+          <a href="/papers/catalyst-n2.pdf" class="btn-blue" target="_blank">Read N2 paper</a>
+          <a href="/papers/catalyst-n1.pdf" class="btn-ghost" target="_blank">Read N1 paper</a>
+          <a href="/cloud" class="btn-ghost">Try Cloud API &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
