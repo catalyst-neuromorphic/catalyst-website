@@ -141,7 +141,7 @@ export default function BillingPanel() {
 
       {/* Current Plan */}
       {isActive && currentPlan !== 'free' && (
-        <div className="bg-[#111] border border-white/5 rounded-xl p-5 mb-6">
+        <div className="console-card p-5 mb-6">
           <div className="flex justify-between items-center">
             <div>
               <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Current Plan</p>
@@ -173,7 +173,7 @@ export default function BillingPanel() {
           const isHigher = plan.price > (sub?.price_usd || 0);
           return (
             <div key={plan.name}
-              className={`rounded-xl p-5 flex flex-col ${(plan as any).recommended ? 'bg-[#111] ring-1 ring-catalyst-blue/30 border border-catalyst-blue/20' : 'bg-[#111] border border-white/5'}`}>
+              className={`console-card p-5 flex flex-col ${(plan as any).recommended ? 'ring-1 ring-catalyst-blue/30' : ''}`}>
               <div className="mb-4">
                 <h3 className="font-semibold">{plan.label}</h3>
                 <p className="text-2xl font-bold mt-1">
@@ -217,7 +217,7 @@ export default function BillingPanel() {
 
       {/* API Credits */}
       <h2 className="text-lg font-semibold mb-4">API Credits</h2>
-      <div className="bg-[#111] border border-white/5 rounded-xl p-5 mb-8">
+      <div className="console-card p-5 mb-8">
         <div className="flex justify-between items-center mb-4">
           <div>
             <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Balance</p>
@@ -241,7 +241,7 @@ export default function BillingPanel() {
               placeholder="5.00"
               value={creditAmount}
               onChange={e => setCreditAmount(e.target.value)}
-              className="bg-black/50 border border-white/10 rounded-lg pl-7 pr-3 py-2 text-sm text-white w-32 focus:outline-none focus:border-green-500/50"
+              className="bg-white/[0.03] border border-white/[0.06] rounded-lg pl-7 pr-3 py-2 text-sm text-white w-32 focus:outline-none focus:border-green-500/50"
             />
           </div>
           <button onClick={handleBuyCredits}
@@ -255,7 +255,7 @@ export default function BillingPanel() {
 
       {/* Extra Usage */}
       <h2 className="text-lg font-semibold mb-4">Extra Usage</h2>
-      <div className="bg-[#111] border border-white/5 rounded-xl p-5 mb-8">
+      <div className="console-card p-5 mb-8">
         <p className="text-white/50 text-sm mb-4">
           When enabled, jobs continue running after your plan limits are reached.
           Compute is billed from your API credit balance at standard API rates.
@@ -277,7 +277,7 @@ export default function BillingPanel() {
       {history.length === 0 ? (
         <p className="text-white/30 text-sm">No transactions yet.</p>
       ) : (
-        <div className="bg-[#111] border border-white/5 rounded-xl overflow-hidden">
+        <div className="console-card overflow-hidden">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-white/5">

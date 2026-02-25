@@ -45,7 +45,7 @@ function UsageBar({ label, pct, used, limit, remaining, resetsAt }: {
   const barColor = pct >= 90 ? 'bg-red-500' : pct >= 70 ? 'bg-yellow-500' : 'bg-catalyst-blue';
 
   return (
-    <div className="bg-[#111] border border-white/5 rounded-xl p-5">
+    <div className="console-card p-5">
       <div className="flex justify-between items-center mb-3">
         <p className="text-white/70 text-sm font-medium">{label}</p>
         <p className="text-white/30 text-xs">Resets in {resetLabel}</p>
@@ -107,7 +107,7 @@ export default function UsageCharts() {
 
       {/* Extra Usage Summary */}
       {usage && (
-        <div className="bg-[#111] border border-white/5 rounded-xl p-5 mb-8">
+        <div className="console-card p-5 mb-8">
           <h2 className="text-sm font-medium text-white/70 mb-3">Extra Usage</h2>
           {usage.extra_usage.enabled ? (
             <div className="grid grid-cols-3 gap-4">
@@ -135,7 +135,7 @@ export default function UsageCharts() {
 
       {/* Plan Info */}
       {usage && (
-        <div className="bg-[#111] border border-white/5 rounded-xl p-5">
+        <div className="console-card p-5">
           <h2 className="text-sm font-medium text-white/70 mb-3">Current Plan</h2>
           <p className="text-white/40 text-sm">
             <span className="text-white font-semibold capitalize">{usage.plan}</span>
