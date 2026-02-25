@@ -1,0 +1,435 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+// V6 — SOCIAL PROOF: Credibility-first structure. Evidence before story. Supabase/Cerebras style.
+---
+
+<BaseLayout title="About — Catalyst Neuromorphic" description="Building neuromorphic processors to challenge the way intelligence is computed." hasFog={true}>
+
+  <!-- HERO + STATS -->
+  <section class="v6-hero" style="position:relative;z-index:1;">
+    <p class="v6-hero-label">About</p>
+    <h1 class="v6-hero-heading">AI has a hardware problem.</h1>
+    <p class="v6-hero-sub">We're building the processors to fix it.</p>
+
+    <!-- Stat bar — immediately below hero, credibility upfront -->
+    <div class="v6-stats reveal-stagger">
+      <div class="v6-stat">
+        <div class="v6-stat-num" data-count="2">0</div>
+        <div class="v6-stat-label">Published papers</div>
+      </div>
+      <div class="v6-stat">
+        <div class="v6-stat-num" data-count="2">0</div>
+        <div class="v6-stat-label">Processor generations</div>
+      </div>
+      <div class="v6-stat">
+        <div class="v6-stat-num" data-count="1">0</div>
+        <div class="v6-stat-label">Cloud API live</div>
+      </div>
+      <div class="v6-stat">
+        <div class="v6-stat-num-static">2026</div>
+        <div class="v6-stat-label">UK Patents filed</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF SECTION -->
+  <section class="v6-proof-section" style="position:relative;z-index:1;">
+    <h2 class="v6-proof-heading reveal">Don't take our word for it.</h2>
+    <div class="v6-proof-grid reveal-stagger">
+      <a href="https://zenodo.org/communities/catalyst-neuromorphic" target="_blank" rel="noopener noreferrer" class="v6-proof-card card-glass">
+        <div style="position:relative;z-index:2;">
+          <div class="v6-proof-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <h3 class="v6-proof-title">Read the papers</h3>
+          <p class="v6-proof-desc">Two published papers on Zenodo with DOIs. Open access. Every claim documented.</p>
+          <span class="v6-proof-arrow">&rarr;</span>
+        </div>
+      </a>
+      <a href="/cloud" class="v6-proof-card card-glass">
+        <div style="position:relative;z-index:2;">
+          <div class="v6-proof-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3 class="v6-proof-title">Try the cloud</h3>
+          <p class="v6-proof-desc">The API is live. Run a neuromorphic network from your terminal. Free tier available.</p>
+          <span class="v6-proof-arrow">&rarr;</span>
+        </div>
+      </a>
+      <a href="/research" class="v6-proof-card card-glass">
+        <div style="position:relative;z-index:2;">
+          <div class="v6-proof-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <h3 class="v6-proof-title">Check the hardware</h3>
+          <p class="v6-proof-desc">Our designs run on real FPGA boards, not just simulators. Physical silicon execution.</p>
+          <span class="v6-proof-arrow">&rarr;</span>
+        </div>
+      </a>
+      <a href="https://github.com/catalyst-neuromorphic" target="_blank" rel="noopener noreferrer" class="v6-proof-card card-glass">
+        <div style="position:relative;z-index:2;">
+          <div class="v6-proof-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="v6-proof-title">Join the community</h3>
+          <p class="v6-proof-desc">Open GitHub, public research, growing backers. We build in the open.</p>
+          <span class="v6-proof-arrow">&rarr;</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="v6-divider"></div>
+
+  <!-- THE SCALING WALL -->
+  <section class="v6-text-section reveal" style="position:relative;z-index:1;">
+    <h2 class="v6-section-heading">The scaling wall</h2>
+    <div class="v6-prose">
+      <p>Modern AI runs on hardware that was never designed for intelligence. GPUs burn hundreds of watts per chip. Data centres already consume over 2% of global electricity, and that share is climbing fast. Training a single large language model can use more energy than a hundred homes do in a year. The models are getting bigger, but the returns are shrinking.</p>
+      <p>And for all that power, these systems still can't learn from new information without being retrained from scratch. They can't run without a data centre. They can't operate without sending your data to someone else's infrastructure.</p>
+      <p>The human brain does all of this on 20 watts. It learns continuously. It processes information in real-time. It runs at the edge, on-device, with no internet connection required. The gap between biological intelligence and artificial intelligence isn't a software problem. It's a hardware problem.</p>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="v6-divider"></div>
+
+  <!-- NEUROMORPHIC PROCESSORS -->
+  <section class="v6-text-section reveal" style="position:relative;z-index:1;">
+    <h2 class="v6-section-heading">Neuromorphic processors</h2>
+    <div class="v6-prose">
+      <p>Neuromorphic chips compute the way neurons do. They're event-driven &mdash; they only consume energy when there's something to process. They can learn on the hardware itself, not just run pre-trained models. They operate at the edge, on-device, without cloud dependency. And they do it at a fraction of the power cost.</p>
+      <p>This technology exists. Intel has Loihi. IBM built TrueNorth. But both are closed, corporate, and inaccessible. If you're not inside those companies or their select research programmes, you don't get access. The hardware that could reshape computing is locked behind walls.</p>
+      <p>Catalyst is building the open alternative. Full processor designs, published research, and a cloud platform anyone can use today. We're not asking for permission to compete with billion-dollar companies. We're just doing it.</p>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="v6-divider"></div>
+
+  <!-- WHERE WE ARE -->
+  <section class="v6-text-section reveal" style="position:relative;z-index:1;">
+    <h2 class="v6-section-heading">Where we are</h2>
+    <div class="v6-prose">
+      <p>We're early. Two processor generations are designed, built in software, and validated on real hardware. Both have published papers you can read today. A cloud API is live &mdash; you can run a neuromorphic network right now, without buying anything.</p>
+      <p>We're raising funding and building toward manufactured silicon. That's the goal: a physical chip you can hold, running real neuromorphic intelligence. We're not there yet. But the architecture is complete, tested, and protected by patent.</p>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="v6-divider"></div>
+
+  <!-- FOUNDER -->
+  <section class="v6-founder-section" style="position:relative;z-index:1;">
+    <div class="v6-founder-card reveal">
+      <div class="v6-founder-accent"></div>
+      <div class="v6-founder-content">
+        <h2 class="v6-founder-heading">Founder</h2>
+        <p class="v6-founder-text"><strong class="v6-founder-name">Henry Shulayev Barnes</strong> &mdash; engineering student at the University of Aberdeen. Started Catalyst because the neuromorphic hardware that should exist doesn't, and the hardware that does exist isn't accessible. Currently a member of Techscaler, Scotland's tech startup community.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- IP SECTION -->
+  <section class="v6-ip-section" style="position:relative;z-index:1;">
+    <h2 class="v6-ip-heading reveal">Intellectual property</h2>
+    <div class="v6-ip-table reveal">
+      <div class="v6-ip-row">
+        <span class="v6-ip-label">UK Patents</span>
+        <span class="v6-ip-value">Filed February 2026</span>
+      </div>
+      <div class="v6-ip-row">
+        <span class="v6-ip-label">RTL</span>
+        <span class="v6-ip-value">BSL 1.1 &mdash; proprietary</span>
+      </div>
+      <div class="v6-ip-row">
+        <span class="v6-ip-label">SDK</span>
+        <span class="v6-ip-value">BSL 1.1</span>
+      </div>
+      <div class="v6-ip-row">
+        <span class="v6-ip-label">Papers</span>
+        <span class="v6-ip-value">Open access on Zenodo</span>
+      </div>
+      <div class="v6-ip-row">
+        <span class="v6-ip-label">API Client</span>
+        <span class="v6-ip-value">MIT &mdash; open source</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GET IN TOUCH -->
+  <section class="connect-section" style="position:relative;z-index:1;">
+    <h2 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2.4rem,5vw,3.6rem); font-weight:700; letter-spacing:-0.035em; line-height:1.08; text-align:center; margin-bottom:18px;">Get in touch.</h2>
+    <p class="connect-email"><a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a></p>
+    <div class="connect-grid">
+      <a href="https://github.com/catalyst-neuromorphic" target="_blank" rel="noopener noreferrer" class="connect-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg><span class="connect-label">GitHub</span><span class="connect-sub">Source &amp; contributions</span></a>
+      <a href="/research" class="connect-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span class="connect-label">Research</span><span class="connect-sub">Papers &amp; benchmarks</span></a>
+      <a href="https://ko-fi.com/catalystneuromorphic" target="_blank" rel="noopener noreferrer" class="connect-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="connect-label">Support</span><span class="connect-sub">Buy us a coffee on Ko-Fi</span></a>
+    </div>
+  </section>
+
+  <style is:global>
+    /* ── V6 Hero ── */
+    .v6-hero {
+      padding: clamp(8rem, 12vw, 10rem) 24px clamp(3rem, 5vw, 5rem);
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .v6-hero-label {
+      font-size: 0.8rem;
+      color: rgba(59,130,246,0.7);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .v6-hero-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #fff;
+    }
+    .v6-hero-sub {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: rgba(255,255,255,0.35);
+      margin-top: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── V6 Stats Row ── */
+    .v6-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .v6-stat {
+      text-align: center;
+      padding: 20px 8px;
+    }
+    .v6-stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      background: linear-gradient(135deg, #60A5FA, #3B82F6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .v6-stat-num-static {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      background: linear-gradient(135deg, #60A5FA, #3B82F6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .v6-stat-label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 8px;
+      line-height: 1.3;
+    }
+
+    /* ── V6 Proof Section ── */
+    .v6-proof-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .v6-proof-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .v6-proof-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .v6-proof-card {
+      display: block;
+      padding: clamp(1.5rem, 3vw, 2rem);
+      text-decoration: none;
+      color: #fff;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .v6-proof-card:hover {
+      transform: translateY(-2px);
+    }
+    .v6-proof-card:hover .v6-proof-arrow {
+      color: rgba(59,130,246,0.9);
+      transform: translateX(4px);
+    }
+    .v6-proof-icon {
+      color: rgba(59,130,246,0.6);
+      margin-bottom: 14px;
+    }
+    .v6-proof-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 8px;
+    }
+    .v6-proof-desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .v6-proof-arrow {
+      font-size: 1.1rem;
+      color: rgba(59,130,246,0.5);
+      transition: color 0.3s, transform 0.3s;
+      display: inline-block;
+    }
+
+    /* ── V6 Divider ── */
+    .v6-divider {
+      width: 100%;
+      max-width: 400px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(59,130,246,0.2), transparent);
+      margin: 0 auto;
+    }
+
+    /* ── V6 Text Sections (vision/story) ── */
+    .v6-text-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 72px 24px;
+    }
+    .v6-section-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .v6-prose {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.8;
+    }
+    .v6-prose p + p {
+      margin-top: 14px;
+    }
+
+    /* ── V6 Founder Card ── */
+    .v6-founder-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 72px 24px;
+    }
+    .v6-founder-card {
+      display: flex;
+      gap: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .v6-founder-accent {
+      width: 4px;
+      min-height: 100%;
+      background: linear-gradient(180deg, rgba(59,130,246,0.6), rgba(59,130,246,0.15));
+      flex-shrink: 0;
+    }
+    .v6-founder-content {
+      padding: clamp(1.5rem, 3vw, 2rem);
+    }
+    .v6-founder-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 10px;
+    }
+    .v6-founder-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.75;
+    }
+    .v6-founder-name {
+      color: rgba(255,255,255,0.7);
+      font-weight: 600;
+    }
+
+    /* ── V6 IP Section ── */
+    .v6-ip-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .v6-ip-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 20px;
+    }
+    .v6-ip-table {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+    }
+    .v6-ip-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 16px;
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      align-items: center;
+    }
+    .v6-ip-row:last-child {
+      border-bottom: none;
+    }
+    .v6-ip-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.3);
+      font-weight: 500;
+    }
+    .v6-ip-value {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* ── V6 Responsive ── */
+    @media (max-width: 640px) {
+      .v6-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .v6-proof-grid {
+        grid-template-columns: 1fr;
+      }
+      .v6-ip-row {
+        grid-template-columns: 100px 1fr;
+        gap: 8px;
+        padding: 12px 16px;
+      }
+    }
+
+    /* ── Connect Section ── */
+    .connect-section{max-width:1100px;margin:0 auto;padding:80px 32px 100px}.connect-email{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;letter-spacing:-0.02em;text-align:center;margin-top:16px;margin-bottom:56px}.connect-email a{color:rgba(59,130,246,0.8);text-decoration:none;transition:color 0.3s}.connect-email a:hover{color:#60A5FA}.connect-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.connect-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:36px 24px;border-radius:20px;text-decoration:none;color:#fff;background:linear-gradient(165deg,rgba(255,255,255,0.12) 0%,rgba(255,255,255,0.05) 35%,rgba(255,255,255,0.025) 100%);backdrop-filter:blur(28px) saturate(190%) brightness(1.06);-webkit-backdrop-filter:blur(28px) saturate(190%) brightness(1.06);border:1px solid transparent;box-shadow:0 8px 32px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.14),inset 0 -1px 0 rgba(255,255,255,0.02);position:relative;overflow:hidden;transition:box-shadow 0.5s,transform 0.3s}.connect-card:hover{transform:translateY(-3px);box-shadow:0 12px 48px rgba(0,0,0,0.55),inset 0 1px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(255,255,255,0.03)}.connect-card::before{content:'';position:absolute;inset:0;border-radius:20px;padding:1px;background:linear-gradient(135deg,rgba(59,130,246,0.22) 0%,rgba(59,130,246,0.06) 25%,rgba(59,130,246,0.02) 50%,rgba(59,130,246,0.06) 75%,rgba(59,130,246,0.18) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;z-index:5;opacity:0.55;transition:opacity 0.4s}.connect-card:hover::before{opacity:1}.connect-card svg{color:#60A5FA;margin-bottom:16px;position:relative;z-index:2}.connect-label{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:600;margin-bottom:6px;position:relative;z-index:2}.connect-sub{font-size:0.78rem;color:rgba(255,255,255,0.4);position:relative;z-index:2}@media(max-width:640px){.connect-grid{grid-template-columns:1fr}}
+  </style>
+
+</BaseLayout>

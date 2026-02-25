@@ -12,7 +12,7 @@ const { title, description, date, tags } = Astro.props;
 const formattedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 
-<BaseLayout title={`${title} — Catalyst Neuromorphic`} description={description}>
+<BaseLayout title={`${title} — Catalyst Neuromorphic`} description={description} hasFog={true}>
 
   <article class="pt-36 pb-20 px-6 md:px-12">
     <div class="max-w-[700px] mx-auto">

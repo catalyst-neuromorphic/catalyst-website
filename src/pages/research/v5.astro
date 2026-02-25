@@ -1,0 +1,378 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+// V5 — INTERACTIVE: Tab switchers, count-up animations, animated bars, scroll-triggered reveals.
+---
+
+<BaseLayout title="Research V5 — Interactive" description="Interactive research page variant" hasFog={true}>
+
+  <!-- HERO with animated counting stats -->
+  <section class="pt-36 pb-8 px-6 md:px-12 text-center" style="position:relative;z-index:1;">
+    <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Research</p>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(3rem,7vw,5.5rem); font-weight:700; letter-spacing:-0.04em; line-height:0.95;">
+      Verified, not just claimed.
+    </h1>
+    <p class="text-lg text-white/35 mt-5 max-w-[520px] mx-auto">Two processor generations. Real FPGA hardware. Every result reproducible.</p>
+  </section>
+
+  <!-- ANIMATED STAT BAR -->
+  <section class="py-10 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="grid grid-cols-4 lg:grid-cols-8 gap-px bg-white/[0.04] rounded-2xl overflow-hidden" id="stat-bar">
+        {[
+          { val: 128, label: 'Cores', suffix: '' },
+          { val: 131, label: 'K Neurons', suffix: 'K' },
+          { val: 5, label: 'Models', suffix: '' },
+          { val: 28, label: 'FPGA', suffix: '/28' },
+          { val: 3091, label: 'Tests', suffix: '' },
+          { val: 859, label: 'SHD', suffix: '', decimal: true },
+          { val: 152, label: 'Parity', suffix: '/155' },
+          { val: 2, label: 'Papers', suffix: '' },
+        ].map((item, i) => (
+          <div class="bg-surface px-3 py-5 text-center">
+            <div
+              class="stat-counter text-white/90"
+              style="font-family:'Space Grotesk',sans-serif; font-size:clamp(1.2rem,2.5vw,1.8rem); font-weight:700; letter-spacing:-0.03em;"
+              data-target={item.val}
+              data-suffix={item.suffix}
+              data-decimal={item.decimal ? 'true' : 'false'}
+            >0</div>
+            <div class="text-[9px] text-white/30 uppercase tracking-wider mt-1">{item.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PAPERS -->
+  <section class="py-12 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {[
+        { gen: 'N2', tag: 'Latest', tagBg: 'bg-catalyst-blue/10 text-catalyst-blue/60', title: 'Full Loihi 2 Parity in an Open Neuromorphic Architecture', pages: 18, doi: '10.5281/zenodo.18728256', doiUrl: 'https://zenodo.org/records/18728256', pdf: '/papers/catalyst-n2.pdf' },
+        { gen: 'N1', tag: 'First gen', tagBg: 'bg-white/5 text-white/30', title: 'A 131K-Neuron Open Neuromorphic Processor', pages: 13, doi: '10.5281/zenodo.18727094', doiUrl: 'https://zenodo.org/records/18727094', pdf: '/papers/catalyst-n1.pdf' },
+      ].map(p => (
+        <div class="card-glass p-7 flex flex-col reveal">
+          <div class="flex items-center gap-2 mb-3">
+            <span class={`text-[9px] uppercase tracking-widest px-2 py-0.5 rounded-full ${p.tagBg}`}>{p.tag}</span>
+            <span class="text-[10px] text-white/20">{p.pages}pp</span>
+          </div>
+          <h3 class="text-lg font-semibold">{p.gen}</h3>
+          <p class="text-sm text-white/40 mt-1 mb-4 flex-1">{p.title}</p>
+          <div class="flex items-center gap-2 mb-3">
+            <a href={p.doiUrl} target="_blank" rel="noopener noreferrer"><img src={`https://zenodo.org/badge/DOI/${p.doi}.svg`} alt="DOI" style="display:inline-block; height:18px;" /></a>
+          </div>
+          <div class="flex gap-2">
+            <a href={p.pdf} class="btn-pill text-xs px-4 py-2" target="_blank">PDF</a>
+            <a href={p.doiUrl} class="btn-pill text-xs px-4 py-2" target="_blank" rel="noopener noreferrer">Zenodo</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- THREE HERO CARDS -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card-glass p-8 text-center reveal" style="box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 0 60px rgba(34,197,94,0.05);">
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(3rem,5vw,4rem); font-weight:700; letter-spacing:-0.04em; color:rgb(34,197,94);" class="stat-counter" data-target="28" data-suffix="/28" data-decimal="false">0</div>
+        <div class="text-sm text-white/50 mt-2">FPGA validation</div>
+        <div class="flex gap-1 justify-center mt-3">
+          <span class="text-[8px] bg-white/5 text-white/25 px-2 py-0.5 rounded-full">AWS F2</span>
+          <span class="text-[8px] bg-white/5 text-white/25 px-2 py-0.5 rounded-full">VU47P</span>
+          <span class="text-[8px] bg-white/5 text-white/25 px-2 py-0.5 rounded-full">Bit-exact</span>
+        </div>
+      </div>
+      <div class="card-glass p-8 text-center reveal" style="box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 0 60px rgba(59,130,246,0.05);">
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(3rem,5vw,4rem); font-weight:700; letter-spacing:-0.04em;" class="stat-counter" data-target="859" data-suffix="%" data-decimal="true">0</div>
+        <div class="text-sm text-white/50 mt-2">SHD accuracy</div>
+        <div class="flex gap-1 justify-center mt-3">
+          <span class="text-[8px] bg-white/5 text-white/25 px-2 py-0.5 rounded-full">&gt; Zenke 83.4%</span>
+          <span class="text-[8px] bg-white/5 text-white/25 px-2 py-0.5 rounded-full">&gt; Cramer 83.2%</span>
+        </div>
+      </div>
+      <div class="card-glass p-8 text-center reveal" style="box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 0 60px rgba(59,130,246,0.03);">
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:clamp(3rem,5vw,4rem); font-weight:700; letter-spacing:-0.04em;"><span class="stat-counter" data-target="152" data-suffix="" data-decimal="false">0</span><span class="text-xl text-white/20">/155</span></div>
+        <div class="text-sm text-white/50 mt-2">Loihi 2 parity</div>
+        <div class="flex gap-1 justify-center mt-3">
+          <span class="text-[8px] bg-white/5 text-white/25 px-2 py-0.5 rounded-full">3-part audit</span>
+          <span class="text-[8px] bg-white/5 text-white/25 px-2 py-0.5 rounded-full">0 missing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALIDATION — with interactive tabs -->
+  <section class="py-20 px-6 md:px-12" style="background:rgba(255,255,255,0.01); border-top:1px solid rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.03);">
+    <div class="max-w-[1200px] mx-auto">
+      <h2 class="reveal mb-8" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:700; letter-spacing:-0.03em;">Validation deep dive</h2>
+
+      <!-- Tab buttons -->
+      <div class="flex gap-2 mb-8" id="val-tabs">
+        <button class="val-tab active text-xs px-4 py-2 rounded-full border transition-colors" data-tab="protocol">Protocol</button>
+        <button class="val-tab text-xs px-4 py-2 rounded-full border transition-colors" data-tab="categories">Test categories</button>
+        <button class="val-tab text-xs px-4 py-2 rounded-full border transition-colors" data-tab="benchmark">SHD benchmark</button>
+        <button class="val-tab text-xs px-4 py-2 rounded-full border transition-colors" data-tab="parity">Parity audit</button>
+      </div>
+
+      <!-- Tab panels -->
+      <div id="tab-protocol" class="val-panel">
+        <div class="grid grid-cols-7 gap-px bg-white/[0.04] rounded-2xl overflow-hidden mb-6">
+          {[
+            { n: '1', t: 'Define', d: 'Python SDK network topology' },
+            { n: '2', t: 'Compile', d: 'Map to hardware bitstream' },
+            { n: '3', t: 'Silence', d: '\u03B8=32767 on stale cores' },
+            { n: '4', t: 'Deploy', d: 'PCIe MMIO, core-by-core' },
+            { n: '5', t: 'Inject', d: 'Spike stimuli per timestep' },
+            { n: '6', t: 'Readback', d: 'Capture output via PCIe' },
+            { n: '7', t: 'Compare', d: 'Bit-exact vs CPU sim' },
+          ].map(s => (
+            <div class="bg-surface p-4 text-center">
+              <div class="text-catalyst-blue/40 text-[9px] font-mono">{s.n}</div>
+              <div class="text-sm font-semibold mt-1">{s.t}</div>
+              <div class="text-[9px] text-white/20 mt-1">{s.d}</div>
+            </div>
+          ))}
+        </div>
+        <div class="card-glass p-5">
+          <div class="text-[9px] text-catalyst-blue/50 uppercase tracking-widest mb-2">Discovery</div>
+          <p class="text-xs text-white/35 leading-relaxed">FPGAs initialize BRAM to all zeros. With threshold \u03B8=0, every neuron fires on every timestep. No global reset between deployments. Both issues required engineering the silence-before-deploy protocol (Step 3). Documented in N2 paper, Section 6.</p>
+        </div>
+      </div>
+
+      <div id="tab-categories" class="val-panel hidden">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { name: 'Neuron Behavior', n: 7, desc: 'Membrane potential, threshold, reset, refractory period' },
+            { name: 'Synaptic Connectivity', n: 6, desc: 'Excitatory, inhibitory, variable-precision weights' },
+            { name: 'CUBA Dynamics', n: 1, desc: 'Matches analytical solution \u2014 decay, integration, overflow' },
+            { name: 'Network Topologies', n: 3, desc: 'Feed-forward, recurrent loops, fan-out patterns' },
+            { name: 'Multi-Core Routing', n: 3, desc: 'Cross-core mesh delivery with axonal delays' },
+            { name: 'Scale & Performance', n: 5, desc: '81K spikes/3.4ms \u2014 163K cross-core microcode' },
+            { name: 'Operational', n: 3, desc: 'BRAM initialization, state isolation, deployment sequencing' },
+          ].map(c => (
+            <div class="card-glass p-5">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-mono text-catalyst-green font-bold">{c.n}/{c.n}</span>
+                <span class="text-[8px] text-catalyst-green/50 uppercase tracking-widest">Pass</span>
+              </div>
+              <h4 class="text-sm font-semibold">{c.name}</h4>
+              <p class="text-xs text-white/25 mt-1 leading-relaxed">{c.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div id="tab-benchmark" class="val-panel hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="card-glass p-8">
+            <div class="mb-4">
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:3rem; font-weight:700; letter-spacing:-0.03em;">85.9<span class="text-lg text-white/20">%</span></div>
+              <div class="text-xs text-white/40">Floating-point</div>
+            </div>
+            <div>
+              <div style="font-family:'Space Grotesk',sans-serif; font-size:2rem; font-weight:700; color:rgba(255,255,255,0.5);">85.4<span class="text-sm text-white/15">%</span></div>
+              <div class="text-xs text-white/30">8-bit quantized (0.5% loss)</div>
+            </div>
+          </div>
+          <div class="card-glass p-8 lg:col-span-2">
+            <h3 class="text-xs text-white/30 uppercase tracking-widest mb-5">vs. published baselines (recurrent LIF)</h3>
+            <div class="space-y-5">
+              {[
+                { name: 'Catalyst N2', sub: 'float', score: 85.9, ours: true },
+                { name: 'Catalyst N2', sub: '8-bit quant', score: 85.4, ours: true },
+                { name: 'Zenke & Vogels', sub: '2021', score: 83.4, ours: false },
+                { name: 'Cramer et al.', sub: '2022', score: 83.2, ours: false },
+              ].map(item => (
+                <div class="flex items-center gap-4">
+                  <div class="w-32 shrink-0">
+                    <div class={`text-sm ${item.ours ? 'font-semibold text-white/80' : 'text-white/30'}`}>{item.name}</div>
+                    <div class="text-[9px] text-white/15">{item.sub}</div>
+                  </div>
+                  <div class="flex-1 h-3 rounded-full bg-white/[0.04] overflow-hidden">
+                    <div class={`h-full rounded-full anim-bar ${item.ours ? 'bg-catalyst-blue' : 'bg-white/10'}`} data-width={`${((item.score - 80) / 10) * 100}%`} style="width:0%"></div>
+                  </div>
+                  <div class={`text-sm font-mono w-14 text-right ${item.ours ? 'text-white/80' : 'text-white/25'}`}>{item.score}%</div>
+                </div>
+              ))}
+            </div>
+            <p class="text-[9px] text-white/15 mt-4">Bars normalized to 80-90% range.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-parity" class="val-panel hidden">
+        <div class="grid grid-cols-3 gap-6 mb-8">
+          <div class="card-glass p-8 text-center">
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:3rem; font-weight:700; color:rgb(34,197,94);">152</div>
+            <div class="text-sm text-white/50 mt-1">Fully implemented</div>
+          </div>
+          <div class="card-glass p-8 text-center">
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:3rem; font-weight:700; color:rgb(96,165,250);">3</div>
+            <div class="text-sm text-white/50 mt-1">Hardware-only</div>
+          </div>
+          <div class="card-glass p-8 text-center">
+            <div style="font-family:'Space Grotesk',sans-serif; font-size:3rem; font-weight:700; color:rgba(255,255,255,0.1);">0</div>
+            <div class="text-sm text-white/50 mt-1">Missing</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            { p: '1', t: 'Pipeline ordering', d: '10 stages verified in Loihi 2 order' },
+            { p: '2', t: 'Feature coverage', d: '155 features mapped. 152 FULL, 3 HW_ONLY, 0 MISSING.' },
+            { p: '3', t: 'Numerical accuracy', d: 'CPU exact. GPU statistical. FPGA bit-exact.' },
+          ].map(a => (
+            <div class="bg-white/[0.03] border border-white/[0.04] rounded-xl px-5 py-4">
+              <div class="text-[9px] text-catalyst-blue/50 font-mono mb-1">Part {a.p}</div>
+              <div class="text-sm font-semibold text-white/70 mb-1">{a.t}</div>
+              <div class="text-xs text-white/25 leading-relaxed">{a.d}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SDK with animated bars -->
+  <section class="py-20 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="flex items-end justify-between mb-8">
+        <h2 class="reveal" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:700; letter-spacing:-0.03em;">Software verification</h2>
+        <div class="reveal text-right">
+          <span style="font-family:'Space Grotesk',sans-serif; font-size:2rem; font-weight:700;" class="stat-counter" data-target="3091" data-suffix="" data-decimal="false">0</span>
+          <div class="text-xs text-white/25">tests &middot; v3.7.0</div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 reveal-stagger">
+        {[
+          { stat: '~1,200', label: 'Unit', pct: 100 },
+          { stat: '~800', label: 'Integration', pct: 67 },
+          { stat: '~500', label: 'Regression', pct: 42 },
+          { stat: '~400', label: 'CPU-GPU', pct: 33 },
+          { stat: '~100', label: 'Stress', pct: 8 },
+        ].map(item => (
+          <div class="card-glass p-5">
+            <div class="text-xl font-bold tracking-tight">{item.stat}</div>
+            <div class="text-xs text-white/40 mt-1">{item.label}</div>
+            <div class="mt-3 h-2 rounded-full bg-white/[0.05] overflow-hidden">
+              <div class="h-full rounded-full bg-catalyst-blue/60 anim-bar" data-width={`${item.pct}%`} style="width:0%"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- N1→N2 TABLE -->
+  <section class="py-20 px-6 md:px-12" style="background:rgba(255,255,255,0.01); border-top:1px solid rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.03);">
+    <div class="max-w-[1200px] mx-auto">
+      <h2 class="reveal mb-8" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:700; letter-spacing:-0.03em;">N1 &rarr; N2</h2>
+      <div class="reveal card-glass p-6 overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="border-b border-white/10"><th class="text-left py-2.5 pr-6 text-white/30 font-medium">Spec</th><th class="text-left py-2.5 px-6 text-white/15 font-medium">N1</th><th class="text-left py-2.5 pl-6 text-catalyst-blue font-semibold">N2</th></tr></thead>
+          <tbody>
+            {[
+              ['Models', '1 (CUBA)', '5 — CUBA, Izh, ALIF, \u03A3\u0394, R&F'],
+              ['Engine', 'Fixed', 'Programmable microcode'],
+              ['Spikes', 'Binary', 'Binary + 8/16/24-bit graded'],
+              ['Weights', '8-bit fixed', '1/2/4/8/16-bit variable'],
+              ['Learning', 'STDP + reward', '3-factor + homeostatic'],
+              ['Tests', '168', '3,091 (18.4\u00D7)'],
+              ['FPGA', '16-core subset', '28/28, full protocol'],
+            ].map(([s, n1, n2]) => (
+              <tr class="border-b border-white/[0.04]"><td class="py-2.5 pr-6 text-white/45">{s}</td><td class="py-2.5 px-6 text-white/15">{n1}</td><td class="py-2.5 pl-6 text-white/70">{n2}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Licensing + CTA -->
+  <section class="py-20 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+        {[{ l:'Papers', v:'Open access' }, { l:'SDK', v:'BSL 1.1' }, { l:'RTL', v:'Patent pending' }, { l:'API', v:'MIT' }].map(i => (
+          <div class="bg-white/[0.03] border border-white/[0.04] rounded-xl px-4 py-3 text-center"><div class="text-[9px] text-white/25 uppercase tracking-wider">{i.l}</div><div class="text-sm font-semibold text-white/65 mt-1">{i.v}</div></div>
+        ))}
+      </div>
+      <div class="text-center">
+        <div class="flex gap-4 justify-center flex-wrap">
+          <a href="/papers/catalyst-n2.pdf" class="btn-blue" target="_blank">Read N2 paper</a>
+          <a href="/papers/catalyst-n1.pdf" class="btn-ghost" target="_blank">N1 paper</a>
+          <a href="/cloud" class="btn-ghost">Cloud API &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .val-tab { border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); background: transparent; cursor: pointer; }
+    .val-tab.active { border-color: rgba(59,130,246,0.4); color: rgb(96,165,250); background: rgba(59,130,246,0.08); }
+    .val-tab:hover:not(.active) { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+    .val-panel.hidden { display: none; }
+  </style>
+
+  <script>
+    // Tab switching
+    document.querySelectorAll('.val-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.val-tab').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.val-panel').forEach(p => p.classList.add('hidden'));
+        btn.classList.add('active');
+        const panel = document.getElementById('tab-' + btn.dataset.tab);
+        if (panel) {
+          panel.classList.remove('hidden');
+          // Trigger bar animations in newly visible panel
+          panel.querySelectorAll('.anim-bar').forEach(bar => {
+            bar.style.width = bar.dataset.width;
+          });
+        }
+      });
+    });
+
+    // Count-up animation
+    const counters = document.querySelectorAll('.stat-counter');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          if (el.dataset.counted) return;
+          el.dataset.counted = 'true';
+          const target = parseInt(el.dataset.target);
+          const suffix = el.dataset.suffix || '';
+          const isDecimal = el.dataset.decimal === 'true';
+          const duration = 1500;
+          const start = performance.now();
+          const animate = (now) => {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            const current = Math.round(target * eased);
+            if (isDecimal) {
+              el.textContent = (current / 10).toFixed(1) + suffix;
+            } else {
+              el.textContent = current.toLocaleString() + suffix;
+            }
+            if (progress < 1) requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+        }
+      });
+    }, { threshold: 0.3 });
+    counters.forEach(c => counterObserver.observe(c));
+
+    // Animated bars
+    const bars = document.querySelectorAll('.anim-bar');
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const bar = entry.target;
+          setTimeout(() => {
+            bar.style.transition = 'width 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
+            bar.style.width = bar.dataset.width;
+          }, 200);
+        }
+      });
+    }, { threshold: 0.2 });
+    bars.forEach(b => barObserver.observe(b));
+  </script>
+
+</BaseLayout>

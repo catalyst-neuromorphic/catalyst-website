@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 const tiers = [
   {
     name: 'Free',
-    price: '$0',
+    amount: 0,
     priceNote: 'credit card required',
     description: 'For exploration and quick experiments.',
     features: [
@@ -20,7 +20,7 @@ const tiers = [
   },
   {
     name: 'Basic',
-    price: '$25',
+    amount: 25,
     priceNote: '/month',
     description: 'For academic research and coursework.',
     features: [
@@ -36,7 +36,7 @@ const tiers = [
   },
   {
     name: 'Max',
-    price: '$100',
+    amount: 100,
     priceNote: '/month',
     description: 'For serious research and benchmarking.',
     features: [
@@ -52,7 +52,7 @@ const tiers = [
   },
   {
     name: 'Ultra',
-    price: '$200',
+    amount: 200,
     priceNote: '/month',
     description: 'For production workloads and heavy compute.',
     features: [
@@ -69,10 +69,10 @@ const tiers = [
 ];
 ---
 
-<BaseLayout title="Pricing — Catalyst Cloud" description="Plans that grow with you. Subscribe for cloud access or buy API credits.">
+<BaseLayout title="Pricing — Catalyst Cloud" description="Plans that grow with you. Subscribe for cloud access or buy API credits." hasFog={true}>
 
   <!-- Header -->
-  <section class="pt-36 pb-12 px-6 md:px-12 text-center">
+  <section class="pt-36 pb-12 px-6 md:px-12 text-center" style="position:relative;z-index:1;">
     <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Pricing</p>
     <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tighter">
       Plans that grow with you.
@@ -86,11 +86,11 @@ const tiers = [
   <section class="py-16 px-6 md:px-12">
     <div class="max-w-[1200px] mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-6">
       {tiers.map(tier => (
-        <div class={`reveal rounded-xl p-6 flex flex-col ${tier.highlight ? 'glass-accent ring-1 ring-catalyst-blue/30' : 'glass'}`}>
+        <div class={`reveal p-6 flex flex-col ${tier.highlight ? 'card-glass ring-1 ring-catalyst-blue/30' : 'card-glass'}`}>
           <div class="mb-6">
             <h3 class="text-lg font-semibold">{tier.name}</h3>
             <div class="mt-3">
-              <span class="text-3xl font-bold">{tier.price}</span>
+              <span class="text-3xl font-bold" data-usd={tier.amount}>${tier.amount}</span>
               <span class="text-sm text-white/40 ml-1">{tier.priceNote}</span>
             </div>
             <p class="text-sm text-white/40 mt-2">{tier.description}</p>
@@ -114,7 +114,7 @@ const tiers = [
   <!-- Enterprise -->
   <section class="py-8 px-6 md:px-12">
     <div class="max-w-[1200px] mx-auto">
-      <div class="reveal glass rounded-xl p-8 text-center">
+      <div class="reveal card-glass p-8 text-center">
         <h3 class="text-xl font-semibold mb-2">Enterprise</h3>
         <p class="text-white/40 mb-4">Custom compute budgets, dedicated capacity, SLA guarantees, and on-premise deployment options.</p>
         <a href="mailto:henry@catalyst-neuromorphic.com" class="text-catalyst-blue hover:underline text-sm">Contact sales &rarr;</a>
@@ -127,24 +127,24 @@ const tiers = [
     <div class="max-w-[800px] mx-auto">
       <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight text-center mb-4">API Credits</h2>
       <p class="text-white/40 text-center mb-8">For programmatic access via API keys. Separate from subscription compute.</p>
-      <div class="reveal glass rounded-xl p-8">
+      <div class="reveal card-glass p-8">
         <div class="grid md:grid-cols-2 gap-8 mb-8">
           <div>
             <h4 class="font-semibold mb-3">Chip Models</h4>
             <div class="space-y-3">
               <div class="flex justify-between items-center">
                 <span class="text-white/60 text-sm">N1 (Loihi 1 parity)</span>
-                <span class="text-green-400 font-bold">$0.002/sec</span>
+                <span class="text-green-400 font-bold"><span data-usd="0.002">$0.002</span>/sec</span>
               </div>
               <div class="flex justify-between items-center">
                 <span class="text-white/60 text-sm">N2 (Loihi 2 parity)</span>
-                <span class="text-green-400 font-bold">$0.005/sec</span>
+                <span class="text-green-400 font-bold"><span data-usd="0.005">$0.005</span>/sec</span>
               </div>
             </div>
           </div>
           <div>
             <h4 class="font-semibold mb-3">Buy Credits</h4>
-            <p class="text-white/60 text-sm mb-2">Any amount, $5 minimum.</p>
+            <p class="text-white/60 text-sm mb-2">Any amount, <span data-usd="5">$5</span> minimum.</p>
             <p class="text-white/30 text-xs">Credits never expire. Buy from the console dashboard.</p>
           </div>
         </div>
@@ -168,7 +168,7 @@ const tiers = [
   <section class="py-16 px-6 md:px-12">
     <div class="max-w-[800px] mx-auto">
       <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight text-center mb-8">How it works</h2>
-      <div class="reveal glass rounded-xl p-8">
+      <div class="reveal card-glass p-8">
         <div class="grid md:grid-cols-3 gap-6">
           <div>
             <div class="text-catalyst-blue text-2xl font-bold mb-2">1.</div>
@@ -239,5 +239,30 @@ const tiers = [
   <section class="py-20 px-6 md:px-12 text-center">
     <a href="/console/signup" class="reveal btn-primary inline-flex px-10 py-3 text-sm">Create free account &rarr;</a>
   </section>
+
+  <script>
+    // Currency auto-detection via Cloudflare cdn-cgi/trace
+    const EU = ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE'];
+    async function detectCurrency() {
+      try {
+        const res = await fetch('/cdn-cgi/trace');
+        const text = await res.text();
+        const loc = text.match(/loc=(\w+)/)?.[1] || '';
+        let symbol = '$', rate = 1;
+        if (loc === 'GB') { symbol = '\u00A3'; rate = 0.80; }
+        else if (EU.includes(loc)) { symbol = '\u20AC'; rate = 0.92; }
+        else { return; }
+        document.querySelectorAll('[data-usd]').forEach(el => {
+          const usd = parseFloat(el.dataset.usd || '0');
+          const converted = usd * rate;
+          const formatted = converted < 1 && converted > 0
+            ? symbol + converted.toFixed(3)
+            : symbol + Math.round(converted);
+          el.textContent = formatted;
+        });
+      } catch {}
+    }
+    detectCurrency();
+  </script>
 
 </BaseLayout>

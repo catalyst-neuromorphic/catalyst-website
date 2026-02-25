@@ -1,0 +1,554 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+// V10 — BOLD ACCENT: SambaNova/Monzo/Figma style.
+// Aggressive blue accent, 2-column alternating layout, CSS abstract visuals.
+---
+
+<BaseLayout title="About — Catalyst Neuromorphic" description="Building neuromorphic processors to challenge the way intelligence is computed." hasFog={true}>
+
+  <!-- HERO -->
+  <section class="v10-hero" style="position:relative;z-index:1;">
+    <p class="v10-hero-label reveal">About</p>
+    <h1 class="v10-hero-heading reveal">
+      AI has a <span class="v10-blue-gradient">hardware problem.</span>
+    </h1>
+    <p class="v10-hero-sub reveal">We're building the processors to fix it.</p>
+  </section>
+
+  <!-- ALTERNATING SECTIONS -->
+  <div class="v10-content" style="position:relative;z-index:1;">
+
+    <!-- ROW 1: The scaling wall (text left, visual right) -->
+    <section class="v10-row reveal">
+      <div class="v10-text">
+        <h2 class="v10-heading">The scaling wall</h2>
+        <p>Modern AI runs on hardware that was never designed for intelligence. GPUs burn hundreds of watts per chip. Data centres already consume over 2% of global electricity, and that share is climbing fast. Training a single large language model can use more energy than a hundred homes do in a year. The models are getting bigger, but the returns are shrinking.</p>
+        <p>And for all that power, these systems still can't learn from new information without being retrained from scratch. They can't run without a data centre. They can't operate without sending your data to someone else's infrastructure.</p>
+        <p>The human brain does all of this on 20 watts. It learns continuously. It processes information in real-time. It runs at the edge, on-device, with no internet connection required. The gap between biological intelligence and artificial intelligence isn't a software problem. It's a hardware problem.</p>
+      </div>
+      <div class="v10-visual v10-visual-neuron" aria-hidden="true">
+        <div class="v10-neuron-core"></div>
+        <div class="v10-neuron-ring v10-ring-1"></div>
+        <div class="v10-neuron-ring v10-ring-2"></div>
+        <div class="v10-neuron-ring v10-ring-3"></div>
+        <div class="v10-neuron-glow"></div>
+      </div>
+    </section>
+
+    <!-- ROW 2: Neuromorphic processors (visual left, text right) -->
+    <section class="v10-row v10-row-reverse reveal">
+      <div class="v10-text">
+        <h2 class="v10-heading">Neuromorphic processors</h2>
+        <p>Neuromorphic chips compute the way neurons do. They're event-driven &mdash; they only consume energy when there's something to process. They can learn on the hardware itself, not just run pre-trained models. They operate at the edge, on-device, without cloud dependency. And they do it at a fraction of the power cost.</p>
+        <p>This technology exists. Intel has Loihi. IBM built TrueNorth. But both are closed, corporate, and inaccessible. If you're not inside those companies or their select research programmes, you don't get access. The hardware that could reshape computing is locked behind walls.</p>
+        <p>Catalyst is building the open alternative. Full processor designs, published research, and a cloud platform anyone can use today. We're not asking for permission to compete with billion-dollar companies. We're just doing it.</p>
+      </div>
+      <div class="v10-visual v10-visual-spikes" aria-hidden="true">
+        <div class="v10-spike-grid">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROW 3: Where we are (text left, visual right) -->
+    <section class="v10-row reveal">
+      <div class="v10-text">
+        <h2 class="v10-heading">Where we are</h2>
+        <p>We're early. Two processor generations are designed, built in software, and validated on real hardware. Both have published papers you can read today. A cloud API is live &mdash; you can run a neuromorphic network right now, without buying anything.</p>
+        <p>We're raising funding and building toward manufactured silicon. That's the goal: a physical chip you can hold, running real neuromorphic intelligence. We're not there yet. But the architecture is complete, tested, and protected by patent.</p>
+      </div>
+      <div class="v10-visual v10-visual-roadmap" aria-hidden="true">
+        <div class="v10-roadmap">
+          <div class="v10-roadmap-track"></div>
+          <div class="v10-roadmap-fill"></div>
+          <div class="v10-milestone v10-ms-1"><span>N1</span></div>
+          <div class="v10-milestone v10-ms-2"><span>N2</span></div>
+          <div class="v10-milestone v10-ms-3 v10-ms-current"><span>Cloud</span></div>
+          <div class="v10-milestone v10-ms-4 v10-ms-future"><span>Silicon</span></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOUNDER -->
+  <section class="v10-founder-section" style="position:relative;z-index:1;">
+    <div class="v10-founder-card card-glass reveal">
+      <div style="position:relative;z-index:2;">
+        <h2 class="v10-heading">Founder</h2>
+        <p class="v10-founder-text"><strong>Henry Shulayev Barnes</strong> &mdash; engineering student at the University of Aberdeen. Started Catalyst because the neuromorphic hardware that should exist doesn't, and the hardware that does exist isn't accessible. Currently a member of Techscaler, Scotland's tech startup community.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="v10-trust-section" style="position:relative;z-index:1;">
+    <h2 class="v10-heading v10-heading-center reveal">Don't take our word for it.</h2>
+    <div class="v10-trust-grid reveal-stagger">
+      <div class="v10-trust-card">
+        <div class="v10-trust-title">Read the papers</div>
+        <div class="v10-trust-desc">Two published papers on Zenodo with DOIs. Open access. Every claim documented.</div>
+      </div>
+      <div class="v10-trust-card">
+        <div class="v10-trust-title">Try the cloud</div>
+        <div class="v10-trust-desc">The API is live. Run a neuromorphic network from your terminal. Free tier available.</div>
+      </div>
+      <div class="v10-trust-card">
+        <div class="v10-trust-title">Check the hardware</div>
+        <div class="v10-trust-desc">Our designs run on real FPGA boards, not just simulators. Physical silicon execution.</div>
+      </div>
+      <div class="v10-trust-card">
+        <div class="v10-trust-title">Join the community</div>
+        <div class="v10-trust-desc">Open GitHub, public research, growing backers. We build in the open.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IP -->
+  <section class="v10-ip-section" style="position:relative;z-index:1;">
+    <h2 class="v10-heading v10-heading-center reveal">Intellectual property</h2>
+    <div class="v10-ip-grid reveal-stagger">
+      <div class="v10-ip-item">
+        <div class="v10-ip-label">UK Patents</div>
+        <div class="v10-ip-value">Filed February 2026</div>
+      </div>
+      <div class="v10-ip-item">
+        <div class="v10-ip-label">RTL</div>
+        <div class="v10-ip-value">BSL 1.1 &mdash; proprietary</div>
+      </div>
+      <div class="v10-ip-item">
+        <div class="v10-ip-label">SDK</div>
+        <div class="v10-ip-value">BSL 1.1</div>
+      </div>
+      <div class="v10-ip-item">
+        <div class="v10-ip-label">Papers</div>
+        <div class="v10-ip-value">Open access on Zenodo</div>
+      </div>
+      <div class="v10-ip-item">
+        <div class="v10-ip-label">API Client</div>
+        <div class="v10-ip-value">MIT &mdash; open source</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GET IN TOUCH -->
+  <section class="connect-section" style="position:relative;z-index:1;">
+    <h2 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2.4rem,5vw,3.6rem); font-weight:700; letter-spacing:-0.035em; line-height:1.08; text-align:center; margin-bottom:18px;">Get in touch.</h2>
+    <p class="connect-email"><a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a></p>
+    <div class="connect-grid">
+      <a href="https://github.com/catalyst-neuromorphic" target="_blank" rel="noopener noreferrer" class="connect-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg><span class="connect-label">GitHub</span><span class="connect-sub">Source &amp; contributions</span></a>
+      <a href="/research" class="connect-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span class="connect-label">Research</span><span class="connect-sub">Papers &amp; benchmarks</span></a>
+      <a href="https://ko-fi.com/catalystneuromorphic" target="_blank" rel="noopener noreferrer" class="connect-card"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="connect-label">Support</span><span class="connect-sub">Buy us a coffee on Ko-Fi</span></a>
+    </div>
+  </section>
+
+  <style is:global>
+    /* ── V10 Hero ── */
+    .v10-hero {
+      padding: clamp(8rem, 12vw, 10rem) 24px clamp(3rem, 5vw, 5rem);
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .v10-hero-label {
+      font-size: 0.8rem;
+      color: rgba(59, 130, 246, 0.7);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .v10-hero-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: #fff;
+    }
+    .v10-blue-gradient {
+      background: linear-gradient(135deg, #3B82F6, #60A5FA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .v10-hero-sub {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: rgba(255, 255, 255, 0.35);
+      margin-top: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── V10 Headings with blue underline ── */
+    .v10-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 28px;
+      position: relative;
+      display: inline-block;
+    }
+    .v10-heading::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(135deg, #3B82F6, #60A5FA);
+      margin-top: 14px;
+      border-radius: 2px;
+    }
+    .v10-heading-center {
+      display: block;
+      text-align: center;
+    }
+    .v10-heading-center::after {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── V10 Content Container ── */
+    .v10-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── V10 Alternating Rows ── */
+    .v10-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 100px;
+    }
+    .v10-row-reverse {
+      direction: rtl;
+    }
+    .v10-row-reverse > * {
+      direction: ltr;
+    }
+
+    /* ── V10 Text ── */
+    .v10-text p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.42);
+    }
+    .v10-text p + p {
+      margin-top: 16px;
+    }
+
+    /* ── V10 Visual: Neuron (concentric circles with blue glow) ── */
+    .v10-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 1;
+      position: relative;
+    }
+    .v10-visual-neuron {
+      max-width: 320px;
+      margin: 0 auto;
+    }
+    .v10-neuron-core {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #3B82F6;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.2);
+    }
+    .v10-neuron-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid rgba(59, 130, 246, 0.15);
+    }
+    .v10-ring-1 {
+      width: 80px;
+      height: 80px;
+      animation: v10-pulse 4s ease-in-out infinite;
+    }
+    .v10-ring-2 {
+      width: 160px;
+      height: 160px;
+      animation: v10-pulse 4s ease-in-out 0.8s infinite;
+    }
+    .v10-ring-3 {
+      width: 260px;
+      height: 260px;
+      animation: v10-pulse 4s ease-in-out 1.6s infinite;
+    }
+    .v10-neuron-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+      z-index: 1;
+    }
+    @keyframes v10-pulse {
+      0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.05); }
+    }
+
+    /* ── V10 Visual: Spike Grid (pulsing dots) ── */
+    .v10-visual-spikes {
+      max-width: 320px;
+      margin: 0 auto;
+    }
+    .v10-spike-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 18px;
+      padding: 30px;
+    }
+    .v10-spike-grid span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(59, 130, 246, 0.15);
+      display: block;
+      margin: 0 auto;
+      animation: v10-spike 3s ease-in-out infinite;
+    }
+    .v10-spike-grid span:nth-child(3n+1) { animation-delay: 0s; }
+    .v10-spike-grid span:nth-child(3n+2) { animation-delay: 0.5s; }
+    .v10-spike-grid span:nth-child(3n) { animation-delay: 1s; }
+    .v10-spike-grid span:nth-child(5n+1) { animation-delay: 0.3s; }
+    .v10-spike-grid span:nth-child(7n+2) { animation-delay: 1.4s; }
+    @keyframes v10-spike {
+      0%, 100% { background: rgba(59, 130, 246, 0.1); transform: scale(1); }
+      50% { background: rgba(59, 130, 246, 0.6); transform: scale(1.4); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+    }
+
+    /* ── V10 Visual: Roadmap ── */
+    .v10-visual-roadmap {
+      max-width: 320px;
+      margin: 0 auto;
+      aspect-ratio: auto;
+      padding: 40px 20px;
+    }
+    .v10-roadmap {
+      position: relative;
+      width: 100%;
+      height: 200px;
+    }
+    .v10-roadmap-track {
+      position: absolute;
+      left: 16px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .v10-roadmap-fill {
+      position: absolute;
+      left: 16px;
+      top: 0;
+      width: 2px;
+      height: 65%;
+      background: linear-gradient(180deg, #3B82F6, rgba(59, 130, 246, 0.3));
+    }
+    .v10-milestone {
+      position: absolute;
+      left: 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .v10-milestone::before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #3B82F6;
+      flex-shrink: 0;
+      margin-left: 11px;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+    }
+    .v10-milestone span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .v10-ms-1 { top: 0; }
+    .v10-ms-2 { top: 33%; }
+    .v10-ms-3 { top: 60%; }
+    .v10-ms-4 { top: 88%; }
+    .v10-ms-current::before {
+      box-shadow: 0 0 14px rgba(59, 130, 246, 0.6), 0 0 30px rgba(59, 130, 246, 0.2);
+      animation: v10-current-pulse 2s ease-in-out infinite;
+    }
+    .v10-ms-current span {
+      color: #60A5FA;
+    }
+    .v10-ms-future::before {
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: none;
+    }
+    .v10-ms-future span {
+      color: rgba(255, 255, 255, 0.3);
+    }
+    @keyframes v10-current-pulse {
+      0%, 100% { box-shadow: 0 0 14px rgba(59, 130, 246, 0.6), 0 0 30px rgba(59, 130, 246, 0.2); }
+      50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 0 0 50px rgba(59, 130, 246, 0.3); }
+    }
+
+    /* ── V10 Founder ── */
+    .v10-founder-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .v10-founder-card {
+      padding: clamp(2rem, 4vw, 3rem);
+      border-top: 3px solid transparent;
+      background-image: linear-gradient(165deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%), linear-gradient(135deg, #3B82F6, #60A5FA);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      border-image: linear-gradient(135deg, #3B82F6, #60A5FA) 1;
+      border-image-slice: 1 0 0 0;
+    }
+    .v10-founder-card .v10-heading {
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+    }
+    .v10-founder-card .v10-heading::after {
+      width: 40px;
+      height: 2px;
+      margin-top: 10px;
+    }
+    .v10-founder-text {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.45);
+    }
+    .v10-founder-text strong {
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 600;
+    }
+
+    /* ── V10 Trust ── */
+    .v10-trust-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .v10-trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .v10-trust-card {
+      padding: 24px 20px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 4px solid rgba(59, 130, 246, 0.4);
+      transition: border 0.4s, background 0.3s, transform 0.3s;
+    }
+    .v10-trust-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-left-color: transparent;
+      border-top: 4px solid rgba(59, 130, 246, 0.6);
+      border-left: 4px solid transparent;
+      transform: translateY(-2px);
+    }
+    .v10-trust-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 8px;
+    }
+    .v10-trust-desc {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.32);
+      line-height: 1.65;
+    }
+
+    /* ── V10 IP ── */
+    .v10-ip-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .v10-ip-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 40px;
+    }
+    .v10-ip-item {
+      padding: 18px 16px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .v10-ip-label {
+      font-size: 0.72rem;
+      color: rgba(59, 130, 246, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .v10-ip-value {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 500;
+    }
+
+    /* ── V10 Responsive ── */
+    @media (max-width: 768px) {
+      .v10-row {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-bottom: 60px;
+      }
+      .v10-row-reverse {
+        direction: ltr;
+      }
+      .v10-visual {
+        display: none;
+      }
+      .v10-trust-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .v10-ip-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 480px) {
+      .v10-trust-grid {
+        grid-template-columns: 1fr;
+      }
+      .v10-ip-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Connect Section ── */
+    .connect-section{max-width:1100px;margin:0 auto;padding:80px 32px 100px}.connect-email{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;letter-spacing:-0.02em;text-align:center;margin-top:16px;margin-bottom:56px}.connect-email a{color:rgba(59,130,246,0.8);text-decoration:none;transition:color 0.3s}.connect-email a:hover{color:#60A5FA}.connect-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.connect-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:36px 24px;border-radius:20px;text-decoration:none;color:#fff;background:linear-gradient(165deg,rgba(255,255,255,0.12) 0%,rgba(255,255,255,0.05) 35%,rgba(255,255,255,0.025) 100%);backdrop-filter:blur(28px) saturate(190%) brightness(1.06);-webkit-backdrop-filter:blur(28px) saturate(190%) brightness(1.06);border:1px solid transparent;box-shadow:0 8px 32px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.14),inset 0 -1px 0 rgba(255,255,255,0.02);position:relative;overflow:hidden;transition:box-shadow 0.5s,transform 0.3s}.connect-card:hover{transform:translateY(-3px);box-shadow:0 12px 48px rgba(0,0,0,0.55),inset 0 1px 0 rgba(255,255,255,0.18),inset 0 -1px 0 rgba(255,255,255,0.03)}.connect-card::before{content:'';position:absolute;inset:0;border-radius:20px;padding:1px;background:linear-gradient(135deg,rgba(59,130,246,0.22) 0%,rgba(59,130,246,0.06) 25%,rgba(59,130,246,0.02) 50%,rgba(59,130,246,0.06) 75%,rgba(59,130,246,0.18) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;z-index:5;opacity:0.55;transition:opacity 0.4s}.connect-card:hover::before{opacity:1}.connect-card svg{color:#60A5FA;margin-bottom:16px;position:relative;z-index:2}.connect-label{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:600;margin-bottom:6px;position:relative;z-index:2}.connect-sub{font-size:0.78rem;color:rgba(255,255,255,0.4);position:relative;z-index:2}@media(max-width:640px){.connect-grid{grid-template-columns:1fr}}
+  </style>
+
+</BaseLayout>
