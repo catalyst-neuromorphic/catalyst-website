@@ -715,6 +715,9 @@
     display:flex;justify-content:space-between;align-items:center;
     font-size:.78rem;color:rgba(255,255,255,0.25);
   }
+  .footer-legal{display:flex;align-items:center;gap:8px;}
+  .footer-legal a{color:rgba(255,255,255,0.35);text-decoration:none;transition:color .25s;}
+  .footer-legal a:hover{color:rgba(255,255,255,0.6);}
 
   /* ═══════════════════════════════════
      CONNECT SECTION
@@ -1286,7 +1289,13 @@
   </div>
   <div class="footer-bottom">
     <span>&copy; 2026 Catalyst Neuromorphic. All rights reserved.</span>
-    <span>UK Patents Pending</span>
+    <span class="footer-legal">
+      <a href="/terms">Terms</a>
+      <span>&middot;</span>
+      <a href="/privacy">Privacy</a>
+      <span>&middot;</span>
+      <span>UK Patents Pending</span>
+    </span>
   </div>
 </footer>
 
