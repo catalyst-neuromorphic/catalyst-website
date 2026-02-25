@@ -52,16 +52,16 @@ function UsageBar({ label, pct, remaining, resetsAt }: {
   const barColor = pct >= 90 ? 'bg-red-500' : pct >= 70 ? 'bg-yellow-500' : 'bg-catalyst-blue';
 
   return (
-    <div className="bg-[#111] border border-white/5 rounded-xl p-5">
-      <div className="flex justify-between items-center mb-2">
+    <div className="console-card p-5">
+      <div className="flex justify-between items-center mb-2" style={{ position: 'relative', zIndex: 2 }}>
         <p className="text-white/40 text-xs uppercase tracking-wider">{label}</p>
         <p className="text-white/30 text-xs">Resets in {resetLabel}</p>
       </div>
-      <div className="w-full bg-white/5 rounded-full h-2.5 mb-2">
+      <div className="w-full bg-white/5 rounded-full h-2.5 mb-2" style={{ position: 'relative', zIndex: 2 }}>
         <div className={`${barColor} h-2.5 rounded-full transition-all duration-500`}
           style={{ width: `${Math.min(100, pct)}%` }} />
       </div>
-      <p className="text-white/50 text-xs">
+      <p className="text-white/50 text-xs" style={{ position: 'relative', zIndex: 2 }}>
         {pct}% used &middot; {Math.round(remaining)}s remaining
       </p>
     </div>
@@ -110,36 +110,40 @@ export default function DashboardOverview() {
       {/* Plan + Usage Bars */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {/* Plan Card */}
-        <div className="bg-[#111] border border-white/5 rounded-xl p-5">
-          <p className="text-white/40 text-xs uppercase tracking-wider mb-2">Current Plan</p>
-          <div className="flex items-center gap-3">
-            <p className={`text-3xl font-bold ${planColors[plan] || 'text-white'}`}>
-              {planLabels[plan] || plan}
-            </p>
-            {plan === 'free' && (
-              <a href="/console/billing"
-                className="text-xs bg-catalyst-blue/10 text-catalyst-blue border border-catalyst-blue/20 px-3 py-1 rounded-full hover:bg-catalyst-blue/20 transition-colors">
-                Upgrade
-              </a>
-            )}
-          </div>
-          <div className="flex gap-4 mt-2 text-white/30 text-xs">
-            {profile.github_linked && <span>GitHub linked</span>}
-            {profile.google_linked && <span>Google linked</span>}
+        <div className="console-card p-5">
+          <div style={{ position: 'relative', zIndex: 2 }}>
+            <p className="text-white/40 text-xs uppercase tracking-wider mb-2">Current Plan</p>
+            <div className="flex items-center gap-3">
+              <p className={`text-3xl font-bold ${planColors[plan] || 'text-white'}`}>
+                {planLabels[plan] || plan}
+              </p>
+              {plan === 'free' && (
+                <a href="/console/billing"
+                  className="text-xs bg-catalyst-blue/10 text-catalyst-blue border border-catalyst-blue/20 px-3 py-1 rounded-full hover:bg-catalyst-blue/20 transition-colors">
+                  Upgrade
+                </a>
+              )}
+            </div>
+            <div className="flex gap-4 mt-2 text-white/30 text-xs">
+              {profile.github_linked && <span>GitHub linked</span>}
+              {profile.google_linked && <span>Google linked</span>}
+            </div>
           </div>
         </div>
 
         {/* API Credits */}
-        <div className="bg-[#111] border border-white/5 rounded-xl p-5">
-          <p className="text-white/40 text-xs uppercase tracking-wider mb-2">API Credits</p>
-          <p className="text-3xl font-bold text-green-400">
-            ${(profile.credits_balance ?? 0).toFixed(2)}
-          </p>
-          <div className="flex gap-3 mt-2">
-            {profile.api_discount_pct > 0 && (
-              <span className="text-xs text-purple-400">{profile.api_discount_pct}% API discount</span>
-            )}
-            <span className="text-white/20 text-xs">{keyCount} active key{keyCount !== 1 ? 's' : ''}</span>
+        <div className="console-card p-5">
+          <div style={{ position: 'relative', zIndex: 2 }}>
+            <p className="text-white/40 text-xs uppercase tracking-wider mb-2">API Credits</p>
+            <p className="text-3xl font-bold text-green-400">
+              ${(profile.credits_balance ?? 0).toFixed(2)}
+            </p>
+            <div className="flex gap-3 mt-2">
+              {profile.api_discount_pct > 0 && (
+                <span className="text-xs text-purple-400">{profile.api_discount_pct}% API discount</span>
+              )}
+              <span className="text-white/20 text-xs">{keyCount} active key{keyCount !== 1 ? 's' : ''}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -164,8 +168,8 @@ export default function DashboardOverview() {
 
       {/* Extra Usage Card */}
       {usage && (
-        <div className="bg-[#111] border border-white/5 rounded-xl p-5 mb-6">
-          <div className="flex justify-between items-center">
+        <div className="console-card p-5 mb-6">
+          <div className="flex justify-between items-center" style={{ position: 'relative', zIndex: 2 }}>
             <div>
               <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Extra Usage</p>
               <p className="text-sm text-white/60">

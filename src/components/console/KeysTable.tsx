@@ -93,7 +93,7 @@ export default function KeysTable() {
         <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-5 mb-6">
           <p className="text-green-400 font-medium text-sm mb-2">Key created. Copy it now — you won't see it again.</p>
           <div className="flex items-center gap-2">
-            <code className="flex-1 bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-2.5 text-sm font-mono text-white break-all">
+            <code className="flex-1 bg-white/[0.02] border border-white/[0.06] rounded-lg px-4 py-2.5 text-sm font-mono text-white break-all">
               {newKey.api_key}
             </code>
             <button onClick={copyKey}
@@ -108,7 +108,7 @@ export default function KeysTable() {
       )}
 
       {/* Create key form */}
-      <div className="bg-[#111] border border-white/5 rounded-xl p-5 mb-6">
+      <div className="console-card p-5 mb-6">
         <div className="flex items-end gap-3">
           <div className="flex-1">
             <label className="block text-sm text-white/40 mb-1">Key name</label>
@@ -117,7 +117,7 @@ export default function KeysTable() {
               value={keyName}
               onChange={e => setKeyName(e.target.value)}
               placeholder="e.g. production, ci-pipeline"
-              className="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-catalyst-blue/50"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-catalyst-blue/50"
             />
           </div>
           <button onClick={createKey} disabled={creating}
@@ -128,7 +128,7 @@ export default function KeysTable() {
       </div>
 
       {/* Keys table */}
-      <div className="bg-[#111] border border-white/5 rounded-xl overflow-hidden">
+      <div className="console-card overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-white/5">

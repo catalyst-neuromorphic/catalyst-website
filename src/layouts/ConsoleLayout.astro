@@ -13,10 +13,10 @@ interface Props {
 const { title, active = '' } = Astro.props;
 
 const navItems = [
-  { href: '/console/dashboard', label: 'Dashboard', icon: '&#9632;' },
-  { href: '/console/keys', label: 'API Keys', icon: '&#9919;' },
-  { href: '/console/usage', label: 'Usage', icon: '&#9671;' },
-  { href: '/console/billing', label: 'Billing', icon: '&#9673;' },
+  { href: '/console/dashboard', label: 'Dashboard', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>` },
+  { href: '/console/keys', label: 'API Keys', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>` },
+  { href: '/console/usage', label: 'Usage', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>` },
+  { href: '/console/billing', label: 'Billing', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>` },
 ];
 ---
 
@@ -29,32 +29,89 @@ const navItems = [
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .console-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      background: rgba(5,5,7,0.8);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .console-sidebar {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      width: 220px;
+      bottom: 0;
+      padding: 16px 12px;
+      background: rgba(5,5,7,0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255,255,255,0.04);
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .sidebar-link:hover {
+      color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.04);
+    }
+    .sidebar-link.active {
+      color: #3B82F6;
+      background: rgba(59,130,246,0.08);
+    }
+    .sidebar-link.active svg {
+      color: #3B82F6;
+    }
+    .console-main {
+      margin-left: 220px;
+      margin-top: 56px;
+      padding: 32px;
+      min-height: calc(100vh - 56px);
+    }
+    @media (max-width: 768px) {
+      .console-sidebar { display: none; }
+      .console-main { margin-left: 0; }
+    }
+  </style>
 </head>
 <body class="bg-surface text-white min-h-screen" style="font-family:'Plus Jakarta Sans','Space Grotesk',system-ui,sans-serif;">
   <!-- Top bar -->
-  <header class="fixed top-0 left-0 right-0 h-14 border-b border-white/5 z-50 flex items-center px-6" style="background:rgba(5,5,7,0.85); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);">
-    <a href="/" style="font-family:'Space Grotesk',system-ui,sans-serif; font-size:1.1rem; font-weight:700; color:#fff; letter-spacing:-0.02em; text-decoration:none; margin-right:2rem;">Catalyst</a>
-    <span class="text-white/30 text-sm">Console</span>
-    <div class="ml-auto flex items-center gap-4">
-      <a href="/cloud/docs" class="text-white/40 hover:text-white/70 text-sm">Docs</a>
-      <button id="logout-btn" class="text-white/40 hover:text-white/70 text-sm cursor-pointer">Log out</button>
+  <header class="console-header">
+    <a href="/" style="font-family:'Space Grotesk',system-ui,sans-serif; font-size:1.15rem; font-weight:700; color:#fff; letter-spacing:-0.02em; text-decoration:none; margin-right:1.5rem;">Catalyst</a>
+    <span class="text-white/25 text-sm" style="font-weight:500;">Console</span>
+    <div class="ml-auto flex items-center gap-5">
+      <a href="/cloud/docs" class="text-white/35 hover:text-white/70 text-sm transition-colors">Docs</a>
+      <button id="logout-btn" class="text-white/35 hover:text-white/70 text-sm cursor-pointer transition-colors">Log out</button>
     </div>
   </header>
 
   <!-- Sidebar -->
-  <aside class="fixed top-14 left-0 w-52 bottom-0 border-r border-white/5 py-4" style="background:rgba(5,5,7,0.95);">
-    <nav class="flex flex-col gap-1 px-3">
+  <aside class="console-sidebar">
+    <nav class="flex flex-col gap-1">
       {navItems.map(item => (
         <a
           href={item.href}
-          class={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
-            active === item.label
-              ? 'bg-catalyst-blue/10 text-catalyst-blue'
-              : 'text-white/50 hover:text-white/80 hover:bg-white/5'
-          }`}
+          class={`sidebar-link ${active === item.label ? 'active' : ''}`}
         >
-          <span class="text-xs" set:html={item.icon} />
+          <span set:html={item.icon} />
           {item.label}
         </a>
       ))}
@@ -62,7 +119,7 @@ const navItems = [
   </aside>
 
   <!-- Main content -->
-  <main class="ml-52 mt-14 p-8 min-h-[calc(100vh-3.5rem)]">
+  <main class="console-main">
     <slot />
   </main>
 

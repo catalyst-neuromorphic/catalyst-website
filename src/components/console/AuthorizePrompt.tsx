@@ -63,7 +63,7 @@ export default function AuthorizePrompt() {
 
   return (
     <div className="max-w-md mx-auto py-12">
-      <div className="bg-[#111] border border-white/10 rounded-xl p-6">
+      <div className="console-card p-6">
         <h1 className="text-lg font-semibold mb-2">Authorize Catalyst CLI</h1>
         <p className="text-white/40 text-sm mb-6">
           The Catalyst CLI is requesting access to your account.
@@ -74,7 +74,7 @@ export default function AuthorizePrompt() {
           <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-lg px-4 py-3 mb-4">{error}</div>
         )}
 
-        <div className="bg-[#0a0a0a] border border-white/5 rounded-lg p-4 mb-6">
+        <div className="bg-white/[0.02] border border-white/[0.06] rounded-lg p-4 mb-6">
           <p className="text-white/60 text-sm mb-2">Permissions requested:</p>
           <ul className="text-white/30 text-xs space-y-1">
             <li>Submit and manage simulation jobs</li>
