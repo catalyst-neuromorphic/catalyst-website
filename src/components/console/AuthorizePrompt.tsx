@@ -5,19 +5,23 @@ export default function AuthorizePrompt() {
   const [authorizing, setAuthorizing] = useState(false);
   const [error, setError] = useState('');
   const [done, setDone] = useState(false);
+  const [userCode, setUserCode] = useState('');
 
   const params = typeof window !== 'undefined'
     ? new URLSearchParams(window.location.search)
     : new URLSearchParams();
 
   const callbackPort = params.get('callback_port');
+  const deviceCode = params.get('device_code');
   const state = params.get('state') || '';
 
   useEffect(() => {
     if (!isLoggedIn()) {
-      // Redirect to login with callback params preserved
-      const loginUrl = `/console/login?callback_port=${callbackPort}&state=${state}`;
-      window.location.href = loginUrl;
+      const loginParams = new URLSearchParams();
+      if (callbackPort) loginParams.set('callback_port', callbackPort);
+      if (deviceCode) loginParams.set('device_code', deviceCode);
+      if (state) loginParams.set('state', state);
+      window.location.href = `/console/login?${loginParams.toString()}`;
     }
   }, []);
 
@@ -25,19 +29,30 @@ export default function AuthorizePrompt() {
     setAuthorizing(true);
     setError('');
     try {
-      const data = await api('/v1/auth/cli-token', { method: 'POST' });
-
+      // Path A: localhost callback (browser on same machine as CLI)
       if (callbackPort) {
-        // Redirect to the CLI's local callback server
+        const data = await api('/v1/auth/cli-token', { method: 'POST' });
         const callbackUrl = `http://localhost:${callbackPort}/callback` +
           `?access_token=${encodeURIComponent(data.access_token)}` +
           `&refresh_token=${encodeURIComponent(data.refresh_token)}` +
           `&state=${encodeURIComponent(state)}`;
         window.location.href = callbackUrl;
         setDone(true);
-      } else {
-        setError('No callback port specified. Please start authorization from the CLI.');
+        return;
       }
+
+      // Path B: device code (manual URL, possibly different device)
+      if (deviceCode) {
+        const data = await api('/v1/auth/device-code/authorize', {
+          method: 'POST',
+          body: JSON.stringify({ device_code: deviceCode }),
+        });
+        setUserCode(data.user_code);
+        setDone(true);
+        return;
+      }
+
+      setError('Missing callback port or device code. Please start login from the CLI.');
     } catch (e: any) {
       setError(e.message);
     }
@@ -53,6 +68,22 @@ export default function AuthorizePrompt() {
   };
 
   if (done) {
+    // Device code mode: show the code for the user to type into the CLI
+    if (userCode) {
+      return (
+        <div className="text-center py-12">
+          <p className="text-green-400 text-lg font-medium mb-4">Authorized</p>
+          <p className="text-white/50 text-sm mb-6">Enter this code in the CLI to complete login:</p>
+          <div className="inline-block bg-white/[0.04] border border-white/[0.08] rounded-xl px-8 py-5 mb-6">
+            <p className="text-3xl font-mono font-bold tracking-[0.25em] text-white select-all">
+              {userCode}
+            </p>
+          </div>
+          <p className="text-white/25 text-xs">This code expires in 10 minutes.</p>
+        </div>
+      );
+    }
+    // Localhost callback mode: just confirm
     return (
       <div className="text-center py-12">
         <p className="text-green-400 text-lg font-medium mb-2">Authorized</p>
