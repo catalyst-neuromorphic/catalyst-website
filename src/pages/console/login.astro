@@ -162,21 +162,39 @@ import '../../styles/global.css';
     const API = 'https://api.catalyst-neuromorphic.com';
     const CALLBACK_URL = `${window.location.origin}/console/oauth-callback`;
 
-    // If already logged in, redirect to dashboard
+    // If already logged in, redirect to dashboard (or authorize page for CLI flows)
     if (localStorage.getItem('catalyst_token') || localStorage.getItem('catalyst_session')) {
-      window.location.href = '/console/dashboard';
+      const params = new URLSearchParams(window.location.search);
+      const callbackPort = params.get('callback_port');
+      const deviceCode = params.get('device_code');
+      if (callbackPort || deviceCode) {
+        const ap = new URLSearchParams();
+        if (callbackPort) ap.set('callback_port', callbackPort);
+        if (deviceCode) ap.set('device_code', deviceCode);
+        if (params.get('state')) ap.set('state', params.get('state')!);
+        window.location.href = `/console/authorize?${ap.toString()}`;
+      } else {
+        window.location.href = '/console/dashboard';
+      }
     }
 
-    // OAuth buttons
-    document.getElementById('github-btn')?.addEventListener('click', () => {
+    // OAuth buttons — pass CLI params (callback_port, device_code, state) through
+    function _buildOAuthExtra(): string {
       const params = new URLSearchParams(window.location.search);
-      const extra = params.get('callback_port') ? `&callback_port=${params.get('callback_port')}&state=${params.get('state') || ''}` : '';
+      let extra = '';
+      if (params.get('callback_port')) extra += `&callback_port=${params.get('callback_port')}`;
+      if (params.get('device_code')) extra += `&device_code=${params.get('device_code')}`;
+      if (params.get('state')) extra += `&state=${params.get('state')}`;
+      return extra;
+    }
+
+    document.getElementById('github-btn')?.addEventListener('click', () => {
+      const extra = _buildOAuthExtra();
       window.location.href = `${API}/v1/auth/github?redirect_uri=${encodeURIComponent(CALLBACK_URL + '?' + extra)}`;
     });
 
     document.getElementById('google-btn')?.addEventListener('click', () => {
-      const params = new URLSearchParams(window.location.search);
-      const extra = params.get('callback_port') ? `&callback_port=${params.get('callback_port')}&state=${params.get('state') || ''}` : '';
+      const extra = _buildOAuthExtra();
       window.location.href = `${API}/v1/auth/google?redirect_uri=${encodeURIComponent(CALLBACK_URL + '?' + extra)}`;
     });
 
@@ -187,8 +205,13 @@ import '../../styles/global.css';
       localStorage.setItem('catalyst_refresh_token', data.refresh_token);
       const params = new URLSearchParams(window.location.search);
       const callbackPort = params.get('callback_port');
-      if (callbackPort) {
-        window.location.href = `/console/authorize?callback_port=${callbackPort}&state=${params.get('state') || ''}`;
+      const deviceCode = params.get('device_code');
+      if (callbackPort || deviceCode) {
+        const ap = new URLSearchParams();
+        if (callbackPort) ap.set('callback_port', callbackPort);
+        if (deviceCode) ap.set('device_code', deviceCode);
+        if (params.get('state')) ap.set('state', params.get('state')!);
+        window.location.href = `/console/authorize?${ap.toString()}`;
       } else {
         window.location.href = '/console/dashboard';
       }

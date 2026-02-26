@@ -31,10 +31,15 @@ import '../../styles/global.css';
       localStorage.setItem('catalyst_token', accessToken);
       localStorage.setItem('catalyst_refresh_token', refreshToken);
 
-      // Check for CLI callback (callback_port in params)
+      // Check for CLI callback (callback_port or device_code in params)
       const callbackPort = params.get('callback_port');
-      if (callbackPort) {
-        window.location.href = `/console/authorize?callback_port=${callbackPort}&state=${params.get('state') || ''}`;
+      const deviceCode = params.get('device_code');
+      if (callbackPort || deviceCode) {
+        const ap = new URLSearchParams();
+        if (callbackPort) ap.set('callback_port', callbackPort);
+        if (deviceCode) ap.set('device_code', deviceCode);
+        if (params.get('state')) ap.set('state', params.get('state')!);
+        window.location.href = `/console/authorize?${ap.toString()}`;
       } else {
         window.location.href = '/console/dashboard';
       }
