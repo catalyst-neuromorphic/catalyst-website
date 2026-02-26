@@ -87,7 +87,7 @@ import '../../styles/global.css';
     <div class="card-glass" style="padding:clamp(1.5rem,3vw,2rem);">
       <div style="position:relative;z-index:2;">
         <h1 class="text-lg font-semibold mb-2">Verify your email</h1>
-        <p class="text-white/40 text-sm mb-6">We sent a 6-digit code to your email address. Enter it below to verify your account.</p>
+        <p id="subtitle" class="text-white/40 text-sm mb-6">Sending a verification code to your email...</p>
 
         <div id="error" class="hidden bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-lg px-4 py-3 mb-4"></div>
         <div id="success" class="hidden bg-green-500/10 border border-green-500/20 text-green-400 text-sm rounded-lg px-4 py-3 mb-4"></div>
@@ -101,7 +101,7 @@ import '../../styles/global.css';
 
         <div class="flex items-center justify-between mt-4">
           <button id="resend-btn" class="text-catalyst-blue text-sm hover:underline disabled:opacity-30 disabled:no-underline" disabled>
-            Resend code (<span id="countdown">60</span>s)
+            Sending...
           </button>
           <a href="/console/dashboard" class="text-white/30 text-sm hover:text-white/50">Skip for now</a>
         </div>
@@ -138,10 +138,10 @@ import '../../styles/global.css';
 
     async function authedFetch(url: string, opts: RequestInit = {}): Promise<Response> {
       const h: Record<string, string> = {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
         ...(opts.headers as Record<string, string> || {}),
       };
+      if (opts.body) h['Content-Type'] = 'application/json';
       let res = await fetch(url, { ...opts, headers: h });
       if (res.status === 401) {
         const refreshed = await refreshToken();
@@ -158,31 +158,79 @@ import '../../styles/global.css';
       return res;
     }
 
-    const headers = () => ({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    });
-
-    // Resend cooldown timer
-    let cooldown = 60;
-    const countdownEl = document.getElementById('countdown')!;
+    const subtitleEl = document.getElementById('subtitle')!;
+    const errorEl = document.getElementById('error')!;
+    const successEl = document.getElementById('success')!;
     const resendBtn = document.getElementById('resend-btn') as HTMLButtonElement;
+    let cooldownTimer: ReturnType<typeof setInterval> | null = null;
 
-    const timer = setInterval(() => {
-      cooldown--;
-      countdownEl.textContent = String(cooldown);
-      if (cooldown <= 0) {
-        clearInterval(timer);
+    function startCooldown(seconds: number) {
+      let cooldown = seconds;
+      resendBtn.disabled = true;
+      resendBtn.innerHTML = `Resend code (<span id="countdown">${cooldown}</span>s)`;
+      if (cooldownTimer) clearInterval(cooldownTimer);
+      cooldownTimer = setInterval(() => {
+        cooldown--;
+        const el = document.getElementById('countdown');
+        if (el) el.textContent = String(cooldown);
+        if (cooldown <= 0) {
+          if (cooldownTimer) clearInterval(cooldownTimer);
+          resendBtn.disabled = false;
+          resendBtn.innerHTML = 'Resend code';
+        }
+      }, 1000);
+    }
+
+    // Auto-send verification code on page load
+    async function init() {
+      try {
+        // First check if already verified
+        const meRes = await authedFetch(`${API}/v1/auth/me`);
+        if (meRes.ok) {
+          const me = await meRes.json();
+          if (me.email_verified) {
+            window.location.href = '/console/dashboard';
+            return;
+          }
+          subtitleEl.textContent = `Sending a verification code to ${me.email}...`;
+        }
+
+        // Auto-send verification code
+        const res = await authedFetch(`${API}/v1/auth/resend-verification`, {
+          method: 'POST',
+        });
+
+        if (res.ok) {
+          subtitleEl.textContent = 'Enter the 6-digit code we sent to your email.';
+          successEl.textContent = 'Verification code sent! Check your inbox.';
+          successEl.classList.remove('hidden');
+          startCooldown(60);
+        } else if (res.status === 429) {
+          // Rate limited — code was already sent recently
+          subtitleEl.textContent = 'Enter the 6-digit code we sent to your email.';
+          const data = await res.json().catch(() => ({}));
+          const match = (data.detail || '').match(/(\d+)\s*seconds/);
+          const wait = match ? parseInt(match[1]) : 30;
+          startCooldown(wait);
+        } else {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.detail || 'Failed to send verification code');
+        }
+      } catch (err: any) {
+        subtitleEl.textContent = 'Enter the 6-digit code we sent to your email.';
+        errorEl.textContent = err.message || 'Failed to send code. Click resend to try again.';
+        errorEl.classList.remove('hidden');
         resendBtn.disabled = false;
         resendBtn.innerHTML = 'Resend code';
       }
-    }, 1000);
+    }
+
+    init();
 
     // Resend button
     resendBtn.addEventListener('click', async () => {
       resendBtn.disabled = true;
-      const errorEl = document.getElementById('error')!;
-      const successEl = document.getElementById('success')!;
+      resendBtn.innerHTML = 'Sending...';
       errorEl.classList.add('hidden');
       successEl.classList.add('hidden');
 
@@ -190,27 +238,20 @@ import '../../styles/global.css';
         const res = await authedFetch(`${API}/v1/auth/resend-verification`, {
           method: 'POST',
         });
+        if (res.status === 429) {
+          const data = await res.json().catch(() => ({}));
+          const match = (data.detail || '').match(/(\d+)\s*seconds/);
+          const wait = match ? parseInt(match[1]) : 30;
+          startCooldown(wait);
+          return;
+        }
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
           throw new Error(data.detail || 'Failed to resend code');
         }
         successEl.textContent = 'A new code has been sent to your email.';
         successEl.classList.remove('hidden');
-
-        // Reset cooldown
-        cooldown = 60;
-        countdownEl.textContent = '60';
-        resendBtn.innerHTML = `Resend code (<span id="countdown">60</span>s)`;
-        const newTimer = setInterval(() => {
-          cooldown--;
-          const el = document.getElementById('countdown');
-          if (el) el.textContent = String(cooldown);
-          if (cooldown <= 0) {
-            clearInterval(newTimer);
-            resendBtn.disabled = false;
-            resendBtn.innerHTML = 'Resend code';
-          }
-        }, 1000);
+        startCooldown(60);
       } catch (err: any) {
         errorEl.textContent = err.message;
         errorEl.classList.remove('hidden');
@@ -222,8 +263,6 @@ import '../../styles/global.css';
     // Verify form
     document.getElementById('verify-form')?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const errorEl = document.getElementById('error')!;
-      const successEl = document.getElementById('success')!;
       const btn = document.getElementById('submit-btn') as HTMLButtonElement;
       const code = (document.getElementById('code') as HTMLInputElement).value.trim();
 
