@@ -32,6 +32,9 @@ export default function AuthorizePrompt() {
       // Path A: localhost callback (browser on same machine as CLI)
       if (callbackPort) {
         const data = await api('/v1/auth/cli-token', { method: 'POST' });
+        if (!data.access_token || !data.refresh_token) {
+          throw new Error('Server returned incomplete token response.');
+        }
         const callbackUrl = `http://localhost:${callbackPort}/callback` +
           `?access_token=${encodeURIComponent(data.access_token)}` +
           `&refresh_token=${encodeURIComponent(data.refresh_token)}` +
@@ -47,6 +50,9 @@ export default function AuthorizePrompt() {
           method: 'POST',
           body: JSON.stringify({ device_code: deviceCode }),
         });
+        if (!data.user_code) {
+          throw new Error('Server did not return a code. The device code may have expired — please restart login from the CLI.');
+        }
         setUserCode(data.user_code);
         setDone(true);
         return;
@@ -54,7 +60,8 @@ export default function AuthorizePrompt() {
 
       setError('Missing callback port or device code. Please start login from the CLI.');
     } catch (e: any) {
-      setError(e.message);
+      console.error('[AuthorizePrompt] authorize failed:', e);
+      setError(e.message || 'Authorization failed. Please try again.');
     }
     setAuthorizing(false);
   };
