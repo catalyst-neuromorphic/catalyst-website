@@ -17,6 +17,8 @@ interface Session {
   created_at: string;
   expires_at: string;
   is_current: boolean;
+  ip_address: string | null;
+  user_agent: string | null;
 }
 
 export default function AccountPanel() {
@@ -176,7 +178,10 @@ export default function AccountPanel() {
                 Unlink
               </button>
             ) : (
-              <span className="text-xs text-white/25">Not linked</span>
+              <a href="https://api.catalyst-neuromorphic.com/v1/auth/github/link?redirect_uri=https://catalyst-neuromorphic.com/console/oauth-callback?provider=github%26linked=true"
+                className="text-xs text-catalyst-blue hover:text-catalyst-blue/80 border border-catalyst-blue/20 px-3 py-1 rounded-lg">
+                Link
+              </a>
             )}
           </div>
           <div className="flex items-center justify-between">
@@ -190,7 +195,10 @@ export default function AccountPanel() {
                 Unlink
               </button>
             ) : (
-              <span className="text-xs text-white/25">Not linked</span>
+              <a href="https://api.catalyst-neuromorphic.com/v1/auth/google/link?redirect_uri=https://catalyst-neuromorphic.com/console/oauth-callback?provider=google%26linked=true"
+                className="text-xs text-catalyst-blue hover:text-catalyst-blue/80 border border-catalyst-blue/20 px-3 py-1 rounded-lg">
+                Link
+              </a>
             )}
           </div>
         </div>
@@ -233,9 +241,13 @@ export default function AccountPanel() {
                     {s.is_current && <span className="text-catalyst-blue text-xs ml-2">Current</span>}
                   </span>
                   <p className="text-xs text-white/30">
+                    {s.ip_address && <span>{s.ip_address} &middot; </span>}
                     Created {new Date(s.created_at).toLocaleDateString()} &middot;
                     Expires {new Date(s.expires_at).toLocaleDateString()}
                   </p>
+                  {s.user_agent && (
+                    <p className="text-xs text-white/20 truncate max-w-xs">{s.user_agent.slice(0, 80)}</p>
+                  )}
                 </div>
                 {!s.is_current && (
                   <button onClick={() => handleRevoke(s.id)}

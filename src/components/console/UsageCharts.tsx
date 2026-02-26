@@ -28,8 +28,11 @@ interface UsageStatus {
 interface Job {
   job_id: string;
   status: string;
+  chip_model: string;
   compute_seconds: number | null;
+  cost_usd: number | null;
   created_at: string;
+  completed_at: string | null;
 }
 
 function UsageBar({ label, pct, used, limit, remaining, resetsAt }: {
@@ -71,8 +74,7 @@ export default function UsageCharts() {
     if (!isLoggedIn()) return;
     Promise.all([
       api('/v1/usage/status').then(setUsage).catch(() => {}),
-      // Fetch recent jobs for the table
-      api('/v1/usage').then(() => {}).catch(() => {}),
+      api('/v1/jobs?limit=10').then(setJobs).catch(() => {}),
     ]).finally(() => setLoading(false));
   }, []);
 
@@ -130,6 +132,54 @@ export default function UsageCharts() {
               <a href="/console/billing" className="text-catalyst-blue ml-1 hover:underline">Enable in billing</a>
             </p>
           )}
+        </div>
+      )}
+
+      {/* Recent Jobs */}
+      <h2 className="text-sm font-medium text-white/70 mb-3">Recent Jobs</h2>
+      {jobs.length === 0 ? (
+        <div className="console-card p-5 mb-8">
+          <p className="text-white/30 text-sm">No jobs yet. Submit a simulation via the API to see results here.</p>
+        </div>
+      ) : (
+        <div className="console-card overflow-hidden mb-8">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-white/5">
+                <th className="text-left text-white/40 text-xs font-normal px-4 py-3">Job ID</th>
+                <th className="text-left text-white/40 text-xs font-normal px-4 py-3">Status</th>
+                <th className="text-left text-white/40 text-xs font-normal px-4 py-3">Chip</th>
+                <th className="text-right text-white/40 text-xs font-normal px-4 py-3">Compute</th>
+                <th className="text-right text-white/40 text-xs font-normal px-4 py-3">Cost</th>
+                <th className="text-right text-white/40 text-xs font-normal px-4 py-3">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {jobs.map(j => (
+                <tr key={j.job_id} className="border-b border-white/5 last:border-0">
+                  <td className="px-4 py-3 text-white/60 text-xs font-mono">{j.job_id.slice(0, 16)}</td>
+                  <td className="px-4 py-3">
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${
+                      j.status === 'completed' ? 'bg-green-500/10 text-green-400' :
+                      j.status === 'running' ? 'bg-blue-500/10 text-blue-400' :
+                      j.status === 'failed' ? 'bg-red-500/10 text-red-400' :
+                      'bg-white/5 text-white/40'
+                    }`}>{j.status}</span>
+                  </td>
+                  <td className="px-4 py-3 text-white/50 text-xs uppercase">{j.chip_model}</td>
+                  <td className="px-4 py-3 text-white/50 text-xs text-right">
+                    {j.compute_seconds != null ? `${j.compute_seconds.toFixed(2)}s` : '\u2014'}
+                  </td>
+                  <td className="px-4 py-3 text-white/50 text-xs text-right font-mono">
+                    {j.cost_usd != null ? `$${j.cost_usd.toFixed(4)}` : '\u2014'}
+                  </td>
+                  <td className="px-4 py-3 text-white/30 text-xs text-right">
+                    {new Date(j.created_at).toLocaleDateString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
 

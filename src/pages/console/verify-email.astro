@@ -112,9 +112,50 @@ import '../../styles/global.css';
   <script>
     const API = 'https://api.catalyst-neuromorphic.com';
 
-    const token = localStorage.getItem('catalyst_token');
+    let token = localStorage.getItem('catalyst_token');
     if (!token) {
       window.location.href = '/console/login';
+    }
+
+    async function refreshToken(): Promise<boolean> {
+      const refresh = localStorage.getItem('catalyst_refresh_token');
+      if (!refresh) return false;
+      try {
+        const res = await fetch(`${API}/v1/auth/refresh`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${refresh}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          localStorage.setItem('catalyst_token', data.access_token);
+          localStorage.setItem('catalyst_refresh_token', data.refresh_token);
+          token = data.access_token;
+          return true;
+        }
+      } catch {}
+      return false;
+    }
+
+    async function authedFetch(url: string, opts: RequestInit = {}): Promise<Response> {
+      const h: Record<string, string> = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        ...(opts.headers as Record<string, string> || {}),
+      };
+      let res = await fetch(url, { ...opts, headers: h });
+      if (res.status === 401) {
+        const refreshed = await refreshToken();
+        if (refreshed) {
+          h['Authorization'] = `Bearer ${token}`;
+          res = await fetch(url, { ...opts, headers: h });
+        }
+      }
+      if (res.status === 401) {
+        localStorage.removeItem('catalyst_token');
+        localStorage.removeItem('catalyst_refresh_token');
+        window.location.href = '/console/login';
+      }
+      return res;
     }
 
     const headers = () => ({
@@ -146,9 +187,8 @@ import '../../styles/global.css';
       successEl.classList.add('hidden');
 
       try {
-        const res = await fetch(`${API}/v1/auth/resend-verification`, {
+        const res = await authedFetch(`${API}/v1/auth/resend-verification`, {
           method: 'POST',
-          headers: headers(),
         });
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
@@ -199,9 +239,8 @@ import '../../styles/global.css';
       btn.disabled = true;
 
       try {
-        const res = await fetch(`${API}/v1/auth/verify-email`, {
+        const res = await authedFetch(`${API}/v1/auth/verify-email`, {
           method: 'POST',
-          headers: headers(),
           body: JSON.stringify({ code }),
         });
 

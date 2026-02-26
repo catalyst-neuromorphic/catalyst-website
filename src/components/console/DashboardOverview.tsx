@@ -92,6 +92,8 @@ export default function DashboardOverview() {
     basic: 'text-catalyst-blue',
     max: 'text-green-400',
     ultra: 'text-purple-400',
+    '$500': 'text-amber-400',
+    '$1000': 'text-amber-300',
   };
 
   const planLabels: Record<string, string> = {
@@ -99,6 +101,8 @@ export default function DashboardOverview() {
     basic: 'Basic',
     max: 'Max',
     ultra: 'Ultra',
+    '$500': '$500',
+    '$1000': '$1,000',
   };
 
   const plan = usage?.plan || profile.plan || 'free';

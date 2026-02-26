@@ -269,7 +269,7 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
       <!-- Step 1: Signup -->
       <div class="reveal mb-10">
         <h3 class="text-lg font-semibold mb-2">1. Sign up and get an API key</h3>
-        <p class="text-sm text-white/40 mb-4">Create an account at the <a href="/console/signup" class="text-catalyst-blue hover:underline">Console</a>, then create an API key from the dashboard. Free, no credit card required.</p>
+        <p class="text-sm text-white/40 mb-4">Create an account at the <a href="/console/signup" class="text-catalyst-blue hover:underline">Console</a>, verify your email, then create an API key from the dashboard. Free, no credit card required.</p>
         <div class="code-tabs glass rounded-xl overflow-hidden" data-group="signup">
           <div class="flex border-b border-white/5">
             <button class="tab-btn active px-4 py-2.5 text-xs font-mono" data-lang="curl">curl</button>
@@ -502,7 +502,7 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
           <tbody>
             <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">400</td><td class="py-1.5 text-white/40">Invalid request — check your JSON format</td></tr>
             <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">401</td><td class="py-1.5 text-white/40">Missing or invalid API key</td></tr>
-            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">403</td><td class="py-1.5 text-white/40">Tier limit exceeded (neurons, timesteps)</td></tr>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">403</td><td class="py-1.5 text-white/40">Email verification required, or tier limit exceeded (neurons, timesteps, chip access)</td></tr>
             <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">404</td><td class="py-1.5 text-white/40">Network or job not found</td></tr>
             <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">409</td><td class="py-1.5 text-white/40">Email already registered</td></tr>
             <tr><td class="py-1.5 font-mono text-white/60">429</td><td class="py-1.5 text-white/40">Daily job limit reached — upgrade your tier</td></tr>
