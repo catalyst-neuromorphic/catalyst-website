@@ -181,21 +181,22 @@ import '../../styles/global.css';
     // OAuth buttons — pass CLI params (callback_port, device_code, state) through
     function _buildOAuthExtra(): string {
       const params = new URLSearchParams(window.location.search);
-      let extra = '';
-      if (params.get('callback_port')) extra += `&callback_port=${params.get('callback_port')}`;
-      if (params.get('device_code')) extra += `&device_code=${params.get('device_code')}`;
-      if (params.get('state')) extra += `&state=${params.get('state')}`;
-      return extra;
+      const ap = new URLSearchParams();
+      if (params.get('callback_port')) ap.set('callback_port', params.get('callback_port')!);
+      if (params.get('device_code')) ap.set('device_code', params.get('device_code')!);
+      if (params.get('state')) ap.set('state', params.get('state')!);
+      const qs = ap.toString();
+      return qs ? `?${qs}` : '';
     }
 
     document.getElementById('github-btn')?.addEventListener('click', () => {
       const extra = _buildOAuthExtra();
-      window.location.href = `${API}/v1/auth/github?redirect_uri=${encodeURIComponent(CALLBACK_URL + '?' + extra)}`;
+      window.location.href = `${API}/v1/auth/github?redirect_uri=${encodeURIComponent(CALLBACK_URL + extra)}`;
     });
 
     document.getElementById('google-btn')?.addEventListener('click', () => {
       const extra = _buildOAuthExtra();
-      window.location.href = `${API}/v1/auth/google?redirect_uri=${encodeURIComponent(CALLBACK_URL + '?' + extra)}`;
+      window.location.href = `${API}/v1/auth/google?redirect_uri=${encodeURIComponent(CALLBACK_URL + extra)}`;
     });
 
     let pendingTempToken = '';
