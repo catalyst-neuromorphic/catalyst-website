@@ -72,7 +72,9 @@ export async function api(path: string, options: RequestInit = {}): Promise<any>
 
   if (res.status === 401) {
     clearTokens();
-    window.location.href = '/console/login';
+    // Preserve URL params (device_code, callback_port, state) so CLI auth flow survives re-login
+    const search = window.location.search || '';
+    window.location.href = '/console/login' + search;
     throw new Error('Session expired');
   }
 
