@@ -76,6 +76,16 @@ export async function api(path: string, options: RequestInit = {}): Promise<any>
     throw new Error('Session expired');
   }
 
+  if (res.status === 403) {
+    const data = await res.json().catch(() => ({}));
+    const detail = data.detail || '';
+    if (detail.toLowerCase().includes('verification required')) {
+      window.location.href = '/console/verify-email';
+      throw new Error('Email verification required');
+    }
+    throw new Error(detail || 'Forbidden');
+  }
+
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
     throw new Error(data.detail || `HTTP ${res.status}`);
@@ -101,11 +111,11 @@ export async function login(email: string, password: string) {
   return data;
 }
 
-export async function signup(email: string, password: string) {
+export async function signup(email: string, password: string, name?: string) {
   const res = await fetch(`${API_BASE}/v1/auth/signup`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ email, password, name, terms_accepted: true }),
   });
 
   if (!res.ok) {

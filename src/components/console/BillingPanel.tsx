@@ -306,14 +306,31 @@ export default function BillingPanel() {
           When enabled, jobs continue running after your plan limits are reached.
           Compute is billed from your API credit balance at standard API rates.
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-wrap">
           <button onClick={handleExtraUsage}
             className={`relative w-12 h-6 rounded-full transition-colors ${extraUsage ? 'bg-catalyst-blue' : 'bg-white/10'}`}>
             <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full transition-transform ${extraUsage ? 'left-6' : 'left-0.5'}`} />
           </button>
           <span className="text-white/60 text-sm">{extraUsage ? 'Enabled' : 'Disabled'}</span>
           {extraUsage && (
-            <span className="text-white/30 text-xs">Monthly cap: ${spendingCap}</span>
+            <div className="flex items-center gap-2">
+              <span className="text-white/30 text-xs">Monthly cap:</span>
+              <div className="relative">
+                <span className="absolute left-2 top-1/2 -translate-y-1/2 text-white/40 text-xs">$</span>
+                <input
+                  type="number"
+                  min="10"
+                  step="10"
+                  value={spendingCap}
+                  onChange={e => setSpendingCap(Number(e.target.value))}
+                  className="bg-white/[0.03] border border-white/[0.06] rounded-lg pl-5 pr-2 py-1 text-xs text-white w-20 focus:outline-none focus:border-catalyst-blue/50"
+                />
+              </div>
+              <button onClick={handleExtraUsage}
+                className="text-xs text-catalyst-blue hover:text-catalyst-blue/80 border border-catalyst-blue/20 px-2 py-1 rounded-lg">
+                Save
+              </button>
+            </div>
           )}
         </div>
       </div>
