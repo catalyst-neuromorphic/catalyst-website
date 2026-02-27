@@ -1,0 +1,136 @@
+---
+title: "I'm 18 and I Built Three Neuromorphic Brain Processors"
+description: "From a bedroom FPGA project to a company with Loihi 2 parity, published benchmarks, and a cloud API. The full Catalyst story."
+date: 2026-02-27
+tags: ["Story", "Architecture", "Company"]
+---
+
+In February 2024, I was 16 and trying to understand how brains compute. By February 2026, I'd built three generations of neuromorphic processors, matched every feature in Intel's Loihi 2, filed two UK patents, incorporated a company, and put a cloud API live that anyone can use right now.
+
+This is the full story.
+
+## What is a neuromorphic processor?
+
+Your brain runs on spikes — brief electrical pulses that neurons fire when they've accumulated enough input. A neuromorphic processor mimics this: instead of multiplying matrices like a GPU, it simulates networks of spiking neurons in hardware, processing information the way biological neural circuits do.
+
+The result is dramatically more energy-efficient for certain workloads. Where a GPU burns hundreds of watts classifying audio or processing sensor data, a neuromorphic chip can do the same work at milliwatts. The trade-off is that you need to rethink your algorithms — these aren't neural networks in the deep learning sense. They're spiking neural networks (SNNs), and they process information through the *timing* of spikes, not just their magnitude.
+
+Intel has Loihi. BrainChip has Akida. IBM has TrueNorth. These are multi-million-dollar programs with dedicated silicon fabs. Catalyst is me, two FPGA boards, and a cloud server.
+
+## N1: The first generation
+
+The N1 processor started as a learning exercise in September 2024. I wanted to understand what makes neuromorphic hardware tick, so I built one from scratch in Verilog.
+
+**What N1 has:**
+- 128 processing cores, each with 1,024 CUBA LIF neurons (131,072 total)
+- Compressed sparse row (CSR) synapse storage
+- Dendritic compartment trees for multi-compartment neuron models
+- Full STDP and 3-factor reward-modulated learning
+- Triple RISC-V embedded processors
+- 96 RTL testbenches, all passing
+
+The N1 architecture matches Intel Loihi 1 feature-for-feature. Every capability Loihi 1 has — programmable delays, spike traces, homeostatic normalization, stochastic threshold noise — N1 has too.
+
+I published the [N1 paper](https://zenodo.org/records/18727094) (13 pages, DOI: 10.5281/zenodo.18727094) and froze the design at version 2.3.
+
+## N2: Loihi 2 parity
+
+N1 proved the concept. N2 was about closing the gap to state-of-the-art.
+
+Intel's Loihi 2 introduced programmable neuron microcode (supporting multiple neuron models), graded spikes, convolutional synapse encodings, and stochastic rounding. These features take neuromorphic computing from "interesting research toy" to "viable inference accelerator."
+
+The N2 processor implements all of them:
+
+| Feature | Loihi 2 | Catalyst N2 |
+|---------|---------|-------------|
+| Neuron models | Programmable microcode | Programmable microcode |
+| Models supported | CUBA, Izhikevich, adLIF, Sigma-Delta, R&F | CUBA, Izhikevich, adLIF, Sigma-Delta, R&F |
+| Graded spikes | Yes | Yes |
+| Convolutional synapses | Yes | Yes |
+| Stochastic rounding | Yes | Yes |
+| Dendritic compartments | Yes | Yes |
+| Learning engine | Programmable | 16 registers, 14 opcodes |
+| Embedded processors | 6× LMT | 3× RV32IMF RISC-V |
+
+The N2 reached version 3.7.0 with **3,091 SDK test passes**, **155 validated features**, and **28/28 FPGA validation passes** on AWS F2 (Xilinx VU47P).
+
+I published the [N2 paper](https://zenodo.org/records/18728256) (18 pages) and filed a UK patent (application 2603866.1, 20 claims, 9 drawings).
+
+## The SDK: neurocore
+
+Hardware without software is useless. The neurocore SDK is a Python library that lets you define spiking neural networks, train them with surrogate gradient BPTT, and deploy to Catalyst hardware — all in the same code.
+
+```python
+import neurocore as nc
+
+net = nc.Network()
+inp = net.population(700, label="input")
+hid = net.population(512, params={"model": "adlif"}, label="hidden")
+out = net.population(20, label="output")
+
+net.connect(inp, hid)
+net.connect(hid, hid)  # recurrent
+net.connect(hid, out)
+```
+
+Four backends: CPU simulator, GPU simulator, UART (physical FPGA), and AWS F2 (cloud FPGA). Same API for all four.
+
+## Benchmarks
+
+One result is an anecdote. We're building a track record.
+
+Our SHD benchmark achieves **85.9%** in floating-point and **85.4%** quantized — using standard LIF neurons. With Adaptive LIF (already implemented in N2 hardware), the literature shows 90-94% is achievable.
+
+We're running the full standard suite:
+
+| Benchmark | Target | Beats |
+|-----------|--------|-------|
+| SHD | 91%+ | Loihi 1 (89%) |
+| SSC | 72%+ | **Loihi 2 (69.8%)** |
+| DVS Gesture | 92%+ | Loihi 1 (89.6%) |
+| GSC KWS | 91%+ | Loihi 1 (88.5%) |
+| N-MNIST | 98%+ | Table stakes |
+
+Every benchmark is fully reproducible: **[github.com/catalyst-neuromorphic/catalyst-benchmarks](https://github.com/catalyst-neuromorphic/catalyst-benchmarks)**
+
+## The cloud API
+
+Not everyone has an FPGA board. The Catalyst Cloud API puts neuromorphic compute behind a REST endpoint:
+
+```bash
+pip install catalyst-cloud
+```
+
+```python
+import catalyst_cloud as cc
+
+client = cc.Client("cn_live_...")
+result = client.simulate(
+    network_id="net_abc123",
+    timesteps=1000,
+)
+```
+
+Free tier: 10 jobs/day, 1,024 neurons. Paid tiers scale up. The API runs real Catalyst hardware on AWS F2 FPGA instances.
+
+Live now at [catalyst-neuromorphic.com/cloud](https://catalyst-neuromorphic.com/cloud).
+
+## What's next
+
+**N3** is in development. 128 cores at 83.3 MHz, all 68 new features validated, FPGA build passing. The jump from N2 to N3 is comparable to Loihi 1 → Loihi 2 for Intel.
+
+Beyond that: ASIC tapeout. The FPGA proves the architecture works. Custom silicon is where neuromorphic computing becomes commercially viable — sub-milliwatt inference for edge AI, always-on sensor processing, and real-time robotics.
+
+But first: benchmarks. The numbers are the currency of credibility in this field. We're going to earn them.
+
+## Try it
+
+- **Cloud API**: [catalyst-neuromorphic.com/cloud](https://catalyst-neuromorphic.com/cloud) — free tier, no hardware needed
+- **Benchmarks**: [github.com/catalyst-neuromorphic/catalyst-benchmarks](https://github.com/catalyst-neuromorphic/catalyst-benchmarks)
+- **Papers**: [N1](https://zenodo.org/records/18727094) | [N2](https://zenodo.org/records/18728256)
+- **GitHub**: [github.com/catalyst-neuromorphic](https://github.com/catalyst-neuromorphic)
+- **HuggingFace**: [huggingface.co/Catalyst-Neuromorphic](https://huggingface.co/Catalyst-Neuromorphic)
+
+---
+
+*Built by Henry Shulayev Barnes, 18, University of Aberdeen. Catalyst Neuromorphic Ltd (Company No. 17054540).*
