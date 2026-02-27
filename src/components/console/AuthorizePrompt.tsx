@@ -35,11 +35,19 @@ export default function AuthorizePrompt() {
         if (!data.access_token || !data.refresh_token) {
           throw new Error('Server returned incomplete token response.');
         }
-        const callbackUrl = `http://localhost:${callbackPort}/callback` +
-          `?access_token=${encodeURIComponent(data.access_token)}` +
-          `&refresh_token=${encodeURIComponent(data.refresh_token)}` +
-          `&state=${encodeURIComponent(state)}`;
-        window.location.href = callbackUrl;
+        // POST tokens to localhost (hidden in body, not visible in URL/history)
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `http://localhost:${callbackPort}/callback`;
+        for (const [key, val] of [['access_token', data.access_token], ['refresh_token', data.refresh_token], ['state', state]]) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = val;
+          form.appendChild(input);
+        }
+        document.body.appendChild(form);
+        form.submit();
         setDone(true);
         return;
       }
