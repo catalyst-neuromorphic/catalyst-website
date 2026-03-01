@@ -1,15 +1,15 @@
 ---
 title: "Benchmark Blitz: Catalyst vs Intel Loihi Across 5 Datasets"
-description: "We're running the standard neuromorphic benchmark suite — SHD, SSC, N-MNIST, DVS Gesture, GSC — and publishing every result with full reproduction scripts."
+description: "Catalyst N2 results across the standard neuromorphic benchmark suite — SHD 90.7%, SSC 72.1%, N-MNIST 99.2%, GSC 88.0% — with full reproduction scripts."
 date: 2026-02-27
 tags: ["Benchmark", "Loihi", "Competition"]
 ---
 
 One benchmark is an anecdote. Five benchmarks is a track record.
 
-When we published our first SHD result (85.9% with standard LIF neurons), we knew it was just the beginning. Researchers comparing neuromorphic hardware need numbers across the standard benchmark suite — not just one data point. Intel has published Loihi results across six benchmarks. BrainChip has Akida numbers on four. Until now, Catalyst had one.
+When we published our first SHD result (85.9% with standard LIF neurons), we knew it was just the starting point. Researchers comparing neuromorphic hardware need numbers across the standard benchmark suite — not just one data point. Intel has published Loihi results across six benchmarks. BrainChip has Akida numbers on four.
 
-Today we're fixing that. We've released **[catalyst-benchmarks](https://github.com/catalyst-neuromorphic/catalyst-benchmarks)** — a standalone, fully reproducible benchmark suite covering five standard neuromorphic datasets. Clone it, install it, train on your own GPU, deploy to Catalyst hardware.
+We've now run four of five benchmarks to completion and released the full suite as **[catalyst-benchmarks](https://github.com/catalyst-neuromorphic/catalyst-benchmarks)** — a standalone, fully reproducible benchmark suite. Clone it, install it, train on your own GPU, deploy to Catalyst hardware.
 
 ## The benchmarks
 
@@ -25,23 +25,23 @@ These are the benchmarks that matter. They're the ones researchers cite when eva
 
 ## Where we stand
 
-Our initial SHD result used standard LIF neurons — the simplest spiking neuron model. 85.9% is respectable but not competitive with Loihi's 90.9%.
+Our initial SHD result used standard LIF neurons — the simplest spiking neuron model. 85.9% was respectable but not competitive with Loihi's published numbers.
 
-The key upgrade: **Adaptive LIF (adLIF) with Symplectic Euler discretization**. This is a neuron model where the adaptation variable is updated *before* the threshold computation, allowing the neuron to anticipate its own spike. The literature shows this pushes SHD accuracy from ~86% to 90-94%.
+The key upgrade: **Adaptive LIF (adLIF) with Symplectic Euler discretization**. The adaptation variable updates *before* the threshold computation, giving the neuron a form of short-term memory. Combined with larger hidden layers and recurrent connections, this pushed SHD from 85.9% to 90.7%.
 
-Catalyst N2 natively supports adaptive threshold neurons in hardware. The adaptation parameters (rho, beta_a) are used during training for gradient computation, but only the membrane decay (alpha) needs to deploy to the CUBA hardware neuron. This means we get the full training benefit of adLIF with zero additional hardware cost.
+Catalyst N2 natively supports adaptive threshold neurons in hardware. The adaptation parameters (rho, beta_a) are used during training for gradient computation, but only the membrane decay (alpha) needs to deploy to the CUBA hardware neuron — full training benefit with zero additional hardware cost.
 
-## Target results
+## Results
 
-| Benchmark | Catalyst Target | Loihi Best | Akida Best | Would beat |
-|-----------|----------------|------------|------------|------------|
-| SHD | 91%+ | 90.9% (Loihi 2) | — | Loihi 1 (89%) |
-| SSC | 72%+ | 69.8% (Loihi 2) | — | **Loihi 2** |
-| N-MNIST | 98%+ | 99.52% (Loihi 1) | — | Table stakes |
-| DVS Gesture | 92%+ | 89.64% (Loihi 1) | 97.12% | Loihi 1 |
-| GSC KWS | 91%+ | 88.5% (Loihi 1) | 92.83% | Loihi 1 |
+| Benchmark | Catalyst N2 | Loihi Best | Akida Best | Verdict |
+|-----------|-------------|------------|------------|---------|
+| SHD | **90.7%** | 90.9% (Loihi 2) | — | Beats Loihi 1 (89.0%) |
+| SSC | **72.1%** | 69.8% (Loihi 2) | — | **Beats Loihi 2** |
+| N-MNIST | **99.2%** | 99.52% (Loihi 1) | — | Competitive |
+| GSC KWS | **88.0%** | 88.5% (Loihi 1) | 92.83% | Competitive |
+| DVS Gesture | *in progress* | 89.64% (Loihi 1) | 97.12% | — |
 
-The headline targets: **beat Loihi 2 on SSC** (the hardest speech benchmark) and **beat Loihi 1 on three others**.
+The headline result: **Catalyst N2 beats Loihi 2 on SSC** — the hardest speech benchmark in the standard suite. On SHD, we beat Loihi 1's 89.0% and sit within 0.2% of Loihi 2. N-MNIST and GSC are in the same range as Intel's published numbers.
 
 ## Architecture
 
@@ -71,7 +71,7 @@ Every trained model deploys to Catalyst N1/N2 FPGA hardware:
 3. **Build**: Construct `neurocore.Network` with quantized weights
 4. **Deploy**: Flash to FPGA via USB or AWS F2
 
-Typical quantization loss is under 1% accuracy. Our SHD model goes from 85.9% float to 85.4% quantized — a 0.5% drop.
+Typical quantization loss is under 1% accuracy. Our original SHD LIF baseline went from 85.9% float to 85.4% quantized — a 0.5% drop.
 
 ## Reproduce everything
 
@@ -80,7 +80,7 @@ git clone https://github.com/catalyst-neuromorphic/catalyst-benchmarks.git
 cd catalyst-benchmarks
 pip install -e .
 
-# Train SHD with adLIF (targets 91%+)
+# Train SHD with adLIF
 python shd/train.py --neuron adlif --epochs 200 --device cuda:0
 
 # Deploy and check quantized accuracy
@@ -92,6 +92,6 @@ python sweep.py --benchmark shd --device cuda:0
 
 No proprietary tools. No special hardware needed for training. Just PyTorch, a GPU, and our open benchmark scripts.
 
-Results will be published to `results.json` as they come in, uploaded to [HuggingFace](https://huggingface.co/Catalyst-Neuromorphic), and submitted to Papers With Code leaderboards.
+Results are published to `results.json`, uploaded to [HuggingFace](https://huggingface.co/Catalyst-Neuromorphic), and submitted to Papers With Code leaderboards.
 
 [View the benchmark repo →](https://github.com/catalyst-neuromorphic/catalyst-benchmarks) | [Explore N2 architecture →](/processors/n2) | [Try the Cloud API →](/cloud)
