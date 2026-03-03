@@ -17,13 +17,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="reveal grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-px bg-white/[0.04] rounded-2xl overflow-hidden">
         {[
           { val: '128', label: 'Cores', sub: 'per chip' },
-          { val: '131K', label: 'Neurons', sub: 'per chip' },
-          { val: '5', label: 'Neuron models', sub: 'programmable' },
-          { val: '28/28', label: 'FPGA tests', sub: '7 categories' },
+          { val: '524K\u20131M', label: 'N3 Neurons', sub: 'precision-adaptive' },
+          { val: '68', label: 'N3 Features', sub: 'all validated' },
+          { val: '19/19', label: 'N3 FPGA tests', sub: '8-core tile' },
           { val: '3,091', label: 'SDK tests', sub: '5 categories' },
           { val: '90.7%', label: 'SHD accuracy', sub: 'adLIF float' },
-          { val: '152/155', label: 'Loihi 2 parity', sub: '0 missing' },
-          { val: '2', label: 'Papers', sub: 'open access' },
+          { val: '73.5%', label: 'SSC accuracy', sub: 'beats Loihi 2' },
+          { val: '3', label: 'Papers', sub: 'N3 coming soon' },
         ].map(item => (
           <div class="bg-surface p-5 text-center">
             <div class="text-lg md:text-xl font-bold tracking-tight text-white/90">{item.val}</div>
@@ -38,11 +38,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- PAPERS — wide two-col -->
   <section class="pb-28 px-6 md:px-12">
     <div class="max-w-[1200px] mx-auto">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 reveal-stagger">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 reveal-stagger">
+        <!-- N3 -->
+        <div class="card-glass p-8 md:p-10 flex flex-col" style="border-color:rgba(59,130,246,0.15);">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-[10px] uppercase tracking-widest text-catalyst-blue/60 bg-catalyst-blue/10 px-2.5 py-1 rounded-full">Coming soon</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-1">Catalyst N3</h3>
+          <p class="text-sm text-white/50 leading-relaxed mb-4">128-Core Hybrid ANN/SNN Neuromorphic SoC with Hardware Virtualization and On-Chip Continual Learning</p>
+          <p class="text-xs text-white/25 mb-4">68 features. FPGA validated (19/19 tests). Full benchmark suite in preparation.</p>
+          <div class="flex items-center gap-3 mt-auto">
+            <a href="/processors/n3" class="btn-pill text-sm">View architecture</a>
+          </div>
+        </div>
         <!-- N2 -->
         <div class="card-glass p-8 md:p-10 flex flex-col">
           <div class="flex items-center gap-3 mb-4">
-            <span class="text-[10px] uppercase tracking-widest text-catalyst-blue/60 bg-catalyst-blue/10 px-2.5 py-1 rounded-full">Latest</span>
+            <span class="text-[10px] uppercase tracking-widest text-white/25 bg-white/5 px-2.5 py-1 rounded-full">Second gen</span>
             <span class="text-xs text-white/25">18 pages</span>
           </div>
           <h3 class="text-xl font-semibold mb-1">Catalyst N2</h3>
@@ -77,7 +89,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
         <div>
           <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight">What we built</h2>
-          <p class="reveal text-white/35 mt-2 max-w-[500px]">N1 matched Intel Loihi 1. N2 matches Loihi 2. Both from a blank Verilog file.</p>
+          <p class="reveal text-white/35 mt-2 max-w-[500px]">N1 matched Intel Loihi 1. N2 matches Loihi 2. N3 goes beyond both. All from a blank Verilog file.</p>
         </div>
         <div class="reveal flex items-center gap-2">
           <span class="text-[10px] uppercase tracking-widest text-catalyst-blue/60 bg-catalyst-blue/10 px-2.5 py-1 rounded-full">N2</span>

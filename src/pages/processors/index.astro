@@ -7,6 +7,7 @@ const products = [
     gen: 'First Generation',
     name: 'N1',
     tagline: 'Loihi 1 parity. Where it began.',
+    image: '/images/renders/chip-n1.webp',
     stats: [
       { label: 'Neurons', value: '131,072' },
       { label: 'Neuron model', value: 'CUBA LIF' },
@@ -21,6 +22,7 @@ const products = [
     gen: 'Second Generation',
     name: 'N2',
     tagline: 'Loihi 2 parity. Programmable everything.',
+    image: '/images/renders/chip-n2.webp',
     stats: [
       { label: 'Neurons', value: '131,072' },
       { label: 'Neuron models', value: '5' },
@@ -34,27 +36,29 @@ const products = [
     chip: 'n3' as const,
     gen: 'Third Generation',
     name: 'N3',
-    tagline: 'In development.',
+    tagline: 'Hybrid ANN/SNN. Hardware virtualization. FPGA validated.',
     stats: [
-      { label: 'Generation', value: 'Third' },
-      { label: 'Architecture', value: 'Next-gen' },
-      { label: 'Status', value: 'In development' },
+      { label: 'Neurons', value: '524K\u20131M' },
+      { label: 'Features', value: '68' },
+      { label: 'Status', value: 'FPGA Validated' },
     ],
-    href: '#',
-    buyHref: '#',
-    available: false,
+    href: '/processors/n3',
+    buyHref: '/processors/n3',
+    available: true,
   },
 ];
 
 const comparison = [
-  { label: 'Cores', n1: '128', n2: '128' },
-  { label: 'Total neurons', n1: '131,072', n2: '131,072' },
-  { label: 'Neuron models', n1: '1 (CUBA LIF)', n2: '5 (programmable)' },
-  { label: 'Weight precision', n1: 'Fixed 8-bit', n2: 'Variable 1–16-bit' },
-  { label: 'Eligibility traces', n1: '2', n2: '5' },
-  { label: 'Learning engine', n1: '14-opcode ISA', n2: '16-register microcode' },
-  { label: 'Spike payloads', n1: 'Binary + 8-bit', n2: 'Binary + 8/16/24-bit' },
-  { label: 'Parity target', n1: 'Intel Loihi 1', n2: 'Intel Loihi 2' },
+  { label: 'Cores', n1: '128', n2: '128', n3: '128 (16 tiles)' },
+  { label: 'Total neurons', n1: '131,072', n2: '131,072', n3: '524K\u20131M' },
+  { label: 'Neuron models', n1: '1 (CUBA LIF)', n2: '5 (programmable)', n3: '7+ (programmable + custom)' },
+  { label: 'Weight precision', n1: 'Fixed 8-bit', n2: 'Variable 1\u201316-bit', n3: 'Variable 1\u201316-bit' },
+  { label: 'Eligibility traces', n1: '2', n2: '5', n3: '6' },
+  { label: 'Learning engine', n1: '14-opcode ISA', n2: '16-register microcode', n3: '16 \u00d7 28-opcode (per-tile)' },
+  { label: 'Spike payloads', n1: 'Binary + 8-bit', n2: 'Binary + 8/16/24-bit', n3: 'Binary + 8/16/24-bit + compression' },
+  { label: 'ANN mode', n1: '\u2014', n2: '\u2014', n3: 'INT8 MAC' },
+  { label: 'Virtualization', n1: '\u2014', n2: '\u2014', n3: 'NeurOS (680+ networks)' },
+  { label: 'Memory hierarchy', n1: '1 level', n2: '1 level', n3: '4 levels (L1\u2013L4)' },
 ];
 ---
 <!DOCTYPE html>
@@ -185,6 +189,7 @@ const comparison = [
   .tile.disabled{opacity:.6;pointer-events:none;filter:saturate(0.3)}
   .tile-chip{display:flex;justify-content:center;margin-bottom:28px}
   .tile-chip svg{width:220px;height:auto}
+  .tile-chip img{width:220px;height:220px;object-fit:contain}
   .tile-gen{
     font-size:.65rem;font-weight:600;text-transform:uppercase;
     letter-spacing:.1em;color:rgba(59,130,246,0.7);margin-bottom:8px;
@@ -394,7 +399,11 @@ const comparison = [
   {products.map(p => (
     <div class:list={['tile', { disabled: !p.available }]}>
       <div class="tile-chip">
-        <ChipFloorplan chip={p.chip} />
+        {p.image ? (
+          <img src={p.image} alt={`Catalyst ${p.name} processor`} width="220" height="220" loading="lazy" />
+        ) : (
+          <ChipFloorplan chip={p.chip} />
+        )}
       </div>
       <p class="tile-gen">{p.gen}</p>
       <h2 class="tile-name">{p.name}</h2>
@@ -411,7 +420,7 @@ const comparison = [
         {p.available ? (
           <>
             <a href={p.href} class="btn-learn glow-btn">Learn more</a>
-            <a href={p.buyHref} class="btn-buy glow-btn">Buy</a>
+            <a href={p.buyHref} class="btn-buy glow-btn">Access</a>
           </>
         ) : (
           <span class="btn-notify">Coming soon</span>
@@ -423,13 +432,14 @@ const comparison = [
 
 <!-- ═══ QUICK COMPARISON ═══ -->
 <section class="comparison reveal">
-  <h2>N1 vs N2</h2>
+  <h2>N1 vs N2 vs N3</h2>
   <table class="comp-table">
     <thead>
       <tr>
         <th></th>
         <th>N1</th>
-        <th class="highlight">N2</th>
+        <th>N2</th>
+        <th class="highlight">N3</th>
       </tr>
     </thead>
     <tbody>
@@ -438,6 +448,7 @@ const comparison = [
           <td>{row.label}</td>
           <td>{row.n1}</td>
           <td>{row.n2}</td>
+          <td>{row.n3}</td>
         </tr>
       ))}
     </tbody>
@@ -464,6 +475,7 @@ const comparison = [
   <div class="footer-grid">
     <div class="footer-col">
       <h4>Products</h4>
+      <a href="/processors/n3">N3 Processor</a>
       <a href="/processors/n2">N2 Processor</a>
       <a href="/processors/n1">N1 Processor</a>
       <a href="/cloud">Catalyst Cloud</a>

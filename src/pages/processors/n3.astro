@@ -6,12 +6,12 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>N2 — Catalyst Neuromorphic Processor</title>
-<meta name="description" content="128-core neuromorphic processor with full Loihi 2 parity. 5 neuron models, programmable microcode learning, FPGA validated." />
-<link rel="canonical" href="https://catalyst-neuromorphic.com/processors/n2" />
+<title>N3 — Catalyst Neuromorphic Processor</title>
+<meta name="description" content="128-core neuromorphic SoC with hybrid ANN/SNN computing, hardware virtualization, and on-chip continual learning. FPGA validated." />
+<link rel="canonical" href="https://catalyst-neuromorphic.com/processors/n3" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<meta property="og:title" content="N2 — Catalyst Neuromorphic Processor" />
-<meta property="og:description" content="128-core neuromorphic processor with full Loihi 2 parity." />
+<meta property="og:title" content="N3 — Catalyst Neuromorphic Processor" />
+<meta property="og:description" content="128-core neuromorphic SoC with hybrid ANN/SNN, hardware virtualization, and on-chip continual learning." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
     background-repeat:repeat;background-size:256px;
   }
 
-  /* ═══ NAV ═══ */
+  /* NAV */
   .nav{
     position:fixed;top:0;left:0;right:0;z-index:100;
     display:flex;align-items:center;justify-content:space-between;
@@ -68,7 +68,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
   .avatar-dropdown a:hover,.avatar-dropdown button:hover{background:rgba(255,255,255,0.06);color:#fff}
   .avatar-divider{height:1px;background:rgba(255,255,255,0.06);margin:4px 0}
 
-  /* ═══ SUB-NAV ═══ */
+  /* SUB-NAV */
   .sub-nav{
     position:fixed;top:0;left:0;right:0;z-index:90;
     display:flex;align-items:center;justify-content:center;gap:32px;
@@ -90,7 +90,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
   }
   .sub-nav a:hover,.sub-nav a.active{color:rgba(255,255,255,0.8)}
 
-  /* ═══ HERO ═══ */
+  /* HERO */
   .hero{
     min-height:100vh;display:flex;flex-direction:column;
     align-items:center;justify-content:center;
@@ -108,9 +108,21 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
   .hero-sub{
     font-size:clamp(1rem,1.8vw,1.3rem);
     color:rgba(255,255,255,0.4);margin-top:16px;
-    max-width:520px;line-height:1.6;
+    max-width:560px;line-height:1.6;
   }
-  .hero-ctas{display:flex;gap:14px;margin-top:36px}
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    margin-top:28px;padding:8px 20px;border-radius:100px;
+    background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);
+    font-size:.82rem;font-weight:600;color:rgba(34,197,94,0.9);
+  }
+  .hero-badge .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:rgba(34,197,94,0.9);
+    animation:pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+  .hero-ctas{display:flex;gap:14px;margin-top:24px}
   .hero-scroll{
     position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
     width:24px;height:40px;border-radius:12px;
@@ -124,8 +136,8 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
   }
   @keyframes scroll-pulse{0%,100%{transform:translateY(0);opacity:.3}50%{transform:translateY(8px);opacity:.8}}
 
-  /* ═══ WALKTHROUGH (Apple-style pinned scroll) ═══ */
-  .walkthrough{position:relative;height:500vh}
+  /* WALKTHROUGH */
+  .walkthrough{position:relative;height:600vh}
   .walkthrough-sticky{
     position:sticky;top:0;height:100vh;
     display:flex;align-items:center;
@@ -169,13 +181,11 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
     background:rgba(59,130,246,0.8);
     box-shadow:0 0 8px rgba(59,130,246,0.4);
   }
-
-  /* SVG region highlighting */
   .chip-wt [data-region]{transition:opacity .5s ease,filter .5s ease}
   .chip-wt [data-region].dim{opacity:.12;filter:saturate(0.2)}
   .chip-wt [data-region].active{opacity:1;filter:saturate(1.3) brightness(1.2)}
 
-  /* ═══ STATS ═══ */
+  /* STATS */
   .stats-section{
     padding:120px 40px;
     display:flex;justify-content:center;gap:80px;flex-wrap:wrap;
@@ -194,32 +204,32 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
     letter-spacing:.06em;font-weight:500;
   }
 
-  /* ═══ EFFICIENCY ═══ */
-  .efficiency{
-    max-width:900px;margin:0 auto;padding:80px 40px 120px;
-  }
-  .efficiency h2{
+  /* WHAT'S NEW */
+  .whats-new{max-width:1000px;margin:0 auto;padding:80px 40px}
+  .whats-new h2{
     font-family:'Space Grotesk',system-ui;
     font-size:clamp(2rem,4vw,3rem);font-weight:700;
     letter-spacing:-0.02em;text-align:center;margin-bottom:48px;
   }
-  .eff-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-  .eff-card{
-    padding:36px 32px;border-radius:20px;
+  .feature-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+  .feature-card{
+    padding:28px 24px;border-radius:16px;
+    background:rgba(255,255,255,0.03);
     border:1px solid rgba(255,255,255,0.06);
+    transition:border-color .3s,background .3s;
   }
-  .eff-card.gpu{background:rgba(255,59,48,0.04)}
-  .eff-card.n2c{background:rgba(59,130,246,0.04);border-color:rgba(59,130,246,0.12)}
-  .eff-card h3{font-size:1.1rem;font-weight:600;margin-bottom:8px}
-  .eff-card .power{
-    font-family:'Space Grotesk',system-ui;
-    font-size:2.5rem;font-weight:700;margin:16px 0 12px;
+  .feature-card:hover{border-color:rgba(59,130,246,0.15);background:rgba(59,130,246,0.03)}
+  .feature-card h3{font-size:.95rem;font-weight:600;margin-bottom:8px}
+  .feature-card p{font-size:.82rem;color:rgba(255,255,255,0.35);line-height:1.6}
+  .feature-card .tag{
+    display:inline-block;font-size:.65rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.08em;
+    padding:3px 8px;border-radius:4px;margin-bottom:12px;
+    background:rgba(59,130,246,0.1);color:rgba(59,130,246,0.8);
   }
-  .eff-card .power.red{color:#FF6B6B}
-  .eff-card .power.blue{color:#60A5FA}
-  .eff-card p{font-size:.88rem;color:rgba(255,255,255,0.35);line-height:1.5}
+  .feature-card .tag.green{background:rgba(34,197,94,0.1);color:rgba(34,197,94,0.8)}
 
-  /* ═══ SDK ═══ */
+  /* SDK */
   .sdk-section{
     max-width:1000px;margin:0 auto;padding:80px 40px;
     display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
@@ -257,7 +267,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
   .code-body .num{color:#fbbf24}
   .code-body .cm{color:rgba(255,255,255,0.25)}
 
-  /* ═══ COMPARISON TABLE ═══ */
+  /* COMPARISON TABLE */
   .comparison{max-width:1100px;margin:0 auto;padding:100px 40px}
   .comparison h2{
     font-family:'Space Grotesk',system-ui;
@@ -269,7 +279,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
     border:1px solid rgba(255,255,255,0.06);
     overflow-x:auto;
   }
-  .comp-table{width:100%;border-collapse:collapse;min-width:800px}
+  .comp-table{width:100%;border-collapse:collapse;min-width:700px}
   .comp-table th{
     padding:16px 18px;text-align:left;
     font-size:.65rem;font-weight:600;text-transform:uppercase;
@@ -288,7 +298,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
   .comp-table tr:last-child td{border-bottom:none}
   .comp-table tr:hover td{background:rgba(255,255,255,0.015)}
 
-  /* ═══ SPECS ACCORDION ═══ */
+  /* SPECS ACCORDION */
   .specs{max-width:900px;margin:0 auto;padding:100px 40px}
   .specs h2{
     font-family:'Space Grotesk',system-ui;
@@ -309,7 +319,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
     content:'+';font-size:1.2rem;color:rgba(255,255,255,0.25);
     transition:transform .2s;
   }
-  details.spec-group[open] summary::after{content:'−'}
+  details.spec-group[open] summary::after{content:'\2212'}
   .spec-row{
     display:flex;justify-content:space-between;
     padding:10px 0;font-size:.88rem;
@@ -318,9 +328,9 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
   .spec-row span:first-child{color:rgba(255,255,255,0.4)}
   .spec-row span:last-child{color:rgba(255,255,255,0.75);font-weight:500;text-align:right}
 
-  /* ═══ PAPER CTA ═══ */
+  /* PAPER CTA */
   .paper-cta{
-    max-width:600px;margin:0 auto;padding:60px 40px 120px;text-align:center;
+    max-width:600px;margin:0 auto;padding:60px 40px 80px;text-align:center;
   }
   .paper-card{
     padding:48px 40px;border-radius:24px;
@@ -328,9 +338,13 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
     border:1px solid rgba(255,255,255,0.06);
   }
   .paper-card h3{font-size:1.2rem;font-weight:600;margin-bottom:8px}
-  .paper-card p{font-size:.88rem;color:rgba(255,255,255,0.35);margin-bottom:24px}
+  .paper-card p{font-size:.88rem;color:rgba(255,255,255,0.35);margin-bottom:24px;line-height:1.5}
+  .paper-card .coming{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.88rem;font-weight:500;color:rgba(255,255,255,0.3);
+  }
 
-  /* ═══ ENQUIRE CTA ═══ */
+  /* ENQUIRE CTA */
   .enquire{max-width:700px;margin:0 auto;padding:40px 40px 120px;text-align:center}
   .enquire-card{
     padding:56px 48px;border-radius:24px;
@@ -345,7 +359,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
   .enquire-card p{font-size:1rem;color:rgba(255,255,255,0.4);margin-bottom:32px;line-height:1.6}
   .enquire-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
-  /* ═══ BUTTONS ═══ */
+  /* BUTTONS */
   .btn{
     display:inline-flex;align-items:center;gap:8px;
     font-size:.9rem;font-weight:600;padding:14px 28px;
@@ -362,7 +376,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
   }
   .btn-pill:hover{background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.2)}
 
-  /* ═══ GLOW BUTTONS ═══ */
+  /* GLOW BUTTONS */
   .glow-btn{position:relative;overflow:hidden;transition:box-shadow .4s ease}
   .glow-spot{
     position:absolute;top:50%;transform:translateY(-50%);
@@ -380,7 +394,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
   }
   .glow-btn.glow-on{box-shadow:0 0 25px rgba(59,130,246,0.25),0 0 50px rgba(59,130,246,0.08)}
 
-  /* ═══ FOOTER ═══ */
+  /* FOOTER */
   .site-footer{border-top:1px solid rgba(255,255,255,0.06);padding:64px 40px 32px}
   .footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;max-width:1100px;margin:0 auto}
   .footer-col h4{
@@ -402,11 +416,11 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
     font-size:.78rem;color:rgba(255,255,255,0.25);
   }
 
-  /* ═══ ANIMATIONS ═══ */
+  /* ANIMATIONS */
   .reveal{opacity:0;transform:translateY(30px);transition:none}
   .reveal.visible{opacity:1;transform:translateY(0);transition:opacity .8s ease,transform .8s ease}
 
-  /* ═══ MOBILE ═══ */
+  /* MOBILE */
   @media(max-width:900px){
     .nav{padding:20px 24px}
     .nav.scrolled{padding:16px 24px}
@@ -423,7 +437,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
     .wt-step{position:relative;transform:none;opacity:1;margin-bottom:60px}
     .wt-dots{display:none}
     .stats-section{gap:40px;padding:80px 24px}
-    .eff-cards{grid-template-columns:1fr}
+    .feature-grid{grid-template-columns:1fr}
     .sdk-section{grid-template-columns:1fr;padding:60px 24px}
     .comparison{padding:60px 20px}
     .specs{padding:60px 20px}
@@ -440,7 +454,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
+<!-- NAV -->
 <nav class="nav" id="main-nav">
   <a href="/" class="nav-logo">Catalyst</a>
   <div class="nav-links">
@@ -464,129 +478,170 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
   </div>
 </nav>
 
-<!-- ═══ SUB-NAV ═══ -->
+<!-- SUB-NAV -->
 <nav class="sub-nav" id="sub-nav">
   <a href="#overview">Overview</a>
   <a href="#architecture">Architecture</a>
   <a href="#stats">Performance</a>
-  <a href="#sdk">SDK</a>
+  <a href="#features">Features</a>
   <a href="#comparison">Comparison</a>
   <a href="#specs">Specs</a>
-  <a href="#paper">Paper</a>
 </nav>
 
-<!-- ═══ HERO ═══ -->
+<!-- HERO -->
 <section class="hero" id="overview">
   <div class="hero-chip">
-    <img src="/images/renders/chip-n2.webp" alt="Catalyst N2 processor" width="340" height="340" style="width:340px;height:340px;object-fit:contain;" />
+    <ChipFloorplan chip="n3" showLabels={true} />
   </div>
-  <h1>N2</h1>
-  <p class="hero-sub">128 cores. 131,072 neurons. 5 neuron models. Programmable everything.</p>
+  <h1>N3</h1>
+  <p class="hero-sub">128 cores. Up to 1 million neurons. Hybrid ANN/SNN. Hardware virtualization. On-chip continual learning.</p>
+  <div class="hero-badge"><span class="dot"></span> FPGA Validated</div>
   <div class="hero-ctas">
-    <a href="/processors/buy" class="btn btn-primary glow-btn">Access N2</a>
-    <a href="/papers/catalyst-n2.pdf" class="btn btn-pill glow-btn" target="_blank">Read the paper</a>
+    <a href="/research" class="btn btn-primary glow-btn">Read the research</a>
+    <a href="mailto:henry@catalyst-neuromorphic.com" class="btn btn-pill glow-btn">Get in touch</a>
   </div>
   <div class="hero-scroll"><span></span></div>
 </section>
 
-<!-- ═══ CHIP WALKTHROUGH ═══ -->
+<!-- CHIP WALKTHROUGH -->
 <section class="walkthrough" id="architecture">
   <div class="walkthrough-sticky">
     <div class="wt-text">
-      <!-- Step 0: Core Mesh -->
+      <!-- Step 0: Hybrid ANN/SNN -->
       <div class="wt-step active" data-step="0">
-        <p class="wt-step-eyebrow">128-Core Mesh</p>
-        <h2>Massively parallel<br>spike processing.</h2>
-        <p>128 neuromorphic cores arranged in an 8&times;16 mesh network. Each core processes 1,024 neurons independently, communicating through barrier-synchronized spike routing.</p>
+        <p class="wt-step-eyebrow">Hybrid Computing</p>
+        <h2>ANN and SNN<br>on one chip.</h2>
+        <p>Each core can switch between spiking neural network mode and INT8 multiply-accumulate mode. Run classical deep learning layers alongside spiking layers on the same silicon. No other neuromorphic chip does this.</p>
       </div>
-      <!-- Step 1: Neuron Models -->
+      <!-- Step 1: Memory Hierarchy -->
       <div class="wt-step" data-step="1">
-        <p class="wt-step-eyebrow">Neuron Array</p>
-        <h2>Five programmable<br>neuron models.</h2>
-        <p>CUBA LIF, Izhikevich, ALIF, Sigma-Delta, and Resonate-and-Fire. Each model runs on a fully programmable microcode engine with 16 general-purpose registers and 256 instructions.</p>
+        <p class="wt-step-eyebrow">4-Level Memory</p>
+        <h2>From 96 KB<br>to unlimited.</h2>
+        <p>L1 SRAM per core (96 KB), L2 shared tile cache (1 MB), L3 external DRAM (500M+ synapses), L4 CXL fabric. Loihi 2 has two levels. N3 has four, with hardware-managed caching and LRU eviction.</p>
       </div>
-      <!-- Step 2: Learning Engine -->
+      <!-- Step 2: Virtualization -->
       <div class="wt-step" data-step="2">
-        <p class="wt-step-eyebrow">Learning Engine</p>
-        <h2>On-chip learning<br>that adapts.</h2>
-        <p>3-factor STDP with 5 eligibility traces, persistent reward signals, and homeostatic threshold regulation. Per-group plasticity enables independent learning rules across synapse populations.</p>
+        <p class="wt-step-eyebrow">NeurOS Virtualization</p>
+        <h2>680+ networks<br>on one chip.</h2>
+        <p>Hardware-scheduled time-division multiplexing with dirty-page tracking and compressed DMA context switching. Each physical neuron handles 8 virtual time slots. No other neuromorphic chip offers hardware virtualization.</p>
       </div>
-      <!-- Step 3: Synapse Memory -->
+      <!-- Step 3: Per-Tile Learning -->
       <div class="wt-step" data-step="3">
-        <p class="wt-step-eyebrow">Synapse Memory</p>
-        <h2>Variable-precision<br>weight storage.</h2>
-        <p>1, 2, 4, 8, or 16-bit weights with barrel shifter decompression. Convolutional shared kernels for efficient spatial pattern detection. 131,072 synapses per core in compressed sparse row format.</p>
+        <p class="wt-step-eyebrow">Learning Accelerators</p>
+        <h2>16 independent<br>learning engines.</h2>
+        <p>One per tile, each with a 28-opcode ISA and 80 registers. Loihi 2 has one global learning engine. N3 has 16 running in parallel. No cross-chip bottleneck. Learning at wire speed.</p>
       </div>
-      <!-- Step 4: Mesh Network -->
+      <!-- Step 4: Precision -->
       <div class="wt-step" data-step="4">
-        <p class="wt-step-eyebrow">Mesh Interconnect</p>
-        <h2>Hierarchical<br>spike routing.</h2>
-        <p>Barrier-synchronized mesh network with binary, 8-bit, 16-bit, and 24-bit spike payloads. Configurable axonal delays from 1 to 63 timesteps per synapse.</p>
+        <p class="wt-step-eyebrow">Precision-Adaptive</p>
+        <h2>24, 16, or 8 bits.<br>Your call.</h2>
+        <p>Configure neuron precision per core. At 8-bit, neuron density doubles to over 1 million total. FACTOR low-rank synapse compression saves 2&ndash;8&times; memory. Same network, multiple precision targets.</p>
       </div>
-      <!-- Step 5: Full Die -->
+      <!-- Step 5: Continual Learning -->
       <div class="wt-step" data-step="5">
+        <p class="wt-step-eyebrow">Continual Learning</p>
+        <h2>Networks that<br>stabilise themselves.</h2>
+        <p>Hardware metaplasticity (3-bit synaptic consolidation), homeostatic plasticity (firing rate tracking with synaptic scaling), and synaptic fatigue. On-chip mechanisms for networks that learn continuously without catastrophic forgetting.</p>
+      </div>
+      <!-- Step 6: Full Die -->
+      <div class="wt-step" data-step="6">
         <p class="wt-step-eyebrow">Full Die</p>
-        <h2>All of this.<br>~20 watts.</h2>
-        <p>A complete neuromorphic processor that matches Intel Loihi 2's feature set while remaining fully open for research and deployment through the Catalyst Cloud API.</p>
+        <h2>68 features.<br>All validated.</h2>
+        <p>128 neuromorphic cores, 4 RISC-V management CPUs, async hybrid network-on-chip, and 36 MB total on-chip SRAM. Every feature specified, implemented in RTL, and validated on FPGA.</p>
       </div>
     </div>
     <div class="wt-chip">
-      <ChipFloorplan chip="n2" showLabels={true} class="chip-wt" />
+      <ChipFloorplan chip="n3" showLabels={true} class="chip-wt" />
     </div>
     <div class="wt-dots">
-      {Array.from({ length: 6 }).map((_, i) => (
+      {Array.from({ length: 7 }).map((_, i) => (
         <div class:list={['wt-dot', { active: i === 0 }]} data-dot={i}></div>
       ))}
     </div>
   </div>
 </section>
 
-<!-- ═══ BY THE NUMBERS ═══ -->
+<!-- BY THE NUMBERS -->
 <section class="stats-section reveal" id="stats">
   <div class="stat">
-    <div class="stat-num" data-count="131072">0</div>
-    <div class="stat-label">Neurons</div>
+    <div class="stat-num" data-count="524288">0</div>
+    <div class="stat-label">Neurons (24-bit)</div>
   </div>
   <div class="stat">
-    <div class="stat-num">5</div>
-    <div class="stat-label">Neuron Models</div>
+    <div class="stat-num">68</div>
+    <div class="stat-label">Architecture Features</div>
   </div>
   <div class="stat">
-    <div class="stat-num">1,000&times;</div>
-    <div class="stat-label">More Efficient</div>
+    <div class="stat-num">16</div>
+    <div class="stat-label">Learning Accelerators</div>
   </div>
   <div class="stat">
-    <div class="stat-num" data-count="3091">0</div>
-    <div class="stat-label">SDK Tests</div>
+    <div class="stat-num">19/19</div>
+    <div class="stat-label">FPGA Tests Passing</div>
   </div>
   <div class="stat">
-    <div class="stat-num">28/28</div>
-    <div class="stat-label">FPGA Tests</div>
+    <div class="stat-num">1,011+</div>
+    <div class="stat-label">RTL Tests</div>
   </div>
 </section>
 
-<!-- ═══ EFFICIENCY ═══ -->
-<section class="efficiency reveal">
-  <h2>The 1,000&times; question.</h2>
-  <div class="eff-cards">
-    <div class="eff-card gpu">
-      <h3>Traditional GPU</h3>
-      <div class="power red">~300W</div>
-      <p>Dense matrix multiply. Every neuron computes every timestep, whether it fires or not. Brute-force power consumption.</p>
+<!-- WHAT'S NEW IN N3 -->
+<section class="whats-new reveal" id="features">
+  <h2>What N3 adds over N2.</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="tag">Unique</span>
+      <h3>ANN INT8 MAC Mode</h3>
+      <p>Per-core toggle between spiking and classical multiply-accumulate. Deploy hybrid ANN/SNN networks natively.</p>
     </div>
-    <div class="eff-card n2c">
-      <h3>Catalyst N2</h3>
-      <div class="power blue">~20W</div>
-      <p>Event-driven. Neurons only compute when they receive a spike. Most of the chip sleeps most of the time. Same network, same accuracy.</p>
+    <div class="feature-card">
+      <span class="tag">Unique</span>
+      <h3>NeurOS Virtualization</h3>
+      <p>Hardware-scheduled TDM for 680+ virtual networks. Context switching with dirty tracking and compressed DMA.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag">Unique</span>
+      <h3>Per-Tile Learning</h3>
+      <p>16 independent learning accelerators. 28-opcode ISA, 80 registers each. 16&times; the throughput of a single global engine.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag green">N3</span>
+      <h3>4-Level Memory</h3>
+      <p>L1 per-core, L2 tile cache, L3 DRAM-backed, L4 CXL fabric. 500M+ addressable synapses with hardware LRU management.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag green">N3</span>
+      <h3>Parameter Groups</h3>
+      <p>32 shared parameter sets per core. 4,096 neurons in 96 KB L1 instead of 1,024. 4&times; density increase.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag green">N3</span>
+      <h3>Hardware Metaplasticity</h3>
+      <p>3-bit consolidation state per synapse. Automatic meta-learning in hardware. No microcode overhead.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag green">N3</span>
+      <h3>FACTOR Compression</h3>
+      <p>Low-rank synapse format using SVD decomposition. Hardware STORE_A/STORE_B opcodes. 2&ndash;8&times; memory savings.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag green">N3</span>
+      <h3>Winner-Take-All</h3>
+      <p>Two-pass hardware WTA with configurable groups and k-winners. Competitive coding for sparse representations.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag green">N3</span>
+      <h3>Spike Compression</h3>
+      <p>DELTA, BURST, and ADAPTIVE encoding on inter-chip links. 2&ndash;8&times; effective bandwidth for multi-chip systems.</p>
     </div>
   </div>
 </section>
 
-<!-- ═══ SDK ═══ -->
+<!-- SDK -->
 <section class="sdk-section reveal" id="sdk">
   <div class="sdk-text">
-    <h2>Ship in Python.</h2>
-    <p>The neurocore SDK gives you hardware-accurate simulation on CPU, GPU, and FPGA — with a single Python API. 155 features. 3,091 tests.</p>
+    <h2>Same SDK. New hardware.</h2>
+    <p>The neurocore SDK targets N3 with the same Python API you already know. Hardware-accurate simulation on CPU, GPU, and FPGA.</p>
     <code class="install">pip install catalyst-cloud</code>
   </div>
   <div class="code-block">
@@ -595,53 +650,58 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
     </div>
     <pre class="code-body"><span class="kw">import</span> catalyst_cloud <span class="kw">as</span> cc
 
-<span class="cm"># Define a spiking network</span>
-net = cc.<span class="fn">Network</span>(chip=<span class="str">"n2"</span>)
+<span class="cm"># Target N3 hardware</span>
+net = cc.<span class="fn">Network</span>(chip=<span class="str">"n3"</span>)
 inp = net.<span class="fn">add_population</span>(<span class="str">"input"</span>, <span class="num">784</span>)
-exc = net.<span class="fn">add_population</span>(<span class="str">"excitatory"</span>, <span class="num">512</span>,
-    neuron_model=<span class="str">"izhikevich"</span>)
+
+<span class="cm"># N3: hybrid ANN layer (INT8 MAC)</span>
+ann = net.<span class="fn">add_population</span>(<span class="str">"encoder"</span>, <span class="num">256</span>,
+    neuron_model=<span class="str">"ann_int8"</span>)
+
+<span class="cm"># N3: spiking recurrent layer</span>
+exc = net.<span class="fn">add_population</span>(<span class="str">"hidden"</span>, <span class="num">512</span>,
+    neuron_model=<span class="str">"adaptive_lif"</span>)
 out = net.<span class="fn">add_population</span>(<span class="str">"output"</span>, <span class="num">10</span>)
 
-net.<span class="fn">connect</span>(inp, exc, weight=<span class="num">0.3</span>)
-net.<span class="fn">connect</span>(exc, out, learning=<span class="str">"stdp"</span>)
+net.<span class="fn">connect</span>(inp, ann, weight=<span class="num">0.3</span>)
+net.<span class="fn">connect</span>(ann, exc, learning=<span class="str">"stdp"</span>)
+net.<span class="fn">connect</span>(exc, out)
 
-<span class="cm"># Run on cloud hardware</span>
 result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</span>)
 <span class="fn">print</span>(result.spike_trains)</pre>
   </div>
 </section>
 
-<!-- ═══ COMPARISON ═══ -->
+<!-- COMPARISON -->
 <section class="comparison reveal" id="comparison">
-  <h2>How N2 compares.</h2>
+  <h2>How N3 compares.</h2>
   <div class="comp-wrap">
     <table class="comp-table">
       <thead>
         <tr>
           <th></th>
-          <th class="hl">Catalyst N2</th>
+          <th class="hl">Catalyst N3</th>
           <th>Intel Loihi 2</th>
-          <th>BrainScaleS-2</th>
-          <th>IBM TrueNorth</th>
+          <th>BrainChip Akida 2</th>
           <th>SpiNNaker 2</th>
-          <th>BrainChip Akida</th>
         </tr>
       </thead>
       <tbody>
         {[
-          ['Cores', '128', '128', '2 (analog)', '4,096', '152 (ARM)', '8 NPUs'],
-          ['Neurons / core', '1,024', '1,024', '256', '256', 'Software', '256'],
-          ['Total neurons', '131,072', '131,072', '512', '1,048,576', 'Up to 16M', '2,048'],
-          ['Neuron models', '5', '3+', 'Physical', '1 (LIF)', 'Software', '1 (LIF)'],
-          ['Weight precision', '1–16-bit', '8-bit', 'Analog', '1-bit', 'Software', '1/2/4/8-bit'],
-          ['On-chip learning', 'Programmable', 'Programmable', 'Analog', '—', 'Yes', 'Limited'],
-          ['Learning engine', '16-reg microcode', 'Microcode', 'Analog', '—', 'ARM cores', 'Fixed'],
-          ['Spike payloads', 'Bin + 8/16/24-bit', 'Bin + graded', 'Analog', 'Binary', 'Software', 'Binary'],
-          ['Routing', 'Barrier mesh', 'Mesh', 'Crossbar', 'Multicast', 'Multicast', 'NoC'],
-          ['Axonal delays', '1–63 timesteps', '1–63', '—', '—', 'Software', '—'],
-          ['Hardware validated', 'FPGA (28/28)', 'ASIC (Intel 4)', 'ASIC (65nm)', 'ASIC (28nm)', 'ASIC (22nm)', 'ASIC (28nm)'],
-          ['Open design', 'Yes', 'No', 'Partial', 'No', 'Partial', 'No'],
-          ['SDK', 'neurocore 3.7', 'Lava', 'PyNN adapter', '—', 'SpiNNTools', 'MetaTF'],
+          ['Cores', '128 (16 tiles)', '128', '8 NPUs', '152 (ARM)'],
+          ['Neurons (24-bit)', '524,288', '~1,000,000', '2,048', 'Up to 16M'],
+          ['Neurons (8-bit)', '1,048,576', '\u2014', '\u2014', '\u2014'],
+          ['Neuron models', '7+ (programmable)', '3+', '1 (LIF)', 'Software'],
+          ['Weight precision', '1\u201316-bit', '1\u20138-bit', '1/2/4/8-bit', 'Software'],
+          ['ANN mode', 'INT8 MAC', '\u2014', 'Yes', '\u2014'],
+          ['On-chip learning', '16 accelerators', '1 global', 'Limited', 'ARM cores'],
+          ['Learning ISA', '28 opcodes, 80 reg', 'Microcode', 'Fixed', 'Software'],
+          ['Memory levels', '4 (L1\u2013L4)', '2', '2', 'External'],
+          ['Virtualization', 'NeurOS (680+)', '\u2014', '\u2014', '\u2014'],
+          ['Spike compression', 'DELTA/BURST', '\u2014', '\u2014', '\u2014'],
+          ['Metaplasticity', 'Hardware (3-bit)', '\u2014', '\u2014', '\u2014'],
+          ['Hardware validated', 'FPGA (19/19)', 'ASIC (Intel 4)', 'ASIC (28nm)', 'ASIC (22nm)'],
+          ['Open design', 'Yes (BSL 1.1)', 'No', 'No', 'Partial'],
         ].map(row => (
           <tr>
             <td>{row[0]}</td>
@@ -649,8 +709,6 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
             <td class="them">{row[2]}</td>
             <td class="them">{row[3]}</td>
             <td class="them">{row[4]}</td>
-            <td class="them">{row[5]}</td>
-            <td class="them">{row[6]}</td>
           </tr>
         ))}
       </tbody>
@@ -658,101 +716,122 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
   </div>
 </section>
 
-<!-- ═══ SPECS ═══ -->
+<!-- SPECS -->
 <section class="specs reveal" id="specs">
   <h2>Technical Specifications</h2>
   <details class="spec-group" open>
     <summary>Compute</summary>
     <div>
-      <div class="spec-row"><span>Cores</span><span>128</span></div>
-      <div class="spec-row"><span>Neurons per core</span><span>1,024</span></div>
-      <div class="spec-row"><span>Total neurons</span><span>131,072</span></div>
-      <div class="spec-row"><span>Synapses per core</span><span>131,072 (CSR format)</span></div>
-      <div class="spec-row"><span>Neuron models</span><span>CUBA LIF, Izhikevich, ALIF, Sigma-Delta, Resonate-and-Fire</span></div>
-      <div class="spec-row"><span>Compartment model</span><span>4-compartment dendritic tree</span></div>
+      <div class="spec-row"><span>Cores</span><span>128 (16 tiles &times; 8 cores)</span></div>
+      <div class="spec-row"><span>Neurons per core (24-bit)</span><span>4,096</span></div>
+      <div class="spec-row"><span>Neurons per core (8-bit)</span><span>8,192</span></div>
+      <div class="spec-row"><span>Total neurons (24-bit)</span><span>524,288</span></div>
+      <div class="spec-row"><span>Total neurons (8-bit)</span><span>1,048,576</span></div>
+      <div class="spec-row"><span>Virtual neurons (TDM &times;8)</span><span>Up to 8,388,608</span></div>
+      <div class="spec-row"><span>Neuron models</span><span>CUBA LIF, Izhikevich, ALIF, Sigma-Delta, Resonate-and-Fire, Gated LIF, 1 custom</span></div>
+      <div class="spec-row"><span>Compartments per neuron</span><span>8 addressable (4 implemented)</span></div>
+      <div class="spec-row"><span>Parameter groups per core</span><span>32</span></div>
+      <div class="spec-row"><span>Management CPUs</span><span>4 &times; RISC-V RV32IMC with neuro ISA extensions</span></div>
     </div>
   </details>
   <details class="spec-group">
-    <summary>Learning Engine</summary>
+    <summary>Memory</summary>
     <div>
-      <div class="spec-row"><span>Plasticity rules</span><span>3-factor STDP, reward-modulated, homeostatic</span></div>
-      <div class="spec-row"><span>Microcode engine</span><span>16 general-purpose registers</span></div>
-      <div class="spec-row"><span>Eligibility traces</span><span>5 types, 7-bit, configurable decay</span></div>
-      <div class="spec-row"><span>Reward signals</span><span>Global + per-core modulation</span></div>
-      <div class="spec-row"><span>Homeostasis</span><span>Proportional error, target rate regulation</span></div>
-      <div class="spec-row"><span>Weight precision</span><span>1/2/4/8/16-bit with stochastic rounding</span></div>
-      <div class="spec-row"><span>Per-group plasticity</span><span>Independent rules per synapse group</span></div>
-      <div class="spec-row"><span>Persistent traces</span><span>5 trace types, configurable time constants</span></div>
+      <div class="spec-row"><span>L1 SRAM per core</span><span>96 KB</span></div>
+      <div class="spec-row"><span>L2 shared tile cache</span><span>1 MB per tile</span></div>
+      <div class="spec-row"><span>Shadow SRAM (TDM)</span><span>8 MB total</span></div>
+      <div class="spec-row"><span>Total on-chip SRAM</span><span>~36 MB</span></div>
+      <div class="spec-row"><span>L3 external memory</span><span>LPDDR5X / HBM</span></div>
+      <div class="spec-row"><span>Addressable synapses</span><span>500M+ (L3-backed)</span></div>
+      <div class="spec-row"><span>L4 fabric</span><span>CXL interconnect</span></div>
+      <div class="spec-row"><span>Synapse formats</span><span>4 modes: Full, Inference, Compact, FACTOR</span></div>
+    </div>
+  </details>
+  <details class="spec-group">
+    <summary>Learning</summary>
+    <div>
+      <div class="spec-row"><span>Learning accelerators</span><span>16 (1 per tile, independent)</span></div>
+      <div class="spec-row"><span>ISA opcodes</span><span>28</span></div>
+      <div class="spec-row"><span>Registers per accelerator</span><span>80</span></div>
+      <div class="spec-row"><span>Parallel threads</span><span>4 per accelerator</span></div>
+      <div class="spec-row"><span>Eligibility traces</span><span>6 types (24-bit mode)</span></div>
+      <div class="spec-row"><span>Metaplasticity</span><span>3-bit consolidation per synapse</span></div>
+      <div class="spec-row"><span>Fatigue</span><span>4-bit per synapse with recovery</span></div>
+      <div class="spec-row"><span>Homeostatic plasticity</span><span>Hardware EWMA rate tracking + synaptic scaling</span></div>
+      <div class="spec-row"><span>Neuromodulation</span><span>16 channels per tile + per-core override</span></div>
     </div>
   </details>
   <details class="spec-group">
     <summary>Communication</summary>
     <div>
-      <div class="spec-row"><span>Routing</span><span>Barrier-synchronized mesh network</span></div>
-      <div class="spec-row"><span>Spike types</span><span>Binary + 8/16/24-bit graded payloads</span></div>
-      <div class="spec-row"><span>Axonal delays</span><span>1–63 timesteps, per-synapse configurable</span></div>
-      <div class="spec-row"><span>Dendrites</span><span>4-compartment multi-compartment model</span></div>
-      <div class="spec-row"><span>Conv synapses</span><span>Shared weight kernels, stride, padding</span></div>
+      <div class="spec-row"><span>NoC type</span><span>Async hybrid (event-driven routers + synchronous cores)</span></div>
+      <div class="spec-row"><span>Intra-tile routing</span><span>4-phase handshake mesh</span></div>
+      <div class="spec-row"><span>Inter-tile routing</span><span>Fat tree + 8 express links</span></div>
+      <div class="spec-row"><span>Spike compression</span><span>DELTA / BURST / ADAPTIVE</span></div>
+      <div class="spec-row"><span>Multicast groups</span><span>256 per tile &times; 32 destinations</span></div>
+      <div class="spec-row"><span>Spike payloads</span><span>Binary + 8/16/24-bit graded</span></div>
+      <div class="spec-row"><span>Axonal delays</span><span>1&ndash;63 timesteps</span></div>
     </div>
   </details>
   <details class="spec-group">
-    <summary>SDK &amp; Software</summary>
+    <summary>Power &amp; Reliability</summary>
     <div>
-      <div class="spec-row"><span>SDK name</span><span>neurocore v3.7.0</span></div>
-      <div class="spec-row"><span>Language</span><span>Python</span></div>
-      <div class="spec-row"><span>Modules</span><span>88</span></div>
-      <div class="spec-row"><span>Features</span><span>155</span></div>
-      <div class="spec-row"><span>Tests</span><span>3,091</span></div>
-      <div class="spec-row"><span>Backends</span><span>CPU, GPU (CUDA), FPGA</span></div>
-      <div class="spec-row"><span>Fixed-point mode</span><span>Hardware-accurate integer quantization</span></div>
-      <div class="spec-row"><span>Benchmark</span><span>90.7% SHD (adLIF float), 85.9% LIF baseline</span></div>
+      <div class="spec-row"><span>Clock gating</span><span>Per-core ICG</span></div>
+      <div class="spec-row"><span>Power gating</span><span>Per-tile (async router stays powered)</span></div>
+      <div class="spec-row"><span>DVFS</span><span>4 clock domains, adaptive frequency</span></div>
+      <div class="spec-row"><span>Thermal management</span><span>4 diodes + throttle FSM</span></div>
+      <div class="spec-row"><span>ECC</span><span>Per-SRAM, with scrubber</span></div>
+      <div class="spec-row"><span>Deterministic mode</span><span>Full-chip reproducibility (LFSR seeding, barrier sync)</span></div>
+      <div class="spec-row"><span>Performance counters</span><span>32 per tile (spikes, FIFO, cache, DMA, NoC)</span></div>
     </div>
   </details>
   <details class="spec-group">
     <summary>Hardware Validation</summary>
     <div>
-      <div class="spec-row"><span>Tests passing</span><span>28/28</span></div>
+      <div class="spec-row"><span>FPGA tests passing</span><span>19/19</span></div>
       <div class="spec-row"><span>Platform</span><span>AWS F2 (Xilinx UltraScale+ VU47P)</span></div>
-      <div class="spec-row"><span>Clock frequency</span><span>62.5 MHz</span></div>
-      <div class="spec-row"><span>Cores validated</span><span>16</span></div>
-      <div class="spec-row"><span>RTL accuracy</span><span>Cycle-accurate, bit-exact vs simulation</span></div>
-      <div class="spec-row"><span>Peak throughput</span><span>81,000 spikes / 3.4ms</span></div>
-      <div class="spec-row"><span>Cross-core routing</span><span>163,000 spikes validated</span></div>
+      <div class="spec-row"><span>Clock frequency</span><span>83.3 MHz (tile), 250 MHz (AXI)</span></div>
+      <div class="spec-row"><span>Cores validated</span><span>8 (single tile, full feature parity)</span></div>
+      <div class="spec-row"><span>RTL testbenches</span><span>58 passing (1,011+ tests)</span></div>
+      <div class="spec-row"><span>RTL modules</span><span>46 modules, ~17,700 lines</span></div>
+      <div class="spec-row"><span>Assertions</span><span>897</span></div>
+      <div class="spec-row"><span>Peak throughput</span><span>14,500 timesteps/sec</span></div>
     </div>
   </details>
   <details class="spec-group">
     <summary>Intellectual Property</summary>
     <div>
-      <div class="spec-row"><span>UK Patent</span><span>Filed February 2026 (full architecture)</span></div>
-      <div class="spec-row"><span>Application ref</span><span>~2602902.6</span></div>
+      <div class="spec-row"><span>UK Patent (N1)</span><span>Filed Feb 2026 &mdash; App 2602902.6</span></div>
+      <div class="spec-row"><span>UK Patent (N2)</span><span>Filed Feb 2026 &mdash; App 2603866.1</span></div>
       <div class="spec-row"><span>RTL</span><span>Proprietary (BSL 1.1)</span></div>
-      <div class="spec-row"><span>SDK</span><span>Proprietary</span></div>
+      <div class="spec-row"><span>Architecture spec</span><span>78 pages, v3.0</span></div>
+      <div class="spec-row"><span>Architectural features</span><span>68 (all at 10/10 readiness)</span></div>
     </div>
   </details>
 </section>
 
-<!-- ═══ PAPER CTA ═══ -->
+<!-- PAPER CTA -->
 <section class="paper-cta reveal" id="paper">
   <div class="paper-card">
-    <h3>Read the N2 paper</h3>
-    <p>18 pages. Full architecture, SDK, and FPGA validation results.</p>
-    <a href="/papers/catalyst-n2.pdf" class="btn btn-pill glow-btn" target="_blank">View PDF</a>
+    <h3>N3 Paper</h3>
+    <p>Full architecture specification, benchmark results, and FPGA validation. Currently in preparation.</p>
+    <span class="coming">Coming soon</span>
   </div>
 </section>
 
-<!-- ═══ ENQUIRE ═══ -->
+<!-- ENQUIRE -->
 <section class="enquire reveal">
   <div class="enquire-card">
-    <h2>Bring N2 to your project.</h2>
-    <p>Cloud API access, research partnerships, and integration enquiries.</p>
+    <h2>Interested in N3?</h2>
+    <p>Research partnerships, early access, and integration enquiries.</p>
     <div class="enquire-btns">
-      <a href="/processors/buy" class="btn btn-primary glow-btn">Get access</a>
-      <a href="mailto:henry@catalyst-neuromorphic.com" class="btn btn-pill glow-btn">Contact us</a>
+      <a href="mailto:henry@catalyst-neuromorphic.com" class="btn btn-primary glow-btn">Get in touch</a>
+      <a href="/research" class="btn btn-pill glow-btn">Read the research</a>
     </div>
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-grid">
     <div class="footer-col">
@@ -767,7 +846,7 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
     <div class="footer-col">
       <h4>Research</h4>
       <a href="/research">Papers</a>
-      <a href="/research">Benchmarks</a>
+      <a href="/benchmarks">Benchmarks</a>
     </div>
     <div class="footer-col">
       <h4>Company</h4>
@@ -794,7 +873,7 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
 
 <script is:inline>
 (function() {
-  /* ═══ NAV SCROLL ═══ */
+  /* NAV SCROLL */
   var nav = document.getElementById('main-nav');
   var subNav = document.getElementById('sub-nav');
   var hero = document.querySelector('.hero');
@@ -806,7 +885,7 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
   }, { threshold: 0.05 });
   if (hero) heroObs.observe(hero);
 
-  /* ═══ SUB-NAV ACTIVE STATE ═══ */
+  /* SUB-NAV ACTIVE STATE */
   var sections = document.querySelectorAll('section[id]');
   var subLinks = subNav.querySelectorAll('a');
   var secObs = new IntersectionObserver(function(entries) {
@@ -820,21 +899,22 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
   }, { threshold: 0.3, rootMargin: '-20% 0px -60% 0px' });
   sections.forEach(function(s) { secObs.observe(s); });
 
-  /* ═══ WALKTHROUGH SCROLL (desktop only) ═══ */
+  /* WALKTHROUGH SCROLL (desktop only) */
   var wt = document.querySelector('.walkthrough');
   var steps = document.querySelectorAll('.wt-step');
   var dots = document.querySelectorAll('.wt-dot');
   var chipSvg = document.querySelector('.chip-wt');
   var regions = chipSvg ? chipSvg.querySelectorAll('[data-region]') : [];
+  var numSteps = 7;
 
-  // Map step index → which SVG regions to highlight
   var regionMap = [
-    ['cores', 'mesh'],       // Step 0: Core Mesh
-    ['cores'],                // Step 1: Neuron Models (zoom into cores)
-    ['cores'],                // Step 2: Learning Engine (inside cores)
-    ['sram', 'cores'],        // Step 3: Synapse Memory
-    ['mesh'],                 // Step 4: Mesh Network
-    ['cores', 'mesh', 'management', 'sram', 'io', 'pads'], // Step 5: Full Die
+    ['cores'],                                                    // Step 0: Hybrid ANN/SNN
+    ['sram'],                                                     // Step 1: Memory
+    ['management', 'cores'],                                      // Step 2: Virtualization
+    ['cores'],                                                    // Step 3: Learning
+    ['cores', 'sram'],                                            // Step 4: Precision
+    ['cores'],                                                    // Step 5: Continual learning
+    ['cores', 'mesh', 'management', 'sram', 'io', 'pads'],       // Step 6: Full Die
   ];
 
   function setActiveStep(idx) {
@@ -844,9 +924,8 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
     dots.forEach(function(d, i) {
       d.classList.toggle('active', i === idx);
     });
-    // Highlight SVG regions
     var activeRegions = regionMap[idx] || [];
-    var isFullDie = idx === 5;
+    var isFullDie = idx === numSteps - 1;
     regions.forEach(function(r) {
       var name = r.getAttribute('data-region');
       if (isFullDie) {
@@ -861,18 +940,17 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
     });
   }
 
-  // Only run scroll-driven walkthrough on desktop
   if (window.innerWidth > 900 && wt) {
     window.addEventListener('scroll', function() {
       var rect = wt.getBoundingClientRect();
       var totalH = wt.offsetHeight - window.innerHeight;
       var progress = Math.max(0, Math.min(1, -rect.top / totalH));
-      var stepIdx = Math.min(5, Math.floor(progress * 6));
+      var stepIdx = Math.min(numSteps - 1, Math.floor(progress * numSteps));
       setActiveStep(stepIdx);
     });
   }
 
-  /* ═══ REVEAL ANIMATIONS ═══ */
+  /* REVEAL ANIMATIONS */
   var revObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
       if (e.isIntersecting) e.target.classList.add('visible');
@@ -880,7 +958,7 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
   }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
   document.querySelectorAll('.reveal').forEach(function(el) { revObs.observe(el); });
 
-  /* ═══ COUNT-UP ═══ */
+  /* COUNT-UP */
   document.querySelectorAll('[data-count]').forEach(function(el) {
     var target = parseInt(el.dataset.count, 10);
     var started = false;
@@ -901,7 +979,7 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
     countObs.observe(el);
   });
 
-  /* ═══ GLOW BUTTONS ═══ */
+  /* GLOW BUTTONS */
   document.querySelectorAll('.glow-btn').forEach(function(btn) {
     var spot = document.createElement('div');
     spot.className = 'glow-spot';
@@ -950,16 +1028,6 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
   });
 })();
 </script>
-<script>
-(function(){
-  var signIn=document.getElementById('sign-in-link'),avatarBtn=document.getElementById('avatar-btn'),dropdown=document.getElementById('avatar-dropdown'),loggedIn=false;
-  try{if(localStorage.getItem('catalyst_token')){loggedIn=true}else{var s=localStorage.getItem('catalyst_session');if(s){var d=JSON.parse(s);if(d&&d.access_token)loggedIn=true}}}catch(e){}
-  if(loggedIn){if(signIn)signIn.style.display='none';if(avatarBtn)avatarBtn.style.display='flex'}
-  if(avatarBtn)avatarBtn.addEventListener('click',function(e){e.stopPropagation();dropdown.classList.toggle('open')});
-  document.addEventListener('click',function(){dropdown&&dropdown.classList.remove('open')});
-  var signOut=document.getElementById('sign-out-btn');
-  if(signOut)signOut.addEventListener('click',function(){localStorage.removeItem('catalyst_session');localStorage.removeItem('catalyst_token');localStorage.removeItem('catalyst_refresh_token');window.location.href='/'});
-})();
-</script>
+
 </body>
 </html>
