@@ -2,13 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Research — Catalyst Neuromorphic" description="Two generations of neuromorphic processors. Validated on real hardware. Every claim backed by evidence." hasFog={true}>
+<BaseLayout title="Research — Catalyst Neuromorphic" description="Three generations of neuromorphic processors. Validated on real hardware. Every claim backed by evidence." hasFog={true}>
 
   <!-- HERO -->
   <section class="pt-36 pb-16 px-6 md:px-12 text-center" style="position:relative;z-index:1;">
     <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Research</p>
     <h1 class="text-[clamp(3rem,6vw,5rem)] font-bold tracking-tighter">Verified, not just claimed.</h1>
-    <p class="text-lg text-white/40 mt-4 max-w-[600px] mx-auto">Two processor generations. Real FPGA hardware. Every result reproducible.</p>
+    <p class="text-lg text-white/40 mt-4 max-w-[600px] mx-auto">Three processor generations. Real FPGA hardware. Every result reproducible.</p>
   </section>
 
   <!-- AT A GLANCE — wide stat bar -->
@@ -21,9 +21,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           { val: '68', label: 'N3 Features', sub: 'all validated' },
           { val: '19/19', label: 'N3 FPGA tests', sub: '8-core tile' },
           { val: '3,091', label: 'SDK tests', sub: '5 categories' },
-          { val: '90.7%', label: 'SHD accuracy', sub: 'adLIF float' },
-          { val: '73.5%', label: 'SSC accuracy', sub: 'beats Loihi 2' },
-          { val: '3', label: 'Papers', sub: 'N3 coming soon' },
+          { val: '91.0%', label: 'SHD accuracy', sub: '#1 — beats Loihi 2' },
+          { val: '76.4%', label: 'SSC accuracy', sub: 'SOTA — +6.6 vs Loihi 2' },
+          { val: '3', label: 'Papers', sub: 'all published' },
         ].map(item => (
           <div class="bg-surface p-5 text-center">
             <div class="text-lg md:text-xl font-bold tracking-tight text-white/90">{item.val}</div>
@@ -42,13 +42,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <!-- N3 -->
         <div class="card-glass p-8 md:p-10 flex flex-col" style="border-color:rgba(59,130,246,0.15);">
           <div class="flex items-center gap-3 mb-4">
-            <span class="text-[10px] uppercase tracking-widest text-catalyst-blue/60 bg-catalyst-blue/10 px-2.5 py-1 rounded-full">Coming soon</span>
+            <span class="text-[10px] uppercase tracking-widest text-catalyst-blue/60 bg-catalyst-blue/10 px-2.5 py-1 rounded-full">Third gen</span>
+            <span class="text-xs text-white/25">22 pages</span>
           </div>
           <h3 class="text-xl font-semibold mb-1">Catalyst N3</h3>
-          <p class="text-sm text-white/50 leading-relaxed mb-4">128-Core Hybrid ANN/SNN Neuromorphic SoC with Hardware Virtualization and On-Chip Continual Learning</p>
-          <p class="text-xs text-white/25 mb-4">68 features. FPGA validated (19/19 tests). Full benchmark suite in preparation.</p>
+          <p class="text-sm text-white/50 leading-relaxed mb-4">A 128-Core Hybrid Neuromorphic Processor with Hardware Virtualisation, Per-Tile Learning, and Silicon Metaplasticity</p>
+          <p class="mb-4"><a href="https://zenodo.org/records/18881283" target="_blank" rel="noopener noreferrer"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.18881283.svg" alt="DOI: 10.5281/zenodo.18881283" style="display:inline-block;" /></a></p>
           <div class="flex items-center gap-3 mt-auto">
-            <a href="/processors/n3" class="btn-pill text-sm">View architecture</a>
+            <a href="/papers/catalyst-n3.pdf" class="btn-pill text-sm" target="_blank">Read PDF</a>
+            <a href="https://zenodo.org/records/18881283" class="btn-pill text-sm" target="_blank" rel="noopener noreferrer">Zenodo</a>
           </div>
         </div>
         <!-- N2 -->
@@ -286,7 +288,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
         <div>
           <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight">SHD benchmark</h2>
-          <p class="reveal text-white/35 mt-2 max-w-[500px]">Spiking Heidelberg Digits &mdash; spoken digit classification with spike-encoded audio. 90.7% accuracy, within 0.2% of Loihi 2.</p>
+          <p class="reveal text-white/35 mt-2 max-w-[500px]">Spiking Heidelberg Digits &mdash; spoken digit classification with spike-encoded audio. N3 achieves 91.0%, beating Loihi 2 (90.9%).</p>
         </div>
       </div>
 
@@ -294,12 +296,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <!-- Our scores — big numbers -->
         <div class="card-glass p-8 flex flex-col justify-center">
           <div class="mb-6">
-            <div class="text-[3.5rem] font-bold tracking-tight leading-none">90.7<span class="text-xl text-white/30">%</span></div>
-            <div class="text-xs text-white/40 mt-1">adLIF, 1024 hidden (float)</div>
+            <div class="text-[3.5rem] font-bold tracking-tight leading-none">91.0<span class="text-xl text-white/30">%</span></div>
+            <div class="text-xs text-white/40 mt-1">N3 adLIF, 1536 hidden (float) &mdash; #1</div>
+          </div>
+          <div class="mb-6">
+            <div class="text-[2.2rem] font-bold tracking-tight leading-none text-white/50">90.7<span class="text-lg text-white/20">%</span></div>
+            <div class="text-xs text-white/30 mt-1">N2 adLIF, 1024 hidden (float)</div>
           </div>
           <div>
             <div class="text-[2.2rem] font-bold tracking-tight leading-none text-white/50">85.9<span class="text-lg text-white/20">%</span></div>
-            <div class="text-xs text-white/30 mt-1">LIF baseline (85.4% quantized)</div>
+            <div class="text-xs text-white/30 mt-1">N2 LIF baseline (85.4% quantized)</div>
           </div>
         </div>
 
@@ -308,11 +314,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h3 class="text-sm font-semibold text-white/50 mb-6">vs. published SHD results</h3>
           <div class="space-y-5">
             {[
-              { name: 'Catalyst N2', sub: 'adLIF, 1024 hidden', score: 90.7, color: 'bg-catalyst-blue', ours: true },
+              { name: 'Catalyst N3', sub: 'adLIF, 1536 hidden', score: 91.0, color: 'bg-catalyst-blue', ours: true },
               { name: 'Intel Loihi 2', sub: 'Loihi 2 (published)', score: 90.9, color: 'bg-white/15', ours: false },
+              { name: 'Catalyst N2', sub: 'adLIF, 1024 hidden', score: 90.7, color: 'bg-catalyst-blue/60', ours: true },
+              { name: 'Yin 2021', sub: 'published', score: 90.4, color: 'bg-white/15', ours: false },
               { name: 'Intel Loihi 1', sub: 'Loihi 1 (published)', score: 89.04, color: 'bg-white/15', ours: false },
               { name: 'Catalyst N2', sub: 'LIF baseline', score: 85.9, color: 'bg-catalyst-green/60', ours: true },
-              { name: 'Zenke & Vogels', sub: '2021', score: 83.4, color: 'bg-white/15', ours: false },
             ].map(item => (
               <div class="flex items-center gap-4">
                 <div class="w-36 shrink-0">
@@ -326,7 +333,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               </div>
             ))}
           </div>
-          <p class="text-[10px] text-white/20 mt-6">Catalyst 90.7% uses adLIF (adaptive LIF) with 1024 hidden neurons. LIF baseline at 85.9% shown for reference.</p>
+          <p class="text-[10px] text-white/20 mt-6">N3 91.0% uses adLIF (adaptive LIF) with 1536 hidden neurons. N2 90.7% with 1024 hidden. LIF baseline at 85.9% shown for reference.</p>
         </div>
       </div>
     </div>
@@ -441,6 +448,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="py-20 px-6 md:px-12 text-center">
     <p class="reveal text-white/30 mb-6">Read the papers. Check the numbers. Run the benchmarks.</p>
     <div class="flex gap-4 justify-center flex-wrap">
+      <a href="/papers/catalyst-n3.pdf" class="reveal btn-pill inline-flex" target="_blank">Read N3 paper</a>
       <a href="/papers/catalyst-n2.pdf" class="reveal btn-pill inline-flex" target="_blank">Read N2 paper</a>
       <a href="/papers/catalyst-n1.pdf" class="reveal btn-pill inline-flex" target="_blank">Read N1 paper</a>
       <a href="/cloud" class="reveal btn-pill inline-flex">Try Cloud API &rarr;</a>
