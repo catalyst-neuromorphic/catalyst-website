@@ -135,7 +135,7 @@
     position:relative;z-index:1;
     max-width:1100px;
     margin:0 auto;
-    padding:140px 32px 60px;
+    padding:220px 32px 60px;
   }
 
   .pillar-stack,.app-section{position:relative}
@@ -738,8 +738,8 @@
   }
   .connect-email a:hover{color:#60A5FA}
   .connect-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);
-    gap:20px;
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:20px;max-width:640px;margin:0 auto;
   }
   .connect-card{
     display:flex;flex-direction:column;align-items:center;
@@ -821,6 +821,7 @@
     <a href="/processors">Products</a>
     <a href="/research">Research</a>
     <a href="/about">About</a>
+    <a href="/blog">Blog</a>
     <div class="auth-area">
       <a href="/console/login" id="sign-in-link">Sign in</a>
       <button id="avatar-btn" class="avatar-btn" style="display:none;" aria-label="Account">
@@ -858,11 +859,10 @@
      WHY NEUROMORPHIC — EDITORIAL + BENTO ANIMATION
      ═══════════════════════════════════════════════ -->
 <section class="section">
-  <h2 class="sh text-anim">Your brain runs on 20&nbsp;watts.</h2>
+  <h2 class="sh text-anim">Why neuromorphic.</h2>
   <p class="ss text-anim d1">
-    It processes vision, sound, and movement simultaneously. It learns from experience,
-    reacts in milliseconds, and never needs a cooling system.
-    We built processors that work the same way.
+    GPUs process every frame whether something changed or not. Cloud inference adds latency. Retraining is a batch process.
+    Catalyst neuromorphic processors solve all three by design.
   </p>
 
   <div class="pillar-stack" style="overflow:visible">
@@ -871,14 +871,14 @@
     <div class="pcard anim">
 
       <div class="pcard-img">
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/6807304/pexels-photo-6807304.jpeg?auto=compress&cs=tinysrgb&w=900')"></div>
+        <div class="bg" style="background-image:url('https://images.pexels.com/photos/6755065/pexels-photo-6755065.jpeg?auto=compress&cs=tinysrgb&w=900')"></div>
         <div class="fade"></div>
       </div>
       <div class="pcard-text">
         <span class="pcard-num">01</span>
         <span class="pcard-tag">Architecture</span>
         <h3 class="pcard-h">Event-driven</h3>
-        <p class="pcard-p">Neurons only fire when something changes. No clock cycles wasted on silence. This is how biology achieves orders-of-magnitude energy efficiency over traditional GPU architectures.</p>
+        <p class="pcard-p">GPUs run every cycle whether there's input or not. Catalyst cores activate only on events, with no wasted cycles and no wasted power. The architecture is inherently sparse.</p>
       </div>
     </div>
 
@@ -886,14 +886,14 @@
     <div class="pcard anim">
 
       <div class="pcard-img">
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/3520679/pexels-photo-3520679.jpeg?auto=compress&cs=tinysrgb&w=900')"></div>
+        <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=900')"></div>
         <div class="fade"></div>
       </div>
       <div class="pcard-text">
         <span class="pcard-num">02</span>
         <span class="pcard-tag">Intelligence</span>
         <h3 class="pcard-h">On-chip learning</h3>
-        <p class="pcard-p">STDP, BTDP, and fully programmable learning rules execute directly in silicon. The chip adapts in real time — no cloud round-trips, no retraining pipelines.</p>
+        <p class="pcard-p">Traditional systems retrain offline in batches, then redeploy. Catalyst processors run STDP, BTDP, and programmable learning rules directly in silicon, adapting in real time, on-device.</p>
       </div>
     </div>
 
@@ -908,7 +908,7 @@
         <span class="pcard-num">03</span>
         <span class="pcard-tag">Deployment</span>
         <h3 class="pcard-h">Edge-native</h3>
-        <p class="pcard-p">Under 20 watts. No internet required. Deploy intelligence where it matters — in satellites, drones, autonomous vehicles, and field equipment at the furthest edge of the network.</p>
+        <p class="pcard-p">Cloud-dependent systems fail when connectivity does. Catalyst processors run under 20 watts with no network dependency: satellites, drones, autonomous vehicles, field equipment.</p>
       </div>
     </div>
 
@@ -920,9 +920,9 @@
      APPLICATIONS — EXPANDED MARQUEE
      ═══════════════════════════════════════════════ -->
 <section class="app-section">
-  <h2 class="sh text-anim" style="font-size:clamp(2rem,4vw,3rem)">The applications are boundless.</h2>
+  <h2 class="sh text-anim" style="font-size:clamp(2rem,4vw,3rem)">Where it applies.</h2>
   <p class="ss text-anim d1">
-    Wherever intelligence meets constraints — power, latency, connectivity — neuromorphic computing changes the equation.
+    From defence to drug discovery, the same architecture scales across industries.
   </p>
   <div class="divider"></div>
 
@@ -1205,29 +1205,6 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════
-     RESEARCH
-     ═══════════════════════════════════════════════ -->
-<section class="connect-section">
-  <h2 class="sh text-anim">Peer-reviewed. Open research.</h2>
-  <p class="ss text-anim d1">Two papers, one patent, and thousands of hours of validation.</p>
-
-  <div class="research-cards">
-    <a href="https://zenodo.org/records/18728256" target="_blank" class="connect-card research-card">
-      <span class="pcard-tag">N2 &middot; Loihi 2 Parity</span>
-      <h3 class="connect-label" style="font-size:1.15rem;margin-bottom:10px">Catalyst N2</h3>
-      <p class="connect-sub" style="line-height:1.6;margin-bottom:16px">128 cores. 131,072 neurons. 5 neuron models with programmable microcode, 16-bit synaptic weights, three-factor reward-modulated learning, and graded spike support. FPGA-validated.</p>
-      <span class="btn btn-blue">Read the paper &rarr;</span>
-    </a>
-    <a href="https://zenodo.org/records/18727094" target="_blank" class="connect-card research-card">
-      <span class="pcard-tag">N1 &middot; Loihi 1 Parity</span>
-      <h3 class="connect-label" style="font-size:1.15rem;margin-bottom:10px">Catalyst N1</h3>
-      <p class="connect-sub" style="line-height:1.6;margin-bottom:16px">128 cores. 131,072 neurons. Configurable LIF engine with on-chip STDP learning, programmable synaptic delays, and mesh network-on-chip. The foundation architecture.</p>
-      <span class="btn btn-blue">Read the paper &rarr;</span>
-    </a>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
      CONNECT — social links grid
      ═══════════════════════════════════════════════ -->
 <section class="connect-section" id="contact">
@@ -1244,11 +1221,6 @@
       <span class="connect-label">Research</span>
       <span class="connect-sub">Papers &amp; benchmarks</span>
     </a>
-    <a href="https://ko-fi.com/catalystneuromorphic" target="_blank" class="connect-card">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      <span class="connect-label">Support</span>
-      <span class="connect-sub">Buy us a coffee on Ko-Fi</span>
-    </a>
   </div>
 </section>
 
@@ -1259,16 +1231,17 @@
   <div class="footer-grid">
     <div class="footer-col">
       <h4>Products</h4>
+      <a href="/processors/n3">N3 Processor</a>
       <a href="/processors/n2">N2 Processor</a>
       <a href="/processors/n1">N1 Processor</a>
+      <a href="/processors/specs">Specifications</a>
       <a href="/cloud">Catalyst Cloud</a>
-      <a href="/cloud/docs">neurocore SDK</a>
       <a href="/cloud/pricing">Pricing</a>
     </div>
     <div class="footer-col">
       <h4>Research</h4>
       <a href="/research">Papers</a>
-      <a href="/research">Benchmarks</a>
+      <a href="/benchmarks">Benchmarks</a>
     </div>
     <div class="footer-col">
       <h4>Company</h4>
@@ -1277,15 +1250,13 @@
     </div>
     <div class="footer-col">
       <h4>Connect</h4>
-      <a href="https://github.com/catalyst-neuromorphic">GitHub</a>
+      <a href="https://github.com/catalyst-neuromorphic" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="mailto:henry@catalyst-neuromorphic.com">Email</a>
     </div>
   </div>
   <div class="footer-support">
     Support our research:
     <a href="https://github.com/sponsors/catalyst-neuromorphic">GitHub Sponsors</a>
-    &middot;
-    <a href="https://ko-fi.com/catalystneuromorphic">Ko-Fi</a>
   </div>
   <div class="footer-bottom">
     <span>&copy; 2026 Catalyst Neuromorphic Ltd. Company No. 17054540. All rights reserved.</span>
@@ -2050,7 +2021,7 @@ document.querySelectorAll('.pcard, .mcard').forEach(function(card) {
     '  float aura = fog * auraMask * 1.25 + edgeGlow * 0.14;' +
 
     /* ── DISTANCE FADE — no bounding geometry, fog thins naturally from cards ── */
-    '  aura *= smoothstep(0.18, 0.0, sdf);' +
+    '  aura *= smoothstep(0.09, 0.0, sdf);' +
 
     /* ── COLOR ── */
     '  vec3 deepBlue   = vec3(0.10, 0.20, 0.45);' +
@@ -2128,7 +2099,7 @@ document.querySelectorAll('.pcard, .mcard').forEach(function(card) {
   var stack = document.querySelector('.pillar-stack');
   if (stack) {
     var pcards = stack.querySelectorAll('.pcard');
-    var BLEED = 450;
+    var BLEED = 225;
 
     var fogC = document.createElement('canvas');
     fogC.style.cssText = 'position:absolute;pointer-events:none;z-index:1;';
@@ -2278,7 +2249,7 @@ document.querySelectorAll('.pcard, .mcard').forEach(function(card) {
 
     /* Combine */
     '  float aura = fog * auraMask * 1.25 + edgeGlow * 0.14;' +
-    '  aura *= smoothstep(0.18, 0.0, sdf);' +
+    '  aura *= smoothstep(0.09, 0.0, sdf);' +
 
     /* Outer fade — fog to nothing at marquee-wrap edges */
     '  float hMask = smoothstep(u_hFade.x, u_hFade.y, uv.x)' +
@@ -2382,7 +2353,7 @@ document.querySelectorAll('.pcard, .mcard').forEach(function(card) {
       var wr = wraps[0].getBoundingClientRect();
       var wL = (wr.left - cr.left) / cW;
       var wR = (wr.right - cr.left) / cW;
-      var bleedUV = 200 / cW;
+      var bleedUV = 100 / cW;
       var hFL0 = wL - bleedUV;
       var hFL1 = wL;
       var hFR1 = wR;
@@ -2415,7 +2386,7 @@ document.querySelectorAll('.pcard, .mcard').forEach(function(card) {
     var mTrack1 = document.getElementById('row1');
     var mTrack2 = document.getElementById('row2');
     if (mWraps.length >= 2 && mTrack1 && mTrack2) {
-      var MBLEED = 400;
+      var MBLEED = 200;
 
       var mFogC = document.createElement('canvas');
       mFogC.style.cssText = 'position:absolute;pointer-events:none;z-index:0;';
