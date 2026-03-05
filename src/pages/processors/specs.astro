@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const processors = [
+  {
+    name: 'N1',
+    class: 'Loihi 1-class',
+    status: 'Production',
+    specs: [
+      ['Cores', '1'],
+      ['Neurons per core', '64'],
+      ['Synapses per core', '4,096'],
+      ['Total synapses', '4,096'],
+      ['Neuron model', 'LIF (leaky integrate-and-fire)'],
+      ['Spike format', 'Binary (1-bit)'],
+      ['Weight precision', '16-bit signed'],
+      ['Membrane precision', '16-bit signed'],
+      ['Leak model', 'Configurable decay constant'],
+      ['Refractory period', 'Programmable (0-63 timesteps)'],
+      ['Learning rule', 'STDP (spike-timing dependent plasticity)'],
+      ['On-chip memory', '8 KB SRAM (neuron state + synaptic)'],
+      ['Clock frequency', '83.3 MHz (FPGA)'],
+      ['Interface', 'AXI4-Lite register map'],
+      ['Target FPGA', 'Xilinx UltraScale+ (AWS F2)'],
+      ['LUT utilization', '~12,000'],
+      ['BRAM utilization', '~8 blocks'],
+      ['Test coverage', '96 tests, all passing'],
+      ['SHD benchmark', '85.9% (float), 85.4% (quantized)'],
+      ['Patent', 'UK 2602902.6 (filed Feb 2026)'],
+      ['Paper', 'DOI 10.5281/zenodo.18727094'],
+    ],
+  },
+  {
+    name: 'N2',
+    class: 'Loihi 2-class',
+    status: 'Production',
+    specs: [
+      ['Cores', '1 (multi-core via NoC)'],
+      ['Neurons per core', '1,024'],
+      ['Synapses per core', '32,768'],
+      ['Neuron models', 'LIF, CUBA, Adaptive LIF'],
+      ['Spike format', 'Binary + Graded (8-bit payload)'],
+      ['Weight precision', '16-bit signed'],
+      ['Membrane precision', '16-bit signed'],
+      ['Compartments', '4 per neuron (dendritic tree)'],
+      ['Delay support', '0-63 timesteps per synapse'],
+      ['Learning rules', 'STDP, 3-factor (reward-modulated), dendritic'],
+      ['Noise injection', 'Per-neuron configurable'],
+      ['On-chip memory', '128 KB SRAM (state + synaptic)'],
+      ['Network-on-Chip', 'Hierarchical packet-switched NoC'],
+      ['Clock frequency', '83.3 MHz (FPGA)'],
+      ['Throughput', '14,500 timesteps/second (sustained)'],
+      ['Spike latency', 'Sub-microsecond'],
+      ['Interface', 'AXI4-Lite + DMA'],
+      ['Target FPGA', 'Xilinx UltraScale+ (AWS F2)'],
+      ['LUT utilization', '~85,000'],
+      ['BRAM utilization', '~120 blocks'],
+      ['Test coverage', '3,091 tests, all passing'],
+      ['FPGA validation', '28/28 integration tests passing'],
+      ['SHD benchmark', '90.7% (quantized, hardware-deployed)'],
+      ['N-MNIST benchmark', '99.2%'],
+      ['SSC benchmark', '72.1%'],
+      ['GSC benchmark', '88.0%'],
+      ['Patent', 'UK 2603866.1 (filed Feb 2026)'],
+      ['Paper', 'DOI 10.5281/zenodo.18728256'],
+    ],
+  },
+  {
+    name: 'N3',
+    class: '128-core SoC',
+    status: 'FPGA validated',
+    specs: [
+      ['Cores', '128'],
+      ['Neurons per core', '1,024'],
+      ['Total neurons', '131,072'],
+      ['Total synapses', '8,388,608'],
+      ['Neuron models', 'LIF, CUBA, Adaptive LIF, multi-compartment'],
+      ['Spike format', 'Binary + Graded (8-bit payload)'],
+      ['Weight precision', '16-bit signed'],
+      ['Membrane precision', '16-bit signed'],
+      ['Compartments', '4 per neuron'],
+      ['Delay support', '0-63 timesteps per synapse'],
+      ['Learning rules', 'STDP, 3-factor, dendritic, continual on-chip'],
+      ['Hardware virtualization', 'Time-multiplexed virtual cores'],
+      ['Memory hierarchy', 'L1 SRAM + L2 shared + L3 external DDR'],
+      ['Network-on-Chip', '2D mesh, hierarchical routing'],
+      ['RISC-V management core', 'RV32I for configuration and monitoring'],
+      ['Clock frequency', '83.3 MHz (FPGA)'],
+      ['Interface', 'AXI4 (full) + PCIM for external memory'],
+      ['Target FPGA', 'Xilinx UltraScale+ (AWS F2)'],
+      ['Feature count', '68 architectural features, all implemented'],
+      ['Test coverage', '1,011+ tests, all passing'],
+      ['FPGA validation', '19/19 integration tests passing'],
+      ['AFI timing', 'WNS = 0.000 ns (timing met)'],
+    ],
+  },
+];
+---
+
+<BaseLayout title="Specifications — Catalyst Neuromorphic" description="Technical specifications for N1, N2, and N3 neuromorphic processors. Architecture, performance, and FPGA resource utilization." hasFog={true}>
+
+  <!-- HERO -->
+  <section class="pt-36 pb-16 px-6 md:px-12" style="position:relative;z-index:1;">
+    <div style="max-width:700px;margin:0 auto;text-align:center;">
+      <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-5">Specifications</p>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2.6rem,5.5vw,4.2rem); font-weight:700; letter-spacing:-0.04em; line-height:1;">
+        Technical reference.
+      </h1>
+      <p class="text-base text-white/35 mt-5" style="line-height:1.7; max-width:520px; margin:0 auto;">
+        Architecture and performance data for all three processor generations. All numbers from hardware measurements, not simulation.
+      </p>
+    </div>
+  </section>
+
+  <!-- PROCESSOR SPEC SHEETS -->
+  {processors.map((proc, i) => (
+    <>
+      <section class="pb-24 px-6 md:px-12" style="position:relative;z-index:1;">
+        <div style="max-width:700px;margin:0 auto;">
+          <div class="reveal" style="margin-bottom:16px; display:flex; align-items:baseline; gap:16px;">
+            <h2 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(1.8rem,3vw,2.4rem); font-weight:700; letter-spacing:-0.03em;">{proc.name}</h2>
+            <span class="text-sm text-white/30">{proc.class}</span>
+            <span style="font-size:.6rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; padding:3px 8px; border-radius:4px; color:#60A5FA; background:rgba(59,130,246,0.12);">{proc.status}</span>
+          </div>
+          <div class="reveal card-glass" style="padding:clamp(1.5rem,3vw,2rem); overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; position:relative; z-index:2;">
+              <tbody>
+                {proc.specs.map(([label, value], j) => (
+                  <tr style={`border-bottom:1px solid rgba(255,255,255,${j === proc.specs.length - 1 ? '0' : '0.04'});`}>
+                    <td class="text-sm text-white/30" style="padding:8px 16px 8px 0; white-space:nowrap; vertical-align:top;">{label}</td>
+                    <td class="text-sm text-white/60" style="padding:8px 0; font-family:'JetBrains Mono',monospace; font-size:0.82rem;">{value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {i < processors.length - 1 && (
+        <div style="width:100%;max-width:400px;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.2),transparent);margin:0 auto 0;"></div>
+      )}
+    </>
+  ))}
+
+  <!-- COMPARISON SUMMARY -->
+  <div style="width:100%;max-width:400px;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.2),transparent);margin:0 auto;"></div>
+
+  <section class="py-24 px-6 md:px-12" style="position:relative;z-index:1;">
+    <div style="max-width:700px;margin:0 auto;">
+      <h2 class="reveal text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-tight mb-6" style="font-family:'Space Grotesk',sans-serif;">At a glance.</h2>
+      <div class="reveal card-glass" style="padding:clamp(1.5rem,3vw,2rem); overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse; position:relative; z-index:2;">
+          <thead>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+              <th class="text-sm text-white/30 font-medium" style="padding:8px 12px 12px 0; text-align:left;"></th>
+              <th class="text-sm text-white/50 font-semibold" style="padding:8px 12px 12px; text-align:center;">N1</th>
+              <th class="text-sm text-white/50 font-semibold" style="padding:8px 12px 12px; text-align:center;">N2</th>
+              <th class="text-sm text-white/50 font-semibold" style="padding:8px 12px 12px; text-align:center;">N3</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['Cores', '1', '1', '128'],
+              ['Neurons', '64', '1,024', '131,072'],
+              ['Synapses', '4,096', '32,768', '8,388,608'],
+              ['Neuron models', '1', '3', '4+'],
+              ['Graded spikes', 'No', 'Yes', 'Yes'],
+              ['3-factor learning', 'No', 'Yes', 'Yes'],
+              ['Compartments', 'No', '4', '4'],
+              ['Tests', '96', '3,091', '1,011+'],
+              ['FPGA validated', 'Yes', 'Yes', 'Yes'],
+              ['SHD accuracy', '85.4%', '90.7%', '&mdash;'],
+            ].map(([label, n1, n2, n3], j) => (
+              <tr style={`border-bottom:1px solid rgba(255,255,255,${j === 9 ? '0' : '0.04'});`}>
+                <td class="text-sm text-white/30" style="padding:8px 12px 8px 0; white-space:nowrap;">{label}</td>
+                <td class="text-sm text-white/50" style="padding:8px 12px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:0.82rem;" set:html={n1}></td>
+                <td class="text-sm text-white/50" style="padding:8px 12px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:0.82rem;" set:html={n2}></td>
+                <td class="text-sm text-white/50" style="padding:8px 12px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:0.82rem;" set:html={n3}></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section class="pb-24 px-6 md:px-12" style="position:relative;z-index:1;">
+    <div style="max-width:640px;margin:0 auto;">
+      <div class="reveal grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {[
+          { title: 'N1 deep dive', href: '/processors/n1' },
+          { title: 'N2 deep dive', href: '/processors/n2' },
+          { title: 'N3 deep dive', href: '/processors/n3' },
+        ].map(link => (
+          <a href={link.href} class="card-glass" style="padding:1.25rem 1.5rem; text-decoration:none; text-align:center; display:block;">
+            <div class="text-sm font-semibold text-white/75" style="position:relative;z-index:2;">{link.title}</div>
+            <div class="text-xs text-catalyst-blue/60 mt-1" style="position:relative;z-index:2;">View &rarr;</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
