@@ -187,21 +187,30 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
 
   /* STATS */
   .stats-section{
+    max-width:1100px;margin:0 auto;
     padding:120px 40px;
-    display:flex;justify-content:center;gap:80px;flex-wrap:wrap;
   }
-  .stat{text-align:center}
+  .stats-category{margin-bottom:48px}
+  .stats-category:last-child{margin-bottom:0}
+  .stats-category-label{
+    font-size:.65rem;font-weight:600;text-transform:uppercase;
+    letter-spacing:.12em;color:rgba(59,130,246,0.6);margin-bottom:20px;
+  }
+  .stats-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:32px;
+  }
+  .stat{text-align:left}
   .stat-num{
     font-family:'Space Grotesk',system-ui;
-    font-size:clamp(2.5rem,5vw,4rem);font-weight:700;
+    font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;
     letter-spacing:-0.03em;
     background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.7) 100%);
     -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   }
   .stat-label{
-    font-size:.82rem;color:rgba(255,255,255,0.3);
-    margin-top:8px;text-transform:uppercase;
-    letter-spacing:.06em;font-weight:500;
+    font-size:.75rem;color:rgba(255,255,255,0.3);
+    margin-top:6px;text-transform:uppercase;
+    letter-spacing:.05em;font-weight:500;
   }
 
   /* WHAT'S NEW */
@@ -497,7 +506,6 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
   </div>
   <h1>N3</h1>
   <p class="hero-sub">128 cores. Up to 1 million neurons. Hybrid ANN/SNN. Hardware virtualization. On-chip continual learning.</p>
-  <div class="hero-badge"><span class="dot"></span> FPGA Validated</div>
   <div class="hero-ctas">
     <a href="/research" class="btn btn-primary glow-btn">Read the research</a>
     <a href="mailto:henry@catalyst-neuromorphic.com" class="btn btn-pill glow-btn">Get in touch</a>
@@ -548,8 +556,8 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
       <!-- Step 6: Full Die -->
       <div class="wt-step" data-step="6">
         <p class="wt-step-eyebrow">Full Die</p>
-        <h2>68 features.<br>All validated.</h2>
-        <p>128 neuromorphic cores, 4 RISC-V management CPUs, async hybrid network-on-chip, and 36 MB total on-chip SRAM. Every feature specified, implemented in RTL, and validated on FPGA.</p>
+        <h2>128 cores.<br>36 MB SRAM.</h2>
+        <p>128 neuromorphic cores across 16 tiles, 4 RISC-V management CPUs, async hybrid network-on-chip, and 36 MB on-chip SRAM. Every architectural feature implemented in RTL and validated on FPGA.</p>
       </div>
     </div>
     <div class="wt-chip">
@@ -565,25 +573,68 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
 
 <!-- BY THE NUMBERS -->
 <section class="stats-section reveal" id="stats">
-  <div class="stat">
-    <div class="stat-num" data-count="524288">0</div>
-    <div class="stat-label">Neurons (24-bit)</div>
+  <div class="stats-category">
+    <p class="stats-category-label">Scale</p>
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-num">4.2M</div>
+        <div class="stat-label">Virtual neurons (24-bit)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">500M+</div>
+        <div class="stat-label">Addressable synapses</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">28 MB</div>
+        <div class="stat-label">On-chip SRAM</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">256</div>
+        <div class="stat-label">GMAC/s (ASIC projected)</div>
+      </div>
+    </div>
   </div>
-  <div class="stat">
-    <div class="stat-num">68</div>
-    <div class="stat-label">Architecture Features</div>
+  <div class="stats-category">
+    <p class="stats-category-label">Architecture</p>
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-num">128</div>
+        <div class="stat-label">Cores (16 tiles)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8+1</div>
+        <div class="stat-label">Neuron models</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">16</div>
+        <div class="stat-label">Learning accelerators</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4-level</div>
+        <div class="stat-label">Memory hierarchy</div>
+      </div>
+    </div>
   </div>
-  <div class="stat">
-    <div class="stat-num">16</div>
-    <div class="stat-label">Learning Accelerators</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">19/19</div>
-    <div class="stat-label">FPGA Tests Passing</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">1,011+</div>
-    <div class="stat-label">RTL Tests</div>
+  <div class="stats-category">
+    <p class="stats-category-label">Performance</p>
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-num">91.0%</div>
+        <div class="stat-label">SHD (#1 SOTA)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">76.4%</div>
+        <div class="stat-label">SSC (#1 SOTA)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4.04</div>
+        <div class="stat-label">nJ / neuron-op (FPGA)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3.7&times;</div>
+        <div class="stat-label">Energy efficiency vs N2</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -693,7 +744,8 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
           ['Cores', '128 (16 tiles)', '128', '8 NPUs', '152 (ARM)'],
           ['Neurons (24-bit)', '524,288', '~1,000,000', '2,048', 'Up to 16M'],
           ['Neurons (8-bit)', '1,048,576', '\u2014', '\u2014', '\u2014'],
-          ['Neuron models', '7+ (programmable)', '3+', '1 (LIF)', 'Software'],
+          ['Virtual neurons (TDM)', '4.2M (24-bit)', '\u2014', '\u2014', '\u2014'],
+          ['Neuron models', '8+1 (programmable)', '3+', '1 (LIF)', 'Software'],
           ['Weight precision', '1\u201316-bit', '1\u20138-bit', '1/2/4/8-bit', 'Software'],
           ['ANN mode', 'INT8 MAC', '\u2014', 'Yes', '\u2014'],
           ['On-chip learning', '16 accelerators', '1 global', 'Limited', 'ARM cores'],
@@ -702,7 +754,7 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
           ['Virtualization', 'NeurOS (680+)', '\u2014', '\u2014', '\u2014'],
           ['Spike compression', 'DELTA/BURST', '\u2014', '\u2014', '\u2014'],
           ['Metaplasticity', 'Hardware (3-bit)', '\u2014', '\u2014', '\u2014'],
-          ['Hardware validated', 'FPGA (19/19)', 'ASIC (Intel 4)', 'ASIC (28nm)', 'ASIC (22nm)'],
+          ['Hardware validated', 'FPGA validated', 'ASIC (Intel 4)', 'ASIC (28nm)', 'ASIC (22nm)'],
           ['Open design', 'Yes (BSL 1.1)', 'No', 'No', 'Partial'],
         ].map(row => (
           <tr>
@@ -730,7 +782,7 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
       <div class="spec-row"><span>Total neurons (24-bit)</span><span>524,288</span></div>
       <div class="spec-row"><span>Total neurons (8-bit)</span><span>1,048,576</span></div>
       <div class="spec-row"><span>Virtual neurons (TDM &times;8)</span><span>Up to 8,388,608</span></div>
-      <div class="spec-row"><span>Neuron models</span><span>CUBA LIF, Izhikevich, ALIF, Sigma-Delta, Resonate-and-Fire, Gated LIF, 1 custom</span></div>
+      <div class="spec-row"><span>Neuron models</span><span>CUBA LIF, ALIF, Sigma-Delta, Gated, Graded, WTA, ANN INT8, Custom ISA</span></div>
       <div class="spec-row"><span>Compartments per neuron</span><span>8 addressable (4 implemented)</span></div>
       <div class="spec-row"><span>Parameter groups per core</span><span>32</span></div>
       <div class="spec-row"><span>Management CPUs</span><span>4 &times; RISC-V RV32IMC with neuro ISA extensions</span></div>
@@ -788,16 +840,29 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
     </div>
   </details>
   <details class="spec-group">
-    <summary>Hardware Validation</summary>
+    <summary>FPGA Performance</summary>
     <div>
-      <div class="spec-row"><span>FPGA tests passing</span><span>19/19</span></div>
       <div class="spec-row"><span>Platform</span><span>AWS F2 (Xilinx UltraScale+ VU47P)</span></div>
-      <div class="spec-row"><span>Clock frequency</span><span>83.3 MHz (tile), 250 MHz (AXI)</span></div>
-      <div class="spec-row"><span>Cores validated</span><span>8 (single tile, full feature parity)</span></div>
-      <div class="spec-row"><span>RTL testbenches</span><span>58 passing (1,011+ tests)</span></div>
-      <div class="spec-row"><span>RTL modules</span><span>46 modules, ~17,700 lines</span></div>
-      <div class="spec-row"><span>Assertions</span><span>897</span></div>
-      <div class="spec-row"><span>Peak throughput</span><span>14,500 timesteps/sec</span></div>
+      <div class="spec-row"><span>Neuromorphic clock</span><span>62.5 MHz (tile), 250 MHz (AXI bus)</span></div>
+      <div class="spec-row"><span>Peak throughput</span><span>14,512 timesteps/sec</span></div>
+      <div class="spec-row"><span>Energy per neuron-op</span><span>4.04 nJ</span></div>
+      <div class="spec-row"><span>Efficiency vs N2</span><span>3.7&times; (nJ/neuron-op)</span></div>
+      <div class="spec-row"><span>SHD accuracy</span><span>91.0% (#1 published result)</span></div>
+      <div class="spec-row"><span>SSC accuracy</span><span>76.4% (#1 published result)</span></div>
+      <div class="spec-row"><span>N-MNIST accuracy</span><span>99.2%</span></div>
+      <div class="spec-row"><span>Total power (FPGA)</span><span>1.91 W (full tile active)</span></div>
+    </div>
+  </details>
+  <details class="spec-group">
+    <summary>ASIC Projections (28nm)</summary>
+    <div>
+      <div class="spec-row"><span>Target process</span><span>TSMC 28nm HPC+</span></div>
+      <div class="spec-row"><span>Projected power</span><span>~2.5 W (full chip)</span></div>
+      <div class="spec-row"><span>Projected throughput</span><span>142 GSOPs/s</span></div>
+      <div class="spec-row"><span>Projected efficiency</span><span>~57 GSOPs/J</span></div>
+      <div class="spec-row"><span>Energy per synaptic event</span><span>12&ndash;18 pJ</span></div>
+      <div class="spec-row"><span>ANN INT8 MAC throughput</span><span>256 GMAC/s (projected)</span></div>
+      <div class="spec-row"><span>Estimated die area</span><span>~9.3 mm&sup2;</span></div>
     </div>
   </details>
   <details class="spec-group">
@@ -807,7 +872,7 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
       <div class="spec-row"><span>UK Patent (N2)</span><span>Filed Feb 2026 &mdash; App 2603866.1</span></div>
       <div class="spec-row"><span>RTL</span><span>Proprietary (BSL 1.1)</span></div>
       <div class="spec-row"><span>Architecture spec</span><span>78 pages, v3.0</span></div>
-      <div class="spec-row"><span>Architectural features</span><span>68 (all at 10/10 readiness)</span></div>
+      <div class="spec-row"><span>RTL modules</span><span>46 modules, ~17,700 lines</span></div>
     </div>
   </details>
 </section>
