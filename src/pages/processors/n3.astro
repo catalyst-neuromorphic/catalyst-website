@@ -504,7 +504,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
     <ChipFloorplan chip="n3" showLabels={true} />
   </div>
   <h1>N3</h1>
-  <p class="hero-sub">128 cores. Up to 1 million neurons. Hybrid ANN/SNN. Hardware virtualization. On-chip continual learning.</p>
+  <p class="hero-sub">128 cores. 524K neurons (24-bit) to 1M (8-bit), up to 8.4M virtual with TDM. Hybrid ANN/SNN. Hardware virtualization. On-chip continual learning.</p>
   <div class="hero-ctas">
     <a href="/research" class="btn btn-primary glow-btn">Read the research</a>
     <a href="mailto:henry@catalyst-neuromorphic.com" class="btn btn-pill glow-btn">Get in touch</a>
@@ -584,7 +584,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
         <div class="stat-label">Addressable synapses</div>
       </div>
       <div class="stat">
-        <div class="stat-num">28 MB</div>
+        <div class="stat-num">36 MB</div>
         <div class="stat-label">On-chip SRAM</div>
       </div>
       <div class="stat">
@@ -601,8 +601,8 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
         <div class="stat-label">Cores (16 tiles)</div>
       </div>
       <div class="stat">
-        <div class="stat-num">8+1</div>
-        <div class="stat-label">Neuron models</div>
+        <div class="stat-num">8</div>
+        <div class="stat-label">Neuron models (7 + custom)</div>
       </div>
       <div class="stat">
         <div class="stat-num">16</div>
@@ -741,10 +741,10 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
       <tbody>
         {[
           ['Cores', '128 (16 tiles)', '128', '8 NPUs', '152 (ARM)'],
-          ['Neurons (24-bit)', '524,288', '~1,000,000', '2,048', 'Up to 16M'],
+          ['Neurons (24-bit)*', '524,288', '~1,000,000', '2,048', 'Up to 16M'],
           ['Neurons (8-bit)', '1,048,576', '\u2014', '\u2014', '\u2014'],
           ['Virtual neurons (TDM)', '4.2M (24-bit)', '\u2014', '\u2014', '\u2014'],
-          ['Neuron models', '8+1 (programmable)', '3+', '1 (LIF)', 'Software'],
+          ['Neuron models', '8 (7 + custom ISA)', '3+', '1 (LIF)', 'Software'],
           ['Weight precision', '1\u201316-bit', '1\u20138-bit', '1/2/4/8-bit', 'Software'],
           ['ANN mode', 'INT8 MAC', '\u2014', 'Yes', '\u2014'],
           ['On-chip learning', '16 accelerators', '1 global', 'Limited', 'ARM cores'],
@@ -766,6 +766,7 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
         ))}
       </tbody>
     </table>
+    <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:12px;">* Neuron counts are not directly comparable across platforms. Loihi 2 neurons are 1-bit compartments; N3 neurons are 24-bit with full state (potential, current, traces). N3 at 8-bit precision supports 1,048,576 physical neurons, or up to 8.4M virtual with TDM.</p>
   </div>
 </section>
 
@@ -777,10 +778,13 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
     <div>
       <div class="spec-row"><span>Cores</span><span>128 (16 tiles &times; 8 cores)</span></div>
       <div class="spec-row"><span>Neurons per core (24-bit)</span><span>4,096</span></div>
+      <div class="spec-row"><span>Neurons per core (16-bit)</span><span>5,120</span></div>
       <div class="spec-row"><span>Neurons per core (8-bit)</span><span>8,192</span></div>
-      <div class="spec-row"><span>Total neurons (24-bit)</span><span>524,288</span></div>
-      <div class="spec-row"><span>Total neurons (8-bit)</span><span>1,048,576</span></div>
-      <div class="spec-row"><span>Virtual neurons (TDM &times;8)</span><span>Up to 8,388,608</span></div>
+      <div class="spec-row"><span>Total physical neurons (24-bit)</span><span>524,288</span></div>
+      <div class="spec-row"><span>Total physical neurons (16-bit)</span><span>655,360</span></div>
+      <div class="spec-row"><span>Total physical neurons (8-bit)</span><span>1,048,576</span></div>
+      <div class="spec-row"><span>Virtual neurons (24-bit, TDM &times;8)</span><span>4,194,304</span></div>
+      <div class="spec-row"><span>Virtual neurons (8-bit, TDM &times;8)</span><span>8,388,608</span></div>
       <div class="spec-row"><span>Neuron models</span><span>CUBA LIF, ALIF, Sigma-Delta, Gated, Graded, WTA, ANN INT8, Custom ISA</span></div>
       <div class="spec-row"><span>Compartments per neuron</span><span>8 addressable (4 implemented)</span></div>
       <div class="spec-row"><span>Parameter groups per core</span><span>32</span></div>
@@ -822,8 +826,8 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
       <div class="spec-row"><span>Inter-tile routing</span><span>Fat tree + 8 express links</span></div>
       <div class="spec-row"><span>Spike compression</span><span>DELTA / BURST / ADAPTIVE</span></div>
       <div class="spec-row"><span>Multicast groups</span><span>256 per tile &times; 32 destinations</span></div>
-      <div class="spec-row"><span>Spike payloads</span><span>Binary + 8/16/24-bit graded</span></div>
-      <div class="spec-row"><span>Axonal delays</span><span>1&ndash;63 timesteps</span></div>
+      <div class="spec-row"><span>Spike payloads</span><span>Binary + 8-bit graded (16-bit extended mode)</span></div>
+      <div class="spec-row"><span>Axonal delays</span><span>1&ndash;255 timesteps (24-bit mode)</span></div>
     </div>
   </details>
   <details class="spec-group">
@@ -856,12 +860,13 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
     <summary>ASIC Projections (28nm)</summary>
     <div>
       <div class="spec-row"><span>Target process</span><span>TSMC 28nm HPC+</span></div>
-      <div class="spec-row"><span>Projected power</span><span>~2.5 W (full chip)</span></div>
-      <div class="spec-row"><span>Projected throughput</span><span>142 GSOPs/s</span></div>
-      <div class="spec-row"><span>Projected efficiency</span><span>~57 GSOPs/J</span></div>
+      <div class="spec-row"><span>Die area per tile (8 cores)</span><span>~58 mm&sup2;</span></div>
+      <div class="spec-row"><span>Full 128-core die</span><span>~1,070 mm&sup2; (not feasible at 28nm &mdash; multi-chip or advanced node required)</span></div>
+      <div class="spec-row"><span>Initial ASIC target</span><span>Single tile (8 cores) or 4-tile (32 cores) configuration</span></div>
       <div class="spec-row"><span>Energy per synaptic event</span><span>12&ndash;18 pJ</span></div>
-      <div class="spec-row"><span>ANN INT8 MAC throughput</span><span>256 GMAC/s (projected)</span></div>
-      <div class="spec-row"><span>Estimated die area</span><span>~9.3 mm&sup2;</span></div>
+      <div class="spec-row"><span>Projected efficiency</span><span>~57 GSOPs/J</span></div>
+      <div class="spec-row"><span>Power (8-core tile, projected)</span><span>~0.2 W (typical activity)</span></div>
+      <div class="spec-row"><span>Scaling path</span><span>Multi-chip AER (8 links/chip) or advanced node (&le;7nm)</span></div>
     </div>
   </details>
   <details class="spec-group">
