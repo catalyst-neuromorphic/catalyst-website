@@ -43,8 +43,8 @@ const products = [
     glowColor: '239,68,68',
     stats: [
       { label: 'Neurons', value: '524K\u20131M' },
-      { label: 'Features', value: '68' },
-      { label: 'Status', value: 'FPGA Validated' },
+      { label: 'Compute', value: 'ANN/SNN' },
+      { label: 'Memory', value: '4-level' },
     ],
     href: '/processors/n3',
     buyHref: '/processors/n3',
@@ -191,9 +191,9 @@ const comparison = [
   }
   .tile:hover::before{opacity:.8}
   .tile.disabled{opacity:.6;pointer-events:none;filter:saturate(0.3)}
-  .tile-chip{display:flex;justify-content:center;align-items:center;margin-bottom:28px;position:relative;min-height:220px}
-  .tile-chip svg{width:100%;max-width:280px;height:auto;position:relative;z-index:2}
-  .tile-chip img{width:100%;max-width:280px;height:auto;object-fit:contain;position:relative;z-index:2}
+  .tile-chip{display:flex;justify-content:center;align-items:center;margin-bottom:28px;position:relative;height:180px}
+  .tile-chip svg{width:100%;max-width:260px;height:auto;position:relative;z-index:2}
+  .tile-chip img{max-width:100%;max-height:160px;width:auto;height:auto;object-fit:contain;position:relative;z-index:2}
   .chip-glow{
     position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
     width:260px;height:260px;border-radius:50%;
