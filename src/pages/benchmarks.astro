@@ -17,9 +17,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </p>
       </div>
 
-      <!-- Main results table -->
+      <!-- N3 Results (Latest) -->
       <div class="reveal" style="margin-bottom:80px;">
-        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:600; color:#fff; margin-bottom:24px;">Results</h2>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:600; color:#fff; margin-bottom:8px;">Catalyst N3 <span style="font-size:0.85rem; font-weight:500; color:rgba(255,255,255,0.35); margin-left:8px;">Latest</span></h2>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem; color:rgba(255,255,255,0.4); margin-bottom:24px;">N3 achieves #1 on SHD and SSC, the two most challenging spiking audio benchmarks.</p>
         <div style="overflow-x:auto; border-radius:16px; border:1px solid rgba(255,255,255,0.06); background:rgba(15,15,20,0.6);">
           <table style="width:100%; border-collapse:collapse; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem;">
             <thead>
@@ -27,9 +28,57 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Benchmark</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Classes</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Architecture</th>
-                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Float</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Float Acc</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">vs SOTA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">SHD</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">20</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1536→20 (rec, adLIF)</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">91.0%</td>
+                <td style="padding:14px 20px;"><span style="background:rgba(34,197,94,0.15); color:#22C55E; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">#1 SOTA</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">SSC</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">35</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1024→512→35 (rec, adLIF)</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">76.4%</td>
+                <td style="padding:14px 20px;"><span style="background:rgba(34,197,94,0.15); color:#22C55E; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">#1 SOTA</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">N-MNIST</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">10</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">34×34×2→Conv+LIF→10</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">99.2%</td>
+                <td style="padding:14px 20px;"><span style="background:rgba(34,197,94,0.15); color:#22C55E; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">Published</span></td>
+              </tr>
+              <tr>
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">GSC-35</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">35</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">Delay+rec adLIF+BN</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">Training</td>
+                <td style="padding:14px 20px;"><span style="background:rgba(234,179,8,0.15); color:#EAB308; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">In progress</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- N2 Results -->
+      <div class="reveal" style="margin-bottom:80px;">
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:600; color:#fff; margin-bottom:8px;">Catalyst N2</h2>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem; color:rgba(255,255,255,0.4); margin-bottom:24px;">All N2 models deploy to Catalyst FPGA hardware via int16 weight quantization.</p>
+        <div style="overflow-x:auto; border-radius:16px; border:1px solid rgba(255,255,255,0.06); background:rgba(15,15,20,0.6);">
+          <table style="width:100%; border-collapse:collapse; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem;">
+            <thead>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Benchmark</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Classes</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Architecture</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Float Acc</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Quantized</th>
-                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -39,7 +88,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1024→20 (rec, adLIF)</td>
                 <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">90.7%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
-                <td style="padding:14px 20px;"><span style="background:rgba(34,197,94,0.15); color:#22C55E; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">Published</span></td>
               </tr>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">SHD (LIF baseline)</td>
@@ -47,15 +95,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→512→20 (rec, LIF)</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">85.9%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">85.4%</td>
-                <td style="padding:14px 20px;"><span style="background:rgba(34,197,94,0.15); color:#22C55E; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">Published</span></td>
               </tr>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">SSC</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">35</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1024→512→35 (rec adLIF)</td>
-                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">73.5%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1024→512→35 (rec, adLIF)</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">72.1%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
-                <td style="padding:14px 20px;"><span style="background:rgba(34,197,94,0.15); color:#22C55E; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">Published</span></td>
               </tr>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">N-MNIST</td>
@@ -63,23 +109,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">34×34×2→Conv+LIF→10</td>
                 <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">99.2%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
-                <td style="padding:14px 20px;"><span style="background:rgba(34,197,94,0.15); color:#22C55E; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">Published</span></td>
               </tr>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
-                <td style="padding:14px 20px; color:#fff; font-weight:600;">DVS Gesture</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">11</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">2048→512→256→11 (rec)</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
-                <td style="padding:14px 20px;"><span style="background:rgba(234,179,8,0.15); color:#EAB308; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">In progress</span></td>
-              </tr>
-              <tr>
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">GSC KWS</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">12</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">80→512→12 (S2S encoding)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">40→512→12 (S2S encoding)</td>
                 <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">88.0%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
-                <td style="padding:14px 20px;"><span style="background:rgba(34,197,94,0.15); color:#22C55E; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">Published</span></td>
+              </tr>
+              <tr>
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">DVS Gesture</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">11</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">128×128→Conv+LIF→11</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
               </tr>
             </tbody>
           </table>
@@ -88,13 +131,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <!-- Competitive comparison -->
       <div class="reveal" style="margin-bottom:80px;">
-        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:600; color:#fff; margin-bottom:24px;">vs Intel Loihi, BrainChip Akida, SpiNNaker 2</h2>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:600; color:#fff; margin-bottom:24px;">Competitive Context</h2>
         <div style="overflow-x:auto; border-radius:16px; border:1px solid rgba(255,255,255,0.06); background:rgba(15,15,20,0.6);">
           <table style="width:100%; border-collapse:collapse; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem;">
             <thead>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Benchmark</th>
-                <th style="padding:16px 20px; text-align:left; color:#60A5FA; font-weight:600; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Catalyst</th>
+                <th style="padding:16px 20px; text-align:left; color:#60A5FA; font-weight:600; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Catalyst N3</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(96,165,250,0.6); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Catalyst N2</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Loihi 1</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Loihi 2</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Akida 2</th>
@@ -104,15 +148,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <tbody>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">SHD</td>
-                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">90.7%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">89.04%</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">91.0%</td>
+                <td style="padding:14px 20px; color:rgba(96,165,250,0.7); font-weight:500;">90.7%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">89.0%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">90.9%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
               </tr>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">SSC</td>
-                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">73.5%</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">76.4%</td>
+                <td style="padding:14px 20px; color:rgba(96,165,250,0.7); font-weight:500;">72.1%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">69.8%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
@@ -121,26 +167,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">N-MNIST</td>
                 <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">99.2%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">99.52%</td>
+                <td style="padding:14px 20px; color:rgba(96,165,250,0.7); font-weight:500;">99.2%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">99.5%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
-              </tr>
-              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
-                <td style="padding:14px 20px; color:#fff; font-weight:600;">DVS Gesture</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">In progress</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">89.64%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">97.12%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
               </tr>
               <tr>
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">GSC KWS</td>
-                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">88.0%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">88.5%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">Training</td>
+                <td style="padding:14px 20px; color:rgba(96,165,250,0.7); font-weight:500;">88.0%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">92.83%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">91.12%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">92.8%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">91.1%</td>
               </tr>
             </tbody>
           </table>
@@ -169,7 +209,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div style="border-radius:16px; border:1px solid rgba(255,255,255,0.06); background:rgba(15,15,20,0.6); padding:28px;">
             <h3 style="font-family:'Space Grotesk',sans-serif; font-size:1.1rem; font-weight:600; color:#fff; margin-bottom:12px;">Deployment</h3>
             <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem; color:rgba(255,255,255,0.5); line-height:1.6;">
-              Quantized weights loaded into Neurocore SDK Network. Deployed to Catalyst N2 FPGA via USB/UART or AWS F2 cloud instance. Same test set evaluated on hardware.
+              Quantized weights loaded into Neurocore SDK Network. Deployed to Catalyst FPGA via USB/UART or AWS F2 cloud instance. Same test set evaluated on hardware.
             </p>
           </div>
         </div>
@@ -185,8 +225,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           pip install -e .<br/>
           <br/>
           <span style="color:rgba(255,255,255,0.35);"># Train any benchmark (auto-downloads data)</span><br/>
-          python shd/train.py --neuron adlif --hidden 1024 --epochs 200 --device cuda:0<br/>
-          python ssc/train.py --epochs 200 --device cuda:0<br/>
+          python shd/train.py --neuron adlif --hidden 1536 --epochs 200 --device cuda:0 --amp<br/>
+          python ssc/train.py --hidden1 1024 --hidden2 768 --recurrent2 --epochs 70 --device cuda:0 --amp<br/>
           <br/>
           <span style="color:rgba(255,255,255,0.35);"># Evaluate quantized accuracy</span><br/>
           python shd/deploy.py --checkpoint shd_model.pt<br/>
