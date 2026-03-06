@@ -35,13 +35,13 @@ Catalyst N2 natively supports adaptive threshold neurons in hardware. The adapta
 
 | Benchmark | Catalyst N2 | Loihi Best | Akida Best | Verdict |
 |-----------|-------------|------------|------------|---------|
-| SHD | **90.7%** | 90.9% (Loihi 2) | — | Beats Loihi 1 (89.0%) |
-| SSC | **72.1%** | 69.8% (Loihi 2) | — | **Beats Loihi 2** |
+| SHD | **90.7%** | 90.9% (Loihi 2) | — | Competitive |
+| SSC | **72.1%** | 69.8% (Loihi 2) | — | Competitive |
 | N-MNIST | **99.2%** | 99.52% (Loihi 1) | — | Competitive |
 | GSC KWS | **88.0%** | 88.5% (Loihi 1) | 92.83% | Competitive |
 | DVS Gesture | *in progress* | 89.64% (Loihi 1) | 97.12% | — |
 
-The headline result: **Catalyst N2 beats Loihi 2 on SSC** — the hardest speech benchmark in the standard suite. On SHD, we beat Loihi 1's 89.0% and sit within 0.2% of Loihi 2. N-MNIST and GSC are in the same range as Intel's published numbers.
+On SHD, we're competitive with Loihi 2's published results. SSC and N-MNIST show strong performance across the benchmark suite. These are initial results — we're actively improving all benchmarks using learnable delays and advanced training techniques.
 
 ## Architecture
 

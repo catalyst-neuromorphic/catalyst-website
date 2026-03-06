@@ -1,13 +1,13 @@
 ---
 title: "SHD Benchmark: 90.7%"
-description: "Catalyst N2 achieves 90.7% accuracy on the Spiking Heidelberg Digits benchmark using Adaptive LIF neurons, beating Loihi 1's 89.0%."
+description: "Catalyst N2 achieves 90.7% accuracy on the Spiking Heidelberg Digits benchmark using Adaptive LIF neurons."
 date: 2026-02-10
 tags: ["Benchmark", "SDK"]
 ---
 
 The Spiking Heidelberg Digits (SHD) benchmark is one of the standard tests for spiking neural network hardware. It's a speech recognition task — classifying spoken digits encoded as spike trains — that requires temporal processing, making it a natural fit for neuromorphic architectures.
 
-Catalyst N2 achieves **90.7%** accuracy using Adaptive LIF neurons — up from our initial 85.9% LIF baseline, and enough to beat Intel Loihi 1's published 89.0%. Here's how we got there.
+Catalyst N2 achieves **90.7%** accuracy using Adaptive LIF neurons — up from our initial 85.9% LIF baseline. Here's how we got there.
 
 ## The benchmark
 
@@ -60,7 +60,7 @@ For comparison, published SHD results:
 - Yin et al. (2021): 90.4% (SRNN with attention, not directly hardware-mappable)
 - **Catalyst N2: 90.7%** (adLIF, hardware-deployable)
 
-Our 90.7% beats Loihi 1's published 89.0% and sits alongside results that use architectural features like attention mechanisms — except ours maps directly to neuromorphic hardware with no modifications needed for deployment.
+Our 90.7% is competitive with published neuromorphic results, and maps directly to neuromorphic hardware with no modifications needed for deployment.
 
 ## Running it yourself
 
