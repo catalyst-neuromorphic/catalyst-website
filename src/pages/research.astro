@@ -21,8 +21,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           { val: '68', label: 'N3 Features', sub: 'all validated' },
           { val: '19/19', label: 'N3 FPGA tests', sub: '8-core tile' },
           { val: '3,091', label: 'SDK tests', sub: '5 categories' },
-          { val: '91.0%', label: 'SHD accuracy', sub: '#1 — beats Loihi 2' },
-          { val: '76.4%', label: 'SSC accuracy', sub: 'SOTA — +6.6 vs Loihi 2' },
+          { val: '91.0%', label: 'SHD accuracy', sub: 'adLIF, 1536 hidden' },
+          { val: '76.4%', label: 'SSC accuracy', sub: 'adLIF, dual recurrent' },
           { val: '3', label: 'Papers', sub: 'all published' },
         ].map(item => (
           <div class="bg-surface p-5 text-center">
@@ -288,7 +288,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
         <div>
           <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight">SHD benchmark</h2>
-          <p class="reveal text-white/35 mt-2 max-w-[500px]">Spiking Heidelberg Digits &mdash; spoken digit classification with spike-encoded audio. N3 achieves 91.0%, beating Loihi 2 (90.9%).</p>
+          <p class="reveal text-white/35 mt-2 max-w-[500px]">Spiking Heidelberg Digits &mdash; spoken digit classification with spike-encoded audio. N3 achieves 91.0% with adaptive LIF neurons.</p>
         </div>
       </div>
 
@@ -297,7 +297,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="card-glass p-8 flex flex-col justify-center">
           <div class="mb-6">
             <div class="text-[3.5rem] font-bold tracking-tight leading-none">91.0<span class="text-xl text-white/30">%</span></div>
-            <div class="text-xs text-white/40 mt-1">N3 adLIF, 1536 hidden (float) &mdash; #1</div>
+            <div class="text-xs text-white/40 mt-1">N3 adLIF, 1536 hidden (float)</div>
           </div>
           <div class="mb-6">
             <div class="text-[2.2rem] font-bold tracking-tight leading-none text-white/50">90.7<span class="text-lg text-white/20">%</span></div>

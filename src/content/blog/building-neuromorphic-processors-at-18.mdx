@@ -79,19 +79,19 @@ Four backends: CPU simulator, GPU simulator, UART (physical FPGA), and AWS F2 (c
 
 One result is an anecdote. We're building a track record.
 
-Our SHD benchmark started at 85.9% with standard LIF neurons. Switching to Adaptive LIF with 1024 recurrent hidden neurons pushed that to **90.7%** — beating Intel Loihi 1's published 89.0%.
+Our SHD benchmark started at 85.9% with standard LIF neurons. Switching to Adaptive LIF with 1024 recurrent hidden neurons pushed that to **90.7%**.
 
 We've now run four of five standard benchmarks:
 
 | Benchmark | Catalyst N2 | Beats |
 |-----------|-------------|-------|
-| SHD | **90.7%** | Loihi 1 (89.0%) |
-| SSC | **72.1%** | **Loihi 2 (69.8%)** |
+| SHD | **90.7%** | Competitive |
+| SSC | **72.1%** | Competitive |
 | N-MNIST | **99.2%** | Competitive |
 | GSC KWS | **88.0%** | Competitive |
 | DVS Gesture | *in progress* | — |
 
-The SSC result is the standout — beating Loihi 2 on the hardest speech benchmark in the suite.
+These are competitive initial results — we're actively pushing all benchmarks higher using learnable delays and advanced training techniques.
 
 Every benchmark is fully reproducible: **[github.com/catalyst-neuromorphic/catalyst-benchmarks](https://github.com/catalyst-neuromorphic/catalyst-benchmarks)**
 
@@ -123,7 +123,7 @@ Live now at [catalyst-neuromorphic.com/cloud](https://catalyst-neuromorphic.com/
 
 Beyond that: ASIC tapeout. The FPGA proves the architecture works. Custom silicon is where neuromorphic computing becomes commercially viable — sub-milliwatt inference for edge AI, always-on sensor processing, and real-time robotics.
 
-The benchmarks are coming in. 90.7% on SHD, 72.1% on SSC (beating Loihi 2), 99.2% on N-MNIST. The numbers are the currency of credibility in this field, and we're earning them.
+The benchmarks are coming in. 90.7% on SHD, 72.1% on SSC, 99.2% on N-MNIST. The numbers are the currency of credibility in this field, and we're earning them.
 
 ## Try it
 
