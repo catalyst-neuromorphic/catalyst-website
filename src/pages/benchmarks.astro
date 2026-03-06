@@ -20,7 +20,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <!-- N3 Results (Latest) -->
       <div class="reveal" style="margin-bottom:80px;">
         <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:600; color:#fff; margin-bottom:8px;">Catalyst N3 <span style="font-size:0.85rem; font-weight:500; color:rgba(255,255,255,0.35); margin-left:8px;">Latest</span></h2>
-        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem; color:rgba(255,255,255,0.4); margin-bottom:24px;">N3 benchmark results on the standard spiking audio and vision benchmarks.</p>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem; color:rgba(255,255,255,0.4); margin-bottom:24px;">All N3 models use adaptive LIF neurons with surrogate gradient BPTT and cosine LR scheduling. Quantised accuracy measured via int16 round-trip quantisation simulating hardware weight registers.</p>
         <div style="overflow-x:auto; border-radius:16px; border:1px solid rgba(255,255,255,0.06); background:rgba(15,15,20,0.6);">
           <table style="width:100%; border-collapse:collapse; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem;">
             <thead>
@@ -28,38 +28,57 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Benchmark</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Classes</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Architecture</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Neuron</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Float Acc</th>
-                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Status</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Quantised (int16)</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Params</th>
               </tr>
             </thead>
             <tbody>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">SHD</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">20</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1536→20 (rec, adLIF)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1536→20 (rec)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">adLIF</td>
                 <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">91.0%</td>
-                <td style="padding:14px 20px;"><span style="background:rgba(34,197,94,0.15); color:#22C55E; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">Published</span></td>
+                <td style="padding:14px 20px; color:#22C55E; font-weight:600;">90.8%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">3.47M</td>
               </tr>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">SSC</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">35</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1024→512→35 (rec, adLIF)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1024→512→35 (rec)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">adLIF</td>
                 <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">76.4%</td>
-                <td style="padding:14px 20px;"><span style="background:rgba(34,197,94,0.15); color:#22C55E; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">Published</span></td>
+                <td style="padding:14px 20px; color:#22C55E; font-weight:600;">76.4%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">2.31M</td>
               </tr>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">N-MNIST</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">10</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">34×34×2→Conv+LIF→10</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">Conv2D+LIF→10</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">LIF</td>
                 <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">99.2%</td>
-                <td style="padding:14px 20px;"><span style="background:rgba(34,197,94,0.15); color:#22C55E; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">Published</span></td>
+                <td style="padding:14px 20px; color:#22C55E; font-weight:600;">99.2%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">691K</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">GSC-12</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">12</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">40→512→12 (rec, S2S)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">adLIF</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">88.4%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">~88.4%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">291K</td>
               </tr>
               <tr>
-                <td style="padding:14px 20px; color:#fff; font-weight:600;">GSC-35</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">35</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">Delay+rec adLIF+BN</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">Training</td>
-                <td style="padding:14px 20px;"><span style="background:rgba(234,179,8,0.15); color:#EAB308; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:500;">In progress</span></td>
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">DVS Gesture</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">11</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">Deep conv+rec</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">adLIF</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">89.4%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">~1.2M</td>
               </tr>
             </tbody>
           </table>
@@ -69,7 +88,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <!-- N2 Results -->
       <div class="reveal" style="margin-bottom:80px;">
         <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:600; color:#fff; margin-bottom:8px;">Catalyst N2</h2>
-        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem; color:rgba(255,255,255,0.4); margin-bottom:24px;">All N2 models deploy to Catalyst FPGA hardware via int16 weight quantization.</p>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem; color:rgba(255,255,255,0.4); margin-bottom:24px;">All N2 models deploy to Catalyst N2 FPGA hardware via int16 weight quantization.</p>
         <div style="overflow-x:auto; border-radius:16px; border:1px solid rgba(255,255,255,0.06); background:rgba(15,15,20,0.6);">
           <table style="width:100%; border-collapse:collapse; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem;">
             <thead>
@@ -77,52 +96,81 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Benchmark</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Classes</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Architecture</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Neuron</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Float Acc</th>
-                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Quantized</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Params</th>
               </tr>
             </thead>
             <tbody>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
-                <td style="padding:14px 20px; color:#fff; font-weight:600;">SHD (adLIF)</td>
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">SHD</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">20</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1024→20 (rec, adLIF)</td>
-                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">90.7%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
-              </tr>
-              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
-                <td style="padding:14px 20px; color:#fff; font-weight:600;">SHD (LIF baseline)</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">20</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→512→20 (rec, LIF)</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">85.9%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">85.4%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→512→20 (rec)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">adLIF</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">84.5%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">759K</td>
               </tr>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">SSC</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">35</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1024→512→35 (rec, adLIF)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1024→512→35 (rec)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">adLIF</td>
                 <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">72.1%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">2.31M</td>
               </tr>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">N-MNIST</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">10</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">34×34×2→Conv+LIF→10</td>
-                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">99.2%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">Conv2D+LIF→10</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">adLIF</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">97.8%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">466K</td>
               </tr>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">GSC KWS</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">12</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">40→512→12 (S2S encoding)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">40→512→12 (rec, S2S)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">adLIF</td>
                 <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">88.0%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">291K</td>
               </tr>
               <tr>
-                <td style="padding:14px 20px; color:#fff; font-weight:600;">DVS Gesture</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">11</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">128×128→Conv+LIF→11</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">—</td>
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">MIT-BIH ECG</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">5</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">187→128→5 (rec)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">adLIF</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">90.9%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">~35K</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- N1 Results -->
+      <div class="reveal" style="margin-bottom:80px;">
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:600; color:#fff; margin-bottom:8px;">Catalyst N1</h2>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem; color:rgba(255,255,255,0.4); margin-bottom:24px;">N1 uses basic LIF neurons only (no adaptation). Demonstrates competitive performance through model capacity alone.</p>
+        <div style="overflow-x:auto; border-radius:16px; border:1px solid rgba(255,255,255,0.06); background:rgba(15,15,20,0.6);">
+          <table style="width:100%; border-collapse:collapse; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem;">
+            <thead>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Benchmark</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Classes</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Architecture</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Neuron</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Float Acc</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Params</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">SHD</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">20</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; font-size:0.85rem;">700→1024→20 (rec)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">LIF</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">89.3%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">1.79M</td>
               </tr>
             </tbody>
           </table>
@@ -139,9 +187,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Benchmark</th>
                 <th style="padding:16px 20px; text-align:left; color:#60A5FA; font-weight:600; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Catalyst N3</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(96,165,250,0.6); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Catalyst N2</th>
-                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Loihi 1</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(96,165,250,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Catalyst N1</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Loihi 2</th>
-                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Akida 2</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">BrainChip Akida</th>
                 <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">SpiNNaker 2</th>
               </tr>
             </thead>
@@ -149,8 +197,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">SHD</td>
                 <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">91.0%</td>
-                <td style="padding:14px 20px; color:rgba(96,165,250,0.7); font-weight:500;">90.7%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">89.0%</td>
+                <td style="padding:14px 20px; color:rgba(96,165,250,0.7); font-weight:500;">84.5%</td>
+                <td style="padding:14px 20px; color:rgba(96,165,250,0.5); font-weight:500;">89.3%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">90.9%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
@@ -167,20 +215,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:14px 20px; color:#fff; font-weight:600;">N-MNIST</td>
                 <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">99.2%</td>
-                <td style="padding:14px 20px; color:rgba(96,165,250,0.7); font-weight:500;">99.2%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">99.5%</td>
+                <td style="padding:14px 20px; color:rgba(96,165,250,0.7); font-weight:500;">97.8%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">99.0%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
               </tr>
               <tr>
-                <td style="padding:14px 20px; color:#fff; font-weight:600;">GSC KWS</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.4);">Training</td>
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">GSC-12</td>
+                <td style="padding:14px 20px; color:#60A5FA; font-weight:600;">88.4%</td>
                 <td style="padding:14px 20px; color:rgba(96,165,250,0.7); font-weight:500;">88.0%</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
                 <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">92.8%</td>
-                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">91.1%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.3);">—</td>
               </tr>
             </tbody>
           </table>
@@ -188,6 +236,136 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.85rem; color:rgba(255,255,255,0.35); margin-top:12px;">
           Sources: Intel Labs (Loihi), BrainChip (Akida), SpiNNaker Project. All results from published papers.
         </p>
+      </div>
+
+      <!-- Quantised Inference -->
+      <div class="reveal" style="margin-bottom:80px;">
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:600; color:#fff; margin-bottom:8px;">Quantised Inference</h2>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem; color:rgba(255,255,255,0.4); margin-bottom:24px;">All models evaluated under int16 round-trip quantisation simulating hardware weight registers. Models deploy directly to hardware with no accuracy impact.</p>
+        <div style="overflow-x:auto; border-radius:16px; border:1px solid rgba(255,255,255,0.06); background:rgba(15,15,20,0.6);">
+          <table style="width:100%; border-collapse:collapse; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem;">
+            <thead>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Benchmark</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Float32</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Int16 Quantised</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Degradation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">SHD</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">91.0%</td>
+                <td style="padding:14px 20px; color:#22C55E; font-weight:600;">90.8%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">0.2pp</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">SSC</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">76.4%</td>
+                <td style="padding:14px 20px; color:#22C55E; font-weight:600;">76.4%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">0.0pp</td>
+              </tr>
+              <tr>
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">N-MNIST</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">99.2%</td>
+                <td style="padding:14px 20px; color:#22C55E; font-weight:600;">99.2%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.5);">0.0pp</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FPGA Hardware Characterisation -->
+      <div class="reveal" style="margin-bottom:80px;">
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:600; color:#fff; margin-bottom:8px;">FPGA Hardware Characterisation</h2>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.9rem; color:rgba(255,255,255,0.4); margin-bottom:24px;">Kria K26 Edge (xczu5ev, 2-core variants, 100 MHz target)</p>
+        <div style="overflow-x:auto; border-radius:16px; border:1px solid rgba(255,255,255,0.06); background:rgba(15,15,20,0.6);">
+          <table style="width:100%; border-collapse:collapse; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem;">
+            <thead>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Processor</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">LUTs</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">LUT%</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">FFs</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">BRAM</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">DSP</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Fmax</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Power</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">N1</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">19,903</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">17.0%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">30,847</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">52.5 (36.5%)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">14 (1.1%)</td>
+                <td style="padding:14px 20px; color:#22C55E; font-weight:600;">100 MHz</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">0.642W</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">N2</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">26,155</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">22.3%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">38,666</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">52.5 (36.5%)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">16 (1.3%)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">~97 MHz</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">0.688W</td>
+              </tr>
+              <tr>
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">N3</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">51,381</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">43.9%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">80,395</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">24 (16.7%)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">20 (1.6%)</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">~58.5 MHz</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">0.867W</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-size:1.15rem; font-weight:600; color:#fff; margin-top:40px; margin-bottom:16px;">AWS F2 Cloud FPGA (Xilinx VU47P)</h3>
+        <div style="overflow-x:auto; border-radius:16px; border:1px solid rgba(255,255,255,0.06); background:rgba(15,15,20,0.6);">
+          <table style="width:100%; border-collapse:collapse; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.95rem;">
+            <thead>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Processor</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Tests</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Pass Rate</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Throughput</th>
+                <th style="padding:16px 20px; text-align:left; color:rgba(255,255,255,0.4); font-weight:500; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.05em;">Frequency</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">N1</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">—</td>
+                <td style="padding:14px 20px; color:#22C55E; font-weight:500;">PASS</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">—</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">62.5 MHz</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">N2</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">28/28</td>
+                <td style="padding:14px 20px; color:#22C55E; font-weight:500;">100%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">—</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">62.5 MHz</td>
+              </tr>
+              <tr>
+                <td style="padding:14px 20px; color:#fff; font-weight:600;">N3</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">19/19</td>
+                <td style="padding:14px 20px; color:#22C55E; font-weight:500;">100%</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">14,512 ts/sec</td>
+                <td style="padding:14px 20px; color:rgba(255,255,255,0.6);">83.3 MHz</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Methodology -->
