@@ -1,0 +1,4 @@
+Contact: mailto:henry@catalyst-neuromorphic.com
+Preferred-Languages: en
+Canonical: https://catalyst-neuromorphic.com/.well-known/security.txt
+Expires: 2027-03-07T00:00:00.000Z

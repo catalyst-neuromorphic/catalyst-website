@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://catalyst-neuromorphic.com/sitemap-index.xml
