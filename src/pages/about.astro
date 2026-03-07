@@ -2,29 +2,29 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="About — Catalyst Neuromorphic" description="Building neuromorphic processors to challenge the way intelligence is computed." hasFog={true}>
+<BaseLayout title="About — Catalyst Neuromorphic" description="Spiking neural network processors. Event-driven, on-chip learning, sub-watt power." hasFog={true}>
 
   <!-- HERO -->
   <section class="pt-36 pb-16 px-6 md:px-12" style="position:relative;z-index:1;">
     <div style="max-width:700px;margin:0 auto;text-align:center;">
       <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-5">About</p>
       <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2.6rem,5.5vw,4.2rem); font-weight:700; letter-spacing:-0.04em; line-height:1;">
-        AI has a hardware problem.
+        Neuromorphic processors for edge inference.
       </h1>
-      <p class="text-base text-white/35 mt-5" style="line-height:1.7;">We're building the processors to fix it.</p>
+      <p class="text-base text-white/35 mt-5" style="line-height:1.7;">Event-driven spiking neural network hardware. Designed, validated on FPGA, targeting ASIC.</p>
     </div>
   </section>
 
-  <!-- THE PROBLEM -->
+  <!-- WHAT WE BUILD -->
   <section class="pb-24 px-6 md:px-12" style="position:relative;z-index:1;">
     <div style="max-width:640px;margin:0 auto;">
       <div class="card-glass reveal" style="padding:clamp(2rem,4vw,3rem);">
         <div style="position:relative;z-index:2;">
-          <h2 class="text-lg font-bold tracking-tight mb-4">The scaling wall</h2>
+          <h2 class="text-lg font-bold tracking-tight mb-4">What we build</h2>
           <div class="space-y-4 text-sm text-white/40" style="line-height:1.75;">
-            <p>Modern AI runs on hardware that was never designed for intelligence. GPUs burn hundreds of watts per chip. Data centres already consume over 2% of global electricity, and that share is climbing fast. Training a single large language model can use more energy than a hundred homes do in a year. The models are getting bigger, but the returns are shrinking.</p>
-            <p>And for all that power, these systems still can't learn from new information without being retrained from scratch. They can't run without a data centre. They can't operate without sending your data to someone else's infrastructure.</p>
-            <p>The human brain does all of this on 20 watts. It learns continuously. It processes information in real-time. It runs at the edge, on-device, with no internet connection required. The gap between biological intelligence and artificial intelligence isn't a software problem. It's a hardware problem.</p>
+            <p>Catalyst designs spiking neural network processors. The architecture is event-driven &mdash; neurons only fire and consume energy when there's a spike to process. Cores support on-chip learning (STDP, reward-modulated three-factor, programmable microcode rules), so models adapt at inference time without retraining.</p>
+            <p>The current generation (N2) implements full Loihi 2 feature parity: 128 neuromorphic cores, 5 neuron models, 4 synapse formats, variable-precision weights (1&ndash;16 bit), graded spike payloads, and a programmable microcode engine that replaces the fixed datapath. All designed from a blank Verilog file, not derived from existing IP.</p>
+            <p>Everything runs on real FPGA hardware today. The cloud API lets you submit spiking networks and get spike train results without owning a board.</p>
           </div>
         </div>
       </div>
@@ -34,14 +34,57 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- DIVIDER -->
   <div style="width:100%;max-width:400px;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.2),transparent);margin:0 auto;"></div>
 
-  <!-- WHAT WE'RE BUILDING -->
+  <!-- FPGA RESULTS -->
   <section class="py-24 px-6 md:px-12" style="position:relative;z-index:1;">
     <div style="max-width:640px;margin:0 auto;">
-      <h2 class="reveal text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-tight mb-6" style="font-family:'Space Grotesk',sans-serif;">Neuromorphic processors.</h2>
+      <h2 class="reveal text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-tight mb-6" style="font-family:'Space Grotesk',sans-serif;">Hardware validation.</h2>
       <div class="space-y-4 text-sm text-white/40 reveal" style="line-height:1.75;">
-        <p>Neuromorphic chips compute the way neurons do. They're event-driven &mdash; they only consume energy when there's something to process. They can learn on the hardware itself, not just run pre-trained models. They operate at the edge, on-device, without cloud dependency. And they do it at a fraction of the power cost.</p>
-        <p>This technology exists. Intel has Loihi. IBM built TrueNorth. But both are closed, corporate, and inaccessible. If you're not inside those companies or their select research programmes, you don't get access. The hardware that could reshape computing is locked behind walls.</p>
-        <p>Catalyst is building the open alternative. Full processor designs, published research, and a cloud platform anyone can use today. We're not asking for permission to compete with billion-dollar companies. We're just doing it.</p>
+        <p>Designs are validated on AWS F2 FPGA instances (Xilinx UltraScale+) and Xilinx Kria K26 SoMs. These aren't simulations &mdash; the RTL runs on physical fabric at clock speed.</p>
+      </div>
+      <div class="reveal grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+        {[
+          { title: 'N4 &mdash; AWS F2 (UltraScale+)', desc: '4-core, 62.5 MHz. Validated: neuron membrane dynamics, synaptic weight formats (1&ndash;16 bit), cross-core mesh routing, axonal delays, STDP learning, graded spike payloads, multi-compartment dendrites, microcode execution, and state isolation. 14,983 timesteps/sec sustained throughput.' },
+          { title: 'N4-Edge &mdash; Kria K26 SoM', desc: '8-core variant targeting embedded deployment. 3,036 LUTs (2.59% of fabric), 0.378 W total board power, WNS +3.301 ns. Same test coverage as F2 build. Targets $5&ndash;$20 FPGA modules for sub-watt edge inference.' },
+          { title: 'N3 &mdash; AWS F2 (UltraScale+)', desc: '8-core tile at 83.3 MHz. All 68 architectural features enabled: hardware virtualisation, per-tile learning engines, silicon metaplasticity, adaptive neuron models. 14,500 timesteps/sec. WNS 0.000 ns (timing met exactly).' },
+          { title: 'N2 &mdash; AWS F2 (UltraScale+)', desc: 'Full 128-core design. 228K LUTs, 1.913 W measured FPGA power. Validated against CPU reference simulator &mdash; bit-exact spike output match across all neuron models and synapse formats.' },
+        ].map(item => (
+          <div class="card-glass" style="padding:1.25rem 1.5rem;">
+            <div class="text-sm font-semibold text-white/75 mb-1.5" style="position:relative;z-index:2;" set:html={item.title}></div>
+            <div class="text-xs text-white/30" style="line-height:1.6;position:relative;z-index:2;" set:html={item.desc}></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div style="width:100%;max-width:400px;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.2),transparent);margin:0 auto;"></div>
+
+  <!-- ASIC PROJECTIONS -->
+  <section class="py-24 px-6 md:px-12" style="position:relative;z-index:1;">
+    <div style="max-width:640px;margin:0 auto;">
+      <h2 class="reveal text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-tight mb-6" style="font-family:'Space Grotesk',sans-serif;">ASIC projections.</h2>
+      <div class="space-y-4 text-sm text-white/40 reveal" style="line-height:1.75;">
+        <p>Synthesis-based estimates from the N2 architecture using standard cell libraries. These are projections from gate-level synthesis, not tape-out results.</p>
+      </div>
+      <div class="reveal card-glass mt-6" style="padding:clamp(1.5rem,3vw,2rem);">
+        <div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:0.6rem 2rem;position:relative;z-index:2;">
+          <div class="text-sm text-white/30"></div>
+          <div class="text-sm text-white/50 font-semibold">28 nm</div>
+          <div class="text-sm text-white/50 font-semibold">130 nm</div>
+          {[
+            ['Die area', '~9.3 mm\u00B2', '~186 mm\u00B2'],
+            ['Power', '19\u201338 mW', '96\u2013191 mW'],
+            ['Target clock', '500 MHz', '125 MHz'],
+            ['Neuron capacity', '131K per chip', '131K per chip'],
+          ].map(([label, col1, col2]) => (
+            <>
+              <div class="text-sm text-white/30">{label}</div>
+              <div class="text-sm text-white/50">{col1}</div>
+              <div class="text-sm text-white/50">{col2}</div>
+            </>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -52,10 +95,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- WHERE WE ARE -->
   <section class="py-24 px-6 md:px-12" style="position:relative;z-index:1;">
     <div style="max-width:640px;margin:0 auto;">
-      <h2 class="reveal text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-tight mb-6" style="font-family:'Space Grotesk',sans-serif;">Where we are.</h2>
+      <h2 class="reveal text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-tight mb-6" style="font-family:'Space Grotesk',sans-serif;">Current status.</h2>
       <div class="space-y-4 text-sm text-white/40 reveal" style="line-height:1.75;">
-        <p>We're early. Three processor generations are designed, built in software, and validated on real hardware. Two have published papers you can read today, with the third coming soon. A cloud API is live &mdash; you can run a neuromorphic network right now, without buying anything.</p>
-        <p>We're raising funding and building toward manufactured silicon. That's the goal: a physical chip you can hold, running real neuromorphic intelligence. We're not there yet. But the architecture is complete, tested, and protected by patent.</p>
+        <p>Four processor generations designed (N1&ndash;N4). All validated on FPGA. Three papers published on Zenodo with open access. The cloud API is live and serving requests. The N4-Edge variant targets sub-watt embedded deployment on $5&ndash;$20 FPGA modules.</p>
+        <p>Next step is manufactured silicon. The architecture is complete and the RTL is synthesis-ready. We're raising funding to tape out at 28 nm.</p>
       </div>
     </div>
   </section>
@@ -63,52 +106,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- DIVIDER -->
   <div style="width:100%;max-width:400px;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.2),transparent);margin:0 auto;"></div>
 
-  <!-- FOUNDER -->
+  <!-- COMPANY -->
   <section class="py-24 px-6 md:px-12" style="position:relative;z-index:1;">
     <div style="max-width:640px;margin:0 auto;">
-      <h2 class="reveal text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-tight mb-6" style="font-family:'Space Grotesk',sans-serif;">Founder.</h2>
-      <div class="reveal card-glass" style="padding:clamp(1.5rem,3vw,2rem);">
-        <div class="text-sm text-white/40" style="line-height:1.75;position:relative;z-index:2;">
-          <p><strong class="text-white/70">Henry Shulayev Barnes</strong> &mdash; engineering student at the University of Aberdeen. Started Catalyst because the neuromorphic hardware that should exist doesn't, and the hardware that does exist isn't accessible. Currently a member of Techscaler, Scotland's tech startup community.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DIVIDER -->
-  <div style="width:100%;max-width:400px;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.2),transparent);margin:0 auto;"></div>
-
-  <!-- WHY TRUST US -->
-  <section class="py-24 px-6 md:px-12" style="position:relative;z-index:1;">
-    <div style="max-width:640px;margin:0 auto;">
-      <h2 class="reveal text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-tight mb-6" style="font-family:'Space Grotesk',sans-serif;">Don't take our word for it.</h2>
-      <div class="reveal grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {[
-          { title: 'Read the papers', desc: 'Published papers on Zenodo with DOIs. Open access. Every claim documented.' },
-          { title: 'Try the cloud', desc: 'The API is live. Run a neuromorphic network from your terminal. Free tier available.' },
-          { title: 'Check the hardware', desc: 'Our designs run on real FPGA boards, not just simulators. Physical silicon execution.' },
-          { title: 'Join the community', desc: 'Open GitHub, public research, growing backers. We build in the open.' },
-        ].map(item => (
-          <div class="card-glass" style="padding:1.25rem 1.5rem;">
-            <div class="text-sm font-semibold text-white/75 mb-1.5" style="position:relative;z-index:2;">{item.title}</div>
-            <div class="text-xs text-white/30" style="line-height:1.6;position:relative;z-index:2;">{item.desc}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- IP -->
-  <section class="py-16 px-6 md:px-12" style="position:relative;z-index:1;">
-    <div style="max-width:640px;margin:0 auto;">
+      <h2 class="reveal text-[clamp(1.8rem,3vw,2.4rem)] font-bold tracking-tight mb-6" style="font-family:'Space Grotesk',sans-serif;">Company.</h2>
       <div class="reveal card-glass" style="padding:clamp(1.5rem,3vw,2rem);">
         <div style="display:grid;grid-template-columns:auto 1fr;gap:0.6rem 2rem;position:relative;z-index:2;">
           {[
-            ['UK Patents', 'Filed February 2026'],
-            ['RTL', 'BSL 1.1 — proprietary'],
-            ['SDK', 'BSL 1.1'],
-            ['Papers', 'Open access on Zenodo'],
-            ['API Client', 'MIT — open source'],
+            ['Founded', 'February 2026'],
+            ['Entity', 'Catalyst Neuromorphic Ltd (UK)'],
+            ['Founder', 'Henry Shulayev Barnes'],
+            ['Affiliation', 'University of Aberdeen'],
+            ['Programme', 'Techscaler (Scotland)'],
+            ['RTL license', 'BSL 1.1 (proprietary)'],
+            ['SDK license', 'BSL 1.1'],
+            ['API client', 'MIT (open source)'],
+            ['Papers', 'Open access (Zenodo)'],
           ].map(([label, value]) => (
             <>
               <div class="text-sm text-white/30">{label}</div>
@@ -120,7 +133,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- GET IN TOUCH — exact homepage section -->
+  <!-- GET IN TOUCH -->
   <section class="connect-section" style="position:relative;z-index:1;">
     <h2 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2.4rem,5vw,3.6rem); font-weight:700; letter-spacing:-0.035em; line-height:1.08; text-align:center; margin-bottom:18px;">Get in touch.</h2>
     <p class="connect-email"><a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a></p>
@@ -139,7 +152,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <style is:global>
-    /* Connect section (homepage exact code) */
     .connect-section {
       max-width: 1100px;
       margin: 0 auto;
@@ -174,29 +186,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       border-radius: 20px;
       text-decoration: none;
       color: #fff;
-      background: linear-gradient(
-        165deg,
-        rgba(255,255,255,0.12) 0%,
-        rgba(255,255,255,0.05) 35%,
-        rgba(255,255,255,0.025) 100%
-      );
+      background: linear-gradient(165deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.025) 100%);
       backdrop-filter: blur(28px) saturate(190%) brightness(1.06);
       -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(1.06);
       border: 1px solid transparent;
-      box-shadow:
-        0 8px 32px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.14),
-        inset 0 -1px 0 rgba(255,255,255,0.02);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(255,255,255,0.02);
       position: relative;
       overflow: hidden;
       transition: box-shadow 0.5s, transform 0.3s;
     }
     .connect-card:hover {
       transform: translateY(-3px);
-      box-shadow:
-        0 12px 48px rgba(0,0,0,0.55),
-        inset 0 1px 0 rgba(255,255,255,0.18),
-        inset 0 -1px 0 rgba(255,255,255,0.03);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(255,255,255,0.03);
     }
     .connect-card::before {
       content: '';
@@ -204,14 +205,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       inset: 0;
       border-radius: 20px;
       padding: 1px;
-      background: linear-gradient(
-        135deg,
-        rgba(59,130,246,0.22) 0%,
-        rgba(59,130,246,0.06) 25%,
-        rgba(59,130,246,0.02) 50%,
-        rgba(59,130,246,0.06) 75%,
-        rgba(59,130,246,0.18) 100%
-      );
+      background: linear-gradient(135deg, rgba(59,130,246,0.22) 0%, rgba(59,130,246,0.06) 25%, rgba(59,130,246,0.02) 50%, rgba(59,130,246,0.06) 75%, rgba(59,130,246,0.18) 100%);
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
