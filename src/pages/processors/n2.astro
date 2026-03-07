@@ -706,7 +706,11 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
       <div class="spec-row"><span>Tests</span><span>3,091</span></div>
       <div class="spec-row"><span>Backends</span><span>CPU, GPU (CUDA), FPGA</span></div>
       <div class="spec-row"><span>Fixed-point mode</span><span>Hardware-accurate integer quantization</span></div>
-      <div class="spec-row"><span>Benchmark</span><span>90.7% SHD (adLIF float), 85.9% LIF baseline</span></div>
+      <div class="spec-row"><span>SHD accuracy</span><span>84.5% (adLIF, 512 hidden)</span></div>
+      <div class="spec-row"><span>SSC accuracy</span><span>72.1% (adLIF, 1024+512 hidden)</span></div>
+      <div class="spec-row"><span>N-MNIST accuracy</span><span>97.8% (adLIF)</span></div>
+      <div class="spec-row"><span>GSC-12 accuracy</span><span>88.0% (adLIF, S2S encoding)</span></div>
+      <div class="spec-row"><span>MIT-BIH ECG accuracy</span><span>90.9% (adLIF, 128 hidden)</span></div>
     </div>
   </details>
   <details class="spec-group">
@@ -719,13 +723,14 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
       <div class="spec-row"><span>RTL accuracy</span><span>Cycle-accurate, bit-exact vs simulation</span></div>
       <div class="spec-row"><span>Peak throughput</span><span>81,000 spikes / 3.4ms</span></div>
       <div class="spec-row"><span>Cross-core routing</span><span>163,000 spikes validated</span></div>
+      <div class="spec-row"><span>Kria K26 (2-core)</span><span>26,431 LUTs (22.6%), 0.688W, ~97 MHz</span></div>
     </div>
   </details>
   <details class="spec-group">
     <summary>Intellectual Property</summary>
     <div>
       <div class="spec-row"><span>UK Patent</span><span>Filed February 2026 (full architecture)</span></div>
-      <div class="spec-row"><span>Application ref</span><span>~2602902.6</span></div>
+      <div class="spec-row"><span>Application ref</span><span>2603866.1</span></div>
       <div class="spec-row"><span>RTL</span><span>Proprietary (BSL 1.1)</span></div>
       <div class="spec-row"><span>SDK</span><span>Proprietary</span></div>
     </div>
