@@ -335,7 +335,7 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
     <div class="max-w-[800px] mx-auto">
       <h2 class="reveal text-2xl font-bold mb-12">Endpoint reference</h2>
 
-      <!-- Authentication -->
+      <!-- Authentication Methods -->
       <div class="reveal mb-10">
         <h3 class="text-lg font-semibold mb-4">Authentication</h3>
         <p class="text-sm text-white/40 mb-4">Two auth methods are supported. Include one header on each request:</p>
@@ -347,47 +347,254 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
             </tbody>
           </table>
         </div>
-        <p class="text-sm text-white/30">API keys are created in the <a href="/console/keys" class="text-catalyst-blue hover:underline">Console</a>. Session tokens are obtained via <code class="font-mono text-white/40">catalyst auth login</code>.</p>
+        <p class="text-sm text-white/30 mb-6">API keys are created in the <a href="/console/keys" class="text-catalyst-blue hover:underline">Console</a>. Session tokens are obtained via <code class="font-mono text-white/40">catalyst auth login</code>.</p>
+        <p class="text-sm text-white/40 mb-3">HMAC signing is optional but recommended for API keys. Include <code class="font-mono text-white/50">X-Signature</code> and <code class="font-mono text-white/50">X-Timestamp</code> headers with HMAC-SHA256 of the request body.</p>
       </div>
 
-      <!-- Auth Me -->
-      <div class="reveal mb-10">
-        <div class="flex items-center gap-3 mb-3">
+      <!-- ═══════════════ AUTH ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Auth</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/signup</code>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Create a new account. Returns session token.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: email, password (min 8 chars, not breached)</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/login</code>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Email/password login. Returns session token (or 2FA challenge if TOTP enabled).</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: email, password</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/logout</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Revoke current session token.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/verify-2fa</code>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Complete 2FA challenge from login. Accepts TOTP code or backup code.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: user_id, code</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
           <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
           <code class="text-sm font-mono text-white/70">/v1/auth/me</code>
-          <span class="text-xs text-white/30">Requires auth</span>
+          <span class="text-xs text-white/30">Auth required</span>
         </div>
-        <p class="text-sm text-white/40 mb-3">Get your account info, tier, and credit balance.</p>
+        <p class="text-sm text-white/40">Get your account info, tier, credit balance, and verification status.</p>
       </div>
 
-      <!-- Billing Balance -->
-      <div class="reveal mb-10">
-        <div class="flex items-center gap-3 mb-3">
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/refresh</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Refresh session token (extends expiry).</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/cli-token</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Issue a long-lived CLI session token.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-yellow-500/20 text-yellow-400">PUT</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/profile</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Update display name or notification preferences.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: display_name, email_notifications</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/verify-email</code>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Verify email address with code sent to inbox.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: email, code</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/resend-verification</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Resend email verification code.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/forgot-password</code>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Send password reset email.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: email</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/reset-password</code>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Reset password with token from email.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: token, new_password</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
           <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
-          <code class="text-sm font-mono text-white/70">/v1/billing/balance</code>
-          <span class="text-xs text-white/30">Requires auth</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/sessions</code>
+          <span class="text-xs text-white/30">Auth required</span>
         </div>
-        <p class="text-sm text-white/40 mb-3">Get your credit balance, tier, and next tier threshold.</p>
+        <p class="text-sm text-white/40">List active sessions with device info.</p>
       </div>
 
-      <!-- Bitstreams -->
-      <div class="reveal mb-10">
-        <div class="flex items-center gap-3 mb-3">
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-red-500/20 text-red-400">DELETE</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/sessions/&#123;session_id&#125;</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Revoke a specific session.</p>
+      </div>
+
+      <!-- OAuth -->
+      <div class="reveal mb-8">
+        <p class="text-sm text-white/50 font-semibold mb-3">OAuth (GitHub &amp; Google)</p>
+        <div class="glass rounded-lg p-3 text-xs space-y-1">
+          <code class="text-white/50 block">GET /v1/auth/github → Redirect to GitHub OAuth</code>
+          <code class="text-white/50 block">GET /v1/auth/github/callback → Handle GitHub callback</code>
+          <code class="text-white/50 block">GET /v1/auth/google → Redirect to Google OAuth</code>
+          <code class="text-white/50 block">GET /v1/auth/google/callback → Handle Google callback</code>
+          <code class="text-white/50 block">GET /v1/auth/github/link → Link GitHub to existing account (auth required)</code>
+          <code class="text-white/50 block">GET /v1/auth/google/link → Link Google to existing account (auth required)</code>
+        </div>
+      </div>
+
+      <!-- Device Code Flow -->
+      <div class="reveal mb-8">
+        <p class="text-sm text-white/50 font-semibold mb-3">Device code flow (for headless devices)</p>
+        <div class="glass rounded-lg p-3 text-xs space-y-1">
+          <code class="text-white/50 block">POST /v1/auth/device-code → Request device code + verification URL</code>
+          <code class="text-white/50 block">POST /v1/auth/device-code/authorize → User authorizes device (auth required)</code>
+          <code class="text-white/50 block">POST /v1/auth/device-code/exchange → Exchange device code for session token</code>
+        </div>
+      </div>
+
+      <!-- ═══════════════ TOTP ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Two-Factor Authentication (TOTP)</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/totp/setup</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Generate TOTP secret and QR code provisioning URI.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/totp/verify-setup</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Confirm TOTP setup with a valid code. Returns backup codes.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: code</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/totp/disable</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Disable 2FA. Requires current TOTP code for security.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: code</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
           <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
-          <code class="text-sm font-mono text-white/70">/v1/bitstreams</code>
-          <span class="text-xs text-white/30">Requires auth</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/totp/status</code>
+          <span class="text-xs text-white/30">Auth required</span>
         </div>
-        <p class="text-sm text-white/40 mb-3">List available FPGA bitstreams for your tier.</p>
+        <p class="text-sm text-white/40">Check if 2FA is enabled on your account.</p>
       </div>
 
-      <!-- Networks -->
-      <div class="reveal mb-10">
-        <div class="flex items-center gap-3 mb-3">
+      <!-- ═══════════════ API KEYS ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">API Keys</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/keys</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Create a new API key. The full key is only shown once.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: name, scope (read | simulate | admin)</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/keys</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">List your API keys (prefix and metadata only, never the full key).</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-red-500/20 text-red-400">DELETE</span>
+          <code class="text-sm font-mono text-white/70">/v1/keys/&#123;key_id&#125;</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Revoke an API key.</p>
+      </div>
+
+      <!-- ═══════════════ NETWORKS ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Networks</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/networks</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">List your saved network definitions.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
           <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
           <code class="text-sm font-mono text-white/70">/v1/networks</code>
-          <span class="text-xs text-white/30">Requires X-API-Key</span>
+          <span class="text-xs text-white/30">Auth required</span>
         </div>
-        <p class="text-sm text-white/40 mb-3">Store a network definition for later job submission.</p>
+        <p class="text-sm text-white/40 mb-3">Store a network definition for later job submission. Max 1 MB.</p>
         <div class="glass rounded-lg p-4 text-sm">
           <p class="font-mono text-white/50 mb-2">Request body:</p>
           <table class="w-full text-sm">
@@ -413,18 +620,40 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">weight</td><td class="py-1.5 text-white/40">int [-32768, 32767] (default 200) — negative for inhibitory</td></tr>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">p</td><td class="py-1.5 text-white/40">float [0, 1] — connection probability (random_sparse)</td></tr>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">delay</td><td class="py-1.5 text-white/40">int [0, 63] — synaptic delay in timesteps</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">fan_in / fan_out</td><td class="py-1.5 text-white/40">int — fixed fan-in or fan-out count (for respective topologies)</td></tr>
               <tr><td class="py-1.5 font-mono text-white/60">compartment</td><td class="py-1.5 text-white/40">int [0, 3] — target dendritic compartment</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Jobs -->
-      <div class="reveal mb-10">
-        <div class="flex items-center gap-3 mb-3">
+      <!-- ═══════════════ JOBS ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Jobs</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/jobs</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">List your simulation jobs (most recent first).</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/jobs/estimate</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Preview cost of a simulation without submitting. Same body as POST /v1/jobs.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Returns: estimated_compute_seconds, estimated_cost_usd, rate_per_second</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
           <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
           <code class="text-sm font-mono text-white/70">/v1/jobs</code>
-          <span class="text-xs text-white/30">Requires X-API-Key</span>
+          <span class="text-xs text-white/30">Auth required</span>
         </div>
         <p class="text-sm text-white/40 mb-3">Submit a simulation job. Returns immediately with job_id.</p>
         <div class="glass rounded-lg p-4 text-sm">
@@ -432,6 +661,8 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
             <tbody>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">network_id</td><td class="py-1.5 text-white/40">string, required — from POST /v1/networks</td></tr>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">timesteps</td><td class="py-1.5 text-white/40">int, required — number of simulation steps</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">chip_model</td><td class="py-1.5 text-white/40">n1 | n2 (default n2) — processor target</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">neuron_model</td><td class="py-1.5 text-white/40">cuba_lif | izhikevich | adex (default cuba_lif)</td></tr>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">stimuli</td><td class="py-1.5 text-white/40">array of population, neurons (optional), current</td></tr>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">learning</td><td class="py-1.5 text-white/40">enabled, graded, dendritic, noise, three_factor</td></tr>
               <tr><td class="py-1.5 font-mono text-white/60">rewards</td><td class="py-1.5 text-white/40">array of timestep, value — for 3-factor learning</td></tr>
@@ -440,12 +671,11 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
         </div>
       </div>
 
-      <!-- Get Job -->
-      <div class="reveal mb-10">
-        <div class="flex items-center gap-3 mb-3">
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
           <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
-          <code class="text-sm font-mono text-white/70">/v1/jobs/job_id</code>
-          <span class="text-xs text-white/30">Requires X-API-Key</span>
+          <code class="text-sm font-mono text-white/70">/v1/jobs/&#123;job_id&#125;</code>
+          <span class="text-xs text-white/30">Auth required</span>
         </div>
         <p class="text-sm text-white/40 mb-3">Get job status and summary results. Poll until status is "completed" or "failed".</p>
         <div class="glass rounded-lg p-4 text-sm">
@@ -461,12 +691,20 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
         </div>
       </div>
 
-      <!-- Get Spikes -->
-      <div class="reveal mb-10">
-        <div class="flex items-center gap-3 mb-3">
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/jobs/&#123;job_id&#125;/cancel</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Cancel a running or pending job. Credits refunded for unused compute.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
           <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
-          <code class="text-sm font-mono text-white/70">/v1/jobs/job_id/spikes</code>
-          <span class="text-xs text-white/30">Requires X-API-Key</span>
+          <code class="text-sm font-mono text-white/70">/v1/jobs/&#123;job_id&#125;/spikes</code>
+          <span class="text-xs text-white/30">Auth required</span>
         </div>
         <p class="text-sm text-white/40 mb-3">Full spike trains grouped by population with local neuron indices.</p>
         <div class="glass rounded-lg p-4 text-sm">
@@ -475,37 +713,538 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
         </div>
       </div>
 
-      <!-- Usage -->
-      <div class="reveal mb-10">
-        <div class="flex items-center gap-3 mb-3">
+      <!-- ═══════════════ BILLING ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Billing</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/plans</code>
+        </div>
+        <p class="text-sm text-white/40">List available subscription plans and limits (public, no auth).</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/api-rates</code>
+        </div>
+        <p class="text-sm text-white/40">Compute cost rates per second by processor (public, no auth).</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/balance</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Get your credit balance, tier, and extra usage status.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/subscription</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Get current subscription details (plan, status, period dates).</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/subscribe</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Start a subscription. Returns Stripe Checkout URL. Annual billing saves 20%.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: plan (basic | max | ultra), interval (month | year), promo_code (optional)</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/change-plan</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Upgrade or downgrade your subscription.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: new_plan</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/cancel</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Cancel your subscription at end of current period.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/credits</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Purchase credits via Stripe Checkout.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: amount_usd (number)</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/extra-usage</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Enable or disable pay-as-you-go beyond tier limits.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: enabled (boolean)</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/history</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Transaction history (credits purchased, compute charges, subscription charges).</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/validate-promo</code>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Validate a promo/coupon code and return discount details.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Query: code (string)</code></div>
+      </div>
+
+      <!-- ═══════════════ WEBHOOKS ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Customer Webhooks</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/webhooks/register</code>
+          <span class="text-xs text-white/30">Auth required (full scope)</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Register a webhook URL for job event notifications. Max 5 per account.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: url (HTTPS), events (array: job.completed, job.failed, job.cancelled)</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/webhooks/list</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">List all registered webhooks.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-red-500/20 text-red-400">DELETE</span>
+          <code class="text-sm font-mono text-white/70">/v1/webhooks/{'{'}webhook_id{'}'}</code>
+          <span class="text-xs text-white/30">Auth required (full scope)</span>
+        </div>
+        <p class="text-sm text-white/40">Delete a registered webhook.</p>
+      </div>
+
+      <!-- ═══════════════ USAGE ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Usage</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/usage/status</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Quick usage check: jobs remaining today, compute used this month.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
           <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
           <code class="text-sm font-mono text-white/70">/v1/usage</code>
-          <span class="text-xs text-white/30">Requires X-API-Key</span>
+          <span class="text-xs text-white/30">Auth required</span>
         </div>
-        <p class="text-sm text-white/40 mb-3">Your current usage stats and estimated cost.</p>
+        <p class="text-sm text-white/40 mb-3">Detailed usage statistics including estimated cost.</p>
         <div class="glass rounded-lg p-4 text-sm">
           <table class="w-full text-sm">
             <tbody>
-              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">jobs_today</td><td class="py-1.5 text-white/40">int — jobs submitted today</td></tr>
-              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">jobs_limit_today</td><td class="py-1.5 text-white/40">int — daily limit for your tier</td></tr>
-              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">compute_seconds_this_month</td><td class="py-1.5 text-white/40">float — total compute this billing cycle</td></tr>
-              <tr><td class="py-1.5 font-mono text-white/60">estimated_cost_usd</td><td class="py-1.5 text-white/40">float — estimated cost at API rates (USD)</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">jobs_today / jobs_limit_today</td><td class="py-1.5 text-white/40">daily job count vs limit</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">compute_seconds_this_month</td><td class="py-1.5 text-white/40">total compute this billing cycle</td></tr>
+              <tr><td class="py-1.5 font-mono text-white/60">estimated_cost_usd</td><td class="py-1.5 text-white/40">estimated cost at API rates</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Errors -->
+      <!-- ═══════════════ ACCOUNT ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Account</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/account/export</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Export all your data (GDPR data portability).</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-red-500/20 text-red-400">DELETE</span>
+          <code class="text-sm font-mono text-white/70">/v1/account</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Delete your account and all associated data permanently (GDPR right to erasure).</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/account/set-password</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Set password for OAuth-only accounts, or change existing password.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: current_password (if exists), new_password</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/account/oauth/unlink</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Unlink a connected OAuth provider (must have password or other provider linked).</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: provider (github | google)</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/account/sessions</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">List active sessions with user-agent and IP info.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-red-500/20 text-red-400">DELETE</span>
+          <code class="text-sm font-mono text-white/70">/v1/account/sessions/&#123;session_id&#125;</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Revoke a session by ID.</p>
+      </div>
+
+      <!-- ═══════════════ BITSTREAMS ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Bitstreams</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/bitstreams</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">List available FPGA bitstreams for your tier.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/bitstreams/&#123;board_id&#125;</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Get a presigned download URL for a specific bitstream. URL expires in 1 hour.</p>
+      </div>
+
+      <!-- ═══════════════ LICENSES ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Licenses</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/licenses/generate</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Generate a new HMAC-signed license key.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: product, tier (optional)</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/licenses</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">List your license keys with activation status.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/licenses/&#123;license_key&#125;/validate</code>
+        </div>
+        <p class="text-sm text-white/40">Validate a license key (checks HMAC signature and activation status). Rate limited to 5 per 15 minutes.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/licenses/&#123;license_key&#125;/activate</code>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Activate a license key on a device.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: device_id</code></div>
+      </div>
+
+      <!-- ═══════════════ DEVICES ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Devices</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/devices</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Register a new device.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: name, board_id, serial_number (optional)</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/devices</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">List your registered devices.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-red-500/20 text-red-400">DELETE</span>
+          <code class="text-sm font-mono text-white/70">/v1/devices/&#123;device_id&#125;</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Remove a registered device (fails if licenses are bound to it).</p>
+      </div>
+
+      <!-- ═══════════════ BILLING ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Billing</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/plans</code>
+        </div>
+        <p class="text-sm text-white/40">List all subscription plans with pricing, limits, and chip access. Public endpoint.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/api-rates</code>
+        </div>
+        <p class="text-sm text-white/40">Get API credit rates per chip model (USD per compute-second). Public endpoint.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/subscribe</code>
+          <span class="text-xs text-white/30">Session required (verified)</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Create a Stripe Checkout session for a subscription.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: plan (basic|max|ultra), interval (month|year), promo_code (optional), success_url, cancel_url</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/change-plan</code>
+          <span class="text-xs text-white/30">Session required (verified)</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Switch to a different plan. Prorated automatically.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: plan (free|basic|max|ultra)</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/cancel</code>
+          <span class="text-xs text-white/30">Session required (verified)</span>
+        </div>
+        <p class="text-sm text-white/40">Cancel subscription at end of current billing period.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/subscription</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Get current subscription plan, status, and billing period.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/balance</code>
+          <span class="text-xs text-white/30">Auth required</span>
+        </div>
+        <p class="text-sm text-white/40">Get current API credit balance and discount percentage.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/credits</code>
+          <span class="text-xs text-white/30">Session required (verified)</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Buy API credits (one-time purchase, $5 minimum). Creates a Stripe Checkout session.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: amount (5-10000), success_url, cancel_url</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/extra-usage</code>
+          <span class="text-xs text-white/30">Session required (verified)</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Toggle extra usage (continue running when subscription limit exhausted, billing from credits).</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: enabled (bool), monthly_spending_cap (0-10000)</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/history</code>
+          <span class="text-xs text-white/30">Session required</span>
+        </div>
+        <p class="text-sm text-white/40">Get billing transaction history (purchases, charges, refunds).</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/invoice/&#123;transaction_id&#125;</code>
+          <span class="text-xs text-white/30">Session required</span>
+        </div>
+        <p class="text-sm text-white/40">Download a PDF invoice/receipt for a specific transaction.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/billing/validate-promo</code>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Validate a promotion code and get discount details.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Query: code (string)</code></div>
+      </div>
+
+      <!-- ═══════════════ TWO-FACTOR AUTH ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Two-Factor Authentication (TOTP)</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/totp/setup</code>
+          <span class="text-xs text-white/30">Session required (verified)</span>
+        </div>
+        <p class="text-sm text-white/40">Generate TOTP secret and QR code. Returns provisioning URI for authenticator apps.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/totp/verify-setup</code>
+          <span class="text-xs text-white/30">Session required</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Complete 2FA setup by verifying a TOTP code. Returns backup codes.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: code (6 digits)</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/totp/disable</code>
+          <span class="text-xs text-white/30">Session required (verified)</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Disable 2FA. Requires password and current TOTP code.</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: password, code</code></div>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/auth/totp/status</code>
+          <span class="text-xs text-white/30">Session required</span>
+        </div>
+        <p class="text-sm text-white/40">Check if 2FA is enabled for the current user.</p>
+      </div>
+
+      <!-- ═══════════════ CUSTOMER WEBHOOKS ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Webhooks</h3>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-green-500/20 text-green-400">POST</span>
+          <code class="text-sm font-mono text-white/70">/v1/webhooks/register</code>
+          <span class="text-xs text-white/30">Auth required (verified, full scope)</span>
+        </div>
+        <p class="text-sm text-white/40 mb-2">Register a webhook URL for job event notifications (max 5 per account).</p>
+        <div class="glass rounded-lg p-3 text-xs"><code class="text-white/50">Body: url (HTTPS only), events (job.completed, job.failed, job.cancelled)</code></div>
+        <p class="text-xs text-white/30 mt-2">Returns a signing secret. Payloads are HMAC-SHA256 signed via the <code class="font-mono">X-Catalyst-Signature</code> header.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-500/20 text-blue-400">GET</span>
+          <code class="text-sm font-mono text-white/70">/v1/webhooks/list</code>
+          <span class="text-xs text-white/30">Auth required (verified)</span>
+        </div>
+        <p class="text-sm text-white/40">List all registered webhooks.</p>
+      </div>
+
+      <div class="reveal mb-8">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-red-500/20 text-red-400">DELETE</span>
+          <code class="text-sm font-mono text-white/70">/v1/webhooks/&#123;webhook_id&#125;</code>
+          <span class="text-xs text-white/30">Auth required (verified, full scope)</span>
+        </div>
+        <p class="text-sm text-white/40">Delete a registered webhook.</p>
+      </div>
+
+      <!-- ═══════════════ RATE LIMITS ═══════════════ -->
+      <h3 class="reveal text-lg font-semibold mt-16 mb-6 border-b border-white/10 pb-2">Rate Limits</h3>
+
+      <div class="reveal mb-8">
+        <div class="glass rounded-lg p-4 text-sm">
+          <table class="w-full text-sm">
+            <tbody>
+              <tr class="border-b border-white/5"><td class="py-1.5 text-white/60">General API</td><td class="py-1.5 text-white/40">60 requests per minute per IP</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 text-white/60">Auth endpoints</td><td class="py-1.5 text-white/40">10 per minute per IP</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 text-white/60">License validation</td><td class="py-1.5 text-white/40">5 per 15 minutes per IP</td></tr>
+              <tr><td class="py-1.5 text-white/60">Job submission</td><td class="py-1.5 text-white/40">Varies by tier (free: 10/day, basic: 50/day, max: 200/day)</td></tr>
+            </tbody>
+          </table>
+          <p class="text-xs text-white/30 mt-3">Rate limit headers: <code class="font-mono">X-RateLimit-Remaining</code>, <code class="font-mono">X-RateLimit-Reset</code></p>
+        </div>
+      </div>
+
+      <!-- ═══════════════ ERRORS ═══════════════ -->
       <h2 class="reveal text-2xl font-bold mt-20 mb-8">Error codes</h2>
       <div class="reveal glass rounded-lg p-4 text-sm">
         <table class="w-full text-sm">
           <tbody>
             <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">400</td><td class="py-1.5 text-white/40">Invalid request — check your JSON format</td></tr>
-            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">401</td><td class="py-1.5 text-white/40">Missing or invalid API key</td></tr>
-            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">403</td><td class="py-1.5 text-white/40">Email verification required, or tier limit exceeded (neurons, timesteps, chip access)</td></tr>
-            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">404</td><td class="py-1.5 text-white/40">Network or job not found</td></tr>
-            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">409</td><td class="py-1.5 text-white/40">Email already registered</td></tr>
-            <tr><td class="py-1.5 font-mono text-white/60">429</td><td class="py-1.5 text-white/40">Daily job limit reached — upgrade your tier</td></tr>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">401</td><td class="py-1.5 text-white/40">Missing or invalid API key / session token</td></tr>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">403</td><td class="py-1.5 text-white/40">Email verification required, insufficient scope, or tier limit exceeded</td></tr>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">404</td><td class="py-1.5 text-white/40">Resource not found (network, job, device, key, session)</td></tr>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">409</td><td class="py-1.5 text-white/40">Conflict (email already registered, device already exists)</td></tr>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">413</td><td class="py-1.5 text-white/40">Network definition exceeds 1 MB limit</td></tr>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">429</td><td class="py-1.5 text-white/40">Rate limit exceeded — wait or upgrade your tier</td></tr>
+            <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">451</td><td class="py-1.5 text-white/40">Service unavailable in your region (export control)</td></tr>
+            <tr><td class="py-1.5 font-mono text-white/60">500</td><td class="py-1.5 text-white/40">Internal server error — contact support if persistent</td></tr>
           </tbody>
         </table>
       </div>
