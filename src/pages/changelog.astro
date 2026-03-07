@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Changelog — Catalyst Neuromorphic" description="Release history for Catalyst processors, cloud API, and tools." hasFog={true}>
+
+  <!-- HERO -->
+  <section class="pt-36 pb-16 px-6 md:px-12" style="position:relative;z-index:1;">
+    <div style="max-width:700px;margin:0 auto;text-align:center;">
+      <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-5">Changelog</p>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2.2rem,4.5vw,3.4rem); font-weight:700; letter-spacing:-0.04em; line-height:1.1;">
+        What we shipped.
+      </h1>
+      <p class="text-base text-white/35 mt-5" style="line-height:1.7;">Processor releases, API updates, and tooling improvements.</p>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="pb-32 px-6 md:px-12" style="position:relative;z-index:1;">
+    <div style="max-width:640px;margin:0 auto;">
+
+      <!-- N4 -->
+      <div class="card-glass reveal" style="padding:clamp(1.5rem,3vw,2.5rem); margin-bottom:24px;">
+        <div style="position:relative;z-index:2;">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-xs font-mono text-catalyst-blue/70 bg-catalyst-blue/10 px-2 py-0.5 rounded">processor</span>
+            <span class="text-xs text-white/25">5 Mar 2026</span>
+          </div>
+          <h3 class="text-lg font-bold tracking-tight mb-2">N4 Processor &mdash; Patent Filed</h3>
+          <div class="text-sm text-white/40" style="line-height:1.75;">
+            <p>512-core chiplet architecture. 216 features, 143 RTL modules, 3,229 tests passing. FPGA validated: 126/126 tests on AWS F2 (AFI v4). UK patent filed 5 Mar 2026.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- N3 -->
+      <div class="card-glass reveal" style="padding:clamp(1.5rem,3vw,2.5rem); margin-bottom:24px;">
+        <div style="position:relative;z-index:2;">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-xs font-mono text-catalyst-blue/70 bg-catalyst-blue/10 px-2 py-0.5 rounded">processor</span>
+            <span class="text-xs text-white/25">2 Mar 2026</span>
+          </div>
+          <h3 class="text-lg font-bold tracking-tight mb-2">N3 Processor &mdash; Patent Filed</h3>
+          <div class="text-sm text-white/40" style="line-height:1.75;">
+            <p>128-core processor with 68 features, all rated 10/10. 1,011+ tests passing. FPGA validated on AWS F2 (AFI v27, 19/19 PASS). 78-page specification. UK patent filed 2 Mar 2026.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cloud API -->
+      <div class="card-glass reveal" style="padding:clamp(1.5rem,3vw,2.5rem); margin-bottom:24px;">
+        <div style="position:relative;z-index:2;">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-xs font-mono text-green-400/70 bg-green-400/10 px-2 py-0.5 rounded">cloud</span>
+            <span class="text-xs text-white/25">Feb 2026</span>
+          </div>
+          <h3 class="text-lg font-bold tracking-tight mb-2">Cloud API v1.0</h3>
+          <div class="text-sm text-white/40" style="line-height:1.75;">
+            <p>Live at api.catalyst-neuromorphic.com. OAuth (GitHub, Google, email), subscription billing via Stripe, job simulation, network management. 70+ endpoints. Python SDK on PyPI.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLI -->
+      <div class="card-glass reveal" style="padding:clamp(1.5rem,3vw,2.5rem); margin-bottom:24px;">
+        <div style="position:relative;z-index:2;">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-xs font-mono text-purple-400/70 bg-purple-400/10 px-2 py-0.5 rounded">tooling</span>
+            <span class="text-xs text-white/25">Feb 2026</span>
+          </div>
+          <h3 class="text-lg font-bold tracking-tight mb-2">Catalyst CLI v0.2</h3>
+          <div class="text-sm text-white/40" style="line-height:1.75;">
+            <p>TypeScript rewrite with interactive TUI. FPGA deployment, cloud simulation, live spike monitoring, board detection, bitstream management. Available on npm.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- N2 -->
+      <div class="card-glass reveal" style="padding:clamp(1.5rem,3vw,2.5rem); margin-bottom:24px;">
+        <div style="position:relative;z-index:2;">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-xs font-mono text-catalyst-blue/70 bg-catalyst-blue/10 px-2 py-0.5 rounded">processor</span>
+            <span class="text-xs text-white/25">21 Feb 2026</span>
+          </div>
+          <h3 class="text-lg font-bold tracking-tight mb-2">N2 Processor &mdash; v3.7.0</h3>
+          <div class="text-sm text-white/40" style="line-height:1.75;">
+            <p>3,091 tests passing. 28/28 FPGA validation. Published paper (DOI: 10.5281/zenodo.18728256). 155 SDK features. UK patent filed 21 Feb 2026.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- N1 -->
+      <div class="card-glass reveal" style="padding:clamp(1.5rem,3vw,2.5rem); margin-bottom:24px;">
+        <div style="position:relative;z-index:2;">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-xs font-mono text-catalyst-blue/70 bg-catalyst-blue/10 px-2 py-0.5 rounded">processor</span>
+            <span class="text-xs text-white/25">13 Feb 2026</span>
+          </div>
+          <h3 class="text-lg font-bold tracking-tight mb-2">N1 Processor &mdash; Final</h3>
+          <div class="text-sm text-white/40" style="line-height:1.75;">
+            <p>First-generation neuromorphic processor. 96/96 tests. Published paper (DOI: 10.5281/zenodo.18727094). UK patent filed 13 Feb 2026.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Company -->
+      <div class="card-glass reveal" style="padding:clamp(1.5rem,3vw,2.5rem);">
+        <div style="position:relative;z-index:2;">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-xs font-mono text-amber-400/70 bg-amber-400/10 px-2 py-0.5 rounded">company</span>
+            <span class="text-xs text-white/25">25 Feb 2026</span>
+          </div>
+          <h3 class="text-lg font-bold tracking-tight mb-2">Catalyst Neuromorphic Ltd &mdash; Incorporated</h3>
+          <div class="text-sm text-white/40" style="line-height:1.75;">
+            <p>Company No. 17054540. Registered in England and Wales.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</BaseLayout>
