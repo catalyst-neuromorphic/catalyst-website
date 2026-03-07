@@ -297,10 +297,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="card-glass p-8 flex flex-col justify-center">
           <div class="mb-6">
             <div class="text-[3.5rem] font-bold tracking-tight leading-none">91.0<span class="text-xl text-white/30">%</span></div>
-            <div class="text-xs text-white/40 mt-1">N3 adLIF, 1536 hidden (90.8% quantised)</div>
+            <div class="text-xs text-white/40 mt-1">N3 adLIF, 1536 hidden</div>
           </div>
           <div class="mb-6">
-            <div class="text-[2.2rem] font-bold tracking-tight leading-none text-white/50">89.3<span class="text-lg text-white/20">%</span></div>
+            <div class="text-[2.2rem] font-bold tracking-tight leading-none text-white/50">90.6<span class="text-lg text-white/20">%</span></div>
             <div class="text-xs text-white/30 mt-1">N1 LIF, 1024 hidden (basic LIF only)</div>
           </div>
           <div>
@@ -315,10 +315,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="space-y-5">
             {[
               { name: 'Catalyst N3', sub: 'adLIF, 1536 hidden', score: 91.0, color: 'bg-catalyst-blue', ours: true },
-              { name: 'Intel Loihi 2', sub: 'Loihi 2 (published)', score: 90.9, color: 'bg-white/15', ours: false },
-              { name: 'Yin 2021', sub: 'published', score: 90.4, color: 'bg-white/15', ours: false },
-              { name: 'Catalyst N1', sub: 'LIF, 1024 hidden', score: 89.3, color: 'bg-catalyst-green/60', ours: true },
-              { name: 'Intel Loihi 1', sub: 'Loihi 1 (published)', score: 89.04, color: 'bg-white/15', ours: false },
+              { name: 'Intel Loihi 2', sub: 'Nowotny et al. 2025', score: 90.9, color: 'bg-white/15', ours: false },
+              { name: 'Catalyst N1', sub: 'LIF, 1024 hidden', score: 90.6, color: 'bg-catalyst-green/60', ours: true },
               { name: 'Catalyst N2', sub: 'adLIF, 512 hidden', score: 84.5, color: 'bg-catalyst-blue/60', ours: true },
             ].map(item => (
               <div class="flex items-center gap-4">
@@ -333,7 +331,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               </div>
             ))}
           </div>
-          <p class="text-[10px] text-white/20 mt-6">N3 91.0% uses adLIF with 1536 hidden neurons (90.8% quantised to int16). N1 89.3% with basic LIF at 1024 hidden. N2 84.5% with adLIF at 512 hidden (published).</p>
+          <p class="text-[10px] text-white/20 mt-6">N3 91.0% uses adLIF with 1536 hidden neurons. N1 90.6% with basic LIF at 1024 hidden. N2 84.5% with adLIF at 512 hidden. Loihi 2 result from Nowotny et al. 2025 (arXiv 2510.13757).</p>
         </div>
       </div>
     </div>

@@ -2,68 +2,125 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Terms of Service — Catalyst Neuromorphic" description="Catalyst Cloud Terms of Service">
+<BaseLayout title="Terms of Service — Catalyst Neuromorphic" description="Terms of Service for Catalyst Cloud and related services">
   <section class="max-w-3xl mx-auto px-6 py-24">
     <h1 class="text-3xl font-bold mb-2" style="font-family:'Space Grotesk',sans-serif;">Terms of Service</h1>
-    <p class="text-white/30 text-sm mb-12">Last updated: 25 February 2026</p>
+    <p class="text-white/30 text-sm mb-12">Last updated: 7 March 2026</p>
 
     <div class="prose-legal">
       <h2>1. About these terms</h2>
-      <p>These Terms of Service ("Terms") govern your use of the Catalyst Cloud platform, API, console, CLI tools, and documentation (collectively, the "Service") operated by Catalyst Neuromorphic ("we", "us", "our"), a business registered in the United Kingdom.</p>
-      <p>By creating an account or using the Service, you agree to be bound by these Terms. If you do not agree, do not use the Service.</p>
+      <p>These Terms of Service ("Terms") govern your use of the Catalyst Cloud platform, REST API, web console, CLI tools, FPGA bitstream downloads, SDK licences, and all related documentation (collectively, the "Service") operated by <strong>Catalyst Neuromorphic Ltd</strong> (Company No. 17054540), registered at 71-75 Shelton Street, London WC2H 9JQ ("we", "us", "our").</p>
+      <p>By creating an account or using any part of the Service, you agree to be bound by these Terms, our <a href="/privacy">Privacy Policy</a>, and our <a href="/cookies">Cookie Policy</a>. If you do not agree, do not use the Service.</p>
 
       <h2>2. The Service</h2>
-      <p>Catalyst Cloud provides cloud-based neuromorphic computing services. You can define spiking neural networks and submit simulation jobs that run on our N1 and N2 neuromorphic processor architectures. The Service includes:</p>
+      <p>Catalyst Cloud provides cloud-based neuromorphic computing services. You can define spiking neural networks, submit simulation jobs that run on our proprietary neuromorphic processor architectures, download FPGA bitstreams, and access SDK tooling. The Service includes:</p>
       <ul>
-        <li>A REST API for programmatic access</li>
-        <li>A web console for account management</li>
-        <li>A CLI tool for local development</li>
-        <li>A Python SDK (catalyst-cloud) for job submission</li>
+        <li>A REST API at api.catalyst-neuromorphic.com for programmatic access</li>
+        <li>A web console for account management, billing, and job monitoring</li>
+        <li>The Catalyst CLI for local development and job submission</li>
+        <li>The catalyst-cloud Python package (PyPI) for SDK integration</li>
+        <li>FPGA bitstream downloads for licensed processor designs</li>
+        <li>Documentation and technical resources</li>
       </ul>
 
-      <h2>3. Accounts</h2>
-      <p>You must provide a valid email address to create an account. You are responsible for maintaining the security of your account credentials and API keys. You must not share API keys or allow others to use your account.</p>
-      <p>You must be at least 16 years old to use the Service. If you are using the Service on behalf of an organisation, you represent that you have authority to bind that organisation to these Terms.</p>
+      <h2>3. Account registration</h2>
+      <p>You must provide a valid email address to create an account. You may also register using GitHub or Google OAuth. You are responsible for:</p>
+      <ul>
+        <li>Maintaining the confidentiality of your account credentials and API keys</li>
+        <li>All activity that occurs under your account</li>
+        <li>Notifying us immediately at <a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a> if you suspect unauthorised access</li>
+      </ul>
+      <p>You must be at least 16 years old to use the Service. If you are acting on behalf of an organisation, you represent and warrant that you have authority to bind that organisation to these Terms.</p>
+      <p>We reserve the right to refuse registration, suspend, or terminate accounts at our discretion, including where we reasonably believe Terms are being violated.</p>
 
       <h2>4. Acceptable use</h2>
       <p>You agree not to:</p>
       <ul>
-        <li>Use the Service for any unlawful purpose</li>
-        <li>Attempt to reverse-engineer, decompile, or extract source code from our proprietary SDK, processors, or platform</li>
-        <li>Circumvent usage limits, rate limits, or security controls</li>
-        <li>Resell or redistribute access to the Service without our written consent</li>
-        <li>Submit workloads designed to degrade the Service for other users</li>
-        <li>Use the Service to develop competing neuromorphic processor designs using information gained from our platform</li>
+        <li>Use the Service for any unlawful purpose or in violation of any applicable law or regulation</li>
+        <li>Reverse-engineer, decompile, disassemble, or otherwise attempt to extract source code from our proprietary SDK, processors, compiler, RTL, or platform infrastructure</li>
+        <li>Extract, replicate, or reconstruct our processor architectures, neuron models, or learning algorithms through systematic observation of inputs and outputs (model extraction)</li>
+        <li>Circumvent, disable, or interfere with usage limits, rate limits, authentication, or other security controls</li>
+        <li>Resell, sublicence, or redistribute access to the Service without our prior written consent</li>
+        <li>Submit workloads designed to degrade, disrupt, or deny Service to other users</li>
+        <li>Use the Service to develop competing neuromorphic processor designs using information obtained from our platform</li>
+        <li>Attempt to access other users' data, accounts, or jobs</li>
+        <li>Transmit malware, spam, or any content that is harmful, threatening, or objectionable</li>
+        <li>Use automated tools to scrape, crawl, or harvest data from the Service beyond normal API usage</li>
+      </ul>
+      <p>Violation of these provisions may result in immediate account suspension or termination without notice.</p>
+
+      <h2>5. Subscription billing</h2>
+      <p>The Service is available on a tiered subscription basis. Paid plans are billed monthly via <strong>Stripe</strong>. Prices are in US dollars unless otherwise indicated.</p>
+      <ul>
+        <li><strong>Auto-renewal:</strong> Subscriptions automatically renew at the end of each billing period unless cancelled before the renewal date.</li>
+        <li><strong>Upgrades:</strong> You may upgrade your plan at any time. Prorated charges will apply for the remainder of the current billing period.</li>
+        <li><strong>Downgrades:</strong> Downgrades take effect at the start of the next billing period.</li>
+        <li><strong>Cancellation:</strong> You may cancel your subscription at any time from the console. Your access continues until the end of the current paid period.</li>
+        <li><strong>Refunds:</strong> If you are a consumer in the United Kingdom, you have a statutory right to cancel within 14 days of purchase under the Consumer Rights Act 2015 and the Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013, provided you have not consumed compute credits or submitted jobs during that period. Refund requests should be sent to <a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a>. API credit purchases are non-refundable once credits have been used.</li>
       </ul>
 
-      <h2>5. Intellectual property</h2>
-      <p><strong>Your content:</strong> You retain all rights to the network definitions, configurations, and data you submit to the Service. We do not claim ownership of your content.</p>
-      <p><strong>Our IP:</strong> The Catalyst N1 and N2 processor architectures, neurocore SDK, compiler, simulator, RTL, and all associated technology are proprietary to Catalyst Neuromorphic, protected by UK patent applications, copyright, and trade secret law. The neurocore SDK is licensed under the Business Source License 1.1 (BSL 1.1). Nothing in these Terms grants you any rights to our source code, designs, or technology beyond the right to use the Service as described.</p>
+      <h2>6. API usage limits</h2>
+      <p>Each subscription plan includes weekly compute-second allowances. When your allowance is exhausted, job submissions will be rejected unless you have enabled Extra Usage billing with a sufficient credit balance. Extra Usage charges are deducted from your credit balance at published per-second rates for each processor generation.</p>
+      <p>We may impose additional rate limits on API requests (per minute, per hour) to ensure fair use and platform stability. Current limits are published in our <a href="/cloud/docs">API documentation</a>. We reserve the right to adjust limits with reasonable notice.</p>
 
-      <h2>6. Subscriptions and payments</h2>
-      <p>Paid subscriptions are billed monthly via Stripe. Prices are in US dollars unless currency conversion is shown on the pricing page. You can upgrade, downgrade, or cancel at any time from the console. Cancellations take effect at the end of the current billing period.</p>
-      <p>Prorated charges apply when upgrading mid-cycle. Refunds are at our discretion. API credit purchases are non-refundable once credits have been used.</p>
-
-      <h2>7. Usage limits and extra usage</h2>
-      <p>Each plan includes weekly compute-second allowances. When your allowance is exhausted, jobs will be rejected unless you have enabled Extra Usage billing with a sufficient API credit balance. Extra Usage charges are deducted from your credit balance at published per-second rates.</p>
+      <h2>7. Intellectual property</h2>
+      <p><strong>Your content:</strong> You retain all intellectual property rights in the network definitions, configurations, datasets, and simulation results you submit to or generate through the Service. We do not claim ownership of your content. We access your content only to provide the Service to you and do not use it for any other purpose.</p>
+      <p><strong>Our IP:</strong> The Catalyst N1, N2, N3, N4, and N5 processor architectures, the neurocore SDK, compiler, simulator, RTL designs, and all associated technology, documentation, and branding are the exclusive property of Catalyst Neuromorphic Ltd, protected by:</p>
+      <ul>
+        <li>UK patent applications (filed 2026, pending)</li>
+        <li>Copyright under UK and international law</li>
+        <li>Trade secret protections</li>
+        <li>The Business Source License 1.1 (BSL 1.1) for the neurocore SDK</li>
+      </ul>
+      <p>Nothing in these Terms grants you any licence to our source code, processor designs, RTL, or proprietary technology beyond the limited right to use the Service as described. All rights not expressly granted are reserved.</p>
 
       <h2>8. Service availability</h2>
-      <p>We aim to keep the Service available but do not guarantee uptime. We may suspend or modify the Service for maintenance, updates, or operational reasons. We will endeavour to give notice of planned downtime where practical.</p>
+      <p>We aim to maintain high availability but do not guarantee uninterrupted access. The Service may be temporarily unavailable due to maintenance, updates, infrastructure issues, or circumstances beyond our control. We will endeavour to provide reasonable notice of planned downtime where practical.</p>
 
       <h2>9. Limitation of liability</h2>
-      <p>To the fullest extent permitted by law, our total liability for any claim arising from or relating to the Service is limited to the amount you paid us in the 12 months preceding the claim. We are not liable for indirect, incidental, consequential, or punitive damages, including loss of data, revenue, or profits.</p>
+      <p>To the fullest extent permitted by applicable law:</p>
+      <ul>
+        <li>Our total aggregate liability for any claim arising from or relating to the Service shall not exceed the amount you paid us in the <strong>12 months</strong> preceding the event giving rise to the claim, or &pound;100, whichever is greater.</li>
+        <li>We shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of data, revenue, profits, business opportunity, or goodwill.</li>
+        <li>We shall not be liable for any loss arising from your failure to maintain adequate backups of your data.</li>
+      </ul>
+      <p>Nothing in these Terms excludes or limits liability for death or personal injury caused by negligence, fraud or fraudulent misrepresentation, or any other liability that cannot be excluded or limited under English law.</p>
 
-      <h2>10. Termination</h2>
-      <p>You may delete your account at any time from the console. We may suspend or terminate your account if you violate these Terms. On termination, your data will be deleted in accordance with our Privacy Policy.</p>
+      <h2>10. Indemnification</h2>
+      <p>You agree to indemnify and hold harmless Catalyst Neuromorphic Ltd, its directors, and affiliates from any claims, damages, losses, or expenses (including reasonable legal fees) arising from your use of the Service, your violation of these Terms, or your violation of any third-party rights.</p>
 
-      <h2>11. Changes to these terms</h2>
-      <p>We may update these Terms from time to time. If we make material changes, we will notify you by email or via the console. Continued use of the Service after changes take effect constitutes acceptance.</p>
+      <h2>11. Termination</h2>
+      <p>You may delete your account at any time from the console or by emailing us. We may suspend or terminate your account immediately if:</p>
+      <ul>
+        <li>You breach these Terms</li>
+        <li>We are required to do so by law</li>
+        <li>We reasonably believe your use poses a security risk to the Service or other users</li>
+        <li>Your account has been inactive for more than 12 months</li>
+      </ul>
+      <p>On termination, your data will be deleted in accordance with our <a href="/privacy">Privacy Policy</a>. Any outstanding payment obligations survive termination.</p>
 
-      <h2>12. Governing law</h2>
-      <p>These Terms are governed by the laws of England and Wales. Any disputes will be resolved in the courts of England and Wales.</p>
+      <h2>12. Changes to these terms</h2>
+      <p>We may update these Terms from time to time. If we make material changes, we will notify you by email or through the console at least 30 days before the changes take effect. Continued use of the Service after changes take effect constitutes your acceptance. If you do not agree to the updated Terms, you should stop using the Service and delete your account.</p>
 
-      <h2>13. Contact</h2>
-      <p>Questions about these Terms? Contact us at <a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a>.</p>
+      <h2>13. Governing law and disputes</h2>
+      <p>These Terms are governed by and construed in accordance with the laws of <strong>England and Wales</strong>. Any dispute arising from or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
+      <p>If you are a consumer, this does not affect any mandatory consumer protection rights you may have under the laws of your country of residence.</p>
+
+      <h2>14. General provisions</h2>
+      <ul>
+        <li><strong>Entire agreement:</strong> These Terms, together with the Privacy Policy and Cookie Policy, constitute the entire agreement between you and Catalyst Neuromorphic Ltd regarding the Service.</li>
+        <li><strong>Severability:</strong> If any provision of these Terms is found to be unenforceable, the remaining provisions shall continue in full force and effect.</li>
+        <li><strong>Waiver:</strong> Our failure to enforce any provision of these Terms does not constitute a waiver of that provision.</li>
+        <li><strong>Assignment:</strong> You may not assign or transfer your rights under these Terms without our prior written consent. We may assign our rights and obligations without restriction.</li>
+      </ul>
+
+      <h2>15. Contact</h2>
+      <p>Questions about these Terms? Contact us at:</p>
+      <p>
+        <strong>Catalyst Neuromorphic Ltd</strong><br />
+        71-75 Shelton Street, London WC2H 9JQ<br />
+        <a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a>
+      </p>
     </div>
   </section>
 </BaseLayout>

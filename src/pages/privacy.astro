@@ -2,94 +2,162 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Privacy Policy — Catalyst Neuromorphic" description="How Catalyst Neuromorphic handles your data">
+<BaseLayout title="Privacy Policy — Catalyst Neuromorphic" description="How Catalyst Neuromorphic Ltd handles your personal data under UK GDPR">
   <section class="max-w-3xl mx-auto px-6 py-24">
     <h1 class="text-3xl font-bold mb-2" style="font-family:'Space Grotesk',sans-serif;">Privacy Policy</h1>
-    <p class="text-white/30 text-sm mb-12">Last updated: 25 February 2026</p>
+    <p class="text-white/30 text-sm mb-12">Last updated: 7 March 2026</p>
 
     <div class="prose-legal">
-      <h2>1. Who we are</h2>
-      <p>Catalyst Neuromorphic ("we", "us") is a business registered in the United Kingdom. We operate the Catalyst Cloud platform at catalyst-neuromorphic.com and api.catalyst-neuromorphic.com.</p>
-      <p>Data controller contact: <a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a></p>
+      <h2>1. Data controller</h2>
+      <p><strong>Catalyst Neuromorphic Ltd</strong> (Company No. 17054540) is the data controller responsible for your personal data. We are registered at 71-75 Shelton Street, London WC2H 9JQ, United Kingdom.</p>
+      <p>ICO Registration: <strong>C1884018</strong></p>
+      <p>Data protection contact: <a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a></p>
+      <p>We operate the Catalyst Cloud platform at catalyst-neuromorphic.com and api.catalyst-neuromorphic.com, providing cloud neuromorphic computing, FPGA bitstream downloads, CLI tools, and SDK licensing.</p>
 
-      <h2>2. What data we collect</h2>
-      <p>When you use our Service, we collect:</p>
+      <h2>2. What personal data we collect</h2>
+      <p>We collect and process the following categories of personal data:</p>
+
+      <p><strong>Account information</strong></p>
       <ul>
-        <li><strong>Account information:</strong> email address, hashed password, display name</li>
-        <li><strong>OAuth data:</strong> GitHub or Google user ID and email (if you sign up via OAuth)</li>
-        <li><strong>Payment information:</strong> processed and stored by Stripe. We store your Stripe customer ID but never your card details.</li>
-        <li><strong>Usage data:</strong> job submissions, compute time, API key usage, timestamps</li>
-        <li><strong>Technical data:</strong> IP address, browser user-agent string, session tokens</li>
-        <li><strong>Network definitions:</strong> the spiking neural network configurations you submit for simulation</li>
+        <li>Email address</li>
+        <li>Display name</li>
+        <li>Hashed password (if registering with email/password)</li>
+        <li>GitHub or Google user ID and email (if you sign up via OAuth)</li>
       </ul>
 
-      <h2>3. How we use your data</h2>
+      <p><strong>Payment information</strong></p>
       <ul>
-        <li><strong>To provide the Service:</strong> run your simulations, manage your account, process payments (legal basis: contract)</li>
-        <li><strong>To communicate with you:</strong> send verification codes, password resets, payment receipts, and service updates (legal basis: contract)</li>
-        <li><strong>To improve the Service:</strong> aggregate, anonymised usage statistics to understand platform performance (legal basis: legitimate interest)</li>
-        <li><strong>To prevent abuse:</strong> rate limiting by IP address, fraud detection (legal basis: legitimate interest)</li>
-      </ul>
-      <p>We do <strong>not</strong> sell your data. We do <strong>not</strong> use your network definitions or simulation results for any purpose other than providing the Service to you.</p>
-
-      <h2>4. Third-party processors</h2>
-      <p>We use the following third-party services to operate the platform:</p>
-      <ul>
-        <li><strong>Stripe</strong> (stripe.com) — payment processing. Stripe's privacy policy applies to payment data.</li>
-        <li><strong>Fly.io</strong> (fly.io) — API hosting. Servers located in London, UK.</li>
-        <li><strong>Cloudflare</strong> (cloudflare.com) — website hosting, CDN, DNS, and DDoS protection.</li>
-        <li><strong>Resend</strong> (resend.com) — transactional email delivery (verification codes, receipts).</li>
-        <li><strong>GitHub / Google</strong> — OAuth authentication (only if you choose to sign in via these providers).</li>
+        <li>Stripe customer ID, subscription ID, and payment method metadata</li>
+        <li>We do <strong>not</strong> store your card number, CVV, or full payment details &mdash; these are held exclusively by Stripe</li>
       </ul>
 
-      <h2>5. Data retention</h2>
+      <p><strong>Usage data</strong></p>
       <ul>
-        <li><strong>Account data:</strong> retained while your account is active. Deleted within 30 days of account deletion.</li>
-        <li><strong>Job results:</strong> retained for 90 days after completion, then automatically purged.</li>
-        <li><strong>Payment records:</strong> retained for 7 years as required by UK tax law.</li>
-        <li><strong>Server logs:</strong> IP addresses and request metadata retained for 30 days.</li>
+        <li>Job submissions: network configurations, job parameters, results, timestamps, compute time consumed</li>
+        <li>API key usage and request counts</li>
+        <li>Subscription tier and billing history</li>
       </ul>
 
-      <h2>6. Your rights (UK GDPR)</h2>
-      <p>Under UK data protection law, you have the right to:</p>
+      <p><strong>Technical data</strong></p>
       <ul>
-        <li><strong>Access:</strong> request a copy of all data we hold about you</li>
-        <li><strong>Rectification:</strong> correct inaccurate data via your account settings</li>
-        <li><strong>Erasure:</strong> delete your account and all associated data</li>
-        <li><strong>Portability:</strong> export your data in machine-readable JSON format</li>
-        <li><strong>Objection:</strong> object to processing based on legitimate interest</li>
-        <li><strong>Restriction:</strong> request we limit how we process your data</li>
-      </ul>
-      <p>To exercise these rights, use the Account page in the console or email us at <a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a>. We will respond within 30 days.</p>
-
-      <h2>7. Data export and deletion</h2>
-      <p>You can export all your data as a JSON file from the Account page in the console. You can delete your account at any time, which will permanently remove all your data including networks, jobs, API keys, usage history, and billing records (except where retention is required by law).</p>
-
-      <h2>8. Security</h2>
-      <p>We protect your data with:</p>
-      <ul>
-        <li>Passwords hashed with bcrypt</li>
-        <li>API keys stored as SHA-256 hashes (never in plaintext)</li>
-        <li>Session tokens hashed before storage</li>
-        <li>HTTPS encryption for all connections</li>
-        <li>WAL-mode SQLite with foreign key constraints for data integrity</li>
+        <li>IP address</li>
+        <li>Browser user-agent string</li>
+        <li>Session tokens (stored as SHA-256 hashes)</li>
+        <li>Request metadata (endpoint, method, timestamp, response status)</li>
       </ul>
 
-      <h2>9. Cookies</h2>
-      <p>We use localStorage (not cookies) to store your session token. We do not use tracking cookies, analytics cookies, or advertising cookies. Cloudflare may set a security cookie (__cf_bm) for bot detection.</p>
+      <p><strong>Job metadata</strong></p>
+      <ul>
+        <li>Network definitions and simulation configurations you submit</li>
+        <li>Job status, duration, and output data</li>
+        <li>Processor generation used (N1, N2, N3, etc.)</li>
+      </ul>
+
+      <h2>3. Lawful basis for processing</h2>
+      <p>We process your personal data under the following lawful bases as defined by UK GDPR:</p>
+      <ul>
+        <li><strong>Contract performance</strong> (Article 6(1)(b)): Processing necessary to provide the Service to you, including account management, job execution, billing, and sending transactional communications (verification codes, password resets, payment receipts, service updates).</li>
+        <li><strong>Legitimate interests</strong> (Article 6(1)(f)): Processing necessary for our legitimate business interests, including platform security (rate limiting, fraud detection, abuse prevention), aggregate anonymised analytics to improve Service performance, and infrastructure monitoring. We have conducted balancing tests to ensure these interests do not override your rights.</li>
+        <li><strong>Legal obligation</strong> (Article 6(1)(c)): Retaining payment records as required by UK tax law (HMRC).</li>
+        <li><strong>Consent</strong> (Article 6(1)(a)): Where we rely on consent, you can withdraw it at any time by contacting us.</li>
+      </ul>
+
+      <h2>4. How we use your data</h2>
+      <ul>
+        <li><strong>To provide the Service:</strong> Run your simulations, manage your account, process payments, deliver FPGA bitstreams, and provide SDK access</li>
+        <li><strong>To communicate with you:</strong> Send verification codes, password resets, payment receipts, usage alerts, and important service updates</li>
+        <li><strong>To improve the Service:</strong> Aggregate, anonymised usage statistics to understand platform performance and capacity planning</li>
+        <li><strong>To prevent abuse:</strong> Rate limiting by IP address, detecting anomalous usage patterns, and fraud prevention</li>
+        <li><strong>To comply with law:</strong> Responding to lawful requests from authorities and retaining records where legally required</li>
+      </ul>
+      <p>We do <strong>not</strong> sell your personal data to anyone. We do <strong>not</strong> use your network definitions, simulation configurations, or job results for any purpose other than providing the Service to you. We do <strong>not</strong> use your data for automated decision-making or profiling.</p>
+
+      <h2>5. Third-party processors</h2>
+      <p>We use the following third-party services to operate the platform. Each acts as a data processor under our instruction:</p>
+      <ul>
+        <li><strong>Stripe</strong> (stripe.com) &mdash; Payment processing. Processes card details, billing, invoices, and subscription management. Stripe is PCI DSS Level 1 certified. Stripe's <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer">privacy policy</a> applies to payment data. Stripe may process data in the US and EU.</li>
+        <li><strong>Fly.io</strong> (fly.io) &mdash; API hosting and application infrastructure. Our API runs in the <strong>London (LHR)</strong> region. Fly.io processes request data and application logs.</li>
+        <li><strong>Amazon Web Services (AWS)</strong> &mdash; S3 object storage for FPGA bitstreams, job artefacts, and backups. Data stored in eu-west-2 (London) where possible. AWS may also process data in us-east-1 for certain services.</li>
+        <li><strong>Cloudflare</strong> (cloudflare.com) &mdash; Website hosting, CDN, DNS, and DDoS protection. Cloudflare may cache static content at global edge locations but does not cache personal data. Cloudflare may set security cookies for bot detection.</li>
+        <li><strong>Resend</strong> (resend.com) &mdash; Transactional email delivery. Processes email addresses and email content for verification codes, receipts, and service notifications.</li>
+        <li><strong>GitHub / Google</strong> &mdash; OAuth authentication providers (only if you choose to sign in via these services). We receive your user ID and email address; we do not access other account data.</li>
+      </ul>
+      <p>We have data processing agreements in place with our sub-processors as required by UK GDPR. We do not share your personal data with any other third parties except where required by law.</p>
+
+      <h2>6. Data retention</h2>
+      <ul>
+        <li><strong>Account data:</strong> Retained while your account is active. Deleted within 30 days of account deletion request.</li>
+        <li><strong>Job results and network definitions:</strong> Retained for <strong>90 days</strong> after job completion, then automatically purged.</li>
+        <li><strong>Server logs</strong> (IP addresses, request metadata): Retained for <strong>12 months</strong>, then deleted.</li>
+        <li><strong>Payment records:</strong> Retained for <strong>7 years</strong> as required by UK tax law (HMRC record-keeping obligations).</li>
+        <li><strong>Email communications:</strong> Transactional email records retained for 12 months.</li>
+      </ul>
+      <p>When data is deleted, it is permanently removed from our systems and backups within 30 days of the retention period expiring.</p>
+
+      <h2>7. Your rights under UK GDPR</h2>
+      <p>Under the UK General Data Protection Regulation and the Data Protection Act 2018, you have the following rights:</p>
+      <ul>
+        <li><strong>Right of access</strong> (Article 15): Request a copy of all personal data we hold about you.</li>
+        <li><strong>Right to rectification</strong> (Article 16): Correct inaccurate personal data. You can update your name and email through the console account settings.</li>
+        <li><strong>Right to erasure</strong> (Article 17): Request deletion of your personal data. You can delete your account from the console, which removes all associated data (subject to legal retention requirements).</li>
+        <li><strong>Right to data portability</strong> (Article 20): Receive your personal data in a structured, commonly used, machine-readable format (JSON). Export available from the console account page.</li>
+        <li><strong>Right to restrict processing</strong> (Article 18): Request that we limit how we process your data in certain circumstances.</li>
+        <li><strong>Right to object</strong> (Article 21): Object to processing based on legitimate interests. We will cease processing unless we demonstrate compelling legitimate grounds.</li>
+        <li><strong>Right to withdraw consent:</strong> Where processing is based on consent, you may withdraw it at any time without affecting the lawfulness of prior processing.</li>
+      </ul>
+      <p>To exercise any of these rights, use the Account page in the console or email <a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a>. We will respond within <strong>one calendar month</strong> as required by UK GDPR. There is no fee for exercising your rights, except in cases of manifestly unfounded or excessive requests.</p>
+
+      <h2>8. Data export and deletion</h2>
+      <p>You can export all your data as a JSON file from the Account page in the console. This includes your profile, API keys (hashed), job history, network definitions, usage data, and billing records.</p>
+      <p>You can delete your account at any time, which will permanently remove all your data including networks, jobs, API keys, usage history, and billing records &mdash; except where retention is required by law (e.g., payment records for 7 years under UK tax law).</p>
+
+      <h2>9. Security measures</h2>
+      <p>We implement appropriate technical and organisational measures to protect your personal data, including:</p>
+      <ul>
+        <li>Passwords hashed with bcrypt (cost factor 12)</li>
+        <li>API keys stored as SHA-256 hashes (plaintext never stored)</li>
+        <li>Session tokens hashed before database storage</li>
+        <li>HTTPS/TLS encryption for all connections</li>
+        <li>IP-based rate limiting on authentication endpoints</li>
+        <li>WAL-mode SQLite with foreign key constraints and integrity checks</li>
+        <li>Infrastructure access restricted to authorised personnel only</li>
+      </ul>
+      <p>In the event of a personal data breach that is likely to result in a risk to your rights and freedoms, we will notify the ICO within 72 hours and notify affected users without undue delay, as required by Articles 33 and 34 of UK GDPR.</p>
 
       <h2>10. International transfers</h2>
-      <p>Your data is primarily stored and processed in the UK (London). Stripe may process payment data in the EU/US under their own data processing agreements. Cloudflare's CDN may cache static content globally but does not cache personal data.</p>
+      <p>Your data is primarily stored and processed in the <strong>United Kingdom</strong> (London). However, some of our sub-processors operate in the United States:</p>
+      <ul>
+        <li><strong>Stripe:</strong> May process payment data in the US and EU. Transfers are covered by Stripe's data processing agreement and EU Standard Contractual Clauses (SCCs).</li>
+        <li><strong>AWS:</strong> Primary storage in eu-west-2 (London). Some services may involve US processing, covered by AWS's DPA and SCCs.</li>
+        <li><strong>Cloudflare:</strong> CDN may cache static content globally. Personal data is not cached. Transfers covered by Cloudflare's DPA and SCCs.</li>
+        <li><strong>Resend:</strong> Email processing may occur in the US. Covered by their DPA and SCCs.</li>
+      </ul>
+      <p>Where personal data is transferred outside the UK, we ensure appropriate safeguards are in place, including EU/UK Standard Contractual Clauses and supplementary measures where required, in accordance with Article 46 of UK GDPR.</p>
 
-      <h2>11. Children</h2>
-      <p>The Service is not directed at individuals under 16. We do not knowingly collect data from children. If you believe a child has created an account, contact us and we will delete it.</p>
+      <h2>11. Cookies and local storage</h2>
+      <p>We use minimal cookies and browser storage. Our session authentication uses localStorage (not cookies). Cloudflare may set security cookies for bot detection. For full details, see our <a href="/cookies">Cookie Policy</a>.</p>
 
-      <h2>12. Changes to this policy</h2>
-      <p>We may update this policy from time to time. Material changes will be communicated via email. The "Last updated" date at the top indicates the most recent revision.</p>
+      <h2>12. Children</h2>
+      <p>The Service is not directed at individuals under 16 years of age. We do not knowingly collect personal data from children under 16. If you believe a child has created an account, please contact us and we will delete it promptly.</p>
 
-      <h2>13. Contact and complaints</h2>
-      <p>Contact our data controller: <a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a></p>
-      <p>If you are not satisfied with our response, you can complain to the UK Information Commissioner's Office (ICO) at <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer">ico.org.uk</a>.</p>
+      <h2>13. Changes to this policy</h2>
+      <p>We may update this Privacy Policy from time to time. If we make material changes that affect how we process your personal data, we will notify you by email or through the console at least 30 days before the changes take effect. The "Last updated" date at the top indicates the most recent revision.</p>
+
+      <h2>14. Contact and complaints</h2>
+      <p>For any questions about this Privacy Policy or how we handle your data, contact our data protection lead:</p>
+      <p>
+        <strong>Henry Shulayev Barnes</strong><br />
+        Director, Catalyst Neuromorphic Ltd<br />
+        71-75 Shelton Street, London WC2H 9JQ<br />
+        <a href="mailto:henry@catalyst-neuromorphic.com">henry@catalyst-neuromorphic.com</a>
+      </p>
+      <p>If you are not satisfied with our response, you have the right to lodge a complaint with the UK supervisory authority:</p>
+      <p>
+        <strong>Information Commissioner's Office (ICO)</strong><br />
+        Wycliffe House, Water Lane, Wilmslow, Cheshire SK9 5AF<br />
+        Tel: 0303 123 1113<br />
+        <a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener noreferrer">ico.org.uk/make-a-complaint</a>
+      </p>
     </div>
   </section>
 </BaseLayout>
