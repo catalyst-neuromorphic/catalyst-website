@@ -366,6 +366,60 @@ const comparison = [
   }
   @media(max-width:640px){#sub-fog-canvas{display:none}}
   @media(prefers-reduced-motion:reduce){#sub-fog-canvas{display:none}}
+
+  /* ═══ CLOUD / PRICING / HARDWARE SECTIONS ═══ */
+  .section-heading{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-.03em;
+    text-align:center;margin-bottom:12px;
+  }
+  .section-sub{
+    text-align:center;color:rgba(255,255,255,0.4);
+    font-size:.95rem;line-height:1.7;max-width:600px;margin:0 auto 48px;
+  }
+  .cloud-section,.pricing-section,.hw-section{
+    max-width:1000px;margin:0 auto;padding:80px 32px;
+  }
+  .cloud-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:32px;
+  }
+  .cloud-card{
+    background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);
+    border-radius:16px;padding:28px;position:relative;
+  }
+  .cloud-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:600;margin-bottom:8px}
+  .cloud-card p{font-size:.88rem;color:rgba(255,255,255,0.4);line-height:1.6}
+  .cloud-num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:rgba(59,130,246,0.4);margin-bottom:12px}
+  .cloud-ctas{display:flex;gap:16px;justify-content:center;margin-top:32px}
+  .coming-soon{
+    display:inline-block;margin-top:14px;
+    font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+    color:rgba(255,255,255,0.25);
+    padding:4px 10px;border:1px solid rgba(255,255,255,0.08);border-radius:6px;
+  }
+
+  /* pricing */
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px}
+  .pricing-card{
+    background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);
+    border-radius:16px;padding:32px;text-align:center;
+  }
+  .pricing-card.featured{border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.04)}
+  .pricing-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:600;margin-bottom:8px}
+  .pricing-price{font-family:'Space Grotesk',sans-serif;font-size:2.5rem;font-weight:700;margin-bottom:20px}
+  .pricing-price span{font-size:.9rem;font-weight:400;color:rgba(255,255,255,0.35)}
+  .pricing-card ul{list-style:none;margin-bottom:24px}
+  .pricing-card li{font-size:.85rem;color:rgba(255,255,255,0.45);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+  .pricing-card li:last-child{border-bottom:none}
+  .pricing-credits{text-align:center;font-size:.88rem;color:rgba(255,255,255,0.4);margin-bottom:12px}
+  .pricing-enterprise{text-align:center;font-size:.88rem;color:rgba(255,255,255,0.35);margin-bottom:0}
+  .pricing-enterprise a{color:#60A5FA;text-decoration:none}
+  .pricing-enterprise a:hover{text-decoration:underline}
+
+  @media(max-width:768px){
+    .cloud-grid,.pricing-grid{grid-template-columns:1fr}
+    .cloud-ctas{flex-direction:column;align-items:center}
+  }
 </style>
 </head>
 <body>
@@ -471,13 +525,117 @@ const comparison = [
   </div>
 </section>
 
+<!-- ═══ CLOUD API ═══ -->
+<section class="cloud-section reveal" id="cloud">
+  <h2 class="section-heading">Cloud API</h2>
+  <p class="section-sub">Run spiking neural network simulations via REST API. No hardware required. Just send JSON, get spikes.</p>
+
+  <div class="cloud-grid">
+    <div class="cloud-card">
+      <div class="cloud-num">01</div>
+      <h3>Define</h3>
+      <p>Describe your network as JSON. Populations, connections, neuron parameters.</p>
+    </div>
+    <div class="cloud-card">
+      <div class="cloud-num">02</div>
+      <h3>Simulate</h3>
+      <p>Submit a job with stimuli and timesteps. Hardware-accurate dynamics server-side.</p>
+    </div>
+    <div class="cloud-card">
+      <div class="cloud-num">03</div>
+      <h3>Analyse</h3>
+      <p>Get firing rates, spike trains, and timeseries. Population-indexed for your pipeline.</p>
+    </div>
+  </div>
+
+  <div class="cloud-ctas">
+    <a href="/console/signup" class="btn-buy glow-btn">Get started free</a>
+    <a href="/cloud/docs" class="btn-learn glow-btn" target="_blank" rel="noopener noreferrer">API reference</a>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section class="pricing-section reveal" id="pricing">
+  <h2 class="section-heading">Pricing</h2>
+  <p class="section-sub">Subscribe for included compute or buy API credits. Free tier available.</p>
+
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <h3>Free</h3>
+      <div class="pricing-price">$0<span>/mo</span></div>
+      <ul>
+        <li>500 compute-sec/week</li>
+        <li>N1 processor</li>
+        <li>1,024 neurons max</li>
+      </ul>
+      <a href="/console/signup" class="btn-learn glow-btn">Sign up</a>
+    </div>
+    <div class="pricing-card featured">
+      <h3>Max</h3>
+      <div class="pricing-price">$100<span>/mo</span></div>
+      <ul>
+        <li>7,000 compute-sec/week</li>
+        <li>N1 + N2 processors</li>
+        <li>131,072 neurons max</li>
+      </ul>
+      <a href="/console/signup" class="btn-buy glow-btn">Get started</a>
+    </div>
+    <div class="pricing-card">
+      <h3>Ultra</h3>
+      <div class="pricing-price">$200<span>/mo</span></div>
+      <ul>
+        <li>16,000 compute-sec/week</li>
+        <li>N1 + N2 processors</li>
+        <li>131,072 neurons max</li>
+      </ul>
+      <a href="/console/signup" class="btn-buy glow-btn">Get started</a>
+    </div>
+  </div>
+
+  <div class="pricing-credits">
+    <p>API credits: <strong>N1 $0.002/sec</strong> &middot; <strong>N2 $0.005/sec</strong> &middot; Buy any amount, $5 minimum, never expire.</p>
+  </div>
+
+  <div class="pricing-enterprise">
+    <p>Enterprise: custom budgets, dedicated capacity, SLA. <a href="mailto:henry@catalyst-neuromorphic.com">Contact us</a></p>
+  </div>
+
+  <div class="cloud-ctas">
+    <a href="/cloud/pricing" class="btn-learn glow-btn">Full pricing details</a>
+  </div>
+</section>
+
+<!-- ═══ FPGA & HARDWARE (Coming Soon) ═══ -->
+<section class="hw-section reveal" id="hardware">
+  <h2 class="section-heading">Hardware access</h2>
+  <p class="section-sub">Run on real FPGA fabric. ASIC tapeout on the roadmap.</p>
+
+  <div class="cloud-grid">
+    <div class="cloud-card">
+      <h3>FPGA bitstreams</h3>
+      <p>Download validated bitstreams for Xilinx UltraScale+ and Kria K26. Deploy on your own hardware.</p>
+      <span class="coming-soon">Coming soon</span>
+    </div>
+    <div class="cloud-card">
+      <h3>AWS F2 instances</h3>
+      <p>Run on cloud FPGA via AWS F2. Pre-built AMI with drivers and SDK.</p>
+      <span class="coming-soon">Coming soon</span>
+    </div>
+    <div class="cloud-card">
+      <h3>ASIC</h3>
+      <p>28nm and 7nm tapeout planned. Contact for early access partnerships.</p>
+      <span class="coming-soon">Coming soon</span>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ CTA ═══ -->
 <section class="cta-section reveal">
   <div class="cta-card">
     <h2>Ready to build?</h2>
-    <p>Run neuromorphic networks on real silicon through the Catalyst Cloud API. Free tier available.</p>
+    <p>Start with the free tier. 500 compute-seconds/week. No credit card required.</p>
     <div class="cta-btns">
-      <a href="/processors/buy" class="btn-buy glow-btn">Get started</a>
+      <a href="/console/signup" class="btn-buy glow-btn">Create free account</a>
       <a href="/research" class="btn-learn glow-btn">Read the research</a>
     </div>
   </div>
