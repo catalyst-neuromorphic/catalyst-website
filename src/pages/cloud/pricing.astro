@@ -5,10 +5,11 @@ const tiers = [
   {
     name: 'Free',
     amount: 0,
-    priceNote: 'credit card required',
+    priceNote: 'forever free',
     description: 'For exploration and quick experiments.',
     features: [
       '500 compute-seconds/week',
+      'N1 chip only',
       '30s max per job',
       '50 jobs/day',
     ],
@@ -111,7 +112,7 @@ const tiers = [
     <div class="max-w-[1200px] mx-auto">
       <div class="reveal card-glass p-8 text-center">
         <h3 class="text-xl font-semibold mb-2">Enterprise</h3>
-        <p class="text-white/40 mb-4">Custom compute budgets, dedicated capacity, SLA guarantees, and on-premise deployment options.</p>
+        <p class="text-white/40 mb-4">Custom compute budgets, priority support, and flexible billing. Contact us to discuss your requirements.</p>
         <a href="/about#contact" class="text-catalyst-blue hover:underline text-sm">Contact sales &rarr;</a>
       </div>
     </div>
@@ -204,7 +205,7 @@ const tiers = [
       <div class="space-y-6">
         <div class="reveal">
           <h3 class="font-semibold mb-2">Is the free tier actually free?</h3>
-          <p class="text-sm text-white/40 leading-relaxed">Yes. 500 compute-seconds per week on the N1 chip. Credit card required to prevent abuse, but you're never charged.</p>
+          <p class="text-sm text-white/40 leading-relaxed">Yes. 500 compute-seconds per week on the N1 chip, no strings attached.</p>
         </div>
         <div class="reveal">
           <h3 class="font-semibold mb-2">What's the difference between subscriptions and API credits?</h3>
@@ -220,7 +221,7 @@ const tiers = [
         </div>
         <div class="reveal">
           <h3 class="font-semibold mb-2">Do different chips cost more?</h3>
-          <p class="text-sm text-white/40 leading-relaxed">Higher-performance chip architectures consume more of your subscription allocation per second. API credit rates reflect this: $0.002/sec for N1, $0.005/sec for N2, with newer architectures priced accordingly.</p>
+          <p class="text-sm text-white/40 leading-relaxed">Higher-performance chip architectures consume more of your subscription allocation per second. N2 uses a 2.5x allocation multiplier, so 100 seconds of N2 compute uses 250 seconds of your weekly budget. API credit rates reflect this: $0.002/sec for N1, $0.005/sec for N2.</p>
         </div>
         <div class="reveal">
           <h3 class="font-semibold mb-2">Can I use GitHub Sponsors instead?</h3>
@@ -235,29 +236,6 @@ const tiers = [
     <a href="/console/signup" class="reveal btn-primary inline-flex px-10 py-3 text-sm">Create free account &rarr;</a>
   </section>
 
-  <script>
-    // Currency auto-detection via Cloudflare cdn-cgi/trace
-    const EU = ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE'];
-    async function detectCurrency() {
-      try {
-        const res = await fetch('/cdn-cgi/trace');
-        const text = await res.text();
-        const loc = text.match(/loc=(\w+)/)?.[1] || '';
-        let symbol = '$', rate = 1;
-        if (loc === 'GB') { symbol = '\u00A3'; rate = 0.80; }
-        else if (EU.includes(loc)) { symbol = '\u20AC'; rate = 0.92; }
-        else { return; }
-        document.querySelectorAll('[data-usd]').forEach(el => {
-          const usd = parseFloat(el.dataset.usd || '0');
-          const converted = usd * rate;
-          const formatted = converted < 1 && converted > 0
-            ? symbol + converted.toFixed(3)
-            : symbol + Math.round(converted);
-          el.textContent = formatted;
-        });
-      } catch {}
-    }
-    detectCurrency();
-  </script>
+  <script is:inline src="/js/pricing.js"></script>
 
 </BaseLayout>

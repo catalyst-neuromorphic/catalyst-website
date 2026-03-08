@@ -41,8 +41,8 @@ jobs:
                   "features_total": "155",
                   "features_full": "152",
                   "features_hw_only": "3",
-                  "shd_float": "85.9",
-                  "shd_quantized": "85.4",
+                  "shd_float": "91.0",
+                  "shd_quantized": "90.8",
                   "sdk_version": "3.7.0"
               }
 
@@ -51,8 +51,8 @@ jobs:
               "FEATURES_TOTAL": str(stats.get("features_total", "155")),
               "FEATURES_FULL": str(stats.get("features_full", "152")),
               "FEATURES_HW_ONLY": str(stats.get("features_hw_only", "3")),
-              "SHD_FLOAT": str(stats.get("shd_float", "85.9")),
-              "SHD_QUANT": str(stats.get("shd_quantized", "85.4")),
+              "SHD_FLOAT": str(stats.get("shd_float", "91.0")),
+              "SHD_QUANT": str(stats.get("shd_quantized", "90.8")),
               "SDK_VERSION": str(stats.get("sdk_version", "3.7.0")),
           }
 
@@ -94,6 +94,6 @@ jobs:
         run: |
           git config user.name "catalyst-ci-bot[bot]"
           git config user.email "catalyst-ci-bot[bot]@users.noreply.github.com"
-          git add -A
+          git add src/
           git diff --cached --quiet || git commit -m "chore: sync stats from test suite"
           git push

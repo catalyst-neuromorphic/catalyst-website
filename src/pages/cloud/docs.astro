@@ -269,7 +269,7 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
       <!-- Step 1: Signup -->
       <div class="reveal mb-10">
         <h3 class="text-lg font-semibold mb-2">1. Sign up and get an API key</h3>
-        <p class="text-sm text-white/40 mb-4">Create an account at the <a href="/console/signup" class="text-catalyst-blue hover:underline">Console</a>, verify your email, then create an API key from the dashboard. Free, no credit card required.</p>
+        <p class="text-sm text-white/40 mb-4">Create an account at the <a href="/console/signup" class="text-catalyst-blue hover:underline">Console</a>, verify your email, then create an API key from the dashboard. Free.</p>
         <div class="code-tabs glass rounded-xl overflow-hidden" data-group="signup">
           <div class="flex border-b border-white/5">
             <button class="tab-btn active px-4 py-2.5 text-xs font-mono" data-lang="curl">curl</button>
@@ -661,8 +661,7 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
             <tbody>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">network_id</td><td class="py-1.5 text-white/40">string, required — from POST /v1/networks</td></tr>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">timesteps</td><td class="py-1.5 text-white/40">int, required — number of simulation steps</td></tr>
-              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">chip_model</td><td class="py-1.5 text-white/40">n1 | n2 (default n2) — processor target</td></tr>
-              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">neuron_model</td><td class="py-1.5 text-white/40">cuba_lif | izhikevich | adex (default cuba_lif)</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">chip_model</td><td class="py-1.5 text-white/40">n1 | n2 (default n1) — processor target</td></tr>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">stimuli</td><td class="py-1.5 text-white/40">array of population, neurons (optional), current</td></tr>
               <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">learning</td><td class="py-1.5 text-white/40">enabled, graded, dendritic, noise, three_factor</td></tr>
               <tr><td class="py-1.5 font-mono text-white/60">rewards</td><td class="py-1.5 text-white/40">array of timestep, value — for 3-factor learning</td></tr>
@@ -857,7 +856,7 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
           <code class="text-sm font-mono text-white/70">/v1/usage/status</code>
           <span class="text-xs text-white/30">Auth required</span>
         </div>
-        <p class="text-sm text-white/40">Quick usage check: jobs remaining today, compute used this month.</p>
+        <p class="text-sm text-white/40">Quick usage check: current session and weekly compute usage with percentages and reset times.</p>
       </div>
 
       <div class="reveal mb-8">
@@ -870,9 +869,11 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
         <div class="glass rounded-lg p-4 text-sm">
           <table class="w-full text-sm">
             <tbody>
-              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">jobs_today / jobs_limit_today</td><td class="py-1.5 text-white/40">daily job count vs limit</td></tr>
-              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">compute_seconds_this_month</td><td class="py-1.5 text-white/40">total compute this billing cycle</td></tr>
-              <tr><td class="py-1.5 font-mono text-white/60">estimated_cost_usd</td><td class="py-1.5 text-white/40">estimated cost at API rates</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">jobs_today</td><td class="py-1.5 text-white/40">jobs submitted today</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">compute_seconds_this_week</td><td class="py-1.5 text-white/40">compute used in current weekly cycle</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">weekly_limit</td><td class="py-1.5 text-white/40">weekly compute allocation for your tier</td></tr>
+              <tr class="border-b border-white/5"><td class="py-1.5 font-mono text-white/60">usage_pct</td><td class="py-1.5 text-white/40">percentage of weekly allocation used</td></tr>
+              <tr><td class="py-1.5 font-mono text-white/60">resets_at</td><td class="py-1.5 text-white/40">ISO timestamp when weekly usage resets</td></tr>
             </tbody>
           </table>
         </div>
@@ -1286,20 +1287,4 @@ print(f"Spikes: &#123;job['result']['total_spikes']&#125;")`} /></pre>
   }
 </style>
 
-<script>
-  document.querySelectorAll('.code-tabs').forEach(group => {
-    const buttons = group.querySelectorAll('.tab-btn');
-    const contents = group.querySelectorAll('.tab-content');
-
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.dataset.lang;
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        contents.forEach(c => {
-          c.classList.toggle('hidden', c.dataset.lang !== lang);
-        });
-      });
-    });
-  });
-</script>
+<script is:inline src="/js/docs-tabs.js"></script>

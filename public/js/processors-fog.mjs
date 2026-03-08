@@ -1,0 +1,390 @@
+import * as THREE from 'three';
+
+const canvas = document.getElementById('sub-fog-canvas');
+if (!canvas) throw new Error('No sub-fog-canvas');
+
+if (window.innerWidth < 640 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  canvas.style.display = 'none';
+} else {
+
+const W = canvas.clientWidth;
+const H = canvas.clientHeight;
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true });
+renderer.setSize(W, H);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+renderer.setClearColor(0x050507, 0);
+
+const camera = new THREE.PerspectiveCamera(50, W / H, 0.1, 100);
+const CAM_Z = 15;
+camera.position.set(0, 0, CAM_Z);
+
+const COLS = 40;
+const ROWS = 22;
+const TOTAL = COLS * ROWS;
+const TILE_W = 0.42;
+const TILE_H = 0.42;
+const GAP = 0.08;
+const CELL_X = TILE_W + GAP;
+const CELL_Y = TILE_H + GAP;
+
+const brightness = new Float32Array(TOTAL);
+const tileEnergy = new Float32Array(TOTAL);
+
+const fogRT = new THREE.WebGLRenderTarget(W, H, {
+  minFilter: THREE.LinearFilter,
+  magFilter: THREE.LinearFilter,
+  format: THREE.RGBAFormat,
+});
+
+const fogScene = new THREE.Scene();
+const fogCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+const fogMat = new THREE.ShaderMaterial({
+  uniforms: {
+    time: { value: 0 },
+    resolution: { value: new THREE.Vector2(W, H) },
+  },
+  vertexShader: `void main(){gl_Position=vec4(position.xy,0,1);}`,
+  fragmentShader: `
+    precision highp float;
+    uniform float time;
+    uniform vec2 resolution;
+
+    vec3 mod289(vec3 x){return x-floor(x*(1./289.))*289.;}
+    vec4 mod289(vec4 x){return x-floor(x*(1./289.))*289.;}
+    vec4 permute(vec4 x){return mod289(((x*34.)+1.)*x);}
+    vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
+
+    float snoise(vec3 v){
+      const vec2 C=vec2(1./6.,1./3.);
+      const vec4 D=vec4(0,.5,1,2);
+      vec3 i=floor(v+dot(v,C.yyy));
+      vec3 x0=v-i+dot(i,C.xxx);
+      vec3 g=step(x0.yzx,x0.xyz);
+      vec3 l=1.-g;
+      vec3 i1=min(g.xyz,l.zxy);
+      vec3 i2=max(g.xyz,l.zxy);
+      vec3 x1=x0-i1+C.xxx;
+      vec3 x2=x0-i2+C.yyy;
+      vec3 x3=x0-D.yyy;
+      i=mod289(i);
+      vec4 p=permute(permute(permute(
+        i.z+vec4(0,i1.z,i2.z,1))+i.y+vec4(0,i1.y,i2.y,1))+i.x+vec4(0,i1.x,i2.x,1));
+      float n_=.142857142857;
+      vec3 ns=n_*D.wyz-D.xzx;
+      vec4 j=p-49.*floor(p*ns.z*ns.z);
+      vec4 x_=floor(j*ns.z);
+      vec4 y_=floor(j-7.*x_);
+      vec4 x=x_*ns.x+ns.yyyy;
+      vec4 y=y_*ns.x+ns.yyyy;
+      vec4 h=1.-abs(x)-abs(y);
+      vec4 b0=vec4(x.xy,y.xy);
+      vec4 b1=vec4(x.zw,y.zw);
+      vec4 s0=floor(b0)*2.+1.;
+      vec4 s1=floor(b1)*2.+1.;
+      vec4 sh=-step(h,vec4(0));
+      vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;
+      vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
+      vec3 p0=vec3(a0.xy,h.x);
+      vec3 p1=vec3(a0.zw,h.y);
+      vec3 p2=vec3(a1.xy,h.z);
+      vec3 p3=vec3(a1.zw,h.w);
+      vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
+      p0*=norm.x;p1*=norm.y;p2*=norm.z;p3*=norm.w;
+      vec4 m=max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.);
+      m=m*m;
+      return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
+    }
+
+    float fbm(vec3 p){
+      float f=0.,amp=.5,freq=1.;
+      for(int i=0;i<3;i++){f+=amp*snoise(p*freq);freq*=2.1;amp*=.48;}
+      return f;
+    }
+
+    void main(){
+      vec2 uv=(gl_FragCoord.xy-.5*resolution)/min(resolution.x,resolution.y);
+      float t=time*.12;
+
+      vec3 p=vec3(uv*2.,t);
+      float n1=fbm(p*.8+vec3(0,0,t*.3));
+      float n2=fbm(p*1.6+vec3(t*.2,0,0)+n1*.5);
+      float fog=n1*.6+n2*.4;
+      fog=fog*.5+.5;
+
+      float nodes=0.;
+      for(int i=0;i<4;i++){
+        float fi=float(i);
+        vec2 nodePos=vec2(sin(fi*1.7+t*.4+cos(fi*.3))*.6,cos(fi*2.3+t*.3+sin(fi*.7))*.4);
+        float dist=length(uv-nodePos);
+        float pulse=sin(t*2.+fi*1.5)*.5+.5;
+        nodes+=(.008+.004*pulse)/(dist*dist+.01);
+      }
+
+      vec3 blue=vec3(.231,.510,.965);
+      vec3 deepBlue=vec3(.10,.20,.45);
+      vec3 dark=vec3(.02,.02,.03);
+
+      vec3 col=dark;
+      col=mix(col,deepBlue,fog*fog*.6);
+      col+=blue*nodes*.12;
+
+      float centerGlow=exp(-length(uv)*1.8)*(.12+.04*sin(t*.5));
+      col+=blue*centerGlow;
+
+      float vig=1.-smoothstep(.4,1.4,length(uv));
+      col*=vig;
+
+      float grain=fract(sin(dot(gl_FragCoord.xy,vec2(12.9898,78.233)))*43758.5453);
+      col+=(grain-.5)*.012;
+
+      col=col/(col+.8);
+      col=pow(col,vec3(.95));
+
+      gl_FragColor=vec4(col,1);
+    }
+  `,
+  depthWrite: false,
+  depthTest: false,
+});
+
+fogScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), fogMat));
+
+const mainScene = new THREE.Scene();
+
+const blitMat = new THREE.ShaderMaterial({
+  uniforms: { tex: { value: fogRT.texture } },
+  vertexShader: `varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.9999,1);}`,
+  fragmentShader: `uniform sampler2D tex;varying vec2 vUv;void main(){gl_FragColor=texture2D(tex,vUv);}`,
+  depthWrite: false, depthTest: false,
+});
+const blitQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), blitMat);
+blitQuad.frustumCulled = false;
+blitQuad.renderOrder = -1000;
+mainScene.add(blitQuad);
+
+const GLOW_PAD = 0.06;
+const tileGeo = new THREE.PlaneGeometry(TILE_W + GLOW_PAD * 2, TILE_H + GLOW_PAD * 2);
+
+const tileMat = new THREE.ShaderMaterial({
+  uniforms: {
+    baseColor: { value: new THREE.Vector3(0.231, 0.510, 0.965) },
+    fogTex: { value: fogRT.texture },
+    resolution: { value: new THREE.Vector2(W, H) },
+    tileHalf: { value: new THREE.Vector2(TILE_W * 0.5, TILE_H * 0.5) },
+    cornerR: { value: 0.025 },
+    time: { value: 0 },
+  },
+  vertexShader: `
+    attribute float energy;
+    varying float vEnergy;
+    varying vec4 vClipPos;
+    varying vec2 vLocal;
+    void main(){
+      vEnergy=energy;
+      vLocal=position.xy;
+      vec4 worldPos=instanceMatrix*vec4(position,1.0);
+      worldPos.z+=energy*0.4;
+      vClipPos=projectionMatrix*modelViewMatrix*worldPos;
+      gl_Position=vClipPos;
+    }
+  `,
+  fragmentShader: `
+    precision highp float;
+    uniform vec3 baseColor;
+    uniform sampler2D fogTex;
+    uniform vec2 resolution;
+    uniform vec2 tileHalf;
+    uniform float cornerR;
+    varying float vEnergy;
+    varying vec4 vClipPos;
+    varying vec2 vLocal;
+
+    float sdRoundRect(vec2 p,vec2 b,float r){
+      vec2 d=abs(p)-b+r;
+      return length(max(d,0.))+min(max(d.x,d.y),0.)-r;
+    }
+
+    void main(){
+      if(vEnergy<0.015) discard;
+      float d=sdRoundRect(vLocal,tileHalf,cornerR);
+      float edgeMask=1.-smoothstep(-.04,.02,d);
+      float outerGlow=exp(-max(d,0.)*10.);
+
+      vec2 screenUV=(vClipPos.xy/vClipPos.w)*.5+.5;
+      vec3 fogBehind=texture2D(fogTex,screenUV).rgb;
+
+      vec3 smokeCol=fogBehind*1.1+baseColor*0.06;
+      float interiorAlpha=edgeMask*vEnergy*0.3;
+
+      vec3 edgeCol=mix(baseColor*0.6,vec3(0.4,0.65,1.0),vEnergy*0.25);
+      float edgeSoft=exp(-abs(d)*12.)*edgeMask;
+      float edgeAlpha=(edgeSoft*0.3+outerGlow*0.15)*vEnergy;
+
+      vec3 col=smokeCol*interiorAlpha+edgeCol*edgeAlpha;
+      float alpha=interiorAlpha+edgeAlpha;
+      if(alpha<0.003) discard;
+      gl_FragColor=vec4(col,alpha);
+    }
+  `,
+  transparent: true,
+  depthWrite: false,
+  blending: THREE.AdditiveBlending,
+  side: THREE.DoubleSide,
+});
+
+const tileMesh = new THREE.InstancedMesh(tileGeo, tileMat, TOTAL);
+const energyAttr = new THREE.InstancedBufferAttribute(new Float32Array(TOTAL), 1);
+tileMesh.geometry.setAttribute('energy', energyAttr);
+tileMesh.renderOrder = 1;
+
+const dummy = new THREE.Object3D();
+for (let row = 0; row < ROWS; row++) {
+  for (let col = 0; col < COLS; col++) {
+    const i = row * COLS + col;
+    const x = (col - COLS / 2 + 0.5) * CELL_X;
+    const y = (ROWS / 2 - row - 0.5) * CELL_Y;
+    dummy.position.set(x, y, (Math.random() - 0.5) * 0.1);
+    dummy.updateMatrix();
+    tileMesh.setMatrixAt(i, dummy.matrix);
+  }
+}
+tileMesh.instanceMatrix.needsUpdate = true;
+mainScene.add(tileMesh);
+
+const MAX_GLOWS = 10;
+const glowGeo = new THREE.PlaneGeometry(1, 1);
+const glowBaseMat = new THREE.ShaderMaterial({
+  vertexShader: `varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1);}`,
+  fragmentShader: `
+    varying vec2 vUv;
+    uniform float opacity;
+    void main(){
+      float d=length(vUv-0.5)*2.;
+      float glow=exp(-d*d*2.);
+      vec3 col=vec3(.231,.510,.965)*1.3;
+      float a=glow*opacity;
+      if(a<.002) discard;
+      gl_FragColor=vec4(col,a);
+    }
+  `,
+  uniforms: { opacity: { value: 0 } },
+  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+});
+
+const glows = [];
+for (let i = 0; i < MAX_GLOWS; i++) {
+  const mat = glowBaseMat.clone();
+  const m = new THREE.Mesh(glowGeo, mat);
+  m.visible = false;
+  m.renderOrder = 0;
+  mainScene.add(m);
+  glows.push({ mesh: m, energy: 0 });
+}
+let nextGlow = 0;
+
+const waves = [];
+function spawnWave() {
+  waves.push({
+    cx: Math.random() * COLS,
+    cy: Math.random() * ROWS,
+    radius: 0,
+    maxRadius: 2 + Math.random() * 3,
+    speed: 1.5 + Math.random() * 1.5,
+    strength: 0.2 + Math.random() * 0.25,
+    born: performance.now() * 0.001,
+  });
+  const g = glows[nextGlow % MAX_GLOWS];
+  const w = waves[waves.length - 1];
+  g.energy = 0.6;
+  g.mesh.position.set(
+    (w.cx - COLS / 2 + 0.5) * CELL_X,
+    (ROWS / 2 - w.cy - 0.5) * CELL_Y,
+    -0.2
+  );
+  g.mesh.scale.set(w.maxRadius * CELL_X * 1.2, w.maxRadius * CELL_Y * 1.2, 1);
+  g.mesh.visible = true;
+  nextGlow++;
+}
+
+for (let k = 0; k < 3; k++) spawnWave();
+function sched() {
+  spawnWave();
+  setTimeout(sched, 1200 + Math.random() * 1200);
+}
+sched();
+
+window.addEventListener('resize', () => {
+  const w2 = canvas.clientWidth;
+  const h2 = canvas.clientHeight;
+  camera.aspect = w2 / h2;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w2, h2);
+  fogRT.setSize(w2, h2);
+  fogMat.uniforms.resolution.value.set(w2, h2);
+  tileMat.uniforms.resolution.value.set(w2, h2);
+});
+
+let lastTick = 0;
+
+function animate(t) {
+  requestAnimationFrame(animate);
+  const now = t || 0;
+  const time = now * 0.001;
+  const dt = 0.016;
+
+  for (let i = waves.length - 1; i >= 0; i--) {
+    const w = waves[i];
+    w.radius += w.speed * dt;
+    if (w.radius > w.maxRadius) { waves.splice(i, 1); continue; }
+    const fade = 1.0 - (w.radius / w.maxRadius);
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) {
+        const d = Math.sqrt((x - w.cx) ** 2 + (y - w.cy) ** 2);
+        const ringDist = Math.abs(d - w.radius);
+        if (ringDist < 1.2) {
+          const wave = Math.exp(-ringDist * 2.0) * fade * w.strength;
+          brightness[y * COLS + x] = Math.min(1, brightness[y * COLS + x] + wave * 0.10);
+        }
+      }
+    }
+  }
+
+  if (now - lastTick > 50) {
+    for (let j = 0; j < TOTAL; j++) {
+      brightness[j] *= 0.93;
+      if (brightness[j] < 0.01) brightness[j] = 0;
+    }
+    lastTick = now;
+  }
+
+  for (let i = 0; i < TOTAL; i++) {
+    tileEnergy[i] += (brightness[i] - tileEnergy[i]) * 0.12;
+    energyAttr.array[i] = tileEnergy[i];
+  }
+  energyAttr.needsUpdate = true;
+
+  for (const g of glows) {
+    g.energy *= 0.95;
+    if (g.energy < 0.01) { g.mesh.visible = false; g.energy = 0; }
+    g.mesh.material.uniforms.opacity.value = g.energy * 0.10;
+  }
+
+  camera.position.x = Math.sin(time * 0.02) * 0.2;
+  camera.position.y = Math.cos(time * 0.018) * 0.15;
+  camera.position.z = CAM_Z;
+  camera.lookAt(0, 0, 0);
+
+  fogMat.uniforms.time.value = time;
+  tileMat.uniforms.time.value = time;
+
+  renderer.setRenderTarget(fogRT);
+  renderer.render(fogScene, fogCamera);
+
+  renderer.setRenderTarget(null);
+  renderer.render(mainScene, camera);
+}
+
+animate(0);
+
+}

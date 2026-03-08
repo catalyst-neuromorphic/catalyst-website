@@ -11,7 +11,11 @@ export default function AuthorizePrompt() {
     ? new URLSearchParams(window.location.search)
     : new URLSearchParams();
 
-  const callbackPort = params.get('callback_port');
+  const rawPort = params.get('callback_port');
+  // Validate callback_port is a safe localhost port (1024-65535, no SSRF)
+  const portNum = rawPort ? parseInt(rawPort, 10) : NaN;
+  const callbackPort = (!isNaN(portNum) && portNum >= 1024 && portNum <= 65535 && String(portNum) === rawPort)
+    ? rawPort : null;
   const deviceCode = params.get('device_code');
   const state = params.get('state') || '';
 

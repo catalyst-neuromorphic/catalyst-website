@@ -83,8 +83,34 @@ const navItems = [
       padding: 32px 48px;
       min-height: calc(100vh - 52px);
     }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      margin-left: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+    .mobile-menu-btn:hover { color: rgba(255,255,255,0.8); }
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      top: 52px;
+      background: rgba(0,0,0,0.5);
+      z-index: 39;
+    }
     @media (max-width: 768px) {
-      .console-sidebar { display: none; }
+      .mobile-menu-btn { display: inline-flex; }
+      .console-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+        z-index: 40;
+        background: rgba(10,10,12,0.98);
+      }
+      .console-sidebar.open { transform: translateX(0); }
+      .sidebar-overlay.open { display: block; }
       .console-main { margin-left: 0; padding: 24px 16px; }
     }
   </style>
@@ -94,6 +120,9 @@ const navItems = [
   <header class="console-header">
     <a href="/" style="font-family:'Space Grotesk',system-ui,sans-serif; font-size:1.15rem; font-weight:700; color:#fff; letter-spacing:-0.02em; text-decoration:none; margin-right:1.5rem;">Catalyst</a>
     <span class="text-white/25 text-sm" style="font-weight:500;">Console</span>
+    <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
     <div class="ml-auto flex items-center gap-5">
       <a href="/cloud/docs" target="_blank" rel="noopener noreferrer" class="text-white/35 hover:text-white/70 text-sm transition-colors">Docs</a>
       <a href="/about#contact" class="text-white/35 hover:text-white/70 text-sm transition-colors">Support</a>
@@ -101,8 +130,11 @@ const navItems = [
     </div>
   </header>
 
+  <!-- Sidebar overlay (mobile) -->
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
   <!-- Sidebar -->
-  <aside class="console-sidebar">
+  <aside id="console-sidebar" class="console-sidebar">
     <nav class="flex flex-col gap-1">
       {navItems.map(item => (
         <a
@@ -121,34 +153,6 @@ const navItems = [
     <slot />
   </main>
 
-  <script>
-    // Auth guard — redirect to login if no token (check both keys for backwards compat)
-    const token = localStorage.getItem('catalyst_token');
-    let sessionToken = null;
-    try {
-      const session = localStorage.getItem('catalyst_session');
-      if (session) { const d = JSON.parse(session); sessionToken = d?.access_token; }
-    } catch {}
-    if (!token && !sessionToken && !window.location.pathname.includes('/login') && !window.location.pathname.includes('/signup') && !window.location.pathname.includes('/authorize')) {
-      window.location.href = '/console/login';
-    }
-
-    // Logout button — clear all token keys
-    document.getElementById('logout-btn')?.addEventListener('click', async () => {
-      try {
-        const t = localStorage.getItem('catalyst_token');
-        if (t) {
-          await fetch('https://api.catalyst-neuromorphic.com/v1/auth/logout', {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${t}` },
-          });
-        }
-      } catch {}
-      localStorage.removeItem('catalyst_token');
-      localStorage.removeItem('catalyst_refresh_token');
-      localStorage.removeItem('catalyst_session');
-      window.location.href = '/console/login';
-    });
-  </script>
+  <script is:inline src="/js/console-layout.js"></script>
 </body>
 </html>

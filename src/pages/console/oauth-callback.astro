@@ -21,37 +21,6 @@ import '../../styles/global.css';
     <p class="text-white/30 text-sm mt-2" id="status">Completing sign in...</p>
   </div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const accessToken = params.get('access_token');
-    const refreshToken = params.get('refresh_token');
-    const statusEl = document.getElementById('status');
-
-    if (accessToken && refreshToken) {
-      localStorage.setItem('catalyst_token', accessToken);
-      localStorage.setItem('catalyst_refresh_token', refreshToken);
-
-      // Check for CLI callback (callback_port or device_code in params)
-      const callbackPort = params.get('callback_port');
-      const deviceCode = params.get('device_code');
-      if (callbackPort || deviceCode) {
-        const ap = new URLSearchParams();
-        if (callbackPort) ap.set('callback_port', callbackPort);
-        if (deviceCode) ap.set('device_code', deviceCode);
-        if (params.get('state')) ap.set('state', params.get('state')!);
-        window.location.href = `/console/authorize?${ap.toString()}`;
-      } else {
-        window.location.href = '/console/dashboard';
-      }
-    } else {
-      if (statusEl) {
-        statusEl.textContent = 'Authentication failed. Redirecting to login...';
-        statusEl.classList.add('text-red-400');
-      }
-      setTimeout(() => {
-        window.location.href = '/console/login';
-      }, 2000);
-    }
-  </script>
+  <script is:inline src="/js/oauth-callback.js"></script>
 </body>
 </html>
