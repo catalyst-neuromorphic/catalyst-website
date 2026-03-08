@@ -215,7 +215,7 @@ export default function DashboardOverview() {
           className="bg-green-500/10 border border-green-500/20 text-green-400 hover:bg-green-500/20 px-4 py-2 rounded-lg text-sm transition-colors">
           Buy API Credits
         </a>
-        <a href="/cloud/docs"
+        <a href="/cloud/docs" target="_blank" rel="noopener noreferrer"
           className="bg-white/5 border border-white/10 text-white/50 hover:text-white/80 hover:bg-white/10 px-4 py-2 rounded-lg text-sm transition-colors">
           API Docs
         </a>
