@@ -9,10 +9,8 @@ const tiers = [
     description: 'For exploration and quick experiments.',
     features: [
       '500 compute-seconds/week',
-      'N1 chip only',
-      '1,024 neurons max',
-      '1,000 timesteps max',
-      'Community support',
+      '30s max per job',
+      '50 jobs/day',
     ],
     cta: 'Get started free',
     ctaHref: '/console/signup',
@@ -25,10 +23,9 @@ const tiers = [
     description: 'For academic research and coursework.',
     features: [
       '1,500 compute-seconds/week',
-      'N1 + N2 chips',
-      '32,768 neurons max',
-      '100,000 timesteps max',
-      'Email support',
+      '5 min max per job',
+      'All chip architectures',
+      '200 jobs/day',
     ],
     cta: 'Subscribe',
     ctaHref: '/console/billing',
@@ -41,10 +38,9 @@ const tiers = [
     description: 'For serious research and benchmarking.',
     features: [
       '7,000 compute-seconds/week',
-      'N1 + N2 chips',
-      '131,072 neurons max',
-      '1M timesteps max',
-      'Priority support',
+      '30 min max per job',
+      'All chip architectures',
+      '500 jobs/day',
     ],
     cta: 'Subscribe',
     ctaHref: '/console/billing',
@@ -57,10 +53,9 @@ const tiers = [
     description: 'For production workloads and heavy compute.',
     features: [
       '16,000 compute-seconds/week',
-      'N1 + N2 chips',
-      '131,072 neurons max',
-      '10M timesteps max',
-      'Dedicated support',
+      '1 hour max per job',
+      'All chip architectures',
+      '1,000 jobs/day',
     ],
     cta: 'Subscribe',
     ctaHref: '/console/billing',
@@ -133,11 +128,11 @@ const tiers = [
             <h4 class="font-semibold mb-3">Chip Models</h4>
             <div class="space-y-3">
               <div class="flex justify-between items-center">
-                <span class="text-white/60 text-sm">N1 (Loihi 1 parity)</span>
+                <span class="text-white/60 text-sm">N1</span>
                 <span class="text-green-400 font-bold"><span data-usd="0.002">$0.002</span>/sec</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-white/60 text-sm">N2 (Loihi 2 parity)</span>
+                <span class="text-white/60 text-sm">N2</span>
                 <span class="text-green-400 font-bold"><span data-usd="0.005">$0.005</span>/sec</span>
               </div>
             </div>
@@ -224,8 +219,8 @@ const tiers = [
           <p class="text-sm text-white/40 leading-relaxed">No. Credits stay on your account until you use them. There are no monthly fees for credits — they're one-time purchases.</p>
         </div>
         <div class="reveal">
-          <h3 class="font-semibold mb-2">How does N2 usage work?</h3>
-          <p class="text-sm text-white/40 leading-relaxed">N2 compute burns 2.5x your subscription allocation compared to N1. So 1 second of N2 compute uses 2.5 seconds of your weekly limit. API credit rates are separate: $0.002/sec for N1, $0.005/sec for N2.</p>
+          <h3 class="font-semibold mb-2">Do different chips cost more?</h3>
+          <p class="text-sm text-white/40 leading-relaxed">Higher-performance chip architectures consume more of your subscription allocation per second. API credit rates reflect this: $0.002/sec for N1, $0.005/sec for N2, with newer architectures priced accordingly.</p>
         </div>
         <div class="reveal">
           <h3 class="font-semibold mb-2">Can I use GitHub Sponsors instead?</h3>

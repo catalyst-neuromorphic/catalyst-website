@@ -60,10 +60,10 @@ function UsageBar({ label, pct, used, limit, resetsAt }: {
 }
 
 const PLANS = [
-  { name: 'free', label: 'Free', price: 0, features: ['500 sec/week', 'N1 only', '1,024 neurons', 'Community support'] },
-  { name: 'basic', label: 'Basic', price: 25, features: ['1,500 sec/week', 'N1 + N2', '32,768 neurons', 'Email support'] },
-  { name: 'max', label: 'Max', price: 100, features: ['7,000 sec/week', 'N1 + N2', '131,072 neurons', 'Priority support'], recommended: true },
-  { name: 'ultra', label: 'Ultra', price: 200, features: ['16,000 sec/week', 'N1 + N2', '131,072 neurons', 'Dedicated support'] },
+  { name: 'free', label: 'Free', price: 0, features: ['500 sec/week', '30s max per job', '50 jobs/day'] },
+  { name: 'basic', label: 'Basic', price: 25, features: ['1,500 sec/week', '5 min max per job', 'All chip architectures', '200 jobs/day'] },
+  { name: 'max', label: 'Max', price: 100, features: ['7,000 sec/week', '30 min max per job', 'All chip architectures', '500 jobs/day'], recommended: true },
+  { name: 'ultra', label: 'Ultra', price: 200, features: ['16,000 sec/week', '1 hour max per job', 'All chip architectures', '1,000 jobs/day'] },
 ];
 
 export default function BillingPanel() {

@@ -191,8 +191,6 @@ export default function UsageCharts() {
             <span className="text-white font-semibold capitalize">{usage.plan}</span>
             {' '}&middot;{' '}
             {Math.round(usage.weekly.limit_seconds)} compute-seconds/week
-            {' '}&middot;{' '}
-            N2 uses 2.5x allocation
           </p>
           {usage.plan === 'free' && (
             <a href="/console/billing" className="text-catalyst-blue text-sm mt-2 inline-block hover:underline">
