@@ -70,7 +70,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight">N4</h2>
             <span class="text-[10px] uppercase tracking-widest text-catalyst-blue/70 bg-catalyst-blue/10 px-3 py-1 rounded-full border border-catalyst-blue/15">Coming soon</span>
           </div>
-          <p class="reveal text-white/35 mt-2 max-w-[550px]">512-core dual-chiplet architecture. 4.19 million neurons. FPGA validated on AWS F2 at 62.5 MHz. Low-power edge variant validated on Kria K26 at 0.378 W. Patent filed March 2026.</p>
+          <p class="reveal text-white/35 mt-2 max-w-[550px]">512-core dual-chiplet architecture. 4.19 million neurons. FPGA validated on AWS F2 at 62.5 MHz. Low-power edge variant validated on Kria K26 at 0.378 W total board power.</p>
         </div>
       </div>
 
@@ -83,7 +83,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           { title: '100\u2013300 mW', desc: 'ASIC power projection at 28 nm. Sub-watt edge variant exists' },
           { title: '8 neuron models', desc: 'Programmable microcode with 50 learning opcodes' },
           { title: '10 synapse formats', desc: 'CSR, dense, population, convolutional, block-sparse, and more' },
-          { title: 'Patent filed', desc: 'UK IPO, 69 claims (12 independent), 33 drawings. 5 March 2026' },
+          { title: 'FPGA validated', desc: 'AWS F2 (UltraScale+) and Kria K26. Bit-exact match against CPU reference' },
         ].map(item => (
           <div class="bg-white/[0.03] border border-white/[0.05] rounded-xl px-5 py-4">
             <div class="text-sm font-semibold text-white/80" set:html={item.title}></div>
@@ -366,9 +366,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               ['Synapse formats', '3', '4', '4 + compression', '10'],
               ['Memory', '1 level', '1 level', '4 levels (L1\u2013L4)', 'HBM3E 48 GB, 2.0 TB/s'],
               ['Virtualization', '\u2014', '\u2014', 'NeurOS (680+ networks)', 'NeurOS v2'],
-              ['FPGA platform', 'VU47P (16-core)', 'VU47P (28 tests)', 'F2 + K26', 'F2 + K26'],
+              ['FPGA validated', 'VU47P (16-core)', 'VU47P (28 tests)', 'F2 + K26', 'F2 + K26'],
               ['ASIC projection', '\u2014', '19\u201338 mW (28 nm)', '\u2014', '100\u2013300 mW (28 nm)'],
-              ['Patent', 'Filed', 'Filed', 'Filed', 'Filed (69 claims)'],
             ].map(([spec, n1, n2, n3, n4]) => (
               <tr class="border-b border-white/[0.04]">
                 <td class="py-2.5 pr-4 text-white/50">{spec}</td>
