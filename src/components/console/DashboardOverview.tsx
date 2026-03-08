@@ -40,30 +40,30 @@ interface UsageStatus {
   };
 }
 
-function UsageBar({ label, pct, remaining, resetsAt }: {
-  label: string; pct: number; remaining: number; resetsAt: string;
+function UsageBar({ label, pct, used, limit, resetsAt }: {
+  label: string; pct: number; used: number; limit: number; resetsAt: string;
 }) {
   const resetDate = new Date(resetsAt);
   const now = new Date();
   const hoursLeft = Math.max(0, (resetDate.getTime() - now.getTime()) / (1000 * 60 * 60));
   const resetLabel = hoursLeft < 24
-    ? `${Math.ceil(hoursLeft)}h`
-    : `${Math.ceil(hoursLeft / 24)}d`;
+    ? `Resets in ${Math.ceil(hoursLeft)}h`
+    : `Resets in ${Math.ceil(hoursLeft / 24)}d`;
 
-  const barColor = pct >= 90 ? 'bg-red-500' : pct >= 70 ? 'bg-yellow-500' : 'bg-catalyst-blue';
+  const barColor = pct >= 90 ? 'bg-red-400' : pct >= 70 ? 'bg-amber-400' : 'bg-white/30';
 
   return (
-    <div className="console-card p-5">
-      <div className="flex justify-between items-center mb-2" style={{ position: 'relative', zIndex: 2 }}>
-        <p className="text-white/40 text-xs uppercase tracking-wider">{label}</p>
-        <p className="text-white/30 text-xs">Resets in {resetLabel}</p>
+    <div>
+      <div className="flex justify-between items-baseline mb-2">
+        <p className="text-white/50 text-xs font-medium">{label}</p>
+        <p className="text-white/20 text-xs">{resetLabel}</p>
       </div>
-      <div className="w-full bg-white/5 rounded-full h-2.5 mb-2" style={{ position: 'relative', zIndex: 2 }}>
-        <div className={`${barColor} h-2.5 rounded-full transition-all duration-500`}
+      <div className="w-full bg-white/[0.06] rounded-full h-1.5 mb-1.5">
+        <div className={`${barColor} h-1.5 rounded-full transition-all duration-500`}
           style={{ width: `${Math.min(100, pct)}%` }} />
       </div>
-      <p className="text-white/50 text-xs" style={{ position: 'relative', zIndex: 2 }}>
-        {pct}% used &middot; {Math.round(remaining)}s remaining
+      <p className="text-white/30 text-xs font-mono">
+        {Math.round(used)}s / {Math.round(limit)}s
       </p>
     </div>
   );
@@ -84,140 +84,121 @@ export default function DashboardOverview() {
     ]).catch(e => setError(e.message));
   }, []);
 
-  if (error) return <div className="text-red-400">{error}</div>;
-  if (!profile) return <div className="text-white/30">Loading...</div>;
-
-  const planColors: Record<string, string> = {
-    free: 'text-white/50',
-    basic: 'text-catalyst-blue',
-    max: 'text-green-400',
-    ultra: 'text-purple-400',
-    '$500': 'text-amber-400',
-    '$1000': 'text-amber-300',
-  };
-
-  const planLabels: Record<string, string> = {
-    free: 'Free',
-    basic: 'Basic',
-    max: 'Max',
-    ultra: 'Ultra',
-    '$500': '$500',
-    '$1000': '$1,000',
-  };
+  if (error) return <div className="text-red-400 text-sm">{error}</div>;
+  if (!profile) return <div className="text-white/20 text-sm">Loading...</div>;
 
   const plan = usage?.plan || profile.plan || 'free';
+  const planLabel: Record<string, string> = {
+    free: 'Free', basic: 'Basic', max: 'Max', ultra: 'Ultra',
+    '$500': '$500', '$1000': '$1,000',
+  };
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-1">Dashboard</h1>
-      <p className="text-white/30 text-sm mb-8">Welcome back, {profile.email}</p>
+      <h1 className="text-xl font-semibold mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Dashboard</h1>
+      <p className="text-white/30 text-sm mb-8">{profile.email}</p>
 
       {/* Email verification banner */}
       {!profile.email_verified && (
-        <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg px-4 py-3 mb-6 flex items-center justify-between">
+        <div className="bg-white/[0.03] border border-white/[0.08] rounded-lg px-4 py-3 mb-6 flex items-center justify-between">
           <div>
-            <p className="text-blue-400 text-sm font-medium">Verify your email</p>
-            <p className="text-blue-400/60 text-xs mt-0.5">Please verify your email to create API keys and submit jobs.</p>
+            <p className="text-white/70 text-sm font-medium">Verify your email</p>
+            <p className="text-white/35 text-xs mt-0.5">Required to create API keys and submit jobs.</p>
           </div>
           <a href="/console/verify-email"
-            className="text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 px-3 py-1.5 rounded-lg hover:bg-blue-500/30 transition-colors whitespace-nowrap">
+            className="text-xs text-white/60 border border-white/10 px-3 py-1.5 rounded-lg hover:text-white/90 hover:border-white/20 transition-colors whitespace-nowrap">
             Verify now
           </a>
         </div>
       )}
 
-      {/* Plan + Usage Bars */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        {/* Plan Card */}
+      {/* Overview grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        {/* Plan */}
         <div className="console-card p-5">
-          <div style={{ position: 'relative', zIndex: 2 }}>
-            <p className="text-white/40 text-xs uppercase tracking-wider mb-2">Current Plan</p>
-            <div className="flex items-center gap-3">
-              <p className={`text-3xl font-bold ${planColors[plan] || 'text-white'}`}>
-                {planLabels[plan] || plan}
-              </p>
-              {plan === 'free' && (
-                <a href="/console/billing"
-                  className="text-xs bg-catalyst-blue/10 text-catalyst-blue border border-catalyst-blue/20 px-3 py-1 rounded-full hover:bg-catalyst-blue/20 transition-colors">
-                  Upgrade
-                </a>
-              )}
-            </div>
-            <div className="flex gap-4 mt-2 text-white/30 text-xs">
-              {profile.github_linked && <span>GitHub linked</span>}
-              {profile.google_linked && <span>Google linked</span>}
-            </div>
+          <p className="text-white/40 text-xs font-medium mb-3">Plan</p>
+          <div className="flex items-baseline gap-2">
+            <p className="text-2xl font-semibold text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {planLabel[plan] || plan}
+            </p>
+            {plan === 'free' && (
+              <a href="/console/billing"
+                className="text-xs text-white/40 border border-white/10 px-2.5 py-1 rounded-md hover:text-white/70 hover:border-white/20 transition-colors">
+                Upgrade
+              </a>
+            )}
           </div>
         </div>
 
-        {/* API Credits */}
+        {/* Credits */}
         <div className="console-card p-5">
-          <div style={{ position: 'relative', zIndex: 2 }}>
-            <p className="text-white/40 text-xs uppercase tracking-wider mb-2">API Credits</p>
-            <p className="text-3xl font-bold text-green-400">
-              ${(profile.credits_balance ?? 0).toFixed(2)}
-            </p>
-            <div className="flex gap-3 mt-2">
-              {profile.api_discount_pct > 0 && (
-                <span className="text-xs text-purple-400">{profile.api_discount_pct}% API discount</span>
-              )}
-              <span className="text-white/20 text-xs">{keyCount} active key{keyCount !== 1 ? 's' : ''}</span>
-            </div>
-          </div>
+          <p className="text-white/40 text-xs font-medium mb-3">Credits</p>
+          <p className="text-2xl font-semibold text-white font-mono" style={{ fontFamily: "'JetBrains Mono', 'Space Grotesk', monospace" }}>
+            ${(profile.credits_balance ?? 0).toFixed(2)}
+          </p>
+          {profile.api_discount_pct > 0 && (
+            <p className="text-white/30 text-xs mt-1">{profile.api_discount_pct}% discount active</p>
+          )}
+        </div>
+
+        {/* API Keys */}
+        <div className="console-card p-5">
+          <p className="text-white/40 text-xs font-medium mb-3">API keys</p>
+          <p className="text-2xl font-semibold text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            {keyCount}
+          </p>
+          <p className="text-white/25 text-xs mt-1">active</p>
         </div>
       </div>
 
-      {/* Usage Bars */}
+      {/* Usage */}
       {usage && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <UsageBar
-            label="Session Usage"
-            pct={usage.session.used_pct}
-            remaining={usage.session.remaining_seconds}
-            resetsAt={usage.session.resets_at}
-          />
-          <UsageBar
-            label="Weekly Usage"
-            pct={usage.weekly.used_pct}
-            remaining={usage.weekly.remaining_seconds}
-            resetsAt={usage.weekly.resets_at}
-          />
-        </div>
-      )}
-
-      {/* Extra Usage Card */}
-      {usage && (
-        <div className="console-card p-5 mb-6">
-          <div className="flex justify-between items-center" style={{ position: 'relative', zIndex: 2 }}>
-            <div>
-              <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Extra Usage</p>
-              <p className="text-sm text-white/60">
-                {usage.extra_usage.enabled
-                  ? `$${usage.extra_usage.spent_this_month.toFixed(2)} spent this month (cap: $${usage.extra_usage.monthly_cap})`
-                  : 'Disabled — jobs stop when plan limits are reached'}
-              </p>
-            </div>
-            <a href="/console/billing"
-              className="text-xs text-catalyst-blue hover:underline">
-              {usage.extra_usage.enabled ? 'Manage' : 'Enable'}
-            </a>
+        <div className="console-card p-5 mb-8">
+          <p className="text-white/40 text-xs font-medium mb-4">Usage</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <UsageBar
+              label="Session"
+              pct={usage.session.used_pct}
+              used={usage.session.used_seconds}
+              limit={usage.session.limit_seconds}
+              remaining={usage.session.remaining_seconds}
+              resetsAt={usage.session.resets_at}
+            />
+            <UsageBar
+              label="Weekly"
+              pct={usage.weekly.used_pct}
+              used={usage.weekly.used_seconds}
+              limit={usage.weekly.limit_seconds}
+              remaining={usage.weekly.remaining_seconds}
+              resetsAt={usage.weekly.resets_at}
+            />
           </div>
+          {usage.extra_usage.enabled && (
+            <div className="mt-4 pt-4 border-t border-white/[0.06] flex justify-between items-center">
+              <p className="text-white/30 text-xs">
+                Extra usage: ${usage.extra_usage.spent_this_month.toFixed(2)} / ${usage.extra_usage.monthly_cap} cap
+              </p>
+              <a href="/console/billing" className="text-xs text-white/40 hover:text-white/60 transition-colors">Manage</a>
+            </div>
+          )}
+          {!usage.extra_usage.enabled && (
+            <div className="mt-4 pt-4 border-t border-white/[0.06] flex justify-between items-center">
+              <p className="text-white/30 text-xs">Extra usage disabled</p>
+              <a href="/console/billing" className="text-xs text-white/40 hover:text-white/60 transition-colors">Enable</a>
+            </div>
+          )}
         </div>
       )}
 
-      {/* Quick Actions */}
+      {/* Quick links */}
       <div className="flex gap-3">
         <a href="/console/keys"
-          className="bg-catalyst-blue/10 border border-catalyst-blue/20 text-catalyst-blue hover:bg-catalyst-blue/20 px-4 py-2 rounded-lg text-sm transition-colors">
-          Create API Key
-        </a>
-        <a href="/console/billing"
-          className="bg-green-500/10 border border-green-500/20 text-green-400 hover:bg-green-500/20 px-4 py-2 rounded-lg text-sm transition-colors">
-          Buy API Credits
+          className="text-sm text-white/50 border border-white/10 hover:text-white/80 hover:border-white/20 px-4 py-2 rounded-lg transition-colors">
+          Create API key
         </a>
         <a href="/cloud/docs" target="_blank" rel="noopener noreferrer"
-          className="bg-white/5 border border-white/10 text-white/50 hover:text-white/80 hover:bg-white/10 px-4 py-2 rounded-lg text-sm transition-colors">
-          API Docs
+          className="text-sm text-white/50 border border-white/10 hover:text-white/80 hover:border-white/20 px-4 py-2 rounded-lg transition-colors">
+          API docs
         </a>
       </div>
     </div>

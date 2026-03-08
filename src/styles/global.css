@@ -163,42 +163,15 @@
   }
   .card-glass:hover::before { opacity: 1; }
 
-  /* ── Console card (subtle glass for dashboard panels) ── */
+  /* ── Console card (clean, minimal panel) ── */
   .console-card {
-    background: linear-gradient(
-      165deg,
-      rgba(255,255,255,0.06) 0%,
-      rgba(255,255,255,0.025) 35%,
-      rgba(255,255,255,0.015) 100%
-    );
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 16px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    border-radius: 12px;
+    transition: border-color 0.15s;
   }
-  .console-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 16px;
-    padding: 1px;
-    background: linear-gradient(
-      135deg,
-      rgba(59,130,246,0.12) 0%,
-      rgba(59,130,246,0.03) 30%,
-      transparent 50%,
-      rgba(59,130,246,0.03) 70%,
-      rgba(59,130,246,0.10) 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    z-index: 5;
-    opacity: 0.4;
+  .console-card:hover {
+    border-color: rgba(255,255,255,0.10);
   }
 
   /* ── Section headings (homepage style) ── */
