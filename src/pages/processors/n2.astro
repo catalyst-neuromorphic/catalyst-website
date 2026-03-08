@@ -557,12 +557,12 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
     <div class="stat-label">More Efficient</div>
   </div>
   <div class="stat">
-    <div class="stat-num" data-count="3091">0</div>
-    <div class="stat-label">SDK Tests</div>
+    <div class="stat-num">131K</div>
+    <div class="stat-label">Neurons</div>
   </div>
   <div class="stat">
-    <div class="stat-num">28/28</div>
-    <div class="stat-label">FPGA Tests</div>
+    <div class="stat-num">62.5 MHz</div>
+    <div class="stat-label">FPGA Clock</div>
   </div>
 </section>
 
@@ -587,7 +587,7 @@ import ChipFloorplan from '../../components/ChipFloorplan.astro';
 <section class="sdk-section reveal" id="sdk">
   <div class="sdk-text">
     <h2>Ship in Python.</h2>
-    <p>The neurocore SDK gives you hardware-accurate simulation on CPU, GPU, and FPGA — with a single Python API. 155 features. 3,091 tests.</p>
+    <p>The neurocore SDK gives you hardware-accurate simulation on CPU, GPU, and FPGA — with a single Python API. Compiler, simulator, training framework, and FPGA deployment.</p>
     <code class="install">pip install catalyst-cloud</code>
   </div>
   <div class="code-block">
@@ -703,7 +703,7 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
       <div class="spec-row"><span>Language</span><span>Python</span></div>
       <div class="spec-row"><span>Modules</span><span>88</span></div>
       <div class="spec-row"><span>Features</span><span>155</span></div>
-      <div class="spec-row"><span>Tests</span><span>3,091</span></div>
+      <div class="spec-row"><span>License</span><span>BSL 1.1</span></div>
       <div class="spec-row"><span>Backends</span><span>CPU, GPU (CUDA), FPGA</span></div>
       <div class="spec-row"><span>Fixed-point mode</span><span>Hardware-accurate integer quantization</span></div>
       <div class="spec-row"><span>SHD accuracy</span><span>84.5% (adLIF, 512 hidden)</span></div>
@@ -716,7 +716,7 @@ result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</s
   <details class="spec-group">
     <summary>Hardware Validation</summary>
     <div>
-      <div class="spec-row"><span>Tests passing</span><span>28/28</span></div>
+      <div class="spec-row"><span>Status</span><span>Validated</span></div>
       <div class="spec-row"><span>Platform</span><span>AWS F2 (Xilinx UltraScale+ VU47P)</span></div>
       <div class="spec-row"><span>Clock frequency</span><span>62.5 MHz</span></div>
       <div class="spec-row"><span>Cores validated</span><span>16</span></div>
