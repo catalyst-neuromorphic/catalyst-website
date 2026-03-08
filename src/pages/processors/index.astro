@@ -50,19 +50,36 @@ const products = [
     buyHref: '/processors/n3',
     available: true,
   },
+  {
+    chip: 'n4' as const,
+    gen: 'Fourth Generation',
+    name: 'N4',
+    tagline: '512-core dual-chiplet. 4.19 million neurons. Patent filed.',
+    image: '/images/renders/chip-n3.webp',
+    glowColor: '59,130,246',
+    stats: [
+      { label: 'Neurons', value: '4.19M' },
+      { label: 'Cores', value: '512' },
+      { label: 'Memory', value: '48 GB HBM3E' },
+    ],
+    href: '/research',
+    buyHref: '/research',
+    available: false,
+  },
 ];
 
 const comparison = [
-  { label: 'Cores', n1: '128', n2: '128', n3: '128 (16 tiles)' },
-  { label: 'Total neurons', n1: '131,072', n2: '131,072', n3: '524K\u20131M' },
-  { label: 'Neuron models', n1: '1 (CUBA LIF)', n2: '5 (programmable)', n3: '7+ (programmable + custom)' },
-  { label: 'Weight precision', n1: 'Fixed 8-bit', n2: 'Variable 1\u201316-bit', n3: 'Variable 1\u201316-bit' },
-  { label: 'Eligibility traces', n1: '2', n2: '5', n3: '6' },
-  { label: 'Learning engine', n1: '14-opcode ISA', n2: '16-register microcode', n3: '16 \u00d7 28-opcode (per-tile)' },
-  { label: 'Spike payloads', n1: 'Binary + 8-bit', n2: 'Binary + 8/16/24-bit', n3: 'Binary + 8/16/24-bit + compression' },
-  { label: 'ANN mode', n1: '\u2014', n2: '\u2014', n3: 'INT8 MAC' },
-  { label: 'Virtualization', n1: '\u2014', n2: '\u2014', n3: 'NeurOS (680+ networks)' },
-  { label: 'Memory hierarchy', n1: '1 level', n2: '1 level', n3: '4 levels (L1\u2013L4)' },
+  { label: 'Cores', n1: '128', n2: '128', n3: '128 (16 tiles)', n4: '512 (dual chiplet)' },
+  { label: 'Total neurons', n1: '131,072', n2: '131,072', n3: '524K\u20131M', n4: '4.19M' },
+  { label: 'Neuron models', n1: '1 (CUBA LIF)', n2: '5 (programmable)', n3: '7+ (programmable + custom)', n4: '8 (50-opcode microcode)' },
+  { label: 'Weight precision', n1: 'Fixed 8-bit', n2: 'Variable 1\u201316-bit', n3: 'Variable 1\u201316-bit', n4: 'Variable 1\u201316-bit' },
+  { label: 'Eligibility traces', n1: '2', n2: '5', n3: '6', n4: '8' },
+  { label: 'Learning engine', n1: '14-opcode ISA', n2: '16-register microcode', n3: '16 \u00d7 28-opcode (per-tile)', n4: '50-opcode (per-core)' },
+  { label: 'Spike payloads', n1: 'Binary + 8-bit', n2: 'Binary + 8/16/24-bit', n3: 'Binary + 8/16/24-bit + compression', n4: 'Binary + graded + compressed' },
+  { label: 'ANN mode', n1: '\u2014', n2: '\u2014', n3: 'INT8 MAC', n4: 'INT8/INT16 MAC' },
+  { label: 'Virtualization', n1: '\u2014', n2: '\u2014', n3: 'NeurOS (680+ networks)', n4: 'NeurOS v2' },
+  { label: 'Memory hierarchy', n1: '1 level', n2: '1 level', n3: '4 levels (L1\u2013L4)', n4: 'HBM3E 48 GB' },
+  { label: 'Synapse formats', n1: '3', n2: '4', n3: '4 + compression', n4: '10' },
 ];
 ---
 <!DOCTYPE html>
@@ -71,11 +88,11 @@ const comparison = [
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Processors — Catalyst Neuromorphic</title>
-<meta name="description" content="Three generations of brain-inspired neuromorphic processors. Compare N1, N2, and N3." />
+<meta name="description" content="Four generations of neuromorphic processors. Compare N1, N2, N3, and N4." />
 <link rel="canonical" href="https://catalyst-neuromorphic.com/processors" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta property="og:title" content="Processors — Catalyst Neuromorphic" />
-<meta property="og:description" content="Three generations of brain-inspired neuromorphic processors." />
+<meta property="og:description" content="Four generations of neuromorphic processors. N4 coming soon." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://catalyst-neuromorphic.com/processors" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -456,8 +473,8 @@ const comparison = [
 <!-- ═══ HERO ═══ -->
 <section class="hero reveal">
   <p class="hero-eyebrow">Neuromorphic Silicon</p>
-  <h1>Three generations.<br>One architecture.</h1>
-  <p>Brain-inspired processors designed from the transistor up. Each generation pushes the boundary of what neuromorphic hardware can do.</p>
+  <h1>Four generations.<br>One architecture.</h1>
+  <p>Neuromorphic processors designed from the transistor up. Each generation pushes the boundary of what spiking silicon can do.</p>
 </section>
 
 <!-- ═══ PRODUCT TILES ═══ -->
@@ -499,14 +516,15 @@ const comparison = [
 
 <!-- ═══ QUICK COMPARISON ═══ -->
 <section class="comparison reveal">
-  <h2>N1 vs N2 vs N3</h2>
+  <h2>N1 vs N2 vs N3 vs N4</h2>
   <table class="comp-table">
     <thead>
       <tr>
         <th></th>
         <th>N1</th>
         <th>N2</th>
-        <th class="highlight">N3</th>
+        <th>N3</th>
+        <th class="highlight">N4</th>
       </tr>
     </thead>
     <tbody>
@@ -516,6 +534,7 @@ const comparison = [
           <td>{row.n1}</td>
           <td>{row.n2}</td>
           <td>{row.n3}</td>
+          <td>{row.n4}</td>
         </tr>
       ))}
     </tbody>

@@ -61,34 +61,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- N2 ARCHITECTURE -->
+  <!-- N4 ARCHITECTURE -->
   <section class="py-28 px-6 md:px-12">
     <div class="max-w-[1200px] mx-auto">
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
         <div>
-          <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight">N2 architecture</h2>
-          <p class="reveal text-white/35 mt-2 max-w-[500px]">Full Loihi 2 feature parity. 128 neuromorphic cores with a programmable microcode engine replacing the fixed datapath. Designed from a blank Verilog file.</p>
+          <div class="flex items-center gap-3 mb-3">
+            <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight">N4</h2>
+            <span class="text-[10px] uppercase tracking-widest text-catalyst-blue/70 bg-catalyst-blue/10 px-3 py-1 rounded-full border border-catalyst-blue/15">Coming soon</span>
+          </div>
+          <p class="reveal text-white/35 mt-2 max-w-[550px]">512-core dual-chiplet architecture. 4.19 million neurons. FPGA validated on AWS F2 at 62.5 MHz. Low-power edge variant validated on Kria K26 at 0.378 W. Patent filed March 2026.</p>
         </div>
       </div>
 
-      <div class="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div class="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[
-          { title: '128 cores', desc: '1,024 neurons + 131K synapses each' },
-          { title: '5 neuron models', desc: 'CUBA LIF, Izhikevich, ALIF, Sigma-Delta, Resonate-and-Fire' },
-          { title: 'Microcode engine', desc: 'Programmable neuron dynamics — replaces fixed datapath' },
-          { title: '4 spike formats', desc: 'Binary, 8-bit, 16-bit, 24-bit graded payloads' },
-          { title: '5 spike traces', desc: 'Configurable time constants, 7-bit precision' },
-          { title: 'Three-factor learning', desc: 'Pre-synaptic, post-synaptic, reward-modulated' },
-          { title: 'Per-group plasticity', desc: 'LTP bitmap + persistent reward traces' },
-          { title: 'Homeostatic plasticity', desc: 'Epoch-based proportional threshold adaptation' },
-          { title: 'Variable weights', desc: '1, 2, 4, 8, or 16 bits per synapse group' },
-          { title: '4 synapse formats', desc: 'Sparse CSR, dense, population, convolutional' },
-          { title: '0&ndash;63 axonal delays', desc: 'Per-connection configurable timestep delays' },
-          { title: '25 probe IDs', desc: 'Voltage, current, threshold, traces, counters per neuron' },
-          { title: 'Perf counters', desc: 'Spike counts, stall cycles, energy metering' },
-          { title: 'Trace FIFO', desc: 'Non-invasive runtime state inspection' },
-          { title: 'DVFS', desc: 'Dynamic voltage + frequency scaling' },
-          { title: 'Multi-compartment', desc: 'Dendritic trees with configurable joins' },
+          { title: '512 cores', desc: 'Dual compute chiplets, each with 256 neuromorphic cores' },
+          { title: '4.19M neurons', desc: '8,192 neurons per core with full synaptic connectivity' },
+          { title: '2.5D packaging', desc: '2 compute dies (7 nm) + 1 I/O die (12 nm), CoWoS-S interposer' },
+          { title: '48 GB HBM3E', desc: '2.0 TB/s bandwidth. Removes the memory wall for large networks' },
+          { title: '100\u2013300 mW', desc: 'ASIC power projection at 28 nm. Sub-watt edge variant exists' },
+          { title: '8 neuron models', desc: 'Programmable microcode with 50 learning opcodes' },
+          { title: '10 synapse formats', desc: 'CSR, dense, population, convolutional, block-sparse, and more' },
+          { title: 'Patent filed', desc: 'UK IPO, 69 claims (12 independent), 33 drawings. 5 March 2026' },
         ].map(item => (
           <div class="bg-white/[0.03] border border-white/[0.05] rounded-xl px-5 py-4">
             <div class="text-sm font-semibold text-white/80" set:html={item.title}></div>
@@ -97,26 +92,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         ))}
       </div>
 
-      <!-- N1 compact summary -->
-      <div class="reveal card-glass p-6 md:p-8">
-        <div class="flex items-center gap-2 mb-5">
-          <span class="text-[10px] uppercase tracking-widest text-white/25 bg-white/5 px-2.5 py-1 rounded-full">N1</span>
-          <span class="text-sm text-white/25">First generation &mdash; Loihi 1 parity</span>
+      <!-- N4-Edge -->
+      <div class="reveal bg-white/[0.02] border border-white/[0.05] rounded-xl p-6 md:p-8">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="text-[10px] uppercase tracking-widest text-white/40 bg-white/5 px-2.5 py-1 rounded-full">N4-Edge</span>
+          <span class="text-sm text-white/25">Low-power embedded variant</span>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-4">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-4">
           {[
-            { title: '128 cores', desc: '1,024 CUBA LIF neurons each' },
-            { title: '24-bit state', desc: 'Dual-variable (voltage + current)' },
-            { title: '35-state FSM', desc: '~51 SRAMs per core' },
-            { title: 'Triple RISC-V', desc: 'RV32IMF, 256 KB SRAM, FPU' },
-            { title: 'Mesh + NoC', desc: 'Dual network, selectable at synthesis' },
-            { title: '16,384-chip', desc: 'Multi-chip serial, 14-bit addressing' },
-            { title: '16 registers', desc: 'Microcode learning engine' },
-            { title: '14 opcodes', desc: '128 instruction slots per core' },
-            { title: 'STDP learning', desc: 'Reward-modulated, dual spike traces' },
-            { title: '3 synapse formats', desc: 'CSR, dense, population' },
-            { title: 'Compartment trees', desc: '4 dendrites, configurable joins' },
-            { title: 'Stochastic noise', desc: '16-bit Galois LFSRs' },
+            { title: '32 cores', desc: 'SRAM-only, no HBM' },
+            { title: '28 nm target', desc: '$5\u201320 FPGA modules' },
+            { title: '0.378 W', desc: 'Total board power on Kria K26' },
+            { title: '2.59% LUT', desc: '3,036 LUTs of 117,120 available' },
+            { title: '15,668 ts/sec', desc: 'Sustained throughput on F2' },
           ].map(item => (
             <div>
               <div class="text-xs font-semibold text-white/60">{item.title}</div>
@@ -351,35 +339,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- N1 → N2 EVOLUTION TABLE -->
+  <!-- ARCHITECTURE EVOLUTION TABLE -->
   <section class="py-28 px-6 md:px-12">
     <div class="max-w-[1200px] mx-auto">
-      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight mb-10">N1 &rarr; N2 evolution</h2>
+      <h2 class="reveal text-[clamp(2rem,3.5vw,3rem)] font-bold tracking-tight mb-10">Architecture evolution</h2>
       <div class="reveal overflow-x-auto card-glass p-6 md:p-8">
-        <table class="w-full text-sm">
+        <table class="w-full text-sm" style="min-width:700px;">
           <thead>
             <tr class="border-b border-white/10">
-              <th class="text-left py-3 pr-6 text-white/40 font-medium w-1/4">Specification</th>
-              <th class="text-left py-3 px-6 text-white/30 font-medium w-[37.5%]">N1</th>
-              <th class="text-left py-3 pl-6 text-catalyst-blue/60 font-medium w-[37.5%]">N2</th>
+              <th class="text-left py-3 pr-4 text-white/40 font-medium" style="width:18%;">Specification</th>
+              <th class="text-left py-3 px-4 text-white/25 font-medium" style="width:18%;">N1</th>
+              <th class="text-left py-3 px-4 text-white/25 font-medium" style="width:18%;">N2</th>
+              <th class="text-left py-3 px-4 text-white/25 font-medium" style="width:18%;">N3</th>
+              <th class="text-left py-3 pl-4 text-catalyst-blue/60 font-medium" style="width:28%;">N4</th>
             </tr>
           </thead>
-          <tbody class="text-white/35">
+          <tbody class="text-white/30">
             {[
-              ['Neuron models', '1 (CUBA LIF)', '5 — CUBA, Izhikevich, ALIF, Sigma-Delta, R&F'],
-              ['Neuron engine', 'Fixed datapath', 'Programmable microcode'],
-              ['Spike formats', 'Binary only', 'Binary, 8-bit, 16-bit, 24-bit graded'],
-              ['Weight precision', 'Fixed 8-bit', 'Variable 1/2/4/8/16-bit per group'],
-              ['Spike traces', '2', '5 with configurable time constants'],
-              ['Learning', 'STDP + reward-modulated', 'Three-factor + homeostatic + persistent reward'],
-              ['Synapse encoding', 'CSR, dense, population', '+ convolutional (FMT_CONV)'],
-              ['Observability', 'Basic state read', '25 probe IDs, perf counters, energy metering, DVFS'],
-              ['Loihi parity', 'Loihi 1 feature set', 'Full Loihi 2 — 152 features, 3 hardware-only'],
-            ].map(([spec, n1, n2]) => (
+              ['Cores', '128', '128', '128 (16 tiles)', '512 (dual chiplet)'],
+              ['Neurons', '131K', '131K', '524K\u20131M', '4.19M'],
+              ['Neuron models', '1 (CUBA LIF)', '5', '7+ (programmable)', '8 (50-opcode microcode)'],
+              ['Neuron engine', 'Fixed datapath', 'Microcode', 'Microcode + ANN mode', 'Microcode + ANN/SNN hybrid'],
+              ['Weight precision', '8-bit fixed', '1\u201316-bit variable', '1\u201316-bit variable', '1\u201316-bit variable'],
+              ['Spike formats', 'Binary', 'Binary + graded', 'Binary + graded + compressed', 'Binary + graded + compressed'],
+              ['Learning', 'STDP + reward', '3-factor + homeostatic', 'Per-tile, 28-opcode ISA', '50-opcode, per-core'],
+              ['Synapse formats', '3', '4', '4 + compression', '10'],
+              ['Memory', '1 level', '1 level', '4 levels (L1\u2013L4)', 'HBM3E 48 GB, 2.0 TB/s'],
+              ['Virtualization', '\u2014', '\u2014', 'NeurOS (680+ networks)', 'NeurOS v2'],
+              ['FPGA platform', 'VU47P (16-core)', 'VU47P (28 tests)', 'F2 + K26', 'F2 + K26'],
+              ['ASIC projection', '\u2014', '19\u201338 mW (28 nm)', '\u2014', '100\u2013300 mW (28 nm)'],
+              ['Patent', 'Filed', 'Filed', 'Filed', 'Filed (69 claims)'],
+            ].map(([spec, n1, n2, n3, n4]) => (
               <tr class="border-b border-white/[0.04]">
-                <td class="py-2.5 pr-6 text-white/50">{spec}</td>
-                <td class="py-2.5 px-6">{n1}</td>
-                <td class="py-2.5 pl-6 text-white/60">{n2}</td>
+                <td class="py-2.5 pr-4 text-white/50">{spec}</td>
+                <td class="py-2.5 px-4">{n1}</td>
+                <td class="py-2.5 px-4">{n2}</td>
+                <td class="py-2.5 px-4">{n3}</td>
+                <td class="py-2.5 pl-4 text-white/55">{n4}</td>
               </tr>
             ))}
           </tbody>
