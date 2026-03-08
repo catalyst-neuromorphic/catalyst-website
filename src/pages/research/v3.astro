@@ -67,7 +67,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               <h3 class="font-semibold">{p.gen}</h3>
               <p class="text-sm text-white/40 mt-1 leading-relaxed">{p.title}</p>
               <div class="mt-3">
-                <a href={p.doiUrl} target="_blank" rel="noopener noreferrer"><img src={`https://zenodo.org/badge/DOI/${p.doi}.svg`} alt="DOI" style="display:inline-block; height:18px;" /></a>
+                <a href={p.doiUrl} target="_blank" rel="noopener noreferrer"><span class="inline-flex items-center gap-1.5 text-xs text-white/40"><span class="bg-white/[0.06] px-2 py-0.5 rounded font-medium">DOI</span><span>{p.doi}</span></span></a>
               </div>
             </div>
             <div class="flex sm:flex-col gap-2 sm:justify-center shrink-0">
