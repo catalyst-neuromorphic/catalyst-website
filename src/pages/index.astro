@@ -6,16 +6,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Catalyst — Neuromorphic Processors</title>
-<meta name="description" content="The thought behind the future. Catalyst is building neuromorphic processors to challenge the way intelligence is computed." />
+<meta name="description" content="Catalyst designs neuromorphic processors for low-power edge deployment. Hardware, SDK, and cloud inference API." />
 <link rel="canonical" href="https://catalyst-neuromorphic.com/" />
 <meta property="og:title" content="Catalyst — Neuromorphic Processors" />
-<meta property="og:description" content="The thought behind the future. Catalyst is building neuromorphic processors to challenge the way intelligence is computed." />
+<meta property="og:description" content="Neuromorphic processors for low-power edge deployment. Hardware, SDK, and cloud inference API." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://catalyst-neuromorphic.com/" />
 <meta property="og:site_name" content="Catalyst Neuromorphic" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Catalyst — Neuromorphic Processors" />
-<meta name="twitter:description" content="The thought behind the future. Catalyst is building neuromorphic processors to challenge the way intelligence is computed." />
+<meta name="twitter:description" content="Neuromorphic processors for low-power edge deployment. Hardware, SDK, and cloud inference API." />
 <!-- Fonts: Space Grotesk (headings/logo) + Plus Jakarta Sans (body) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -336,9 +336,9 @@
     width:max-content;
     will-change:transform;
   }
-  /* 13 unique cards per row — longer duration so they don't whip past */
-  .marquee-track.r1{animation:scroll-left 80s linear infinite}
-  .marquee-track.r2{animation:scroll-left 90s linear infinite reverse}
+  /* 6 unique cards per row */
+  .marquee-track.r1{animation:scroll-left 40s linear infinite}
+  .marquee-track.r2{animation:scroll-left 45s linear infinite reverse}
 
   .marquee-track:hover{animation-play-state:paused}
 
@@ -844,7 +844,7 @@
 <!-- Hero Content -->
 <section class="hero">
   <h1>Catalyst</h1>
-  <p>The thought behind the future.</p>
+  <p>Neuromorphic processors for edge inference.</p>
   <div class="hero-ctas">
     <a href="/processors" class="primary">View Products &rarr;</a>
     <a href="#contact" class="secondary">Contact us</a>
@@ -919,284 +919,120 @@
      APPLICATIONS — EXPANDED MARQUEE
      ═══════════════════════════════════════════════ -->
 <section class="app-section">
-  <h2 class="sh text-anim" style="font-size:clamp(2rem,4vw,3rem)">Where it applies.</h2>
+  <h2 class="sh text-anim" style="font-size:clamp(2rem,4vw,3rem)">Where it deploys.</h2>
   <p class="ss text-anim d1">
-    From defence to drug discovery, the same architecture scales across industries.
+    Event-driven inference for environments where power, latency, and connectivity are constrained.
   </p>
   <div class="divider"></div>
 
-  <!-- ROW 1 → scrolls left (13 unique cards + 13 duplicates for seamless loop) -->
+  <!-- ROW 1 → scrolls left (6 unique cards + 6 duplicates for seamless loop) -->
   <div class="marquee-wrap">
     <div class="marquee-track r1" id="row1">
-      <!-- 13 unique cards -->
+      <!-- 6 unique cards -->
       <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/389822/pexels-photo-389822.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
         <div class="ct"><span class="tag">Defence</span><h3>Defence & Autonomy</h3><p>Threat detection, target tracking, and autonomous navigation in contested environments.</p></div>
       </div>
       <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/8294608/pexels-photo-8294608.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
         <div class="ct"><span class="tag">Robotics</span><h3>Robotics & Sensing</h3><p>Real-time motor control and adaptive manipulation with microsecond latency.</p></div>
       </div>
       <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/7089020/pexels-photo-7089020.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Healthcare</span><h3>Healthcare & Diagnostics</h3><p>Neural signal decoding, brain-computer interfaces, and bedside monitoring.</p></div>
+        <div class="ct"><span class="tag">Healthcare</span><h3>Healthcare & BCI</h3><p>Neural signal decoding, brain-computer interfaces, and real-time patient monitoring.</p></div>
       </div>
       <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Space</span><h3>Space & Satellites</h3><p>Onboard processing for Earth observation and deep-space navigation.</p></div>
+        <div class="ct"><span class="tag">Space</span><h3>Space & Satellites</h3><p>Onboard processing for Earth observation and deep-space navigation at milliwatt power.</p></div>
       </div>
       <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/8198136/pexels-photo-8198136.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Audio</span><h3>Audio & Speech</h3><p>Keyword spotting, speaker verification, and real-time speech enhancement on-device.</p></div>
+        <div class="ct"><span class="tag">Audio</span><h3>Audio & Speech</h3><p>Keyword spotting, speaker verification, and speech enhancement on-device.</p></div>
       </div>
       <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/2281073/pexels-photo-2281073.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Agriculture</span><h3>Precision Agriculture</h3><p>Drone-based crop monitoring, soil analysis, and autonomous field management.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/1969979/pexels-photo-1969979.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Energy</span><h3>Energy & Smart Grid</h3><p>Predictive load balancing, anomaly detection, and distributed grid optimisation.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/932638/pexels-photo-932638.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Marine</span><h3>Underwater & Marine</h3><p>Sonar processing, autonomous submersibles, and deep-sea exploration at milliwatt power.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/6153354/pexels-photo-6153354.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Bionics</span><h3>Smart Prosthetics</h3><p>EMG signal decoding and real-time adaptive control for next-generation neural interfaces.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/8956453/pexels-photo-8956453.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Weather</span><h3>Weather & Climate</h3><p>Real-time storm prediction, atmospheric modelling, and extreme-event early warning.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/9076534/pexels-photo-9076534.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Safety</span><h3>Wildfire Detection</h3><p>Edge-deployed thermal vision for early ignition detection in remote terrain.</p></div>
-      </div>
-      <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/29656048/pexels-photo-29656048.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Vision</span><h3>Night Vision & ISR</h3><p>Low-light image enhancement, surveillance, and intelligence at the tactical edge.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/906494/pexels-photo-906494.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Logistics</span><h3>Supply Chain</h3><p>Predictive routing, demand sensing, and autonomous warehouse optimisation.</p></div>
+        <div class="ct"><span class="tag">Vision</span><h3>Night Vision & ISR</h3><p>Event-camera processing, low-light enhancement, and surveillance at the tactical edge.</p></div>
       </div>
       <!-- ── duplicate set for seamless loop ── -->
       <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/389822/pexels-photo-389822.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
         <div class="ct"><span class="tag">Defence</span><h3>Defence & Autonomy</h3><p>Threat detection, target tracking, and autonomous navigation in contested environments.</p></div>
       </div>
       <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/8294608/pexels-photo-8294608.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
         <div class="ct"><span class="tag">Robotics</span><h3>Robotics & Sensing</h3><p>Real-time motor control and adaptive manipulation with microsecond latency.</p></div>
       </div>
       <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/7089020/pexels-photo-7089020.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Healthcare</span><h3>Healthcare & Diagnostics</h3><p>Neural signal decoding, brain-computer interfaces, and bedside monitoring.</p></div>
+        <div class="ct"><span class="tag">Healthcare</span><h3>Healthcare & BCI</h3><p>Neural signal decoding, brain-computer interfaces, and real-time patient monitoring.</p></div>
       </div>
       <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Space</span><h3>Space & Satellites</h3><p>Onboard processing for Earth observation and deep-space navigation.</p></div>
+        <div class="ct"><span class="tag">Space</span><h3>Space & Satellites</h3><p>Onboard processing for Earth observation and deep-space navigation at milliwatt power.</p></div>
       </div>
       <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/8198136/pexels-photo-8198136.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Audio</span><h3>Audio & Speech</h3><p>Keyword spotting, speaker verification, and real-time speech enhancement on-device.</p></div>
+        <div class="ct"><span class="tag">Audio</span><h3>Audio & Speech</h3><p>Keyword spotting, speaker verification, and speech enhancement on-device.</p></div>
       </div>
       <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/2281073/pexels-photo-2281073.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Agriculture</span><h3>Precision Agriculture</h3><p>Drone-based crop monitoring, soil analysis, and autonomous field management.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/1969979/pexels-photo-1969979.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Energy</span><h3>Energy & Smart Grid</h3><p>Predictive load balancing, anomaly detection, and distributed grid optimisation.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/932638/pexels-photo-932638.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Marine</span><h3>Underwater & Marine</h3><p>Sonar processing, autonomous submersibles, and deep-sea exploration at milliwatt power.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/6153354/pexels-photo-6153354.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Bionics</span><h3>Smart Prosthetics</h3><p>EMG signal decoding and real-time adaptive control for next-generation neural interfaces.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/8956453/pexels-photo-8956453.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Weather</span><h3>Weather & Climate</h3><p>Real-time storm prediction, atmospheric modelling, and extreme-event early warning.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/9076534/pexels-photo-9076534.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Safety</span><h3>Wildfire Detection</h3><p>Edge-deployed thermal vision for early ignition detection in remote terrain.</p></div>
-      </div>
-      <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/29656048/pexels-photo-29656048.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Vision</span><h3>Night Vision & ISR</h3><p>Low-light image enhancement, surveillance, and intelligence at the tactical edge.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/906494/pexels-photo-906494.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Logistics</span><h3>Supply Chain</h3><p>Predictive routing, demand sensing, and autonomous warehouse optimisation.</p></div>
+        <div class="ct"><span class="tag">Vision</span><h3>Night Vision & ISR</h3><p>Event-camera processing, low-light enhancement, and surveillance at the tactical edge.</p></div>
       </div>
     </div>
   </div>
 
-  <!-- ROW 2 → scrolls right (13 unique cards + 13 duplicates) -->
+  <!-- ROW 2 → scrolls right (6 unique cards + 6 duplicates) -->
   <div class="marquee-wrap">
     <div class="marquee-track r2" id="row2">
-      <!-- 13 unique cards -->
+      <!-- 6 unique cards -->
       <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/5380664/pexels-photo-5380664.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Security</span><h3>Cybersecurity</h3><p>Pattern-based intrusion detection and adaptive real-time threat response.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/11951215/pexels-photo-11951215.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Industry</span><h3>Industrial & Manufacturing</h3><p>Predictive maintenance, quality inspection, and process optimisation at the edge.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/207529/pexels-photo-207529.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Research</span><h3>Scientific Computing</h3><p>Particle physics, fluid dynamics, and biological network modelling.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/594233/pexels-photo-594233.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Connectivity</span><h3>Telecoms & IoT</h3><p>Spectrum analysis and always-on edge processing for billions of devices.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/534216/pexels-photo-534216.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Finance</span><h3>Finance & Trading</h3><p>Microsecond anomaly detection, pattern recognition, and algorithmic risk analysis.</p></div>
-      </div>
-      <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/442589/pexels-photo-442589.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
         <div class="ct"><span class="tag">Autonomous</span><h3>Autonomous Vehicles</h3><p>Sensor fusion, object detection, and path planning without cloud dependency.</p></div>
       </div>
       <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/356060/pexels-photo-356060.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Environment</span><h3>Environmental Monitoring</h3><p>Climate sensors, wildlife tracking, and ocean floor analysis at extreme low power.</p></div>
+        <div class="bg" style="background-image:url('https://images.pexels.com/photos/11951215/pexels-photo-11951215.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
+        <div class="ct"><span class="tag">Industry</span><h3>Industrial & Manufacturing</h3><p>Predictive maintenance, quality inspection, and anomaly detection at the edge.</p></div>
       </div>
       <div class="mcard">
-
+        <div class="bg" style="background-image:url('https://images.pexels.com/photos/356060/pexels-photo-356060.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
+        <div class="ct"><span class="tag">Environment</span><h3>Environmental Monitoring</h3><p>Wildlife tracking, climate sensors, and remote habitat monitoring at extreme low power.</p></div>
+      </div>
+      <div class="mcard">
+        <div class="bg" style="background-image:url('https://images.pexels.com/photos/932638/pexels-photo-932638.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
+        <div class="ct"><span class="tag">Marine</span><h3>Underwater & Marine</h3><p>Sonar processing and autonomous submersibles at milliwatt power budgets.</p></div>
+      </div>
+      <div class="mcard">
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/1334602/pexels-photo-1334602.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
         <div class="ct"><span class="tag">Wearable</span><h3>Wearable & Implantable</h3><p>Always-on health monitoring, gesture recognition, and adaptive hearing aids.</p></div>
       </div>
       <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/3044470/pexels-photo-3044470.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Nuclear</span><h3>Nuclear & Radiation</h3><p>Radiation-hardened anomaly detection and autonomous monitoring in extreme environments.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/13111784/pexels-photo-13111784.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Pharma</span><h3>Drug Discovery</h3><p>Molecular interaction modelling and accelerated compound screening with spiking networks.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/5723883/pexels-photo-5723883.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Neuro</span><h3>Neuroscience & BCI</h3><p>Real-time neural decoding, closed-loop stimulation, and brain-machine interfaces.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/14747539/pexels-photo-14747539.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Infrastructure</span><h3>Railway & Tunnels</h3><p>Structural health monitoring, vibration analysis, and predictive maintenance underground.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/7720712/pexels-photo-7720712.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Smart Home</span><h3>Smart Buildings</h3><p>Occupancy-aware HVAC, adaptive lighting, and energy-harvesting sensor networks.</p></div>
+        <div class="bg" style="background-image:url('https://images.pexels.com/photos/9076534/pexels-photo-9076534.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
+        <div class="ct"><span class="tag">Safety</span><h3>Wildfire Detection</h3><p>Edge-deployed thermal vision for early ignition detection in remote terrain.</p></div>
       </div>
       <!-- ── duplicate set for seamless loop ── -->
       <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/5380664/pexels-photo-5380664.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Security</span><h3>Cybersecurity</h3><p>Pattern-based intrusion detection and adaptive real-time threat response.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/11951215/pexels-photo-11951215.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Industry</span><h3>Industrial & Manufacturing</h3><p>Predictive maintenance, quality inspection, and process optimisation at the edge.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/207529/pexels-photo-207529.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Research</span><h3>Scientific Computing</h3><p>Particle physics, fluid dynamics, and biological network modelling.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/594233/pexels-photo-594233.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Connectivity</span><h3>Telecoms & IoT</h3><p>Spectrum analysis and always-on edge processing for billions of devices.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/534216/pexels-photo-534216.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Finance</span><h3>Finance & Trading</h3><p>Microsecond anomaly detection, pattern recognition, and algorithmic risk analysis.</p></div>
-      </div>
-      <div class="mcard">
-
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/442589/pexels-photo-442589.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
         <div class="ct"><span class="tag">Autonomous</span><h3>Autonomous Vehicles</h3><p>Sensor fusion, object detection, and path planning without cloud dependency.</p></div>
       </div>
       <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/356060/pexels-photo-356060.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Environment</span><h3>Environmental Monitoring</h3><p>Climate sensors, wildlife tracking, and ocean floor analysis at extreme low power.</p></div>
+        <div class="bg" style="background-image:url('https://images.pexels.com/photos/11951215/pexels-photo-11951215.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
+        <div class="ct"><span class="tag">Industry</span><h3>Industrial & Manufacturing</h3><p>Predictive maintenance, quality inspection, and anomaly detection at the edge.</p></div>
       </div>
       <div class="mcard">
-
+        <div class="bg" style="background-image:url('https://images.pexels.com/photos/356060/pexels-photo-356060.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
+        <div class="ct"><span class="tag">Environment</span><h3>Environmental Monitoring</h3><p>Wildlife tracking, climate sensors, and remote habitat monitoring at extreme low power.</p></div>
+      </div>
+      <div class="mcard">
+        <div class="bg" style="background-image:url('https://images.pexels.com/photos/932638/pexels-photo-932638.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
+        <div class="ct"><span class="tag">Marine</span><h3>Underwater & Marine</h3><p>Sonar processing and autonomous submersibles at milliwatt power budgets.</p></div>
+      </div>
+      <div class="mcard">
         <div class="bg" style="background-image:url('https://images.pexels.com/photos/1334602/pexels-photo-1334602.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
         <div class="ct"><span class="tag">Wearable</span><h3>Wearable & Implantable</h3><p>Always-on health monitoring, gesture recognition, and adaptive hearing aids.</p></div>
       </div>
       <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/3044470/pexels-photo-3044470.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Nuclear</span><h3>Nuclear & Radiation</h3><p>Radiation-hardened anomaly detection and autonomous monitoring in extreme environments.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/13111784/pexels-photo-13111784.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Pharma</span><h3>Drug Discovery</h3><p>Molecular interaction modelling and accelerated compound screening with spiking networks.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/5723883/pexels-photo-5723883.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Neuro</span><h3>Neuroscience & BCI</h3><p>Real-time neural decoding, closed-loop stimulation, and brain-machine interfaces.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/14747539/pexels-photo-14747539.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Infrastructure</span><h3>Railway & Tunnels</h3><p>Structural health monitoring, vibration analysis, and predictive maintenance underground.</p></div>
-      </div>
-      <div class="mcard">
-
-        <div class="bg" style="background-image:url('https://images.pexels.com/photos/7720712/pexels-photo-7720712.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
-        <div class="ct"><span class="tag">Smart Home</span><h3>Smart Buildings</h3><p>Occupancy-aware HVAC, adaptive lighting, and energy-harvesting sensor networks.</p></div>
+        <div class="bg" style="background-image:url('https://images.pexels.com/photos/9076534/pexels-photo-9076534.jpeg?auto=compress&cs=tinysrgb&w=600')"></div><div class="ov"></div>
+        <div class="ct"><span class="tag">Safety</span><h3>Wildfire Detection</h3><p>Edge-deployed thermal vision for early ignition detection in remote terrain.</p></div>
       </div>
     </div>
   </div>
@@ -1230,7 +1066,7 @@
   <div class="footer-grid">
     <div class="footer-col">
       <h4>Products</h4>
-      <a href="/research">N4 Processor <span style="font-size:0.7em;color:rgba(59,130,246,0.6);">Coming soon</span></a>
+      <a href="/research">N4 Processor</a>
       <a href="/processors/n3">N3 Processor</a>
       <a href="/processors/n2">N2 Processor</a>
       <a href="/processors/n1">N1 Processor</a>
