@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="850" viewBox="0 0 900 850">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .label { font-size: 10px; }
+    .small { font-size: 9px; }
+  </style>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="450" y="25" text-anchor="middle" class="title">Figure 2: Variable-Precision Weight Packing</text>
+
+  <!-- 16-bit Pool Word, Five Configurations -->
+  <text x="450" y="55" text-anchor="middle" font-weight="bold">16-bit Synapse Pool Word: Five Packing Modes</text>
+
+  <!-- Config 1: 16x1-bit -->
+  <text x="35" y="88" class="label" font-weight="bold">16x1-bit:</text>
+  <g transform="translate(120, 74)">
+    <rect x="0" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="12" y="12" text-anchor="middle" dominant-baseline="central" class="small">w0</text>
+    <rect x="24" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="36" y="12" text-anchor="middle" dominant-baseline="central" class="small">w1</text>
+    <rect x="48" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="60" y="12" text-anchor="middle" dominant-baseline="central" class="small">w2</text>
+    <rect x="72" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="84" y="12" text-anchor="middle" dominant-baseline="central" class="small">w3</text>
+    <rect x="96" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="108" y="12" text-anchor="middle" dominant-baseline="central" class="small">w4</text>
+    <rect x="120" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="132" y="12" text-anchor="middle" dominant-baseline="central" class="small">w5</text>
+    <rect x="144" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="156" y="12" text-anchor="middle" dominant-baseline="central" class="small">w6</text>
+    <rect x="168" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="180" y="12" text-anchor="middle" dominant-baseline="central" class="small">w7</text>
+    <rect x="192" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="204" y="12" text-anchor="middle" dominant-baseline="central" class="small">w8</text>
+    <rect x="216" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="228" y="12" text-anchor="middle" dominant-baseline="central" class="small">w9</text>
+    <rect x="240" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="252" y="12" text-anchor="middle" dominant-baseline="central" class="small">10</text>
+    <rect x="264" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="276" y="12" text-anchor="middle" dominant-baseline="central" class="small">11</text>
+    <rect x="288" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="300" y="12" text-anchor="middle" dominant-baseline="central" class="small">12</text>
+    <rect x="312" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="324" y="12" text-anchor="middle" dominant-baseline="central" class="small">13</text>
+    <rect x="336" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="348" y="12" text-anchor="middle" dominant-baseline="central" class="small">14</text>
+    <rect x="360" y="0" width="24" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="372" y="12" text-anchor="middle" dominant-baseline="central" class="small">15</text>
+  </g>
+  <text x="650" y="88" class="small">16 weights per word</text>
+
+  <!-- Config 2: 8x2-bit -->
+  <text x="35" y="128" class="label" font-weight="bold">8x2-bit:</text>
+  <g transform="translate(120, 114)">
+    <rect x="0" y="0" width="48" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="24" y="12" text-anchor="middle" dominant-baseline="central" class="small">w0</text>
+    <rect x="48" y="0" width="48" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="72" y="12" text-anchor="middle" dominant-baseline="central" class="small">w1</text>
+    <rect x="96" y="0" width="48" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="120" y="12" text-anchor="middle" dominant-baseline="central" class="small">w2</text>
+    <rect x="144" y="0" width="48" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="168" y="12" text-anchor="middle" dominant-baseline="central" class="small">w3</text>
+    <rect x="192" y="0" width="48" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="216" y="12" text-anchor="middle" dominant-baseline="central" class="small">w4</text>
+    <rect x="240" y="0" width="48" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="264" y="12" text-anchor="middle" dominant-baseline="central" class="small">w5</text>
+    <rect x="288" y="0" width="48" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="312" y="12" text-anchor="middle" dominant-baseline="central" class="small">w6</text>
+    <rect x="336" y="0" width="48" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="360" y="12" text-anchor="middle" dominant-baseline="central" class="small">w7</text>
+  </g>
+  <text x="650" y="128" class="small">8 weights per word</text>
+
+  <!-- Config 3: 4x4-bit -->
+  <text x="35" y="168" class="label" font-weight="bold">4x4-bit:</text>
+  <g transform="translate(120, 154)">
+    <rect x="0" y="0" width="96" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="48" y="12" text-anchor="middle" dominant-baseline="central" class="small">w0 (4-bit)</text>
+    <rect x="96" y="0" width="96" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="144" y="12" text-anchor="middle" dominant-baseline="central" class="small">w1 (4-bit)</text>
+    <rect x="192" y="0" width="96" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="240" y="12" text-anchor="middle" dominant-baseline="central" class="small">w2 (4-bit)</text>
+    <rect x="288" y="0" width="96" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="336" y="12" text-anchor="middle" dominant-baseline="central" class="small">w3 (4-bit)</text>
+  </g>
+  <text x="650" y="168" class="small">4 weights per word</text>
+
+  <!-- Config 4: 2x8-bit -->
+  <text x="35" y="208" class="label" font-weight="bold">2x8-bit:</text>
+  <g transform="translate(120, 194)">
+    <rect x="0" y="0" width="192" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="96" y="12" text-anchor="middle" dominant-baseline="central" class="small">w0 (8-bit)</text>
+    <rect x="192" y="0" width="192" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="288" y="12" text-anchor="middle" dominant-baseline="central" class="small">w1 (8-bit)</text>
+  </g>
+  <text x="650" y="208" class="small">2 weights per word</text>
+
+  <!-- Config 5: 1x16-bit -->
+  <text x="35" y="248" class="label" font-weight="bold">1x16-bit:</text>
+  <g transform="translate(120, 234)">
+    <rect x="0" y="0" width="384" height="24" fill="none" stroke="black" stroke-width="1"/>
+    <text x="192" y="12" text-anchor="middle" dominant-baseline="central" class="small">w0 (16-bit, full precision)</text>
+  </g>
+  <text x="650" y="244" class="small">1 weight per word</text>
+
+  <!-- Bit position labels -->
+  <text x="120" y="270" class="small">bit 15</text>
+  <text x="484" y="270" class="small">bit 0</text>
+
+  <!-- ===== Index Table Entry with Precision Tag ===== -->
+  <rect x="40" y="300" width="500" height="95" fill="none" stroke="black" stroke-width="2"/>
+  <text x="290" y="322" text-anchor="middle" font-weight="bold">Index Table Entry (per synapse group)</text>
+  <line x1="40" y1="330" x2="540" y2="330" stroke="black" stroke-width="0.5"/>
+
+  <rect x="55" y="345" width="110" height="35" fill="none" stroke="black" stroke-width="1"/>
+  <text x="110" y="366" text-anchor="middle" dominant-baseline="central" class="small">pool_base_addr</text>
+
+  <rect x="175" y="345" width="80" height="35" fill="none" stroke="black" stroke-width="1"/>
+  <text x="215" y="366" text-anchor="middle" dominant-baseline="central" class="small">num_syn</text>
+
+  <rect x="265" y="345" width="80" height="35" fill="none" stroke="black" stroke-width="1"/>
+  <text x="305" y="358" text-anchor="middle" dominant-baseline="central" class="small" font-weight="bold">precision</text>
+  <text x="305" y="375" text-anchor="middle" dominant-baseline="central" class="small">(3-bit tag)</text>
+
+  <rect x="355" y="345" width="80" height="35" fill="none" stroke="black" stroke-width="1"/>
+  <text x="395" y="366" text-anchor="middle" dominant-baseline="central" class="small">scale_exp</text>
+
+  <rect x="445" y="345" width="80" height="35" fill="none" stroke="black" stroke-width="1"/>
+  <text x="485" y="366" text-anchor="middle" dominant-baseline="central" class="small">learn_en</text>
+
+  <!-- ===== Decompression Unit ===== -->
+  <rect x="595" y="300" width="270" height="210" fill="none" stroke="black" stroke-width="2"/>
+  <text x="730" y="322" text-anchor="middle" font-weight="bold">Decompression Unit</text>
+  <line x1="595" y1="330" x2="865" y2="330" stroke="black" stroke-width="0.5"/>
+
+  <!-- Barrel shifter -->
+  <rect x="620" y="345" width="220" height="45" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="730" y="364" text-anchor="middle" class="small">Barrel Shifter</text>
+  <text x="730" y="379" text-anchor="middle" class="small">Extract w[i] from pool word</text>
+
+  <!-- Sign extension -->
+  <rect x="620" y="410" width="220" height="35" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="730" y="432" text-anchor="middle" dominant-baseline="central" class="small">Sign Extension to 16-bit</text>
+
+  <!-- Scale factor -->
+  <rect x="620" y="465" width="220" height="35" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="730" y="487" text-anchor="middle" dominant-baseline="central" class="small">w_eff = w_raw x 2^scale_exp</text>
+
+  <!-- Internal arrows -->
+  <line x1="730" y1="390" x2="730" y2="410" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="730" y1="445" x2="730" y2="465" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: precision tag to decompression (centered on precision box at x=305) -->
+  <line x1="305" y1="380" x2="305" y2="420" stroke="black" stroke-width="1"/>
+  <line x1="305" y1="420" x2="570" y2="420" stroke="black" stroke-width="1"/>
+  <line x1="570" y1="420" x2="570" y2="367" stroke="black" stroke-width="1"/>
+  <line x1="570" y1="367" x2="620" y2="367" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="430" y="414" class="small">precision mode select</text>
+
+  <!-- Arrow: pool word to barrel shifter (routes right side, enters left of barrel shifter) -->
+  <line x1="504" y1="86" x2="580" y2="86" stroke="black" stroke-width="1.5"/>
+  <line x1="580" y1="86" x2="580" y2="355" stroke="black" stroke-width="1.5"/>
+  <line x1="580" y1="355" x2="620" y2="355" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="573" y="280" class="small" text-anchor="end">pool word</text>
+
+  <!-- Arrow: scale_exp to scale unit (centered on scale_exp box at x=395) -->
+  <line x1="395" y1="380" x2="395" y2="482" stroke="black" stroke-width="1"/>
+  <line x1="395" y1="482" x2="620" y2="482" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="500" y="475" class="small">scale_exp</text>
+
+  <!-- Output -->
+  <line x1="730" y1="500" x2="730" y2="540" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="730" y="558" text-anchor="middle" class="label" font-weight="bold">w_effective (16-bit)</text>
+  <text x="730" y="575" text-anchor="middle" class="small">to synaptic integration</text>
+
+  <!-- ===== Memory Savings Table ===== -->
+  <rect x="40" y="600" width="820" height="130" fill="none" stroke="black" stroke-width="1"/>
+  <text x="450" y="622" text-anchor="middle" font-weight="bold">Memory Efficiency: Weights per 16-bit Pool Word</text>
+  <line x1="40" y1="630" x2="860" y2="630" stroke="black" stroke-width="0.5"/>
+
+  <text x="60" y="650" class="small" font-weight="bold">Precision</text>
+  <text x="200" y="650" class="small" font-weight="bold">Weights/Word</text>
+  <text x="340" y="650" class="small" font-weight="bold">Compression vs 8-bit</text>
+  <text x="560" y="650" class="small" font-weight="bold">Use Case</text>
+
+  <text x="60" y="670" class="small">1-bit</text>
+  <text x="200" y="670" class="small">16</text>
+  <text x="340" y="670" class="small">8x (excitatory/inhibitory only)</text>
+  <text x="560" y="670" class="small">Binary connectivity, large fan-out</text>
+
+  <text x="60" y="688" class="small">2-bit</text>
+  <text x="200" y="688" class="small">8</text>
+  <text x="340" y="688" class="small">4x (4 weight levels)</text>
+  <text x="560" y="688" class="small">Quantized networks, ternary weights</text>
+
+  <text x="60" y="706" class="small">4-bit</text>
+  <text x="200" y="706" class="small">4</text>
+  <text x="340" y="706" class="small">2x (16 weight levels)</text>
+  <text x="560" y="706" class="small">General inference workloads</text>
+
+  <text x="60" y="724" class="small">8-bit (N1 default)</text>
+  <text x="200" y="724" class="small">2</text>
+  <text x="340" y="724" class="small">1x (baseline)</text>
+  <text x="560" y="724" class="small">Standard SNN training and inference</text>
+</svg>

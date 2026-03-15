@@ -1,0 +1,30 @@
+---
+// SubpageFog.astro — Lighter Three.js fog for subpages
+// 20x11 grid (vs 40x22 homepage), 3-octave FBM, no mouse, no blur, no synapses
+---
+
+<canvas id="sub-fog-canvas"></canvas>
+
+<style>
+  #sub-fog-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60vh;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+  }
+  @media (max-width: 640px) {
+    #sub-fog-canvas { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #sub-fog-canvas { display: none; }
+  }
+</style>
+
+<script type="importmap" is:inline>{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.172.0/build/three.module.js"}}</script>
+<script type="module" is:inline src="/js/subpage-fog.mjs"></script>

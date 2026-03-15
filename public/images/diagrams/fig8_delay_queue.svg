@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .small { font-size: 9px; }
+    .mono { font-family: monospace; font-size: 10px; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="25" text-anchor="middle" class="title">Figure 8: Per-Synapse Programmable Delay Queue</text>
+
+  <!-- Synapse with delay -->
+  <rect x="30" y="55" width="180" height="85" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="120" y="75" text-anchor="middle" font-weight="bold">Synapse Delivery</text>
+  <text x="120" y="95" text-anchor="middle" class="small">pool_delay[addr] = 6-bit delay</text>
+  <text x="120" y="115" text-anchor="middle" class="small">If delay > 0: push to queue</text>
+  <text x="120" y="130" text-anchor="middle" class="small">If delay == 0: deliver now</text>
+
+  <!-- Pool delay SRAM note -->
+  <rect x="30" y="160" width="180" height="45" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="120" y="180" text-anchor="middle" font-weight="bold">Pool Delay SRAM</text>
+  <text x="120" y="196" text-anchor="middle" class="small">131K x 6 bits (0-63 timesteps)</text>
+
+  <!-- Circular queue -->
+  <rect x="260" y="55" width="500" height="230" fill="none" stroke="black" stroke-width="2"/>
+  <text x="510" y="75" text-anchor="middle" font-weight="bold">Circular Delay Queue SRAM</text>
+  <text x="510" y="92" text-anchor="middle" class="small">64 timestep buckets x 64 entries = 4096 entries</text>
+
+  <!-- Bucket headers -->
+  <rect x="280" y="108" width="80" height="28" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="320" y="127" text-anchor="middle" class="small">Bucket t</text>
+  <rect x="370" y="108" width="80" height="28" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="410" y="127" text-anchor="middle" class="small">Bucket t+1</text>
+  <rect x="460" y="108" width="80" height="28" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="500" y="127" text-anchor="middle" class="small">Bucket t+2</text>
+  <text x="560" y="127" text-anchor="middle">...</text>
+  <rect x="580" y="108" width="80" height="28" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="620" y="127" text-anchor="middle" class="small">Bucket t+63</text>
+  <rect x="670" y="108" width="60" height="28" fill="none" stroke="black" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="700" y="127" text-anchor="middle" class="small">(wraps)</text>
+
+  <!-- Entries in bucket t (current) -->
+  <rect x="280" y="150" width="80" height="120" fill="none" stroke="black" stroke-width="1.5"/>
+  <rect x="285" y="155" width="70" height="17" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="320" y="167" text-anchor="middle" class="mono">entry 0</text>
+  <rect x="285" y="172" width="70" height="17" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="320" y="184" text-anchor="middle" class="mono">entry 1</text>
+  <rect x="285" y="189" width="70" height="17" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="320" y="201" text-anchor="middle" class="mono">entry 2</text>
+  <text x="320" y="225" text-anchor="middle">...</text>
+  <rect x="285" y="237" width="70" height="17" fill="none" stroke="black" stroke-width="0.5"/>
+  <text x="320" y="249" text-anchor="middle" class="mono">entry 63</text>
+  <text x="320" y="278" text-anchor="middle" class="small">DRAIN at ts t</text>
+
+  <!-- Entry format (moved right, more space) -->
+  <rect x="410" y="165" width="330" height="80" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="575" y="185" text-anchor="middle" font-weight="bold">Entry Format (28 bits)</text>
+
+  <rect x="430" y="198" width="80" height="22" fill="none" stroke="black" stroke-width="1"/>
+  <text x="470" y="213" text-anchor="middle" class="mono">target</text>
+  <rect x="515" y="198" width="110" height="22" fill="none" stroke="black" stroke-width="1"/>
+  <text x="570" y="213" text-anchor="middle" class="mono">graded_current</text>
+  <rect x="630" y="198" width="60" height="22" fill="none" stroke="black" stroke-width="1"/>
+  <text x="660" y="213" text-anchor="middle" class="mono">comp</text>
+
+  <text x="470" y="237" text-anchor="middle" class="small">(10 bits)</text>
+  <text x="570" y="237" text-anchor="middle" class="small">(16 bits)</text>
+  <text x="660" y="237" text-anchor="middle" class="small">(2 bits)</text>
+
+  <!-- Arrow from synapse to queue -->
+  <line x1="210" y1="95" x2="260" y2="95" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="235" y="87" text-anchor="middle" class="small">push</text>
+
+  <!-- Address computation -->
+  <rect x="260" y="320" width="300" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="410" y="342" text-anchor="middle" font-weight="bold">Queue Address</text>
+  <text x="410" y="362" text-anchor="middle" class="mono">addr = {(ts + delay)[5:0], entry_idx[5:0]}</text>
+
+  <!-- Drain output -->
+  <rect x="600" y="320" width="160" height="55" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="680" y="342" text-anchor="middle" font-weight="bold">Drain Output</text>
+  <text x="680" y="362" text-anchor="middle" class="small">acc[target][comp] += current</text>
+
+  <!-- Arrow from bucket to address -->
+  <line x1="320" y1="278" x2="320" y2="320" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <!-- Arrow from address to drain -->
+  <line x1="560" y1="347" x2="600" y2="347" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+</svg>

@@ -1,0 +1,298 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Research — Catalyst Neuromorphic" description="Four generations of neuromorphic processors. FPGA validated. Open-access papers." hasFog={true}>
+
+  <!-- HERO -->
+  <section class="pt-36 pb-20 px-6 md:px-12" style="position:relative;z-index:1;">
+    <div class="max-w-[1200px] mx-auto">
+      <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Research</p>
+      <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tight max-w-[700px]">Four processor generations. Three open-access papers. FPGA validated on AWS F2 and Kria K26.</h1>
+    </div>
+  </section>
+
+  <!-- N4 -->
+  <section class="pb-28 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="flex items-center gap-3 mb-3">
+        <h2 class="reveal text-[clamp(1.8rem,3vw,2.5rem)] font-bold tracking-tight">N4</h2>
+        <span class="text-[10px] uppercase tracking-widest text-catalyst-blue/70 bg-catalyst-blue/10 px-3 py-1 rounded-full border border-catalyst-blue/15">Coming soon</span>
+      </div>
+      <p class="reveal text-white/35 mt-2 mb-10 max-w-[600px]">512-core dual-chiplet architecture. 4.19 million neurons. FPGA validated on AWS F2 at 62.5 MHz. Edge variant validated on Kria K26 at 0.378 W total board power.</p>
+
+      <div class="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {[
+          { title: '512 cores', desc: 'Dual compute chiplets, each with 256 neuromorphic cores' },
+          { title: '4.19M neurons', desc: '8,192 neurons per core with full synaptic connectivity' },
+          { title: '2.5D packaging', desc: '2 compute dies (7 nm) + 1 I/O die (12 nm), CoWoS-S interposer' },
+          { title: '48 GB HBM3E', desc: '2.0 TB/s bandwidth' },
+          { title: '100\u2013300 mW', desc: 'ASIC power projection at 28 nm' },
+          { title: '8 neuron models', desc: 'Programmable microcode, 50 learning opcodes' },
+          { title: '10 synapse formats', desc: 'CSR, dense, population, convolutional, block-sparse' },
+          { title: '62.5 MHz', desc: 'Validated clock on AWS F2 UltraScale+' },
+        ].map(item => (
+          <div class="bg-white/[0.03] border border-white/[0.05] rounded-xl px-5 py-4">
+            <div class="text-sm font-semibold text-white/80" set:html={item.title}></div>
+            <div class="text-xs text-white/30 mt-1 leading-relaxed">{item.desc}</div>
+          </div>
+        ))}
+      </div>
+
+      <!-- N4-Edge -->
+      <div class="reveal bg-white/[0.02] border border-white/[0.05] rounded-xl p-6 md:p-8">
+        <h3 class="text-sm font-semibold text-white/50 mb-4">N4-Edge</h3>
+        <p class="text-xs text-white/30 mb-5">Low-power embedded variant. SRAM-only, no HBM. Targets $5-20 FPGA modules.</p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-4">
+          {[
+            { title: '32 cores', desc: '262,144 neurons' },
+            { title: '0.378 W', desc: 'Total board power, Kria K26' },
+            { title: '2.59% LUT', desc: '3,036 of 117,120' },
+            { title: '+3.301 ns WNS', desc: 'Positive timing slack' },
+            { title: '15,668 ts/sec', desc: 'Sustained throughput on F2' },
+          ].map(item => (
+            <div>
+              <div class="text-xs font-semibold text-white/60">{item.title}</div>
+              <div class="text-[11px] text-white/25 mt-0.5">{item.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE EVOLUTION -->
+  <section class="py-28 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <h2 class="reveal text-[clamp(1.8rem,3vw,2.5rem)] font-bold tracking-tight mb-4">Architecture evolution</h2>
+      <p class="reveal text-white/35 mb-10 max-w-[600px]">Each generation extends the ISA and adds hardware capabilities. N1 through N3 have dedicated product pages with full specifications.</p>
+
+      <div class="reveal overflow-x-auto card-glass p-6 md:p-8 mb-8">
+        <table class="w-full text-sm" style="min-width:700px;">
+          <thead>
+            <tr class="border-b border-white/10">
+              <th class="text-left py-3 pr-4 text-white/40 font-medium" style="width:18%;"></th>
+              <th class="text-left py-3 px-4 text-white/25 font-medium" style="width:18%;"><a href="/processors/n1" class="hover:text-white/50 transition-colors">N1</a></th>
+              <th class="text-left py-3 px-4 text-white/25 font-medium" style="width:18%;"><a href="/processors/n2" class="hover:text-white/50 transition-colors">N2</a></th>
+              <th class="text-left py-3 px-4 text-white/25 font-medium" style="width:18%;"><a href="/processors/n3" class="hover:text-white/50 transition-colors">N3</a></th>
+              <th class="text-left py-3 pl-4 text-catalyst-blue/60 font-medium" style="width:28%;">N4</th>
+            </tr>
+          </thead>
+          <tbody class="text-white/30">
+            {[
+              ['Cores', '128', '128', '128 (16 tiles)', '512 (dual chiplet)'],
+              ['Neurons', '131K', '131K', '524K\u20131M', '4.19M'],
+              ['Neuron models', '1 (CUBA LIF)', '5', '7+ (programmable)', '8 (50-opcode microcode)'],
+              ['Neuron engine', 'Fixed datapath', 'Microcode', 'Microcode + ANN mode', 'Microcode + ANN/SNN hybrid'],
+              ['Weight precision', '8-bit fixed', '1\u201316-bit variable', '1\u201316-bit variable', '1\u201316-bit variable'],
+              ['Spike formats', 'Binary', 'Binary + graded', 'Binary + graded + compressed', 'Binary + graded + compressed'],
+              ['Learning', 'STDP + reward', '3-factor + homeostatic', 'Per-tile, 28-opcode ISA', '50-opcode, per-core'],
+              ['Synapse formats', '3', '4', '4 + compression', '10'],
+              ['Memory', '1 level', '1 level', '4 levels (L1\u2013L4)', 'HBM3E 48 GB, 2.0 TB/s'],
+              ['Virtualization', '\u2014', '\u2014', 'NeurOS (680+ networks)', 'NeurOS v2'],
+              ['FPGA validated', 'VU47P (16-core)', 'VU47P (28 tests)', 'F2 + K26', 'F2 + K26'],
+              ['ASIC projection', '\u2014', '19\u201338 mW (28 nm)', '\u2014', '100\u2013300 mW (28 nm)'],
+            ].map(([spec, n1, n2, n3, n4]) => (
+              <tr class="border-b border-white/[0.04]">
+                <td class="py-2.5 pr-4 text-white/50">{spec}</td>
+                <td class="py-2.5 px-4">{n1}</td>
+                <td class="py-2.5 px-4">{n2}</td>
+                <td class="py-2.5 px-4">{n3}</td>
+                <td class="py-2.5 pl-4 text-white/55">{n4}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flex gap-3 flex-wrap">
+        <a href="/processors/n1" class="btn-pill text-sm">N1 specifications</a>
+        <a href="/processors/n2" class="btn-pill text-sm">N2 specifications</a>
+        <a href="/processors/n3" class="btn-pill text-sm">N3 specifications</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNICAL DETAIL LINKS -->
+  <section class="py-28 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- FPGA Validation -->
+        <a href="/research/validation" class="card-glass p-8 md:p-10 flex flex-col group" style="text-decoration:none;">
+          <h3 class="text-lg font-semibold mb-2 group-hover:text-catalyst-blue transition-colors">FPGA validation</h3>
+          <p class="text-xs text-white/30 leading-relaxed mb-4">All four generations validated on physical FPGA fabric. RTL on hardware at clock speed, compared bit-exact against a CPU reference simulator. Covers neuron dynamics, synaptic formats, mesh routing, on-chip learning, microcode execution, and state isolation.</p>
+          <div class="grid grid-cols-2 gap-3 mb-6">
+            <div>
+              <div class="text-xs font-semibold text-white/60">Platforms</div>
+              <div class="text-[11px] text-white/25">AWS F2, Kria K26</div>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-white/60">Clock</div>
+              <div class="text-[11px] text-white/25">62.5 MHz</div>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-white/60">Method</div>
+              <div class="text-[11px] text-white/25">Bit-exact vs CPU sim</div>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-white/60">Throughput</div>
+              <div class="text-[11px] text-white/25">14,983 ts/sec (N4)</div>
+            </div>
+          </div>
+          <span class="mt-auto text-xs text-catalyst-blue/50 group-hover:text-catalyst-blue/80 transition-colors">Methodology and results &rarr;</span>
+        </a>
+
+        <!-- Benchmarks -->
+        <a href="/benchmarks" class="card-glass p-8 md:p-10 flex flex-col group" style="text-decoration:none;">
+          <h3 class="text-lg font-semibold mb-2 group-hover:text-catalyst-blue transition-colors">Benchmarks</h3>
+          <p class="text-xs text-white/30 leading-relaxed mb-4">Standard neuromorphic benchmark suite. SHD, SSC, N-MNIST, DVS Gesture. Results reported alongside current state-of-the-art. The architecture is competitive on SHD (91.0% vs 96.4% SOTA). The gap is in training methodology, not hardware capability.</p>
+          <div class="grid grid-cols-2 gap-3 mb-6">
+            <div>
+              <div class="text-xs font-semibold text-white/60">SHD</div>
+              <div class="text-[11px] text-white/25">91.0% (SOTA: 96.4%)</div>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-white/60">SSC</div>
+              <div class="text-[11px] text-white/25">76.4% (SOTA: 86.0%)</div>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-white/60">N-MNIST</div>
+              <div class="text-[11px] text-white/25">99.2%</div>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-white/60">DVS Gesture</div>
+              <div class="text-[11px] text-white/25">89.4% (SOTA: 99.0%)</div>
+            </div>
+          </div>
+          <span class="mt-auto text-xs text-catalyst-blue/50 group-hover:text-catalyst-blue/80 transition-colors">Full benchmark results &rarr;</span>
+        </a>
+
+        <!-- Loihi 2 Parity -->
+        <a href="/research/loihi-parity" class="card-glass p-8 md:p-10 flex flex-col group" style="text-decoration:none;">
+          <h3 class="text-lg font-semibold mb-2 group-hover:text-catalyst-blue transition-colors">Loihi 2 parity audit</h3>
+          <p class="text-xs text-white/30 leading-relaxed mb-4">155 features identified in Intel's Loihi 2 architecture. Each mapped to the N2 implementation and verified against RTL, SDK, and test suite. 152 fully implemented. 3 require physical I/O pins not present on FPGA dev boards. 0 missing.</p>
+          <div class="grid grid-cols-3 gap-3 mb-6">
+            <div>
+              <div class="text-xs font-semibold text-catalyst-green">152</div>
+              <div class="text-[11px] text-white/25">Implemented</div>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-catalyst-blue">3</div>
+              <div class="text-[11px] text-white/25">Hardware-only</div>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-white/15">0</div>
+              <div class="text-[11px] text-white/25">Missing</div>
+            </div>
+          </div>
+          <span class="mt-auto text-xs text-catalyst-blue/50 group-hover:text-catalyst-blue/80 transition-colors">Full audit methodology &rarr;</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section class="py-28 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <h2 class="reveal text-[clamp(1.8rem,3vw,2.5rem)] font-bold tracking-tight mb-10">Publications</h2>
+
+      <div class="space-y-6">
+        {[
+          {
+            gen: 'Third generation',
+            title: 'Catalyst N3: A 128-Core Hybrid Neuromorphic Processor with Hardware Virtualisation, Per-Tile Learning, and Silicon Metaplasticity',
+            pages: 22,
+            doi: '10.5281/zenodo.18881283',
+            doiUrl: 'https://zenodo.org/records/18881283',
+            pdf: '/papers/catalyst-n3.pdf',
+            highlights: '128 cores, 16 tiles, NeurOS virtualisation (680+ concurrent networks), ANN/SNN hybrid mode, 4-level memory hierarchy, per-tile 28-opcode learning ISA, silicon metaplasticity.',
+          },
+          {
+            gen: 'Second generation',
+            title: 'Catalyst N2: Full Loihi 2 Parity in an Open Neuromorphic Architecture',
+            pages: 18,
+            doi: '10.5281/zenodo.18728256',
+            doiUrl: 'https://zenodo.org/records/18728256',
+            pdf: '/papers/catalyst-n2.pdf',
+            highlights: '155-feature Loihi 2 parity audit, 5 neuron models, programmable microcode engine, 3-factor learning with homeostatic plasticity, graded spike payloads.',
+          },
+          {
+            gen: 'First generation',
+            title: 'Catalyst N1: A 131K-Neuron Open Neuromorphic Processor with Programmable Synaptic Plasticity',
+            pages: 13,
+            doi: '10.5281/zenodo.18727094',
+            doiUrl: 'https://zenodo.org/records/18727094',
+            pdf: '/papers/catalyst-n1.pdf',
+            highlights: '128 cores, 131,072 CUBA LIF neurons, STDP + reward-modulated plasticity, 14-opcode learning ISA, SHD 90.6%.',
+          },
+        ].map(paper => (
+          <div class="reveal card-glass p-6 md:p-8">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+              <div class="flex-1">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-[10px] uppercase tracking-widest text-white/25 bg-white/5 px-2.5 py-1 rounded-full">{paper.gen}</span>
+                  <span class="text-xs text-white/20">{paper.pages} pages</span>
+                </div>
+                <h3 class="text-base font-semibold mb-2 leading-snug">{paper.title}</h3>
+                <p class="text-xs text-white/30 leading-relaxed mb-3">{paper.highlights}</p>
+                <a href={paper.doiUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-white/40 hover:text-white/60 transition-colors">
+                  <span class="bg-white/[0.06] px-2 py-0.5 rounded font-medium">DOI</span>
+                  <span>{paper.doi}</span>
+                </a>
+              </div>
+              <div class="flex items-center gap-3 md:pt-6 shrink-0">
+                <a href={paper.pdf} class="btn-pill text-sm" target="_blank">PDF</a>
+                <a href={paper.doiUrl} class="btn-pill text-sm" target="_blank" rel="noopener noreferrer">Zenodo</a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SDK -->
+  <section class="py-28 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <h2 class="reveal text-[clamp(1.8rem,3vw,2.5rem)] font-bold tracking-tight mb-4">Software</h2>
+      <p class="reveal text-white/35 mb-10 max-w-[600px]">The SDK includes three execution backends. The CPU backend is the reference implementation. Every commit is tested against all three.</p>
+
+      <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+        {[
+          { name: 'CPU', desc: 'Reference implementation. Deterministic, exact integer arithmetic. Ground truth for all comparisons.' },
+          { name: 'GPU (CUDA)', desc: 'Parallel backend for training. Statistically equivalent to CPU. Differences limited to floating-point operation reordering.' },
+          { name: 'FPGA', desc: 'PCIe MMIO driver targeting AWS F2 and Kria K26. Bit-exact spike output match against CPU simulator.' },
+        ].map(item => (
+          <div class="bg-white/[0.03] border border-white/[0.05] rounded-xl px-5 py-4">
+            <div class="text-sm font-semibold text-white/70">{item.name}</div>
+            <div class="text-xs text-white/25 mt-1 leading-relaxed">{item.desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- LICENSING -->
+  <section class="py-20 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="reveal grid grid-cols-2 md:grid-cols-5 gap-4">
+        {[
+          { label: 'Papers', value: 'Open access', sub: 'Zenodo with DOI' },
+          { label: 'N1 RTL', value: 'Apache 2.0', sub: 'Open source' },
+          { label: 'N2+ RTL', value: 'BSL 1.1', sub: 'Proprietary' },
+          { label: 'SDK', value: 'BSL 1.1', sub: 'Proprietary' },
+          { label: 'API client', value: 'MIT', sub: 'Open source' },
+        ].map(item => (
+          <div class="bg-white/[0.03] border border-white/[0.05] rounded-xl px-5 py-4">
+            <div class="text-[10px] text-white/30 uppercase tracking-wider">{item.label}</div>
+            <div class="text-sm font-semibold text-white/70 mt-1">{item.value}</div>
+            <div class="text-[10px] text-white/20 mt-0.5">{item.sub}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

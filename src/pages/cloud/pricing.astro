@@ -1,0 +1,241 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const tiers = [
+  {
+    name: 'Free',
+    amount: 0,
+    priceNote: 'forever free',
+    description: 'For exploration and quick experiments.',
+    features: [
+      '500 compute-seconds/week',
+      'N1 chip only',
+      '30s max per job',
+      '50 jobs/day',
+    ],
+    cta: 'Get started free',
+    ctaHref: '/console/signup',
+    highlight: false,
+  },
+  {
+    name: 'Basic',
+    amount: 25,
+    priceNote: '/month',
+    description: 'For academic research and coursework.',
+    features: [
+      '1,500 compute-seconds/week',
+      '5 min max per job',
+      'All chip architectures',
+      '200 jobs/day',
+    ],
+    cta: 'Subscribe',
+    ctaHref: '/console/billing',
+    highlight: false,
+  },
+  {
+    name: 'Max',
+    amount: 100,
+    priceNote: '/month',
+    description: 'For serious research and benchmarking.',
+    features: [
+      '7,000 compute-seconds/week',
+      '30 min max per job',
+      'All chip architectures',
+      '500 jobs/day',
+    ],
+    cta: 'Subscribe',
+    ctaHref: '/console/billing',
+    highlight: true,
+  },
+  {
+    name: 'Ultra',
+    amount: 200,
+    priceNote: '/month',
+    description: 'For production workloads and heavy compute.',
+    features: [
+      '16,000 compute-seconds/week',
+      '1 hour max per job',
+      'All chip architectures',
+      '1,000 jobs/day',
+    ],
+    cta: 'Subscribe',
+    ctaHref: '/console/billing',
+    highlight: false,
+  },
+];
+---
+
+<BaseLayout title="Pricing — Catalyst Cloud" description="Plans that grow with you. Subscribe for cloud access or buy API credits." hasFog={true}>
+
+  <!-- Header -->
+  <section class="pt-36 pb-12 px-6 md:px-12 text-center" style="position:relative;z-index:1;">
+    <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Pricing</p>
+    <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tighter">
+      Plans that grow with you.
+    </h1>
+    <p class="text-lg text-white/40 mt-4 max-w-[550px] mx-auto">
+      Subscribe for cloud access with included compute. Buy API credits separately for programmatic use.
+    </p>
+  </section>
+
+  <!-- Pricing Grid -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {tiers.map(tier => (
+        <div class={`reveal p-6 flex flex-col ${tier.highlight ? 'card-glass ring-1 ring-catalyst-blue/30' : 'card-glass'}`}>
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold">{tier.name}</h3>
+            <div class="mt-3">
+              <span class="text-3xl font-bold" data-usd={tier.amount}>${tier.amount}</span>
+              <span class="text-sm text-white/40 ml-1">{tier.priceNote}</span>
+            </div>
+            <p class="text-sm text-white/40 mt-2">{tier.description}</p>
+          </div>
+          <ul class="flex-1 space-y-3 mb-6">
+            {tier.features.map(f => (
+              <li class="flex items-start gap-2 text-sm text-white/60">
+                <span class="text-catalyst-blue mt-0.5 flex-shrink-0">&#10003;</span>
+                {f}
+              </li>
+            ))}
+          </ul>
+          <a href={tier.ctaHref} class={`text-center py-2.5 rounded-lg text-sm font-medium transition-all duration-200 no-underline ${tier.highlight ? 'bg-catalyst-blue text-white hover:bg-catalyst-blue/80' : 'border border-white/10 text-white/70 hover:text-white hover:border-white/20'}`}>
+            {tier.cta}
+          </a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Enterprise -->
+  <section class="py-8 px-6 md:px-12">
+    <div class="max-w-[1200px] mx-auto">
+      <div class="reveal card-glass p-8 text-center">
+        <h3 class="text-xl font-semibold mb-2">Enterprise</h3>
+        <p class="text-white/40 mb-4">Custom compute budgets, priority support, and flexible billing. Contact us to discuss your requirements.</p>
+        <a href="/about#contact" class="text-catalyst-blue hover:underline text-sm">Contact sales &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- API Pricing -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight text-center mb-4">API Credits</h2>
+      <p class="text-white/40 text-center mb-8">For programmatic access via API keys. Separate from subscription compute.</p>
+      <div class="reveal card-glass p-8">
+        <div class="grid md:grid-cols-2 gap-8 mb-8">
+          <div>
+            <h4 class="font-semibold mb-3">Chip Models</h4>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <span class="text-white/60 text-sm">N1</span>
+                <span class="text-green-400 font-bold"><span data-usd="0.002">$0.002</span>/sec</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-white/60 text-sm">N2</span>
+                <span class="text-green-400 font-bold"><span data-usd="0.005">$0.005</span>/sec</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-3">Buy Credits</h4>
+            <p class="text-white/60 text-sm mb-2">Any amount, <span data-usd="5">$5</span> minimum.</p>
+            <p class="text-white/30 text-xs">Credits never expire. Buy from the console dashboard.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Extra Usage -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight mb-4">Extra usage</h2>
+      <p class="reveal text-white/40 max-w-[600px] mx-auto">
+        Hit your subscription limits? Enable extra usage to keep going.
+        Compute is billed from your API credit balance at standard API rates.
+        Set a monthly spending cap for peace of mind.
+      </p>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight text-center mb-8">How it works</h2>
+      <div class="reveal card-glass p-8">
+        <div class="grid md:grid-cols-3 gap-6">
+          <div>
+            <div class="text-catalyst-blue text-2xl font-bold mb-2">1.</div>
+            <h4 class="font-semibold text-sm mb-1">Sign up free</h4>
+            <p class="text-sm text-white/40">Create an account with GitHub, Google, or email. Free tier gets 500 compute-seconds/week.</p>
+          </div>
+          <div>
+            <div class="text-catalyst-blue text-2xl font-bold mb-2">2.</div>
+            <h4 class="font-semibold text-sm mb-1">Subscribe or buy credits</h4>
+            <p class="text-sm text-white/40">Subscribe for included compute with usage bars. Or buy API credits for programmatic access.</p>
+          </div>
+          <div>
+            <div class="text-catalyst-blue text-2xl font-bold mb-2">3.</div>
+            <h4 class="font-semibold text-sm mb-1">Run simulations</h4>
+            <p class="text-sm text-white/40">Subscription compute tracks via session and weekly limits. API credits are deducted per second of compute.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GitHub Sponsors -->
+  <section class="py-16 px-6 md:px-12">
+    <div class="max-w-[800px] mx-auto text-center">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight mb-4">GitHub Sponsors</h2>
+      <p class="reveal text-white/40 max-w-[600px] mx-auto mb-6">
+        Sponsor us on GitHub and your subscription is activated automatically when you sign in with GitHub OAuth.
+      </p>
+      <a href="https://github.com/sponsors/catalyst-neuromorphic" target="_blank"
+        class="reveal btn-primary inline-flex px-8 py-3 text-sm">Sponsor on GitHub &rarr;</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-32 px-6 md:px-12">
+    <div class="max-w-[700px] mx-auto">
+      <h2 class="reveal text-[clamp(2rem,3.5vw,2.5rem)] font-bold tracking-tight text-center mb-12">Questions</h2>
+      <div class="space-y-6">
+        <div class="reveal">
+          <h3 class="font-semibold mb-2">Is the free tier actually free?</h3>
+          <p class="text-sm text-white/40 leading-relaxed">Yes. 500 compute-seconds per week on the N1 chip, no strings attached.</p>
+        </div>
+        <div class="reveal">
+          <h3 class="font-semibold mb-2">What's the difference between subscriptions and API credits?</h3>
+          <p class="text-sm text-white/40 leading-relaxed">Subscriptions give you included compute for interactive cloud access (console, web interface). API credits are for programmatic access via API keys — billed per compute-second.</p>
+        </div>
+        <div class="reveal">
+          <h3 class="font-semibold mb-2">What is extra usage?</h3>
+          <p class="text-sm text-white/40 leading-relaxed">When your subscription compute is exhausted, extra usage lets jobs keep running by billing from your API credit balance. You control this with a monthly spending cap.</p>
+        </div>
+        <div class="reveal">
+          <h3 class="font-semibold mb-2">Do API credits expire?</h3>
+          <p class="text-sm text-white/40 leading-relaxed">No. Credits stay on your account until you use them. There are no monthly fees for credits — they're one-time purchases.</p>
+        </div>
+        <div class="reveal">
+          <h3 class="font-semibold mb-2">Do different chips cost more?</h3>
+          <p class="text-sm text-white/40 leading-relaxed">Higher-performance chip architectures consume more of your subscription allocation per second. N2 uses a 2.5x allocation multiplier, so 100 seconds of N2 compute uses 250 seconds of your weekly budget. API credit rates reflect this: $0.002/sec for N1, $0.005/sec for N2.</p>
+        </div>
+        <div class="reveal">
+          <h3 class="font-semibold mb-2">Can I use GitHub Sponsors instead?</h3>
+          <p class="text-sm text-white/40 leading-relaxed">Yes. Sponsoring at $25/mo gives you a Basic plan, $100/mo gives Max, $200/mo gives Ultra. Sign in with GitHub OAuth and it's activated automatically.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 px-6 md:px-12 text-center">
+    <a href="/console/signup" class="reveal btn-primary inline-flex px-10 py-3 text-sm">Create free account &rarr;</a>
+  </section>
+
+  <script is:inline src="/js/pricing.js"></script>
+
+</BaseLayout>

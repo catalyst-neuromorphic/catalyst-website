@@ -1,0 +1,97 @@
+---
+title: "Benchmark Blitz: Catalyst vs Intel Loihi Across 5 Datasets"
+description: "Catalyst N2 results across the standard neuromorphic benchmark suite — SHD 90.7%, SSC 72.1%, N-MNIST 99.2%, GSC 88.0% — with full reproduction scripts."
+date: 2026-02-27
+tags: ["Benchmark", "Loihi", "Competition"]
+---
+
+One benchmark is an anecdote. Five benchmarks is a track record.
+
+When we published our first SHD result (85.9% with standard LIF neurons), we knew it was just the starting point. Researchers comparing neuromorphic hardware need numbers across the standard benchmark suite — not just one data point. Intel has published Loihi results across six benchmarks. BrainChip has Akida numbers on four.
+
+We've now run four of five benchmarks to completion and released the full suite as **[catalyst-benchmarks](https://github.com/catalyst-neuromorphic/catalyst-benchmarks)** — a standalone, fully reproducible benchmark suite. Clone it, install it, train on your own GPU, deploy to Catalyst hardware.
+
+## The benchmarks
+
+| Benchmark | What it tests | Classes | Input |
+|-----------|--------------|---------|-------|
+| **SHD** | Temporal spike pattern recognition | 20 | 700ch cochlea |
+| **SSC** | Large-scale speech command classification | 35 | 700ch cochlea |
+| **N-MNIST** | Neuromorphic digit recognition | 10 | 34×34 DVS |
+| **DVS Gesture** | Event-camera gesture recognition | 11 | 128×128 DVS |
+| **GSC KWS** | Keyword spotting from audio | 12 | 80ch spike-encoded |
+
+These are the benchmarks that matter. They're the ones researchers cite when evaluating new neuromorphic hardware. They're on Papers With Code. They're in the NeuroBench framework.
+
+## Where we stand
+
+Our initial SHD result used standard LIF neurons — the simplest spiking neuron model. 85.9% was respectable but not competitive with Loihi's published numbers.
+
+The key upgrade: **Adaptive LIF (adLIF) with Symplectic Euler discretization**. The adaptation variable updates *before* the threshold computation, giving the neuron a form of short-term memory. Combined with larger hidden layers and recurrent connections, this pushed SHD from 85.9% to 90.7%.
+
+Catalyst N2 natively supports adaptive threshold neurons in hardware. The adaptation parameters (rho, beta_a) are used during training for gradient computation, but only the membrane decay (alpha) needs to deploy to the CUBA hardware neuron — full training benefit with zero additional hardware cost.
+
+## Results
+
+| Benchmark | Catalyst N2 | Loihi Best | Akida Best | Verdict |
+|-----------|-------------|------------|------------|---------|
+| SHD | **90.7%** | 90.9% (Loihi 2) | — | Competitive |
+| SSC | **72.1%** | 69.8% (Loihi 2) | — | Competitive |
+| N-MNIST | **99.2%** | 99.52% (Loihi 1) | — | Competitive |
+| GSC KWS | **88.0%** | 88.5% (Loihi 1) | 92.83% | Competitive |
+| DVS Gesture | *in progress* | 89.64% (Loihi 1) | 97.12% | — |
+
+On SHD, we're competitive with Loihi 2's published results. SSC and N-MNIST show strong performance across the benchmark suite. These are initial results — we're actively improving all benchmarks using learnable delays and advanced training techniques.
+
+## Architecture
+
+Every benchmark uses the same core approach:
+
+1. **Surrogate gradient BPTT** — Heaviside forward, fast-sigmoid backward
+2. **Adaptive LIF neurons** — SE discretization with learnable alpha, rho, beta_a
+3. **Recurrent connections** — for temporal context in speech/gesture tasks
+4. **Event-drop augmentation** — randomly drop time bins or channels for regularization
+5. **AdamW + cosine annealing** — standard optimization, gradient clipping at 1.0
+
+The only things that change between benchmarks are the input size, hidden size, and number of classes. The neuron model, training loop, and deployment pipeline are shared.
+
+```python
+# Same training command for any benchmark
+python shd/train.py --neuron adlif --epochs 200 --device cuda:0
+python ssc/train.py --neuron adlif --epochs 200 --device cuda:0
+python dvs_gesture/train.py --neuron adlif --epochs 200 --device cuda:0
+```
+
+## Hardware deployment
+
+Every trained model deploys to Catalyst N1/N2 FPGA hardware:
+
+1. **Quantize**: Float32 weights → int16 (`w_hw = round(w_float * 1000 / threshold)`)
+2. **Map**: Membrane decay → 12-bit fixed-point (`decay_v = round(alpha * 4096)`)
+3. **Build**: Construct `neurocore.Network` with quantized weights
+4. **Deploy**: Flash to FPGA via USB or AWS F2
+
+Typical quantization loss is under 1% accuracy. Our original SHD LIF baseline went from 85.9% float to 85.4% quantized — a 0.5% drop.
+
+## Reproduce everything
+
+```bash
+git clone https://github.com/catalyst-neuromorphic/catalyst-benchmarks.git
+cd catalyst-benchmarks
+pip install -e .
+
+# Train SHD with adLIF
+python shd/train.py --neuron adlif --epochs 200 --device cuda:0
+
+# Deploy and check quantized accuracy
+python shd/deploy.py --checkpoint shd_model.pt
+
+# Or run the full sweep
+python sweep.py --benchmark shd --device cuda:0
+```
+
+No proprietary tools. No special hardware needed for training. Just PyTorch, a GPU, and our open benchmark scripts.
+
+Results are published to `results.json`, uploaded to [HuggingFace](https://huggingface.co/Catalyst-Neuromorphic), and submitted to Papers With Code leaderboards.
+
+[View the benchmark repo →](https://github.com/catalyst-neuromorphic/catalyst-benchmarks) | [Explore N2 architecture →](/processors/n2) | [Try the Cloud API →](/cloud)

@@ -1,0 +1,26 @@
+---
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/600.css';
+import '../../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signing in... — Catalyst Console</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-surface text-white min-h-screen flex items-center justify-center" style="font-family:'Plus Jakarta Sans','Space Grotesk',system-ui,sans-serif;">
+  <div class="text-center">
+    <a href="/" style="font-family:'Space Grotesk',system-ui,sans-serif; font-size:1.9rem; font-weight:700; color:#fff; letter-spacing:-0.02em; text-decoration:none;">Catalyst</a>
+    <p class="text-white/30 text-sm mt-2" id="status">Completing sign in...</p>
+  </div>
+
+  <script is:inline src="/js/oauth-callback.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="560" viewBox="0 0 800 560">
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 11px; fill: black; }
+    .title { font-size: 14px; font-weight: bold; }
+    .small { font-size: 9px; }
+    .mono { font-family: monospace; font-size: 10px; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="25" text-anchor="middle" class="title">Figure 3: Three-Factor Eligibility Learning Datapath</text>
+
+  <!-- Factor 1: Pre-synaptic traces -->
+  <rect x="30" y="60" width="180" height="100" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="120" y="80" text-anchor="middle" font-weight="bold">Pre-Synaptic</text>
+  <text x="120" y="95" text-anchor="middle" font-weight="bold">Traces</text>
+  <text x="120" y="115" text-anchor="middle" class="small">x1: trace SRAM (1024x8)</text>
+  <text x="120" y="130" text-anchor="middle" class="small">x2: trace SRAM (1024x8)</text>
+  <text x="120" y="145" text-anchor="middle" class="small">tau1, tau2: 4-bit decay</text>
+
+  <!-- Factor 2: Post-synaptic traces -->
+  <rect x="30" y="190" width="180" height="100" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="120" y="210" text-anchor="middle" font-weight="bold">Post-Synaptic</text>
+  <text x="120" y="225" text-anchor="middle" font-weight="bold">Traces</text>
+  <text x="120" y="245" text-anchor="middle" class="small">y1: trace SRAM (1024x8)</text>
+  <text x="120" y="260" text-anchor="middle" class="small">y2: trace SRAM (1024x8)</text>
+  <text x="120" y="275" text-anchor="middle" class="small">y3: trace SRAM (1024x8)</text>
+
+  <!-- Stochastic decay block -->
+  <rect x="30" y="320" width="180" height="60" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="120" y="343" text-anchor="middle" font-weight="bold">Stochastic Decay</text>
+  <text x="120" y="358" text-anchor="middle" class="small">LFSR rounding</text>
+  <text x="120" y="371" text-anchor="middle" class="small">Min-step-1 correction</text>
+
+  <!-- Arrow from pre to decay -->
+  <line x1="120" y1="160" x2="120" y2="190" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+  <!-- Arrow from post to decay -->
+  <line x1="120" y1="290" x2="120" y2="320" stroke="black" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- STDP Computation -->
+  <rect x="280" y="130" width="180" height="90" fill="none" stroke="black" stroke-width="2"/>
+  <text x="370" y="155" text-anchor="middle" font-weight="bold">STDP Computation</text>
+  <text x="370" y="175" text-anchor="middle" class="small">LTP: pre before post</text>
+  <text x="370" y="190" text-anchor="middle" class="small">LTD: post before pre</text>
+  <text x="370" y="208" text-anchor="middle" class="mono">delta = f(x1,x2,y1,y2,y3)</text>
+
+  <!-- Arrows from traces to STDP -->
+  <line x1="210" y1="110" x2="280" y2="155" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="240" y="120" class="small">x1, x2</text>
+  <line x1="210" y1="240" x2="280" y2="195" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="235" y="230" class="small">y1, y2, y3</text>
+
+  <!-- Eligibility Trace SRAM -->
+  <rect x="530" y="110" width="200" height="130" fill="none" stroke="black" stroke-width="2"/>
+  <text x="630" y="135" text-anchor="middle" font-weight="bold">Eligibility Trace</text>
+  <text x="630" y="150" text-anchor="middle" font-weight="bold">SRAM</text>
+  <text x="630" y="170" text-anchor="middle" class="small">131K x 16 bits</text>
+  <text x="630" y="185" text-anchor="middle" class="small">(1 per synapse in pool)</text>
+  <text x="630" y="205" text-anchor="middle" class="mono">elig += STDP_delta</text>
+  <text x="630" y="225" text-anchor="middle" class="small">Exponential decay between</text>
+  <text x="630" y="237" text-anchor="middle" class="small">learning events</text>
+
+  <!-- Arrow from STDP to eligibility -->
+  <line x1="460" y1="175" x2="530" y2="175" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="495" y="167" text-anchor="middle" class="small">delta</text>
+
+  <!-- Factor 3: Reward -->
+  <rect x="530" y="290" width="200" height="80" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="630" y="315" text-anchor="middle" font-weight="bold">Reward Signal</text>
+  <text x="630" y="335" text-anchor="middle" class="small">Per-core register (16-bit)</text>
+  <text x="630" y="350" text-anchor="middle" class="small">CMD_REWARD from host</text>
+  <text x="630" y="365" text-anchor="middle" class="small">Exponential decay (tau)</text>
+
+  <!-- Weight Update -->
+  <rect x="350" y="430" width="220" height="50" fill="none" stroke="black" stroke-width="2"/>
+  <text x="460" y="452" text-anchor="middle" font-weight="bold">Weight Update</text>
+  <text x="460" y="470" text-anchor="middle" class="mono">dW = (elig x reward) >> 7</text>
+
+  <!-- Arrow from eligibility down to weight update (routed around right side of Reward box) -->
+  <line x1="730" y1="200" x2="755" y2="200" stroke="black" stroke-width="1.5"/>
+  <line x1="755" y1="200" x2="755" y2="455" stroke="black" stroke-width="1.5"/>
+  <line x1="755" y1="455" x2="570" y2="455" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="768" y="340" class="small">elig</text>
+
+  <!-- Arrow from reward down to weight update -->
+  <line x1="630" y1="370" x2="630" y2="400" stroke="black" stroke-width="1.5"/>
+  <line x1="630" y1="400" x2="460" y2="400" stroke="black" stroke-width="1.5"/>
+  <line x1="460" y1="400" x2="460" y2="430" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="555" y="393" text-anchor="middle" class="small">reward</text>
+
+  <!-- Weight SRAM -->
+  <rect x="380" y="510" width="180" height="30" fill="none" stroke="black" stroke-width="1.5"/>
+  <text x="470" y="530" text-anchor="middle" font-weight="bold">Weight SRAM (clamped update)</text>
+
+  <!-- Arrow from weight update to weight SRAM -->
+  <line x1="460" y1="480" x2="460" y2="510" stroke="black" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Labels for the three factors -->
+  <rect x="30" y="430" width="140" height="100" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="100" y="450" text-anchor="middle" font-weight="bold">Three Factors</text>
+  <text x="100" y="470" text-anchor="middle" class="small">1. Pre-synaptic traces</text>
+  <text x="100" y="485" text-anchor="middle" class="small">2. Post-synaptic traces</text>
+  <text x="100" y="500" text-anchor="middle" class="small">3. Reward signal</text>
+  <text x="100" y="520" text-anchor="middle" class="small">Rule: pre x post x reward</text>
+</svg>

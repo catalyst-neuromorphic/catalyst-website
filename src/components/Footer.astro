@@ -1,0 +1,132 @@
+---
+// Footer.astro — Full homepage-style footer with 4-column grid
+---
+
+<footer class="hp-footer">
+  <div class="hp-footer-inner">
+    <div class="hp-footer-grid">
+      <div class="hp-footer-col">
+        <h4>Products</h4>
+        <a href="/processors/n3">N3 Processor</a>
+        <a href="/processors/n2">N2 Processor</a>
+        <a href="/processors/n1">N1 Processor</a>
+        <a href="/processors/specs">Specifications</a>
+        <a href="/cloud">Catalyst Cloud</a>
+        <a href="/cloud/pricing">Pricing</a>
+      </div>
+      <div class="hp-footer-col">
+        <h4>Research</h4>
+        <a href="/research">Papers</a>
+        <a href="/benchmarks">Benchmarks</a>
+      </div>
+      <div class="hp-footer-col">
+        <h4>Company</h4>
+        <a href="/about">About</a>
+        <a href="/changelog">Changelog</a>
+        <a href="/status">Status</a>
+        <a href="/about#contact">Contact</a>
+      </div>
+      <div class="hp-footer-col">
+        <h4>Connect</h4>
+        <a href="https://github.com/catalyst-neuromorphic" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="mailto:henry@catalyst-neuromorphic.com">Email</a>
+      </div>
+    </div>
+    <div class="hp-footer-support">
+      Support our research:
+      <a href="https://github.com/sponsors/catalyst-neuromorphic" target="_blank" rel="noopener noreferrer">GitHub Sponsors</a>
+    </div>
+    <div class="hp-footer-bottom">
+      <span>&copy; 2026 Catalyst Neuromorphic Ltd. Company No. 17054540. All rights reserved.</span>
+      <span class="hp-footer-legal">
+        <a href="/terms">Terms</a>
+        <span>&middot;</span>
+        <a href="/privacy">Privacy</a>
+        <span>&middot;</span>
+        <a href="/cookies">Cookies</a>
+        <span>&middot;</span>
+        <a href="/sla">SLA</a>
+        <span>&middot;</span>
+        <a href="/dpa">DPA</a>
+        <span>&middot;</span>
+        <a href="/security">Security</a>
+        <span>&middot;</span>
+        <span>UK Patents Pending</span>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<style is:global>
+  .hp-footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 64px 40px 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .hp-footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hp-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+  .hp-footer-col h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 20px;
+  }
+  .hp-footer-col a {
+    display: block;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: color 0.25s;
+  }
+  .hp-footer-col a:hover { color: #fff; }
+  .hp-footer-support {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.3);
+  }
+  .hp-footer-support a {
+    color: rgba(59,130,246,0.7);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .hp-footer-support a:hover { color: #60A5FA; }
+  .hp-footer-bottom {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.25);
+  }
+  .hp-footer-legal {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hp-footer-legal a {
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .hp-footer-legal a:hover { color: rgba(255,255,255,0.6); }
+  @media (max-width: 640px) {
+    .hp-footer { padding: 32px 24px 24px; }
+    .hp-footer-grid { grid-template-columns: 1fr 1fr; }
+    .hp-footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>

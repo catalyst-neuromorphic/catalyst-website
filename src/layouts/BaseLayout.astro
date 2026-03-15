@@ -1,0 +1,84 @@
+---
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import SubpageFog from '../components/SubpageFog.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  hasFog?: boolean;
+}
+
+const { title, description = 'Neuromorphic processors. Built from scratch.', image = '/og-default.png', hasFog = false } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://catalyst-neuromorphic.com');
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href={canonicalURL} />
+
+  <!-- Plus Jakarta Sans (body) from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Catalyst Neuromorphic" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={image} />
+  <meta name="twitter:site" content="@CatalystNeuro" />
+
+  <!-- JSON-LD Organization -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Catalyst Neuromorphic",
+    "url": "https://catalyst-neuromorphic.com",
+    "logo": "https://catalyst-neuromorphic.com/favicon.svg",
+    "description": "Neuromorphic processors built from scratch. Hardware-accurate spiking neural network silicon.",
+    "sameAs": [
+      "https://github.com/catalyst-neuromorphic",
+      "https://twitter.com/CatalystNeuro"
+    ]
+  })} />
+</head>
+<body>
+  {hasFog && <SubpageFog />}
+  <Nav />
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+      <main>
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </div>
+
+  <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+  <script is:inline src="/js/base-layout.js"></script>
+</body>
+</html>

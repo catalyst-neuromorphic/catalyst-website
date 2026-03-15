@@ -1,0 +1,158 @@
+---
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  active?: string;
+}
+
+const { title, active = '' } = Astro.props;
+
+const navItems = [
+  { href: '/console/dashboard', label: 'Dashboard', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>` },
+  { href: '/console/keys', label: 'API Keys', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>` },
+  { href: '/console/billing', label: 'Billing & Usage', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>` },
+  { href: '/console/settings', label: 'Settings', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>` },
+  { href: '/console/account', label: 'Account', icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>` },
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} — Catalyst Console</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .console-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      background: rgba(10,10,12,0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .console-sidebar {
+      position: fixed;
+      top: 52px;
+      left: 0;
+      width: 200px;
+      bottom: 0;
+      padding: 12px 8px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.15s, background 0.15s;
+    }
+    .sidebar-link:hover {
+      color: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.04);
+    }
+    .sidebar-link.active {
+      color: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.06);
+    }
+    .sidebar-link.active svg {
+      color: rgba(255,255,255,0.9);
+    }
+    .console-main {
+      margin-left: 200px;
+      margin-top: 52px;
+      padding: 32px 48px;
+      min-height: calc(100vh - 52px);
+    }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      margin-left: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+    .mobile-menu-btn:hover { color: rgba(255,255,255,0.8); }
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      top: 52px;
+      background: rgba(0,0,0,0.5);
+      z-index: 39;
+    }
+    @media (max-width: 768px) {
+      .mobile-menu-btn { display: inline-flex; }
+      .console-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+        z-index: 40;
+        background: rgba(10,10,12,0.98);
+      }
+      .console-sidebar.open { transform: translateX(0); }
+      .sidebar-overlay.open { display: block; }
+      .console-main { margin-left: 0; padding: 24px 16px; }
+    }
+  </style>
+</head>
+<body class="bg-surface text-white min-h-screen" style="font-family:'Plus Jakarta Sans','Space Grotesk',system-ui,sans-serif;">
+  <!-- Top bar -->
+  <header class="console-header">
+    <a href="/" style="font-family:'Space Grotesk',system-ui,sans-serif; font-size:1.15rem; font-weight:700; color:#fff; letter-spacing:-0.02em; text-decoration:none; margin-right:1.5rem;">Catalyst</a>
+    <span class="text-white/25 text-sm" style="font-weight:500;">Console</span>
+    <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="ml-auto flex items-center gap-5">
+      <a href="/cloud/docs" target="_blank" rel="noopener noreferrer" class="text-white/35 hover:text-white/70 text-sm transition-colors">Docs</a>
+      <a href="/about#contact" class="text-white/35 hover:text-white/70 text-sm transition-colors">Support</a>
+      <button id="logout-btn" class="text-white/35 hover:text-white/70 text-sm cursor-pointer transition-colors">Log out</button>
+    </div>
+  </header>
+
+  <!-- Sidebar overlay (mobile) -->
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+  <!-- Sidebar -->
+  <aside id="console-sidebar" class="console-sidebar">
+    <nav class="flex flex-col gap-1">
+      {navItems.map(item => (
+        <a
+          href={item.href}
+          class={`sidebar-link ${active === item.label ? 'active' : ''}`}
+        >
+          <span set:html={item.icon} />
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <main class="console-main">
+    <slot />
+  </main>
+
+  <script is:inline src="/js/console-layout.js"></script>
+</body>
+</html>

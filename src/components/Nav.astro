@@ -1,0 +1,87 @@
+---
+// Nav.astro — Homepage-style navigation (4 flat links, no dropdowns)
+---
+
+<nav id="nav" class="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between transition-all duration-500" style="padding: 30px 56px; background: transparent;">
+  <!-- Logo -->
+  <a href="/" class="no-underline" style="font-family:'Space Grotesk',system-ui,sans-serif; font-size:1.9rem; font-weight:700; color:#fff; letter-spacing:-0.02em;">Catalyst</a>
+
+  <!-- Desktop nav -->
+  <div id="nav-links" class="hidden md:flex items-center" style="gap:50px;">
+    <a href="/processors" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:1.2rem; font-weight:500; color:rgba(255,255,255,0.6); text-decoration:none; transition:color 0.25s;">Products</a>
+    <a href="/research" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:1.2rem; font-weight:500; color:rgba(255,255,255,0.6); text-decoration:none; transition:color 0.25s;">Research</a>
+    <a href="/about" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:1.2rem; font-weight:500; color:rgba(255,255,255,0.6); text-decoration:none; transition:color 0.25s;">About</a>
+    <!-- Auth area -->
+    <div class="relative" id="auth-nav">
+      <a href="/console/login" id="sign-in-link" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:1.2rem; font-weight:500; color:rgba(255,255,255,0.6); text-decoration:none; transition:color 0.25s;">Sign in</a>
+      <!-- Avatar (shown when logged in) -->
+      <button id="avatar-btn" class="hidden w-8 h-8 rounded-full bg-catalyst-blue/20 border border-catalyst-blue/30 text-catalyst-blue items-center justify-center hover:bg-catalyst-blue/30 transition-colors" style="display:none;">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <div id="avatar-dropdown" class="absolute top-full right-0 pt-3 opacity-0 invisible transition-all duration-200" style="z-index:200;">
+        <div class="glass rounded-xl p-2 min-w-[180px]" style="border-radius:16px;">
+          <a href="/console/dashboard" class="flex px-4 py-2.5 rounded-lg text-sm text-white/70 no-underline hover:bg-white/[0.06] transition-colors">Dashboard</a>
+          <a href="/console/keys" class="flex px-4 py-2.5 rounded-lg text-sm text-white/70 no-underline hover:bg-white/[0.06] transition-colors">API Keys</a>
+          <a href="/console/billing" class="flex px-4 py-2.5 rounded-lg text-sm text-white/70 no-underline hover:bg-white/[0.06] transition-colors">Billing</a>
+          <a href="/console/usage" class="flex px-4 py-2.5 rounded-lg text-sm text-white/70 no-underline hover:bg-white/[0.06] transition-colors">Usage</a>
+          <div class="border-t border-white/[0.06] my-1"></div>
+          <button id="sign-out-btn" class="flex w-full px-4 py-2.5 rounded-lg text-sm text-white/40 hover:text-white/70 hover:bg-white/[0.06] transition-colors text-left">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu button -->
+  <button id="mobile-menu-btn" class="md:hidden text-white/50 hover:text-white transition-colors" aria-label="Menu">
+    <svg id="menu-icon" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+    <svg id="close-icon" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" class="hidden md:hidden fixed left-0 right-0 z-[99] py-6 px-8" style="top:90px; background:rgba(5,5,7,0.97); backdrop-filter:blur(40px); border-bottom:1px solid rgba(255,255,255,0.06);">
+  <a href="/processors" class="block py-3 text-white/50 no-underline hover:text-white transition-colors" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:1.1rem; font-weight:500;">Products</a>
+  <a href="/research" class="block py-3 text-white/50 no-underline hover:text-white transition-colors" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:1.1rem; font-weight:500;">Research</a>
+  <a href="/about" class="block py-3 text-white/50 no-underline hover:text-white transition-colors" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:1.1rem; font-weight:500;">About</a>
+  <div class="border-t border-white/[0.06] my-3"></div>
+  <a href="/console/login" id="mobile-sign-in" class="block py-3 no-underline transition-colors" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:1.1rem; font-weight:500; color:#60A5FA;">Sign in</a>
+</div>
+
+<style>
+  /* Hover state for desktop nav links */
+  #nav-links a:hover { color: #fff !important; }
+
+  /* Frosted glass on scroll */
+  #nav.scrolled {
+    background: rgba(5,5,7,0.55) !important;
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  #nav.scrolled::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(180deg, rgba(5,5,7,0.4), transparent);
+    pointer-events: none;
+  }
+
+  /* Responsive nav padding */
+  @media (max-width: 900px) {
+    #nav { padding: 20px 24px !important; }
+    #nav-links { gap: 24px !important; }
+    #nav-links a { font-size: 1rem !important; }
+  }
+</style>
+
+<script is:inline src="/js/nav.js"></script>

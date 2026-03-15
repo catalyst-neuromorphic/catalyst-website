@@ -1,0 +1,99 @@
+---
+title: "SHD Benchmark: 90.7%"
+description: "Catalyst N2 achieves 90.7% accuracy on the Spiking Heidelberg Digits benchmark using Adaptive LIF neurons."
+date: 2026-02-10
+tags: ["Benchmark", "SDK"]
+---
+
+The Spiking Heidelberg Digits (SHD) benchmark is one of the standard tests for spiking neural network hardware. It's a speech recognition task — classifying spoken digits encoded as spike trains — that requires temporal processing, making it a natural fit for neuromorphic architectures.
+
+Catalyst N2 achieves **90.7%** accuracy using Adaptive LIF neurons — up from our initial 85.9% LIF baseline. Here's how we got there.
+
+## The benchmark
+
+SHD consists of 8,156 training samples and 2,264 test samples of spoken digits (0–9) in English and German. The audio is converted to spike trains using a biologically-inspired cochlea model, producing 700 input channels of sparse temporal spike patterns.
+
+The task is challenging for spiking neural networks because it requires integrating information across time — a digit isn't recognised from a single spike but from the temporal pattern of spikes across hundreds of milliseconds.
+
+## The LIF baseline (85.9%)
+
+Our first pass used a straightforward 3-layer recurrent SNN with standard LIF neurons:
+
+- **Input**: 700 channels (cochlea encoding)
+- **Hidden**: 256 recurrent LIF neurons
+- **Output**: 20 readout neurons (10 digits x 2 languages)
+
+Training uses surrogate gradient descent with the neurocore SDK's built-in training loop. This converged at 85.9% float / 85.4% quantized in roughly 100 epochs. A solid starting point, but not competitive with Loihi 1's 89.0%.
+
+## The adLIF upgrade (90.7%)
+
+The jump to 90.7% came from two changes:
+
+1. **Adaptive LIF (adLIF) neurons** with Symplectic Euler discretization. The adaptation variable updates *before* the threshold computation, giving the neuron a form of short-term memory — recent spikes raise the threshold, creating a natural temporal filter. This is one of the five neuron models N2 supports natively in hardware.
+
+2. **Larger hidden layer**: 1,024 recurrent adLIF neurons instead of 256 LIF. More capacity for temporal pattern representation.
+
+The final architecture:
+
+- **Input**: 700 channels (cochlea encoding)
+- **Hidden**: 1,024 recurrent adLIF neurons
+- **Output**: 20 readout neurons (10 digits x 2 languages)
+
+Training ran for 200 epochs with AdamW and cosine annealing. The adaptation parameters (rho, beta_a) are used during training for gradient computation, but only the membrane decay (alpha) needs to deploy to the CUBA hardware neuron — full training benefit of adLIF with zero additional hardware cost.
+
+## Results
+
+| Configuration | Float | Quantized | Weight precision | Membrane precision |
+|---------------|-------|-----------|------------------|--------------------|
+| LIF baseline (256 hidden) | 85.9% | 85.4% | 8-bit | 16-bit |
+| adLIF (1024 hidden, recurrent) | **90.7%** | — | 8-bit | 16-bit |
+
+The LIF baseline showed only 0.5% loss from quantization, which gives us confidence that the adLIF model will quantize well too. N2's 8-bit weight format isn't a compromise; it's sufficient for real workloads.
+
+## Context
+
+For comparison, published SHD results:
+
+- Cramer et al. (2020): 83.2% (standard RSNN baseline)
+- Zenke & Vogels (2021): 84.4% (SuperSpike)
+- Intel Loihi 1: 89.0%
+- Yin et al. (2021): 90.4% (SRNN with attention, not directly hardware-mappable)
+- **Catalyst N2: 90.7%** (adLIF, hardware-deployable)
+
+Our 90.7% is competitive with published neuromorphic results, and maps directly to neuromorphic hardware with no modifications needed for deployment.
+
+## Running it yourself
+
+The benchmark is included in the neurocore SDK examples:
+
+```python
+import neurocore as nc
+
+# Load the SHD dataset
+train, test = nc.datasets.shd(path="./data")
+
+# Build the network (adLIF, 1024 hidden)
+net = nc.Network()
+inp = net.add_layer(700, model="input")
+hid = net.add_layer(1024, model="adlif", recurrent=True)
+out = net.add_layer(20, model="lif")
+net.connect(inp, hid)
+net.connect(hid, hid)  # recurrent
+net.connect(hid, out)
+
+# Train
+trainer = nc.Trainer(net, lr=1e-3, optimizer="adamw", scheduler="cosine")
+trainer.fit(train, epochs=200, batch_size=64)
+
+# Evaluate
+accuracy = trainer.evaluate(test)
+print(f"Test accuracy: {accuracy:.1%}")
+```
+
+The same code runs on CPU, GPU, or FPGA backends. Change `nc.Network(backend="fpga")` to target real hardware.
+
+## What's next
+
+We're running the full standard benchmark suite — SSC, N-MNIST, DVS Gesture, GSC KWS — using the same adLIF approach. Early results are promising. See the [Benchmark Blitz](/blog/benchmarks-vs-loihi) post for the full picture.
+
+[Explore N2 →](/processors/n2) | [Try the Cloud API →](/cloud)

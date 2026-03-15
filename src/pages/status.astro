@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Status — Catalyst Neuromorphic" description="Live status for Catalyst Cloud API and services." hasFog={true}>
+
+  <!-- HERO -->
+  <section class="pt-36 pb-16 px-6 md:px-12" style="position:relative;z-index:1;">
+    <div style="max-width:700px;margin:0 auto;text-align:center;">
+      <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-5">Status</p>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(2.2rem,4.5vw,3.4rem); font-weight:700; letter-spacing:-0.04em; line-height:1.1;">
+        System status.
+      </h1>
+      <p class="text-base text-white/35 mt-5" style="line-height:1.7;">Live health checks for Catalyst services.</p>
+    </div>
+  </section>
+
+  <!-- STATUS CARDS -->
+  <section class="pb-32 px-6 md:px-12" style="position:relative;z-index:1;">
+    <div style="max-width:640px;margin:0 auto;">
+
+      <!-- Cloud API -->
+      <div class="card-glass reveal" style="padding:clamp(1.5rem,3vw,2rem); margin-bottom:16px;">
+        <div style="position:relative;z-index:2;" class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold tracking-tight">Cloud API</h3>
+            <p class="text-xs text-white/30 mt-1">api.catalyst-neuromorphic.com</p>
+          </div>
+          <div class="flex items-center gap-2" id="api-status">
+            <div class="w-2.5 h-2.5 rounded-full bg-white/20 animate-pulse" id="api-dot"></div>
+            <span class="text-xs text-white/30" id="api-label">Checking&hellip;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Website -->
+      <div class="card-glass reveal" style="padding:clamp(1.5rem,3vw,2rem); margin-bottom:16px;">
+        <div style="position:relative;z-index:2;" class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold tracking-tight">Website</h3>
+            <p class="text-xs text-white/30 mt-1">catalyst-neuromorphic.com</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+            <span class="text-xs text-green-400/70">Operational</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PyPI -->
+      <div class="card-glass reveal" style="padding:clamp(1.5rem,3vw,2rem); margin-bottom:16px;">
+        <div style="position:relative;z-index:2;" class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold tracking-tight">Python SDK</h3>
+            <p class="text-xs text-white/30 mt-1">pypi.org/project/catalyst-cloud</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+            <span class="text-xs text-green-400/70">Published</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- npm -->
+      <div class="card-glass reveal" style="padding:clamp(1.5rem,3vw,2rem); margin-bottom:16px;">
+        <div style="position:relative;z-index:2;" class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold tracking-tight">CLI</h3>
+            <p class="text-xs text-white/30 mt-1">npmjs.com/package/@catalyst-neuromorphic/cli</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+            <span class="text-xs text-green-400/70">Published</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Last checked -->
+      <p class="text-xs text-white/20 text-center mt-8" id="last-checked"></p>
+
+    </div>
+  </section>
+
+  <script is:inline src="/js/status.js"></script>
+
+</BaseLayout>

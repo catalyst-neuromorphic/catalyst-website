@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="FPGA Validation — Catalyst Neuromorphic" description="Hardware validation methodology for Catalyst neuromorphic processors. Bit-exact RTL testing on AWS F2 and Kria K26." hasFog={true}>
+
+  <!-- HERO -->
+  <section class="pt-36 pb-20 px-6 md:px-12" style="position:relative;z-index:1;">
+    <div class="max-w-[1000px] mx-auto">
+      <a href="/research" class="text-xs text-white/30 hover:text-white/50 transition-colors mb-4 inline-block">&larr; Research</a>
+      <h1 class="text-[clamp(2.2rem,4.5vw,3.5rem)] font-bold tracking-tight">FPGA validation</h1>
+      <p class="text-white/35 mt-4 max-w-[650px]">All four processor generations are validated on physical FPGA fabric. RTL runs on hardware at clock speed. Output spikes are compared bit-exact against a CPU reference simulator.</p>
+    </div>
+  </section>
+
+  <!-- PLATFORMS -->
+  <section class="pb-28 px-6 md:px-12">
+    <div class="max-w-[1000px] mx-auto">
+      <h2 class="reveal text-xl font-semibold mb-6">Platforms</h2>
+      <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-4 mb-16">
+        <div class="card-glass p-6 md:p-8">
+          <h3 class="text-sm font-semibold text-white/70 mb-3">AWS F2</h3>
+          <div class="space-y-2 text-xs text-white/30">
+            <div class="flex justify-between"><span class="text-white/50">FPGA</span><span>Xilinx UltraScale+ VU47P</span></div>
+            <div class="flex justify-between"><span class="text-white/50">Interface</span><span>PCIe Gen3 x16, MMIO</span></div>
+            <div class="flex justify-between"><span class="text-white/50">Clock</span><span>62.5 MHz</span></div>
+            <div class="flex justify-between"><span class="text-white/50">N4 throughput</span><span>14,983 timesteps/sec</span></div>
+            <div class="flex justify-between"><span class="text-white/50">N3 throughput</span><span>14,500 timesteps/sec</span></div>
+            <div class="flex justify-between"><span class="text-white/50">N4-Edge throughput</span><span>15,668 timesteps/sec</span></div>
+          </div>
+        </div>
+        <div class="card-glass p-6 md:p-8">
+          <h3 class="text-sm font-semibold text-white/70 mb-3">Kria K26 SoM</h3>
+          <div class="space-y-2 text-xs text-white/30">
+            <div class="flex justify-between"><span class="text-white/50">FPGA</span><span>Xilinx Zynq UltraScale+</span></div>
+            <div class="flex justify-between"><span class="text-white/50">LUTs available</span><span>117,120</span></div>
+            <div class="flex justify-between"><span class="text-white/50">N4-Edge LUTs used</span><span>3,036 (2.59%)</span></div>
+            <div class="flex justify-between"><span class="text-white/50">Total board power</span><span>0.378 W</span></div>
+            <div class="flex justify-between"><span class="text-white/50">Timing (WNS)</span><span>+3.301 ns</span></div>
+            <div class="flex justify-between"><span class="text-white/50">Target</span><span>Edge deployment, $5-20 modules</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROTOCOL -->
+      <h2 class="reveal text-xl font-semibold mb-6">Validation protocol</h2>
+      <p class="reveal text-xs text-white/30 mb-6 max-w-[650px]">Every FPGA test follows the same seven-step sequence. The protocol was developed during N1 validation and has been used unchanged for all subsequent generations.</p>
+      <div class="reveal mb-16">
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-px bg-white/[0.04] rounded-2xl overflow-hidden">
+          {[
+            { n: '1', title: 'Define', desc: 'Network topology in Python SDK' },
+            { n: '2', title: 'Compile', desc: 'Map to hardware configuration' },
+            { n: '3', title: 'Silence', desc: 'Set threshold high on unused cores' },
+            { n: '4', title: 'Deploy', desc: 'PCIe MMIO write, core-by-core' },
+            { n: '5', title: 'Inject', desc: 'Spike stimuli per timestep' },
+            { n: '6', title: 'Readback', desc: 'Capture output spikes via PCIe' },
+            { n: '7', title: 'Compare', desc: 'Bit-exact match vs CPU sim' },
+          ].map(item => (
+            <div class="bg-surface p-4 text-center">
+              <div class="text-catalyst-blue/50 text-[10px] font-mono">{item.n}</div>
+              <div class="text-sm font-semibold mt-1">{item.title}</div>
+              <div class="text-[10px] text-white/25 mt-1 leading-snug">{item.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- BRAM -->
+      <div class="reveal mb-16">
+        <h2 class="text-xl font-semibold mb-4">BRAM initialization</h2>
+        <div class="bg-white/[0.02] border border-white/[0.05] rounded-xl p-6 max-w-[700px]">
+          <p class="text-xs text-white/30 leading-relaxed">FPGAs initialise BRAM to zeros. A threshold of zero fires every neuron every timestep. There is no global reset between deploys. This led to step 3 of the protocol: setting unused core thresholds to 32,767 before deploying any network. Without this, residual state from a previous deployment corrupts the output of the next one.</p>
+        </div>
+      </div>
+
+      <!-- COVERAGE -->
+      <h2 class="reveal text-xl font-semibold mb-6">Coverage</h2>
+      <p class="reveal text-xs text-white/30 mb-6 max-w-[650px]">The validation suite covers eight categories of hardware behaviour. Each category is tested across all supported neuron models and synapse formats.</p>
+      <div class="reveal grid grid-cols-1 sm:grid-cols-2 gap-4 mb-16">
+        {[
+          { name: 'Neuron membrane dynamics', desc: 'Voltage integration, threshold crossing, reset behaviour, refractory period enforcement across all neuron models.' },
+          { name: 'Synaptic weight formats', desc: 'Excitatory and inhibitory connections at 1, 2, 4, 8, and 16-bit precision. CSR, dense, population, and convolutional encoding.' },
+          { name: 'Cross-core mesh routing', desc: 'Spike delivery across cores via the on-chip network. Axonal delays up to 63 timesteps. Fan-out to multiple targets.' },
+          { name: 'On-chip learning', desc: 'STDP, three-factor reward-modulated plasticity, homeostatic threshold adaptation. Weight updates verified against CPU reference.' },
+          { name: 'Graded spike payloads', desc: '8-bit, 16-bit, and 24-bit spike values propagated through the pipeline. Payload integrity verified end-to-end.' },
+          { name: 'Microcode execution', desc: 'Programmable neuron update rules executing on-chip. Custom dynamics replacing the fixed datapath.' },
+          { name: 'State isolation', desc: 'Cores do not interfere. Deploying a new network does not corrupt state on uninvolved cores.' },
+          { name: 'Scale and throughput', desc: 'Multi-core networks at sustained clock rates. N4 on F2: 14,983 timesteps/sec. N3 on F2: 14,500 timesteps/sec.' },
+        ].map(cat => (
+          <div class="bg-white/[0.03] border border-white/[0.05] rounded-xl px-5 py-4">
+            <div class="text-sm font-semibold text-white/70 mb-1">{cat.name}</div>
+            <div class="text-xs text-white/25 leading-relaxed">{cat.desc}</div>
+          </div>
+        ))}
+      </div>
+
+      <!-- PER-GENERATION RESULTS -->
+      <h2 class="reveal text-xl font-semibold mb-6">Per-generation results</h2>
+      <div class="reveal overflow-x-auto card-glass p-6 md:p-8 mb-16">
+        <table class="w-full text-sm" style="min-width:600px;">
+          <thead>
+            <tr class="border-b border-white/10">
+              <th class="text-left py-3 pr-4 text-white/40 font-medium"></th>
+              <th class="text-left py-3 px-4 text-white/25 font-medium">N1</th>
+              <th class="text-left py-3 px-4 text-white/25 font-medium">N2</th>
+              <th class="text-left py-3 px-4 text-white/25 font-medium">N3</th>
+              <th class="text-left py-3 pl-4 text-white/40 font-medium">N4</th>
+            </tr>
+          </thead>
+          <tbody class="text-white/30">
+            {[
+              ['FPGA platform', 'VU47P', 'VU47P', 'F2 + K26', 'F2 + K26'],
+              ['Clock', '62.5 MHz', '62.5 MHz', '62.5 MHz', '62.5 MHz'],
+              ['Cores tested', '16', '128', '128', '4 (1 NCC, 2 tiles)'],
+              ['Throughput', '\u2014', '\u2014', '14,500 ts/sec', '14,983 ts/sec'],
+              ['Comparison method', 'Bit-exact', 'Bit-exact', 'Bit-exact', 'Bit-exact (behavioral)'],
+              ['Edge variant', '\u2014', '\u2014', '\u2014', 'K26, 0.378 W, 2.59% LUT'],
+            ].map(([spec, n1, n2, n3, n4]) => (
+              <tr class="border-b border-white/[0.04]">
+                <td class="py-2.5 pr-4 text-white/50">{spec}</td>
+                <td class="py-2.5 px-4">{n1}</td>
+                <td class="py-2.5 px-4">{n2}</td>
+                <td class="py-2.5 px-4">{n3}</td>
+                <td class="py-2.5 pl-4 text-white/50">{n4}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- SOFTWARE BACKENDS -->
+      <h2 class="reveal text-xl font-semibold mb-4">Software test suite</h2>
+      <p class="reveal text-xs text-white/30 mb-6 max-w-[650px]">The SDK test suite runs against all three backends on every commit. The CPU backend is the reference. The GPU backend must produce statistically equivalent results. The FPGA backend must produce bit-exact results.</p>
+      <div class="reveal card-glass p-6 md:p-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {[
+            { label: 'Unit', desc: 'Individual neuron models, synapse formats, weight operations, spike trace computations, microcode instructions.' },
+            { label: 'Integration', desc: 'Multi-core networks, routing, learning rule interactions, deployment sequences, state management.' },
+            { label: 'Regression', desc: 'Previously discovered edge cases preserved as permanent tests. Every bug fix includes a regression test.' },
+            { label: 'CPU\u2013GPU parity', desc: 'Same network, same inputs, same expected outputs. Verifies CUDA backend matches CPU reference.' },
+            { label: 'Stress', desc: 'Maximum-size networks, high spike rates, boundary conditions, overflow handling, resource exhaustion.' },
+          ].map(item => (
+            <div>
+              <div class="text-sm font-semibold text-white/70">{item.label}</div>
+              <div class="text-xs text-white/25 mt-1 leading-relaxed">{item.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

@@ -1,0 +1,956 @@
+---
+import ChipFloorplan from '../../components/ChipFloorplan.astro';
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N3 — Catalyst Neuromorphic Processor</title>
+<meta name="description" content="128-core neuromorphic SoC with hybrid ANN/SNN computing, hardware virtualization, and on-chip continual learning. FPGA validated." />
+<link rel="canonical" href="https://catalyst-neuromorphic.com/processors/n3" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:title" content="N3 — Catalyst Neuromorphic Processor" />
+<meta property="og:description" content="128-core neuromorphic SoC with hybrid ANN/SNN, hardware virtualization, and on-chip continual learning." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:#050507;color:#fff;
+    font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  body::after{
+    content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat:repeat;background-size:256px;
+  }
+
+  /* NAV */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:30px 56px;transition:all .6s ease;
+  }
+  .nav.scrolled{
+    background:rgba(5,5,7,0.55);
+    backdrop-filter:blur(24px) saturate(180%);
+    -webkit-backdrop-filter:blur(24px) saturate(180%);
+    padding:20px 56px;
+  }
+  .nav.scrolled::after{opacity:1}
+  .nav::after{
+    content:'';position:absolute;bottom:-20px;left:0;right:0;height:20px;
+    background:linear-gradient(180deg,rgba(5,5,7,0.4),transparent);
+    opacity:0;transition:opacity .6s ease;pointer-events:none;
+  }
+  .nav-logo{
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    font-size:1.9rem;font-weight:700;color:#fff;
+    letter-spacing:-0.02em;text-decoration:none;
+  }
+  .nav-links{display:flex;align-items:center;gap:50px}
+  .nav-links a{
+    font-size:1.2rem;font-weight:500;color:rgba(255,255,255,0.6);
+    text-decoration:none;transition:color .25s;
+  }
+  .nav-links a:hover{color:#fff}
+  .auth-area{position:relative}
+  .avatar-btn{width:34px;height:34px;border-radius:50%;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.25);color:#60A5FA;cursor:pointer;display:none;align-items:center;justify-content:center;transition:background .2s}
+  .avatar-btn:hover{background:rgba(59,130,246,0.25)}
+  .avatar-dropdown{position:absolute;top:calc(100% + 12px);right:0;background:rgba(15,15,20,0.92);backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:6px;min-width:180px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,visibility .2s,transform .2s;z-index:200}
+  .avatar-dropdown.open{opacity:1;visibility:visible;transform:translateY(0)}
+  .avatar-dropdown a,.avatar-dropdown button{display:block;width:100%;padding:9px 14px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;font-weight:500;color:rgba(255,255,255,0.6);text-decoration:none;text-align:left;background:none;border:none;cursor:pointer;transition:background .15s,color .15s}
+  .avatar-dropdown a:hover,.avatar-dropdown button:hover{background:rgba(255,255,255,0.06);color:#fff}
+  .avatar-divider{height:1px;background:rgba(255,255,255,0.06);margin:4px 0}
+
+  /* SUB-NAV */
+  .sub-nav{
+    position:fixed;top:0;left:0;right:0;z-index:90;
+    display:flex;align-items:center;justify-content:center;gap:32px;
+    padding:14px 24px;
+    background:rgba(5,5,7,0.85);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    opacity:0;transform:translateY(-100%);
+    transition:opacity .3s,transform .3s;
+    pointer-events:none;
+  }
+  .sub-nav.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+  .sub-nav a{
+    font-size:.78rem;font-weight:500;
+    color:rgba(255,255,255,0.35);
+    text-decoration:none;transition:color .25s;
+    white-space:nowrap;
+  }
+  .sub-nav a:hover,.sub-nav a.active{color:rgba(255,255,255,0.8)}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    text-align:center;padding:100px 40px 60px;
+    position:relative;
+  }
+  .hero-chip{margin-bottom:32px}
+  .hero-chip svg{width:340px;height:auto}
+  .wt-chip svg{width:420px;height:auto;transition:opacity .4s}
+  .hero h1{
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    font-size:clamp(5rem,12vw,10rem);font-weight:700;
+    letter-spacing:-0.04em;line-height:0.9;
+  }
+  .hero-sub{
+    font-size:clamp(1rem,1.8vw,1.3rem);
+    color:rgba(255,255,255,0.4);margin-top:16px;
+    max-width:560px;line-height:1.6;
+  }
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    margin-top:28px;padding:8px 20px;border-radius:100px;
+    background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);
+    font-size:.82rem;font-weight:600;color:rgba(34,197,94,0.9);
+  }
+  .hero-badge .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:rgba(34,197,94,0.9);
+    animation:pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+  .hero-ctas{display:flex;gap:14px;margin-top:24px}
+  .hero-scroll{
+    position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+    width:24px;height:40px;border-radius:12px;
+    border:1px solid rgba(255,255,255,0.15);
+    display:flex;justify-content:center;padding-top:8px;
+  }
+  .hero-scroll span{
+    width:3px;height:8px;border-radius:2px;
+    background:rgba(255,255,255,0.3);
+    animation:scroll-pulse 2s ease-in-out infinite;
+  }
+  @keyframes scroll-pulse{0%,100%{transform:translateY(0);opacity:.3}50%{transform:translateY(8px);opacity:.8}}
+
+  /* WALKTHROUGH */
+  .walkthrough{position:relative;height:600vh}
+  .walkthrough-sticky{
+    position:sticky;top:0;height:100vh;
+    display:flex;align-items:center;
+    max-width:1200px;margin:0 auto;
+    padding:0 48px;gap:60px;
+  }
+  .wt-text{flex:1;min-width:0}
+  .wt-chip{flex:0 0 auto;position:relative}
+  .wt-chip svg{width:420px;height:auto;transition:opacity .4s}
+  .wt-step{
+    position:absolute;top:50%;left:0;right:0;
+    transform:translateY(-50%);
+    opacity:0;transition:opacity .5s ease;
+    pointer-events:none;
+  }
+  .wt-step.active{opacity:1;pointer-events:auto}
+  .wt-step-eyebrow{
+    font-size:.7rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.12em;
+    color:rgba(59,130,246,0.7);margin-bottom:12px;
+  }
+  .wt-step h2{
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;
+    letter-spacing:-0.02em;line-height:1.1;margin-bottom:16px;
+  }
+  .wt-step p{
+    font-size:1rem;color:rgba(255,255,255,0.45);
+    line-height:1.7;max-width:420px;
+  }
+  .wt-dots{
+    position:absolute;right:24px;top:50%;transform:translateY(-50%);
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .wt-dot{
+    width:6px;height:6px;border-radius:50%;
+    background:rgba(255,255,255,0.12);
+    transition:all .3s;
+  }
+  .wt-dot.active{
+    background:rgba(59,130,246,0.8);
+    box-shadow:0 0 8px rgba(59,130,246,0.4);
+  }
+  .chip-wt [data-region]{transition:opacity .5s ease,filter .5s ease}
+  .chip-wt [data-region].dim{opacity:.12;filter:saturate(0.2)}
+  .chip-wt [data-region].active{opacity:1;filter:saturate(1.3) brightness(1.2)}
+
+  /* STATS */
+  .stats-section{
+    max-width:1100px;margin:0 auto;
+    padding:120px 40px;
+  }
+  .stats-category{margin-bottom:48px}
+  .stats-category:last-child{margin-bottom:0}
+  .stats-category-label{
+    font-size:.65rem;font-weight:600;text-transform:uppercase;
+    letter-spacing:.12em;color:rgba(59,130,246,0.6);margin-bottom:20px;
+  }
+  .stats-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:32px;
+  }
+  .stat{text-align:left}
+  .stat-num{
+    font-family:'Space Grotesk',system-ui;
+    font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;
+    letter-spacing:-0.03em;
+    background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.7) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .stat-label{
+    font-size:.75rem;color:rgba(255,255,255,0.3);
+    margin-top:6px;text-transform:uppercase;
+    letter-spacing:.05em;font-weight:500;
+  }
+
+  /* WHAT'S NEW */
+  .whats-new{max-width:1000px;margin:0 auto;padding:80px 40px}
+  .whats-new h2{
+    font-family:'Space Grotesk',system-ui;
+    font-size:clamp(2rem,4vw,3rem);font-weight:700;
+    letter-spacing:-0.02em;text-align:center;margin-bottom:48px;
+  }
+  .feature-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+  .feature-card{
+    padding:28px 24px;border-radius:16px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.06);
+    transition:border-color .3s,background .3s;
+  }
+  .feature-card:hover{border-color:rgba(59,130,246,0.15);background:rgba(59,130,246,0.03)}
+  .feature-card h3{font-size:.95rem;font-weight:600;margin-bottom:8px}
+  .feature-card p{font-size:.82rem;color:rgba(255,255,255,0.35);line-height:1.6}
+  .feature-card .tag{
+    display:inline-block;font-size:.65rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.08em;
+    padding:3px 8px;border-radius:4px;margin-bottom:12px;
+    background:rgba(59,130,246,0.1);color:rgba(59,130,246,0.8);
+  }
+  .feature-card .tag.green{background:rgba(34,197,94,0.1);color:rgba(34,197,94,0.8)}
+
+  /* SDK */
+  .sdk-section{
+    max-width:1000px;margin:0 auto;padding:80px 40px;
+    display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+  }
+  .sdk-text h2{
+    font-family:'Space Grotesk',system-ui;
+    font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;
+    letter-spacing:-0.02em;margin-bottom:12px;
+  }
+  .sdk-text p{font-size:1rem;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:20px}
+  .sdk-text .install{
+    font-family:'JetBrains Mono',monospace;font-size:.85rem;
+    color:rgba(59,130,246,0.8);background:rgba(59,130,246,0.06);
+    padding:8px 16px;border-radius:8px;display:inline-block;
+    border:1px solid rgba(59,130,246,0.12);
+  }
+  .code-block{
+    border-radius:16px;overflow:hidden;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.06);
+  }
+  .code-header{
+    padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);
+    display:flex;gap:6px;
+  }
+  .code-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.08)}
+  .code-body{
+    padding:20px;font-family:'JetBrains Mono',monospace;
+    font-size:.78rem;line-height:1.8;color:rgba(255,255,255,0.6);
+    overflow-x:auto;
+  }
+  .code-body .kw{color:#c084fc}
+  .code-body .fn{color:#60a5fa}
+  .code-body .str{color:#86efac}
+  .code-body .num{color:#fbbf24}
+  .code-body .cm{color:rgba(255,255,255,0.25)}
+
+  /* COMPARISON TABLE */
+  .comparison{max-width:1100px;margin:0 auto;padding:100px 40px}
+  .comparison h2{
+    font-family:'Space Grotesk',system-ui;
+    font-size:clamp(2rem,4vw,3rem);font-weight:700;
+    letter-spacing:-0.02em;text-align:center;margin-bottom:48px;
+  }
+  .comp-wrap{
+    border-radius:16px;overflow:hidden;
+    border:1px solid rgba(255,255,255,0.06);
+    overflow-x:auto;
+  }
+  .comp-table{width:100%;border-collapse:collapse;min-width:700px}
+  .comp-table th{
+    padding:16px 18px;text-align:left;
+    font-size:.65rem;font-weight:600;text-transform:uppercase;
+    letter-spacing:.08em;color:rgba(255,255,255,0.25);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    background:rgba(255,255,255,0.02);
+  }
+  .comp-table th.hl{color:rgba(59,130,246,0.8)}
+  .comp-table td{
+    padding:14px 18px;font-size:.85rem;
+    border-bottom:1px solid rgba(255,255,255,0.03);
+  }
+  .comp-table td:first-child{color:rgba(255,255,255,0.5);font-weight:500}
+  .comp-table .us{color:rgba(255,255,255,0.9);font-weight:600}
+  .comp-table .them{color:rgba(255,255,255,0.25)}
+  .comp-table tr:last-child td{border-bottom:none}
+  .comp-table tr:hover td{background:rgba(255,255,255,0.015)}
+
+  /* SPECS ACCORDION */
+  .specs{max-width:900px;margin:0 auto;padding:100px 40px}
+  .specs h2{
+    font-family:'Space Grotesk',system-ui;
+    font-size:clamp(2rem,4vw,3rem);font-weight:700;
+    letter-spacing:-0.02em;text-align:center;margin-bottom:48px;
+  }
+  details.spec-group{
+    border-bottom:1px solid rgba(255,255,255,0.04);
+  }
+  details.spec-group summary{
+    padding:18px 0;cursor:pointer;
+    font-size:1rem;font-weight:600;
+    color:rgba(255,255,255,0.7);
+    list-style:none;display:flex;justify-content:space-between;align-items:center;
+  }
+  details.spec-group summary::-webkit-details-marker{display:none}
+  details.spec-group summary::after{
+    content:'+';font-size:1.2rem;color:rgba(255,255,255,0.25);
+    transition:transform .2s;
+  }
+  details.spec-group[open] summary::after{content:'\2212'}
+  .spec-row{
+    display:flex;justify-content:space-between;
+    padding:10px 0;font-size:.88rem;
+    border-top:1px solid rgba(255,255,255,0.02);
+  }
+  .spec-row span:first-child{color:rgba(255,255,255,0.4)}
+  .spec-row span:last-child{color:rgba(255,255,255,0.75);font-weight:500;text-align:right}
+
+  /* PAPER CTA */
+  .paper-cta{
+    max-width:600px;margin:0 auto;padding:60px 40px 80px;text-align:center;
+  }
+  .paper-card{
+    padding:48px 40px;border-radius:24px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.06);
+  }
+  .paper-card h3{font-size:1.2rem;font-weight:600;margin-bottom:8px}
+  .paper-card p{font-size:.88rem;color:rgba(255,255,255,0.35);margin-bottom:24px;line-height:1.5}
+  .paper-card .coming{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.88rem;font-weight:500;color:rgba(255,255,255,0.3);
+  }
+
+  /* ENQUIRE CTA */
+  .enquire{max-width:700px;margin:0 auto;padding:40px 40px 120px;text-align:center}
+  .enquire-card{
+    padding:56px 48px;border-radius:24px;
+    background:rgba(59,130,246,0.04);
+    border:1px solid rgba(59,130,246,0.12);
+  }
+  .enquire-card h2{
+    font-family:'Space Grotesk',system-ui;
+    font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;
+    letter-spacing:-0.02em;margin-bottom:12px;
+  }
+  .enquire-card p{font-size:1rem;color:rgba(255,255,255,0.4);margin-bottom:32px;line-height:1.6}
+  .enquire-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+  /* BUTTONS */
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.9rem;font-weight:600;padding:14px 28px;
+    border-radius:100px;text-decoration:none;transition:all .3s;
+  }
+  .btn-primary{
+    color:#fff;background:linear-gradient(135deg,#3B82F6,#2563EB);
+    box-shadow:0 4px 16px rgba(59,130,246,0.3);
+  }
+  .btn-primary:hover{box-shadow:0 6px 24px rgba(59,130,246,0.45);transform:translateY(-1px)}
+  .btn-pill{
+    color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.1);
+  }
+  .btn-pill:hover{background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.2)}
+
+  /* GLOW BUTTONS */
+  .glow-btn{position:relative;overflow:hidden;transition:box-shadow .4s ease}
+  .glow-spot{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:200px;height:100%;display:flex;align-items:center;justify-content:center;
+    z-index:0;pointer-events:none;opacity:0;will-change:transform,opacity;
+  }
+  .glow-spot-circle{
+    position:absolute;width:120px;height:120px;border-radius:50%;
+    background:radial-gradient(50% 50% at 50% 50%,rgba(255,255,255,0.90) 3.5%,rgba(96,165,250,0.70) 26.5%,rgba(147,197,253,0.50) 37.5%,rgba(59,130,246,0.25) 49%,rgba(37,99,235,0) 92.5%);
+  }
+  .glow-spot-wide{
+    position:absolute;width:200px;height:100px;
+    background:radial-gradient(43.3% 44.23% at 50% 49.51%,rgba(255,255,255,0.70) 29%,rgba(191,219,254,0.50) 48.5%,rgba(147,197,253,0.25) 60.71%,rgba(214,211,210,0) 100%);
+    filter:blur(5px);
+  }
+  .glow-btn.glow-on{box-shadow:0 0 25px rgba(59,130,246,0.25),0 0 50px rgba(59,130,246,0.08)}
+
+  /* FOOTER */
+  .site-footer{border-top:1px solid rgba(255,255,255,0.06);padding:64px 40px 32px}
+  .footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;max-width:1100px;margin:0 auto}
+  .footer-col h4{
+    font-family:'Space Grotesk',sans-serif;font-size:.8rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.35);margin-bottom:20px;
+  }
+  .footer-col a{display:block;font-size:.88rem;color:rgba(255,255,255,0.5);text-decoration:none;margin-bottom:10px;transition:color .25s}
+  .footer-col a:hover{color:#fff}
+  .footer-support{max-width:1100px;margin:40px auto 0;text-align:center;font-size:.85rem;color:rgba(255,255,255,0.3)}
+  .footer-support a{color:rgba(59,130,246,0.7);text-decoration:none;transition:color .25s}
+  .footer-support a:hover{color:#60A5FA}
+  .footer-legal{display:flex;align-items:center;gap:8px}
+  .footer-legal a{color:rgba(255,255,255,0.35);text-decoration:none;transition:color .25s}
+  .footer-legal a:hover{color:rgba(255,255,255,0.6)}
+  .footer-bottom{
+    max-width:1100px;margin:24px auto 0;padding-top:24px;
+    border-top:1px solid rgba(255,255,255,0.04);
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:.78rem;color:rgba(255,255,255,0.25);
+  }
+
+  /* ANIMATIONS */
+  .reveal{opacity:0;transform:translateY(30px);transition:none}
+  .reveal.visible{opacity:1;transform:translateY(0);transition:opacity .8s ease,transform .8s ease}
+
+  /* MOBILE */
+  @media(max-width:900px){
+    .nav{padding:20px 24px}
+    .nav.scrolled{padding:16px 24px}
+    .nav-logo{font-size:1.5rem}
+    .nav-links{gap:28px}
+    .nav-links a{font-size:1rem}
+    .hero-chip svg{width:240px}
+    .walkthrough{height:auto}
+    .walkthrough-sticky{
+      position:relative;flex-direction:column;
+      padding:80px 24px;gap:40px;height:auto;
+    }
+    .wt-chip svg{width:280px}
+    .wt-step{position:relative;transform:none;opacity:1;margin-bottom:60px}
+    .wt-dots{display:none}
+    .stats-section{gap:40px;padding:80px 24px}
+    .feature-grid{grid-template-columns:1fr}
+    .sdk-section{grid-template-columns:1fr;padding:60px 24px}
+    .comparison{padding:60px 20px}
+    .specs{padding:60px 20px}
+    .sub-nav{display:none}
+    .footer-grid{grid-template-columns:1fr 1fr}
+    .footer-bottom{flex-direction:column;gap:8px;text-align:center}
+  }
+  @media(max-width:600px){
+    .nav-links{display:none}
+    .hero-ctas{flex-direction:column;align-items:center}
+    .enquire-btns{flex-direction:column;align-items:center}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="main-nav">
+  <a href="/" class="nav-logo">Catalyst</a>
+  <div class="nav-links">
+    <a href="/processors">Products</a>
+
+    <a href="/research">Research</a>
+    <a href="/about">About</a>
+    <div class="auth-area">
+      <a href="/console/login" id="sign-in-link">Sign in</a>
+      <button id="avatar-btn" class="avatar-btn" style="display:none;" aria-label="Account">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <div id="avatar-dropdown" class="avatar-dropdown">
+        <a href="/console/dashboard">Dashboard</a>
+        <a href="/console/keys">API Keys</a>
+        <a href="/console/billing">Billing</a>
+        <a href="/console/usage">Usage</a>
+        <div class="avatar-divider"></div>
+        <button id="sign-out-btn">Sign out</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- SUB-NAV -->
+<nav class="sub-nav" id="sub-nav">
+  <a href="#overview">Overview</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#stats">Performance</a>
+  <a href="#features">Features</a>
+  <a href="#comparison">Comparison</a>
+  <a href="#specs">Specs</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="overview">
+  <div class="hero-chip">
+    <ChipFloorplan chip="n3" showLabels={true} />
+  </div>
+  <h1>N3</h1>
+  <p class="hero-sub">128 cores. 524K neurons (24-bit) to 1M (8-bit), up to 8.4M virtual with TDM. Hybrid ANN/SNN. Hardware virtualization. On-chip continual learning.</p>
+  <div class="hero-ctas">
+    <a href="/research" class="btn btn-primary glow-btn">Read the research</a>
+    <a href="/about#contact" class="btn btn-pill glow-btn">Get in touch</a>
+  </div>
+  <div class="hero-scroll"><span></span></div>
+</section>
+
+<!-- CHIP WALKTHROUGH -->
+<section class="walkthrough" id="architecture">
+  <div class="walkthrough-sticky">
+    <div class="wt-text">
+      <!-- Step 0: Hybrid ANN/SNN -->
+      <div class="wt-step active" data-step="0">
+        <p class="wt-step-eyebrow">Hybrid Computing</p>
+        <h2>ANN and SNN<br>on one chip.</h2>
+        <p>Each core can switch between spiking neural network mode and INT8 multiply-accumulate mode. Run classical deep learning layers alongside spiking layers on the same silicon. No other neuromorphic chip does this.</p>
+      </div>
+      <!-- Step 1: Memory Hierarchy -->
+      <div class="wt-step" data-step="1">
+        <p class="wt-step-eyebrow">4-Level Memory</p>
+        <h2>From 96 KB<br>to unlimited.</h2>
+        <p>L1 SRAM per core (96 KB), L2 shared tile cache (1 MB), L3 external DRAM (500M+ synapses), L4 CXL fabric. Loihi 2 has two levels. N3 has four, with hardware-managed caching and LRU eviction.</p>
+      </div>
+      <!-- Step 2: Virtualization -->
+      <div class="wt-step" data-step="2">
+        <p class="wt-step-eyebrow">NeurOS Virtualization</p>
+        <h2>680+ networks<br>on one chip.</h2>
+        <p>Hardware-scheduled time-division multiplexing with dirty-page tracking and compressed DMA context switching. Each physical neuron handles 8 virtual time slots. No other neuromorphic chip offers hardware virtualization.</p>
+      </div>
+      <!-- Step 3: Per-Tile Learning -->
+      <div class="wt-step" data-step="3">
+        <p class="wt-step-eyebrow">Learning Accelerators</p>
+        <h2>16 independent<br>learning engines.</h2>
+        <p>One per tile, each with a 28-opcode ISA and 80 registers. Loihi 2 has one global learning engine. N3 has 16 running in parallel. No cross-chip bottleneck. Learning at wire speed.</p>
+      </div>
+      <!-- Step 4: Precision -->
+      <div class="wt-step" data-step="4">
+        <p class="wt-step-eyebrow">Precision-Adaptive</p>
+        <h2>24, 16, or 8 bits.<br>Your call.</h2>
+        <p>Configure neuron precision per core. At 8-bit, neuron density doubles to over 1 million total. FACTOR low-rank synapse compression saves 2&ndash;8&times; memory. Same network, multiple precision targets.</p>
+      </div>
+      <!-- Step 5: Continual Learning -->
+      <div class="wt-step" data-step="5">
+        <p class="wt-step-eyebrow">Continual Learning</p>
+        <h2>Networks that<br>stabilise themselves.</h2>
+        <p>Hardware metaplasticity (3-bit synaptic consolidation), homeostatic plasticity (firing rate tracking with synaptic scaling), and synaptic fatigue. On-chip mechanisms for networks that learn continuously without catastrophic forgetting.</p>
+      </div>
+      <!-- Step 6: Full Die -->
+      <div class="wt-step" data-step="6">
+        <p class="wt-step-eyebrow">Full Die</p>
+        <h2>128 cores.<br>36 MB SRAM.</h2>
+        <p>128 neuromorphic cores across 16 tiles, 4 RISC-V management CPUs, async hybrid network-on-chip, and 36 MB on-chip SRAM. Every architectural feature implemented in RTL and validated on FPGA.</p>
+      </div>
+    </div>
+    <div class="wt-chip">
+      <ChipFloorplan chip="n3" showLabels={true} class="chip-wt" />
+    </div>
+    <div class="wt-dots">
+      {Array.from({ length: 7 }).map((_, i) => (
+        <div class:list={['wt-dot', { active: i === 0 }]} data-dot={i}></div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- BY THE NUMBERS -->
+<section class="stats-section reveal" id="stats">
+  <div class="stats-category">
+    <p class="stats-category-label">Scale</p>
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-num">4.2M</div>
+        <div class="stat-label">Virtual neurons (24-bit)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">500M+</div>
+        <div class="stat-label">Addressable synapses</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">36 MB</div>
+        <div class="stat-label">On-chip SRAM</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">256</div>
+        <div class="stat-label">GMAC/s (ASIC projected)</div>
+      </div>
+    </div>
+  </div>
+  <div class="stats-category">
+    <p class="stats-category-label">Architecture</p>
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-num">128</div>
+        <div class="stat-label">Cores (16 tiles)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8</div>
+        <div class="stat-label">Neuron models (7 + custom)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">16</div>
+        <div class="stat-label">Learning accelerators</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4-level</div>
+        <div class="stat-label">Memory hierarchy</div>
+      </div>
+    </div>
+  </div>
+  <div class="stats-category">
+    <p class="stats-category-label">Performance</p>
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-num">91.0%</div>
+        <div class="stat-label">SHD accuracy</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">76.4%</div>
+        <div class="stat-label">SSC accuracy</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4.04</div>
+        <div class="stat-label">nJ / neuron-op (FPGA)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3.7&times;</div>
+        <div class="stat-label">Energy efficiency vs N2</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S NEW IN N3 -->
+<section class="whats-new reveal" id="features">
+  <h2>What N3 adds over N2.</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="tag">Unique</span>
+      <h3>ANN INT8 MAC Mode</h3>
+      <p>Per-core toggle between spiking and classical multiply-accumulate. Deploy hybrid ANN/SNN networks natively.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag">Unique</span>
+      <h3>NeurOS Virtualization</h3>
+      <p>Hardware-scheduled TDM for 680+ virtual networks. Context switching with dirty tracking and compressed DMA.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag">Unique</span>
+      <h3>Per-Tile Learning</h3>
+      <p>16 independent learning accelerators. 28-opcode ISA, 80 registers each. 16&times; the throughput of a single global engine.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag green">N3</span>
+      <h3>4-Level Memory</h3>
+      <p>L1 per-core, L2 tile cache, L3 DRAM-backed, L4 CXL fabric. 500M+ addressable synapses with hardware LRU management.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag green">N3</span>
+      <h3>Parameter Groups</h3>
+      <p>32 shared parameter sets per core. 4,096 neurons in 96 KB L1 instead of 1,024. 4&times; density increase.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag green">N3</span>
+      <h3>Hardware Metaplasticity</h3>
+      <p>3-bit consolidation state per synapse. Automatic meta-learning in hardware. No microcode overhead.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag green">N3</span>
+      <h3>FACTOR Compression</h3>
+      <p>Low-rank synapse format using SVD decomposition. Hardware STORE_A/STORE_B opcodes. 2&ndash;8&times; memory savings.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag green">N3</span>
+      <h3>Winner-Take-All</h3>
+      <p>Two-pass hardware WTA with configurable groups and k-winners. Competitive coding for sparse representations.</p>
+    </div>
+    <div class="feature-card">
+      <span class="tag green">N3</span>
+      <h3>Spike Compression</h3>
+      <p>DELTA, BURST, and ADAPTIVE encoding on inter-chip links. 2&ndash;8&times; effective bandwidth for multi-chip systems.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SDK -->
+<section class="sdk-section reveal" id="sdk">
+  <div class="sdk-text">
+    <h2>Same SDK. New hardware.</h2>
+    <p>The neurocore SDK targets N3 with the same Python API you already know. Hardware-accurate simulation on CPU, GPU, and FPGA.</p>
+    <code class="install">pip install catalyst-cloud</code>
+  </div>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div>
+    </div>
+    <pre class="code-body"><span class="kw">import</span> catalyst_cloud <span class="kw">as</span> cc
+
+<span class="cm"># Target N3 hardware</span>
+net = cc.<span class="fn">Network</span>(chip=<span class="str">"n3"</span>)
+inp = net.<span class="fn">add_population</span>(<span class="str">"input"</span>, <span class="num">784</span>)
+
+<span class="cm"># N3: hybrid ANN layer (INT8 MAC)</span>
+ann = net.<span class="fn">add_population</span>(<span class="str">"encoder"</span>, <span class="num">256</span>,
+    neuron_model=<span class="str">"ann_int8"</span>)
+
+<span class="cm"># N3: spiking recurrent layer</span>
+exc = net.<span class="fn">add_population</span>(<span class="str">"hidden"</span>, <span class="num">512</span>,
+    neuron_model=<span class="str">"adaptive_lif"</span>)
+out = net.<span class="fn">add_population</span>(<span class="str">"output"</span>, <span class="num">10</span>)
+
+net.<span class="fn">connect</span>(inp, ann, weight=<span class="num">0.3</span>)
+net.<span class="fn">connect</span>(ann, exc, learning=<span class="str">"stdp"</span>)
+net.<span class="fn">connect</span>(exc, out)
+
+result = cc.<span class="fn">run</span>(net, timesteps=<span class="num">1000</span>)
+<span class="fn">print</span>(result.spike_trains)</pre>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="comparison reveal" id="comparison">
+  <h2>How N3 compares.</h2>
+  <div class="comp-wrap">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="hl">Catalyst N3</th>
+          <th>Intel Loihi 2</th>
+          <th>BrainChip Akida 2</th>
+          <th>SpiNNaker 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        {[
+          ['Cores', '128 (16 tiles)', '128', '8 NPUs', '152 (ARM)'],
+          ['Neurons (24-bit)*', '524,288', '~1,000,000', '2,048', 'Up to 16M'],
+          ['Neurons (8-bit)', '1,048,576', '\u2014', '\u2014', '\u2014'],
+          ['Virtual neurons (TDM)', '4.2M (24-bit)', '\u2014', '\u2014', '\u2014'],
+          ['Neuron models', '8 (7 + custom ISA)', '3+', '1 (LIF)', 'Software'],
+          ['Weight precision', '1\u201316-bit', '1\u20138-bit', '1/2/4/8-bit', 'Software'],
+          ['ANN mode', 'INT8 MAC', '\u2014', 'Yes', '\u2014'],
+          ['On-chip learning', '16 accelerators', '1 global', 'Limited', 'ARM cores'],
+          ['Learning ISA', '28 opcodes, 80 reg', 'Microcode', 'Fixed', 'Software'],
+          ['Memory levels', '4 (L1\u2013L4)', '2', '2', 'External'],
+          ['Virtualization', 'NeurOS (680+)', '\u2014', '\u2014', '\u2014'],
+          ['Spike compression', 'DELTA/BURST', '\u2014', '\u2014', '\u2014'],
+          ['Metaplasticity', 'Hardware (3-bit)', '\u2014', '\u2014', '\u2014'],
+          ['Hardware validated', 'FPGA validated', 'ASIC (Intel 4)', 'ASIC (28nm)', 'ASIC (22nm)'],
+          ['Open design', 'Yes (BSL 1.1)', 'No', 'No', 'Partial'],
+        ].map(row => (
+          <tr>
+            <td>{row[0]}</td>
+            <td class="us">{row[1]}</td>
+            <td class="them">{row[2]}</td>
+            <td class="them">{row[3]}</td>
+            <td class="them">{row[4]}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:12px;">* Neuron counts are not directly comparable across platforms. Loihi 2 neurons are 1-bit compartments; N3 neurons are 24-bit with full state (potential, current, traces). N3 at 8-bit precision supports 1,048,576 physical neurons, or up to 8.4M virtual with TDM.</p>
+  </div>
+</section>
+
+<!-- SPECS -->
+<section class="specs reveal" id="specs">
+  <h2>Technical Specifications</h2>
+  <details class="spec-group" open>
+    <summary>Compute</summary>
+    <div>
+      <div class="spec-row"><span>Cores</span><span>128 (16 tiles &times; 8 cores)</span></div>
+      <div class="spec-row"><span>Neurons per core (24-bit)</span><span>4,096</span></div>
+      <div class="spec-row"><span>Neurons per core (16-bit)</span><span>5,120</span></div>
+      <div class="spec-row"><span>Neurons per core (8-bit)</span><span>8,192</span></div>
+      <div class="spec-row"><span>Total physical neurons (24-bit)</span><span>524,288</span></div>
+      <div class="spec-row"><span>Total physical neurons (16-bit)</span><span>655,360</span></div>
+      <div class="spec-row"><span>Total physical neurons (8-bit)</span><span>1,048,576</span></div>
+      <div class="spec-row"><span>Virtual neurons (24-bit, TDM &times;8)</span><span>4,194,304</span></div>
+      <div class="spec-row"><span>Virtual neurons (8-bit, TDM &times;8)</span><span>8,388,608</span></div>
+      <div class="spec-row"><span>Neuron models</span><span>CUBA LIF, ALIF, Sigma-Delta, Gated, Graded, WTA, ANN INT8, Custom ISA</span></div>
+      <div class="spec-row"><span>Compartments per neuron</span><span>8 addressable (4 implemented)</span></div>
+      <div class="spec-row"><span>Parameter groups per core</span><span>32</span></div>
+      <div class="spec-row"><span>Management CPUs</span><span>4 &times; RISC-V RV32IMC with neuro ISA extensions</span></div>
+    </div>
+  </details>
+  <details class="spec-group">
+    <summary>Memory</summary>
+    <div>
+      <div class="spec-row"><span>L1 SRAM per core</span><span>96 KB</span></div>
+      <div class="spec-row"><span>L2 shared tile cache</span><span>1 MB per tile</span></div>
+      <div class="spec-row"><span>Shadow SRAM (TDM)</span><span>8 MB total</span></div>
+      <div class="spec-row"><span>Total on-chip SRAM</span><span>~36 MB</span></div>
+      <div class="spec-row"><span>L3 external memory</span><span>LPDDR5X / HBM</span></div>
+      <div class="spec-row"><span>Addressable synapses</span><span>500M+ (L3-backed)</span></div>
+      <div class="spec-row"><span>L4 fabric</span><span>CXL interconnect</span></div>
+      <div class="spec-row"><span>Synapse formats</span><span>4 modes: Full, Inference, Compact, FACTOR</span></div>
+    </div>
+  </details>
+  <details class="spec-group">
+    <summary>Learning</summary>
+    <div>
+      <div class="spec-row"><span>Learning accelerators</span><span>16 (1 per tile, independent)</span></div>
+      <div class="spec-row"><span>ISA opcodes</span><span>28</span></div>
+      <div class="spec-row"><span>Registers per accelerator</span><span>80</span></div>
+      <div class="spec-row"><span>Parallel threads</span><span>4 per accelerator</span></div>
+      <div class="spec-row"><span>Eligibility traces</span><span>6 types (24-bit mode)</span></div>
+      <div class="spec-row"><span>Metaplasticity</span><span>3-bit consolidation per synapse</span></div>
+      <div class="spec-row"><span>Fatigue</span><span>4-bit per synapse with recovery</span></div>
+      <div class="spec-row"><span>Homeostatic plasticity</span><span>Hardware EWMA rate tracking + synaptic scaling</span></div>
+      <div class="spec-row"><span>Neuromodulation</span><span>16 channels per tile + per-core override</span></div>
+    </div>
+  </details>
+  <details class="spec-group">
+    <summary>Communication</summary>
+    <div>
+      <div class="spec-row"><span>NoC type</span><span>Async hybrid (event-driven routers + synchronous cores)</span></div>
+      <div class="spec-row"><span>Intra-tile routing</span><span>4-phase handshake mesh</span></div>
+      <div class="spec-row"><span>Inter-tile routing</span><span>Fat tree + 8 express links</span></div>
+      <div class="spec-row"><span>Spike compression</span><span>DELTA / BURST / ADAPTIVE</span></div>
+      <div class="spec-row"><span>Multicast groups</span><span>256 per tile &times; 32 destinations</span></div>
+      <div class="spec-row"><span>Spike payloads</span><span>Binary + 8-bit graded (16-bit extended mode)</span></div>
+      <div class="spec-row"><span>Axonal delays</span><span>1&ndash;255 timesteps (24-bit mode)</span></div>
+    </div>
+  </details>
+  <details class="spec-group">
+    <summary>Power &amp; Reliability</summary>
+    <div>
+      <div class="spec-row"><span>Clock gating</span><span>Per-core ICG</span></div>
+      <div class="spec-row"><span>Power gating</span><span>Per-tile (async router stays powered)</span></div>
+      <div class="spec-row"><span>DVFS</span><span>4 clock domains, adaptive frequency</span></div>
+      <div class="spec-row"><span>Thermal management</span><span>4 diodes + throttle FSM</span></div>
+      <div class="spec-row"><span>ECC</span><span>Per-SRAM, with scrubber</span></div>
+      <div class="spec-row"><span>Deterministic mode</span><span>Full-chip reproducibility (LFSR seeding, barrier sync)</span></div>
+      <div class="spec-row"><span>Performance counters</span><span>32 per tile (spikes, FIFO, cache, DMA, NoC)</span></div>
+    </div>
+  </details>
+  <details class="spec-group">
+    <summary>FPGA Performance</summary>
+    <div>
+      <div class="spec-row"><span>Platform</span><span>AWS F2 (Xilinx UltraScale+ VU47P)</span></div>
+      <div class="spec-row"><span>Neuromorphic clock</span><span>62.5 MHz (tile), 250 MHz (AXI bus)</span></div>
+      <div class="spec-row"><span>Peak throughput</span><span>14,512 timesteps/sec</span></div>
+      <div class="spec-row"><span>Energy per neuron-op</span><span>4.04 nJ</span></div>
+      <div class="spec-row"><span>Efficiency vs N2</span><span>3.7&times; (nJ/neuron-op)</span></div>
+      <div class="spec-row"><span>SHD accuracy</span><span>91.0%</span></div>
+      <div class="spec-row"><span>SSC accuracy</span><span>76.4%</span></div>
+      <div class="spec-row"><span>N-MNIST accuracy</span><span>99.1%</span></div>
+      <div class="spec-row"><span>GSC-12 accuracy</span><span>88.0%</span></div>
+      <div class="spec-row"><span>DVS Gesture accuracy</span><span>89.0%</span></div>
+      <div class="spec-row"><span>Total power (FPGA)</span><span>1.91 W (full tile active)</span></div>
+      <div class="spec-row"><span>Kria K26 (2-core)</span><span>51,381 LUTs (43.9%), 0.867W, ~58.5 MHz</span></div>
+    </div>
+  </details>
+  <details class="spec-group">
+    <summary>ASIC Projections (28nm)</summary>
+    <div>
+      <div class="spec-row"><span>Target process</span><span>TSMC 28nm HPC+</span></div>
+      <div class="spec-row"><span>Die area per tile (8 cores)</span><span>~58 mm&sup2;</span></div>
+      <div class="spec-row"><span>Full 128-core die</span><span>~1,070 mm&sup2; (not feasible at 28nm &mdash; multi-chip or advanced node required)</span></div>
+      <div class="spec-row"><span>Initial ASIC target</span><span>Single tile (8 cores) or 4-tile (32 cores) configuration</span></div>
+      <div class="spec-row"><span>Energy per synaptic event</span><span>12&ndash;18 pJ</span></div>
+      <div class="spec-row"><span>Projected efficiency</span><span>~57 GSOPs/J</span></div>
+      <div class="spec-row"><span>Power (8-core tile, projected)</span><span>~0.2 W (typical activity)</span></div>
+      <div class="spec-row"><span>Scaling path</span><span>Multi-chip AER (8 links/chip) or advanced node (&le;7nm)</span></div>
+    </div>
+  </details>
+  <details class="spec-group">
+    <summary>Intellectual Property</summary>
+    <div>
+      <div class="spec-row"><span>RTL</span><span>Proprietary (BSL 1.1)</span></div>
+      <div class="spec-row"><span>Architecture spec</span><span>78 pages, v3.0</span></div>
+      <div class="spec-row"><span>RTL modules</span><span>46 modules, ~17,700 lines</span></div>
+    </div>
+  </details>
+</section>
+
+<!-- PAPER CTA -->
+<section class="paper-cta reveal" id="paper">
+  <div class="paper-card">
+    <h3>N3 Paper</h3>
+    <p>Full architecture specification, benchmark results, and FPGA validation.</p>
+    <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:16px;">
+      <a href="https://zenodo.org/records/18881283" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;background:#3B82F6;color:#fff;text-decoration:none;font-weight:600;font-size:0.95rem;transition:background 0.2s;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Read on Zenodo
+      </a>
+      <a href="/papers/catalyst-n3.pdf" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);text-decoration:none;font-weight:600;font-size:0.95rem;transition:all 0.2s;">
+        Download PDF
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ENQUIRE -->
+<section class="enquire reveal">
+  <div class="enquire-card">
+    <h2>Interested in N3?</h2>
+    <p>Research partnerships, early access, and integration enquiries.</p>
+    <div class="enquire-btns">
+      <a href="/about#contact" class="btn btn-primary glow-btn">Get in touch</a>
+      <a href="/research" class="btn btn-pill glow-btn">Read the research</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Products</h4>
+      <a href="/processors/n3">N3 Processor</a>
+      <a href="/processors/n2">N2 Processor</a>
+      <a href="/processors/n1">N1 Processor</a>
+      <a href="/processors/specs">Specifications</a>
+      <a href="/cloud">Catalyst Cloud</a>
+      <a href="/cloud/pricing">Pricing</a>
+    </div>
+    <div class="footer-col">
+      <h4>Research</h4>
+      <a href="/research">Papers</a>
+      <a href="/benchmarks">Benchmarks</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="/about">About</a>
+  
+      <a href="/about#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="https://github.com/catalyst-neuromorphic" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:henry@catalyst-neuromorphic.com">Email</a>
+    </div>
+  </div>
+  <div class="footer-support">
+    Support our research:
+    <a href="https://github.com/sponsors/catalyst-neuromorphic">GitHub Sponsors</a>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Catalyst Neuromorphic Ltd. Company No. 17054540. All rights reserved.</span>
+    <span class="footer-legal"><a href="/terms">Terms</a><span>&middot;</span><a href="/privacy">Privacy</a><span>&middot;</span><a href="/cookies">Cookies</a><span>&middot;</span><span>UK Patents Pending</span></span>
+  </div>
+</footer>
+
+<script is:inline src="/js/n3.js"></script>
+
+</body>
+</html>

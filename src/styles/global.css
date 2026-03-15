@@ -1,0 +1,243 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface text-white font-sans antialiased overflow-x-hidden;
+  }
+  a {
+    color: inherit;
+  }
+
+  /* Noise texture overlay on body */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+}
+
+@layer components {
+  /* ── Glass morphism ── */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(40px) saturate(1.2);
+    -webkit-backdrop-filter: blur(40px) saturate(1.2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%, rgba(255,255,255,0.02) 100%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(60px) saturate(1.3);
+    -webkit-backdrop-filter: blur(60px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .glass-strong::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(255,255,255,0.08) 0%, transparent 40%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .glass-accent {
+    background: rgba(59, 130, 246, 0.04);
+    backdrop-filter: blur(40px) saturate(1.2);
+    -webkit-backdrop-filter: blur(40px) saturate(1.2);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .glass-accent::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(59,130,246,0.06) 0%, transparent 50%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  /* ── Buttons ── */
+  .btn-pill {
+    @apply inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full transition-all duration-300;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .btn-pill:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+  }
+  .btn-primary {
+    @apply inline-flex items-center gap-2 text-sm font-medium px-7 py-3.5 rounded-full transition-all duration-300;
+    color: #fff;
+    background: #3B82F6;
+    border: 1px solid rgba(59, 130, 246, 0.5);
+  }
+  .btn-primary:hover {
+    background: #2563EB;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.25);
+  }
+
+  /* ── Labels ── */
+  .section-label {
+    @apply text-xs tracking-widest uppercase flex items-center gap-2.5 mb-4;
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .accent-mark {
+    @apply inline-block w-2 h-2 rounded-sm bg-catalyst-blue;
+  }
+
+  /* ── Homepage-style deep glass (content cards) ── */
+  .card-glass {
+    background: linear-gradient(
+      165deg,
+      rgba(255,255,255,0.12) 0%,
+      rgba(255,255,255,0.05) 35%,
+      rgba(255,255,255,0.025) 100%
+    );
+    backdrop-filter: blur(28px) saturate(190%) brightness(1.06);
+    -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(1.06);
+    border: 1px solid transparent;
+    border-radius: 20px;
+    box-shadow:
+      0 8px 32px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.14),
+      inset 0 -1px 0 rgba(255,255,255,0.02);
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.5s, transform 0.3s;
+  }
+  .card-glass:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 12px 48px rgba(0,0,0,0.55),
+      inset 0 1px 0 rgba(255,255,255,0.18),
+      inset 0 -1px 0 rgba(255,255,255,0.03);
+  }
+  .card-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(59,130,246,0.22) 0%,
+      rgba(59,130,246,0.06) 25%,
+      rgba(59,130,246,0.02) 50%,
+      rgba(59,130,246,0.06) 75%,
+      rgba(59,130,246,0.18) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.55;
+    transition: opacity 0.4s;
+  }
+  .card-glass:hover::before { opacity: 1; }
+
+  /* ── Console card (clean, minimal panel) ── */
+  .console-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    transition: border-color 0.15s;
+  }
+  .console-card:hover {
+    border-color: rgba(255,255,255,0.10);
+  }
+
+  /* ── Section headings (homepage style) ── */
+  .sh {
+    font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .ss {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto 72px;
+    line-height: 1.7;
+  }
+
+  /* ── Homepage-style buttons ── */
+  .btn-blue {
+    background: linear-gradient(135deg, #3B82F6, #2563EB);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(59,130,246,0.3);
+    border-radius: 999px;
+    padding: 12px 28px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s;
+  }
+  .btn-blue:hover { box-shadow: 0 6px 24px rgba(59,130,246,0.45); transform: translateY(-1px); }
+  .btn-ghost {
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.04);
+    border-radius: 999px;
+    padding: 12px 28px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+  /* ── Reveal (GSAP-driven) ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    will-change: opacity, transform;
+  }
+  /* Stagger parent — children get staggered reveal via GSAP */
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(30px);
+    will-change: opacity, transform;
+  }
+}
+
+/* ── Neural grid canvas ── */
+#neuralCanvas { display: block; }

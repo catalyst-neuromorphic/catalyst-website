@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page not found — Catalyst">
+  <section style="min-height:60vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:4rem 2rem;">
+    <div>
+      <h1 style="font-family:'Space Grotesk',system-ui,sans-serif;font-size:clamp(4rem,10vw,8rem);font-weight:700;color:rgba(255,255,255,0.08);line-height:1;">404</h1>
+      <p style="font-size:1.25rem;color:rgba(255,255,255,0.6);margin-top:1rem;">Page not found</p>
+      <p style="font-size:0.9rem;color:rgba(255,255,255,0.3);margin-top:0.5rem;max-width:400px;margin-left:auto;margin-right:auto;">The page you're looking for doesn't exist or has been moved.</p>
+      <div style="margin-top:2rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="/" class="btn-primary" style="display:inline-block;background:linear-gradient(135deg,#3B82F6,#2563EB);color:#fff;font-weight:600;padding:0.625rem 1.5rem;border-radius:0.75rem;text-decoration:none;font-size:0.875rem;">Go home</a>
+        <a href="/cloud" style="display:inline-block;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-weight:500;padding:0.625rem 1.5rem;border-radius:0.75rem;text-decoration:none;font-size:0.875rem;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.6)'">Explore Cloud</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
