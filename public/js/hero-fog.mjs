@@ -17,8 +17,9 @@ const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 10
 const CAM_Z = 15;
 camera.position.set(0, 0, CAM_Z);
 
-// Render target for fog
-const fogRT = new THREE.WebGLRenderTarget(innerWidth, innerHeight, {
+// Render fog at half res — fog is blurry noise, LinearFilter upscale is invisible
+const FOG_SCALE = 0.5;
+const fogRT = new THREE.WebGLRenderTarget(Math.floor(innerWidth * FOG_SCALE), Math.floor(innerHeight * FOG_SCALE), {
   minFilter: THREE.LinearFilter,
   magFilter: THREE.LinearFilter,
   format: THREE.RGBAFormat,
@@ -472,19 +473,30 @@ window.addEventListener('resize', () => {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(innerWidth, innerHeight);
-  fogRT.setSize(innerWidth, innerHeight);
+  fogRT.setSize(Math.floor(innerWidth * FOG_SCALE), Math.floor(innerHeight * FOG_SCALE));
   fogMat.uniforms.resolution.value.set(innerWidth, innerHeight);
   tileMat.uniforms.resolution.value.set(innerWidth, innerHeight);
 });
 
+// === VISIBILITY — pause when hero is off-screen ===
+let heroVisible = true;
+const heroObs = new IntersectionObserver(entries => {
+  heroVisible = entries[0].isIntersecting;
+}, { threshold: 0 });
+heroObs.observe(canvas);
+
 // === ANIMATION ===
 let lastTick = 0;
+let fogFrame = 0;
 
 function animate(t) {
   requestAnimationFrame(animate);
+  if (!heroVisible) return;
+
   const now = t || 0;
   const time = now * 0.001;
   const dt = 0.016;
+  fogFrame++;
 
   mouseSmooth.x += (mouse.x - mouseSmooth.x) * 0.05;
   mouseSmooth.y += (mouse.y - mouseSmooth.y) * 0.05;
@@ -567,11 +579,13 @@ function animate(t) {
   // Tile time uniform for per-tile fog animation
   tileMat.uniforms.time.value = time;
 
-  // PASS 1: Render fog to texture
-  renderer.setRenderTarget(fogRT);
-  renderer.render(fogScene, fogCamera);
+  // PASS 1: Render fog every 2nd frame — fog moves slowly, reuse last texture
+  if (fogFrame % 2 === 0) {
+    renderer.setRenderTarget(fogRT);
+    renderer.render(fogScene, fogCamera);
+  }
 
-  // PASS 2: Render main scene (blit fog + tiles + glows)
+  // PASS 2: Render main scene (blit fog + tiles + glows) — every frame
   renderer.setRenderTarget(null);
   renderer.render(mainScene, camera);
 }
