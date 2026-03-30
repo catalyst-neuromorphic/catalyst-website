@@ -395,14 +395,7 @@
 
 </div><!-- end .frost -->
 
-<script type="module" is:inline>
-requestIdleCallback(() => {
-  const s = document.createElement('script');
-  s.type = 'module';
-  s.src = '/js/hero-fog.mjs';
-  document.body.appendChild(s);
-}, { timeout: 200 });
-</script>
+<script type="module" src="/js/hero-fog.mjs"></script>
 
 <script is:inline src="/js/homepage.js"></script>
 </body>
