@@ -394,7 +394,16 @@
 
 </div><!-- end .frost -->
 
-<script type="module" is:inline src="/js/hero-fog.mjs"></script>
+<script type="importmap" is:inline>{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.172.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.172.0/examples/jsm/"}}</script>
+<script type="module" is:inline>
+// Defer hero init until after first paint
+requestIdleCallback(() => {
+  const s = document.createElement('script');
+  s.type = 'module';
+  s.src = '/js/hero-fog.mjs';
+  document.body.appendChild(s);
+}, { timeout: 200 });
+</script>
 
 <script is:inline src="/js/homepage.js"></script>
 </body>

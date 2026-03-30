@@ -6,10 +6,14 @@
   X-XSS-Protection: 0
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   # SHA-256 hashes for inline scripts that cannot be externalized:
-  #   sha256-mHbvPrXUG06xYIqUCj6XMz6uaJGLsniNehYq9faMvYo= = importmap (local three.js)
+  #   sha256-oJmNzr9a3tCQD/ogwKjR9tbwBAz32SAtPFcY0CMJCYk= = homepage importmap (three + addons)
+  #   sha256-Y3d/FnGxlE0bOE4W+M0R13w0O3u5EGezcY45JJJSj74= = subpage importmap (three only)
   #   sha256-eIXWvAmxkr251LJZkjniEK5LcPF3NkapbJepohwYRIc= = Astro island hydration bootstrap
   #   sha256-U7a72oKuFFz8D7GUHLA1NZ0ciymHmDOc9T9aVDg2rWU= = Astro island hydration runtime
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-mHbvPrXUG06xYIqUCj6XMz6uaJGLsniNehYq9faMvYo=' 'sha256-eIXWvAmxkr251LJZkjniEK5LcPF3NkapbJepohwYRIc=' 'sha256-U7a72oKuFFz8D7GUHLA1NZ0ciymHmDOc9T9aVDg2rWU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.catalyst-neuromorphic.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+  # NOTE: Astro hashes will change when Astro is upgraded. Rebuild and re-hash after upgrades.
+  # TODO: Add CSP reporting endpoint once a collector is set up:
+  # Content-Security-Policy-Report-Only: ... report-uri https://csp.catalyst-neuromorphic.com/report
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-oJmNzr9a3tCQD/ogwKjR9tbwBAz32SAtPFcY0CMJCYk=' 'sha256-Y3d/FnGxlE0bOE4W+M0R13w0O3u5EGezcY45JJJSj74=' 'sha256-eIXWvAmxkr251LJZkjniEK5LcPF3NkapbJepohwYRIc=' 'sha256-U7a72oKuFFz8D7GUHLA1NZ0ciymHmDOc9T9aVDg2rWU=' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.catalyst-neuromorphic.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
 
 /papers/*
   Content-Disposition: inline

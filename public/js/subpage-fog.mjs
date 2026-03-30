@@ -1,4 +1,4 @@
-import * as THREE from '/js/three.module.js';
+import * as THREE from 'three';
 
 const canvas = document.getElementById('sub-fog-canvas');
 if (!canvas) throw new Error('No sub-fog-canvas');
