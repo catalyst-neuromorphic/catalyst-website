@@ -8,7 +8,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="pt-36 pb-20 px-6 md:px-12" style="position:relative;z-index:1;">
     <div class="max-w-[1200px] mx-auto">
       <p class="text-sm text-catalyst-blue font-medium tracking-wider uppercase mb-4">Research</p>
-      <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tight max-w-[700px]">Four processor generations. Three open-access papers. FPGA validated on AWS F2 and Kria K26.</h1>
+      <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-tight max-w-[700px]">Four processor generations. Four open-access papers. FPGA validated on AWS F2 and Kria K26.</h1>
     </div>
   </section>
 
@@ -19,12 +19,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <h2 class="reveal text-[clamp(1.8rem,3vw,2.5rem)] font-bold tracking-tight">N4</h2>
         <span class="text-[10px] uppercase tracking-widest text-catalyst-blue/70 bg-catalyst-blue/10 px-3 py-1 rounded-full border border-catalyst-blue/15">Coming soon</span>
       </div>
-      <p class="reveal text-white/35 mt-2 mb-10 max-w-[600px]">512-core dual-chiplet architecture. 4.19 million neurons. FPGA validated on AWS F2 at 62.5 MHz. Edge variant validated on Kria K26 at 0.378 W total board power.</p>
+      <p class="reveal text-white/35 mt-2 mb-10 max-w-[600px]">512-core dual-chiplet architecture. 4.19 million physical neurons, 134 million virtual via TDM. FPGA validated on AWS F2 at 62.5 MHz. Edge variant validated on Kria K26 at 0.378 W total board power.</p>
 
       <div class="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[
           { title: '512 cores', desc: 'Dual compute chiplets, each with 256 neuromorphic cores' },
-          { title: '4.19M neurons', desc: '8,192 neurons per core with full synaptic connectivity' },
+          { title: '134M virtual neurons', desc: '4.19M physical, up to 134M via 32-context TDM' },
           { title: '2.5D packaging', desc: '2 compute dies (7 nm) + 1 I/O die (12 nm), CoWoS-S interposer' },
           { title: '48 GB HBM3E', desc: '2.0 TB/s bandwidth' },
           { title: '100\u2013300 mW', desc: 'ASIC power projection at 28 nm' },
@@ -81,7 +81,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <tbody class="text-white/30">
             {[
               ['Cores', '128', '128', '128 (16 tiles)', '512 (dual chiplet)'],
-              ['Neurons', '131K', '131K', '524K\u20131M', '4.19M'],
+              ['Neurons', '131K', '131K', '524K\u20131M', '4.19M (134M virtual)'],
               ['Neuron models', '1 (CUBA LIF)', '5', '7+ (programmable)', '8 (50-opcode microcode)'],
               ['Neuron engine', 'Fixed datapath', 'Microcode', 'Microcode + ANN mode', 'Microcode + ANN/SNN hybrid'],
               ['Weight precision', '8-bit fixed', '1\u201316-bit variable', '1\u201316-bit variable', '1\u201316-bit variable'],
@@ -200,6 +200,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       <div class="space-y-6">
         {[
+          {
+            gen: 'Fourth generation',
+            title: 'Catalyst N4: A 512-Core Dual-Chiplet Neuromorphic Processor with 134M Virtual Neurons, Spike Tensor Core, and Hardware Neuroscience Primitives',
+            pages: 29,
+            doi: '10.5281/zenodo.19332513',
+            doiUrl: 'https://zenodo.org/records/19332513',
+            pdf: '/papers/catalyst-n4.pdf',
+            highlights: '512 cores, 134M virtual neurons via TDM, 16x16 Spike Tensor Core, 8-head spiking attention, KV cache, hyperdimensional computing, Hopfield memory, hardware backpropagation, federated learning, post-quantum security, RV64GC with 14 custom opcodes.',
+          },
           {
             gen: 'Third generation',
             title: 'Catalyst N3: A 128-Core Hybrid Neuromorphic Processor with Hardware Virtualisation, Per-Tile Learning, and Silicon Metaplasticity',

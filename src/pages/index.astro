@@ -394,9 +394,8 @@
 
 </div><!-- end .frost -->
 
-<script type="importmap" is:inline>{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.172.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.172.0/examples/jsm/"}}</script>
+<script type="importmap" is:inline>{"imports":{"three":"/js/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.172.0/examples/jsm/"}}</script>
 <script type="module" is:inline>
-// Defer hero init until after first paint
 requestIdleCallback(() => {
   const s = document.createElement('script');
   s.type = 'module';
