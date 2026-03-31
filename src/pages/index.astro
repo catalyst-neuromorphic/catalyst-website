@@ -340,18 +340,19 @@
   <h2 class="sh text-anim">N4</h2>
   <div class="spec-row text-anim d1">
     <span class="spec-pill">512 cores</span>
-    <span class="spec-pill">4.19M neurons</span>
-    <span class="spec-pill">256 MACs/cycle</span>
+    <span class="spec-pill">134M virtual neurons</span>
+    <span class="spec-pill">Spike Tensor Core</span>
     <span class="spec-pill">0.378 W edge</span>
     <span class="spec-pill">48 GB HBM3E</span>
     <span class="spec-pill">126/126 FPGA tests</span>
   </div>
   <p class="ss text-anim d1">
-    Chiplet architecture with 2 Neural Compute Chiplets, 32 tiles each. Spike Tensor Core with 16&times;16 MAC array. 8 synapse formats including KAN B-spline. 4-way multi-threading. 8 hardware learning rules. AES-256-GCM with post-quantum key exchange.
+    Dual-chiplet architecture with 4.19M physical neurons, expandable to 134M via 32-context TDM. 16&times;16 Spike Tensor Core, 8-head spiking attention with KV cache, 8 synapse formats including KAN B-spline. Hardware backpropagation, hyperdimensional computing, Hopfield memory, post-quantum security.
   </p>
   <p class="ss text-anim d2">
     3,229 simulation tests passing. N4-Edge variant runs at 2.6% LUT utilisation and 0.378 W total on Kria K26.
   </p>
+  <div class="section-links text-anim d2"><a href="https://doi.org/10.5281/zenodo.19332513">Paper</a></div>
 </section>
 
 <section class="section" id="research">
@@ -366,9 +367,10 @@
     All from FPGA-validated builds. Trained on GPU, quantized to 16-bit, deployed on hardware.
   </p>
   <div class="section-links text-anim d2">
-    <a href="https://doi.org/10.5281/zenodo.18727094">N1 Paper</a> &nbsp;&middot;&nbsp;
-    <a href="https://doi.org/10.5281/zenodo.18728256">N2 Paper</a> &nbsp;&middot;&nbsp;
+    <a href="https://doi.org/10.5281/zenodo.19332513">N4 Paper</a> &nbsp;&middot;&nbsp;
     <a href="https://doi.org/10.5281/zenodo.18881283">N3 Paper</a> &nbsp;&middot;&nbsp;
+    <a href="https://doi.org/10.5281/zenodo.18728256">N2 Paper</a> &nbsp;&middot;&nbsp;
+    <a href="https://doi.org/10.5281/zenodo.18727094">N1 Paper</a> &nbsp;&middot;&nbsp;
     <a href="https://github.com/catalyst-neuromorphic/catalyst-benchmarks">Benchmarks</a>
   </div>
 </section>
